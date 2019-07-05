@@ -1,22 +1,27 @@
 <template>
   <div id="app">
 		<header class="header">
-		  <div class="float-left">
+		  <div class="float-left" style="height: 100%;">
 		    <a class="logo" href="#"><img src="./assets/logo.png" width="100%"></a>
-		    <el-menu :default-active="activeIndex" mode="horizontal">
-		      <el-menu-item index="1">主页</el-menu-item>
-		      <!-- <el-menu-item index="2">精选</el-menu-item> -->
-		    </el-menu>
+		    <!-- <el-menu :default-active="activeIndex" mode="horizontal">
+		      <el-menu-item index="1"><a href="#" target="_blank">首页</a></el-menu-item>
+		      <el-menu-item index="2">精选</el-menu-item>
+		    </el-menu> -->
+				<ul class="nav">
+					<li class="nav-item"><a  href="#" class="active">主页</a></li>
+					<li class="nav-item"><a  href="#test">其他</a></li>
+				</ul>
 		  </div>
-		  <div class="float-right">
-		    <el-menu mode="horizontal">
-		      <el-menu-item><span><i class="el-icon-edit"></i></span></el-menu-item>
-		      <el-menu-item><span><i class="el-icon-share"></i></span></el-menu-item>
-		      <el-menu-item><span><i class="el-icon-delete"></i></span></el-menu-item>
-		      <!-- <el-menu-item><img width="24px" height="24px" src="./assets/img/logo.png" ></el-menu-item> -->
-						<el-menu-item @click="loginOpen = true">登录</el-menu-item>
-						<el-menu-item @click="registerOpen = true">注册</el-menu-item>
-		    </el-menu>
+		  <div class="float-right" style="height: 100%;">
+				<ul class="nav">
+					<li class="nav-item"><a  href="#"><i class="el-icon-edit"></i></a></li>
+					<li class="nav-item"><a  href="#test"><i class="el-icon-share"></i></a></li>
+					<li class="nav-item"><a  href="#test"><i class="el-icon-delete"></i></a></li>
+					<li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li>
+					<!-- <li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
+					<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li> -->
+				</ul>
+				
 				<el-dialog title="登录" :visible.sync="loginOpen" width="30%">
 					<el-input v-model="username" placeholder="请输入账号"></el-input>
 					<el-input v-model="password" placeholder="请输入密码"></el-input>
@@ -32,10 +37,127 @@
 				</el-dialog>
 		  </div>
 		</header>
+		<section>
+		  <div id="search">
+				<div class="form">
+		      <input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
+		      <button id="search_but" @click="search">{{searchTitle}}搜索</button>
+				</div>
+				<div class="dropdown">
+				  <el-dropdown placement="bottom" @command="handleCommand">
+				    <span class="el-dropdown-link">
+				      <img width="20px" height="20px" v-bind:src="searchIcon">
+				      <i class="el-icon-arrow-down"></i>
+				    </span>
+				    <el-dropdown-menu slot="dropdown">
+								<el-dropdown-item command="百度,https://www.baidu.com/s?word=,https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
+									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
+									百度
+								</el-dropdown-item>
+				      <el-dropdown-item command="360,https://www.so.com/s?q=,https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
+									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
+									360
+								</el-dropdown-item>
+				      <el-dropdown-item command="Bing,https://cn.bing.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
+									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
+									Bing
+								</el-dropdown-item>
+				      <el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
+									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
+									搜狗
+								</el-dropdown-item>
+								<el-dropdown-item command="谷歌,https://www.google.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
+									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
+									谷歌
+								</el-dropdown-item>
+				    </el-dropdown-menu>
+				  </el-dropdown>
+				</div>
+		   </div>
+				
+				<!-- touch图标块 -->
+				<div id="touch" class="box">
+					<a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
+					 <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
+					 <div class="site-touch-title">{{ t.title }}</div>
+					</a>
+			 </div>
+			 
+			 <!-- 功能导航块 -->
+			 <div class="box">
+				 <div class="float-left">
+					 <ul class="nav" style="line-height: 30px;">
+						 <li class="nav-item"><a href="#" class="active">导航</a></li> 
+						 <li class="nav-item"><a href="#test">其他</a></li></ul>
+				 </div>
+				 <div class="float-right"></div>
+			 </div>
+			 
+			 <div class="main">
+				 <!-- 主体显示块 -->
+				 <div class="container">	 
+						<div class="box" style="margin-top: 3px;">
+							 <div class="box-header">
+								 <h3>常用</h3>
+								 <span><i class="el-icon-setting"></i></span>
+							 </div>
+							 <div class="box-body">
+								 <ul class="site-list">
+									 <li v-for="site in sites">
+										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+											 <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
+											 <div class="site-info float-right">
+												 <h3>{{ site.title }}</h3>
+												 <p>{{ site.summary }}</p>
+											 </div>
+										 </a>
+									 </li>
+								 </ul>
+							 </div>
+						 </div>
+				 </div>
+				 <!-- 侧边栏 -->
+				 <div class="sidebar">
+						<div class="box">
+							<el-carousel trigger="click" height="130px">
+								<el-carousel-item v-for="item in imgs" :key="item">
+									<img class="thumbnail" :src="item" width="100%" height="100%" />
+								</el-carousel-item>
+							</el-carousel>
+						</div>
+						<div class="box">
+							<div class="box-header">
+								<h3>每日推荐</h3>
+							</div>
+							<div class="box-body" v-for="(item,index) in ranking">
+								<p style="display: inline-flex;">{{ index+1 }}.<el-link :href="item.url" target="_blank">{{ item.title }}</el-link></p>
+							</div>
+						</div>
+				 </div>
+				
+				<div class="box">
+					<div class="box-header">
+						<h3>精选图片</h3>
+					</div>
+					<div class="box-body">
+						<div class="image-placeholder">
+							<a href="#" class="block bordercss"  v-for="thumbnail in thumbnails">
+								<img class="thumbnail" :src="thumbnail.url" >
+							</a>
+						</div>
+					</div>
+				</div>
+				
+			 </div>
+			
+			</section>
   </div>
 </template>
 
+
 <script>
+import dataJson from './data.json';
+
 export default {
   data() {
         return {
@@ -51,7 +173,9 @@ export default {
 					apiUrlSites:'http://localhost:8080/getList',
 					apiUrlTouch:'http://localhost:8080/getTouch',
 					sites:null,
-					touch:null
+					touch:null,
+					ranking:null,
+					thumbnails:null
 				};
       },
   methods: {
@@ -68,8 +192,28 @@ export default {
 			    type: 'success'
 			  });
 				this.registerOpen=false
+		},
+		search:function(){
+			var url = this.searchUrl + document.getElementById("search_text").value;
+			window.open(url,"_blank")
+		},
+		handleCommand:function(command) {
+			var str = command.split(',')
+			this.searchTitle = str[0];
+			this.searchUrl = str[1];
+			this.searchIcon = str[2];
+			this.$message('切换至搜索引擎 ' + str[0]);
+		},
+		getData:function(){
+			this.touch = dataJson.getTouch;
+			this.sites = dataJson.getList;
+			this.ranking = dataJson.getRanking;
+			this.thumbnails = dataJson.getThumbnail;
 		}
-  }
+  },
+	mounted() {
+		this.getData();
+	}
 }
 </script>
 
@@ -101,11 +245,57 @@ body{
 	    font-weight: 400;
 	}
 	
+		.float-left{
+	    float: left;
+	}
+	.float-right{
+	    float: right;
+	}
+	
+	.nav{
+	    height: 100%;
+	    line-height: 60px;
+	    background: transparent;
+	    padding: 0;
+	    margin: 0;
+		}
+		
+		.nav-item {
+	    margin: 0;
+			height: 100%;
+	    float: left;
+	    list-style: none;
+	    position: relative;
+	    cursor: pointer;
+			vertical-align: middle;
+	}
+	
+	.nav-item a {
+	    text-decoration: none;
+	    color:#909399;
+	    display: block;
+	}
+	
+	.nav-item a.active{
+		    color: #1989fa;
+	}
+	
+	.nav-item a.active:after {
+	    content: "";
+	    display: inline-block;
+	    position: absolute;
+	    bottom: 0;
+	    left: calc(50% - 15px);
+	    width: 30px;
+	    height: 2px;
+	    background: #409eff;
+	}
+	
+	
 	#app {
 	  font-family: Helvetica, sans-serif;
 	}
 	header{
-		padding: 0 100px;
 		width: 100%;
 		height: 3.75rem;
 	  line-height: 3.75rem;
@@ -116,25 +306,31 @@ body{
 		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
 	  box-shadow: 0 1px 3px rgba(26,26,26,.1);
 	}
-	.logo{
-	    display: inline-block;
+	
+	.header .logo{
 	    width: 40px;
 	    float: left;
 	}
 	.logo img{
 	  vertical-align: middle;
 	}
-
-	.float-left{
-	    float: left;
-	}
-	.float-right{
-	    float: right;
-	}
+	
+	
+	
+	
+	
+	
 	section{
 	  padding-top: 2%;
-		margin: 0 16%;
+		margin: 0;
+		display: inherit;
+		/* margin: 0 16%; */
 	}
+	.form{
+		display: flex;
+		justify-content:center;
+	}
+	
 	#search{
 		padding: 20px 0;
 	}
@@ -167,9 +363,8 @@ body{
 	}
 	
 	.dropdown{
+		width: 36px;
 	  position: relative;
-	  top: 0;
-	  left: 55px;
 	  padding: 0 6px;
 	  display: flex;
 	  align-items:center;
@@ -186,18 +381,16 @@ body{
 		justify-content: center;
 	}
 	
-	.site-card{
-		display: inline-block;
-		margin: 15px;
+	#touch .site-card{
+		text-align: center;
 	}
 	
-	.site-card .site-touch-icon{
-		width: 36px;
-		height: 36px;
+	#touch .site-card .site-touch-icon{
+		display: inline-block;
 		transition: .5s;
 	}
 	
-	.site-card:hover .site-touch-icon{
+	#touch .site-card:hover .site-touch-icon{
 		margin-top: -10px;
 		margin-bottom: 10px;
 		-webkit-filter: drop-shadow(0 6px 6px rgba(100,100,100,0.6));
@@ -208,10 +401,11 @@ body{
 		  transform: translateY(-4px) scale(1.15);
 	}
 	
-	.site-touch-title{
-		margin-bottom:-12px;
+	#touch .site-touch-title{
 		line-height: 26px;
-		font-size: 14px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 	
 	#touch img{
@@ -258,28 +452,14 @@ body{
 		justify-content: center;
 		margin-bottom: 10px;
 	}	
-	.site-list li{
-		height: 60px;
-		width: 230px;
-	}
 	.site-list .site-item{
 		height: 100%;
 		font-size: 14px;
-		padding: 5px 22px;
 		display:flex;
 		align-items:center;
 		overflow: hidden;
 	}
-	.site-icon{
-		margin-right: 15px;
-	}
-	.site-icon img{
-		width: 2rem;
-		height: 2rem;
-	}
-	.site-info{
-		width: 150px;
-	}
+	
 	.site-info h3{
 		color: #444444;
 	}
@@ -305,12 +485,7 @@ body{
 	
 	.main{
 	}
-	.container{
-		width: 70%;
-	}
-	.sidebar{
-		width: 28%;
-	}
+
 	
 	.thumbnail{
 		width: 100%;
@@ -359,4 +534,346 @@ body{
 	.el-menu.el-menu--horizontal{
 	      border-bottom: none;
 	}
+	
+	
+	
+@media screen and (min-width:1200px) {
+	.header{
+		padding: 0 6%;
+	}
+	.nav-item a {
+			font-size: 14px;
+	    padding: 0 5px;
+	}
+	.nav-item .el-avatar{
+		height: 30px;
+		width: 30px;
+		line-height:30px;
+	}
+	.header .logo{
+		width: 25px;
+	}
+	
+	.dropdown{
+	  top: -28px;
+	  left: 19%;
+	}
+	
+	#touch .site-card{
+		margin: 5px;
+		width: 60px;
+	}
+	#touch .site-card .site-touch-icon{
+		width: 36px;
+		height: 36px;
+	}
+
+	#touch .site-touch-title{
+		margin-bottom:0px;
+		font-size: 14px;
+		text-align: center;
+	}
+	
+	section{
+		margin: 0 10%;
+	}
+	.container{
+		width: 70%;
+		float: left;
+	}
+	.sidebar{
+		width: 30%;
+		float: right;
+	}
+	
+	.site-list li{
+		height: 60px;
+		width: 190px;
+	}
+	.site-list .site-icon img{
+		width: 32px;
+		height: 32px;
+	}
+	
+	.site-list .site-item{
+		padding: 5px 15px;
+	}
+	.site-list .site-icon{
+		margin-right: 5px;
+	}
+	.site-list .site-info{
+		width: 130px;
+	}
+	.site-list .site-info h3{
+		font-size: 14px;
+	}
+}
+
+@media screen and (min-width: 960px) and (max-width: 1199px) {
+	.header{
+		padding: 0 10px;
+	}
+	.nav-item a {
+			font-size: 12px;
+	    padding: 0 5px;
+	}
+	.nav-item .el-avatar{
+		height: 30px;
+		width: 30px;
+		line-height:30px;
+	}
+	.header .logo{
+		width: 25px;
+	}
+	
+	.dropdown{
+	  top: -28px;
+	  left: 32px;
+	}
+	
+	#touch .site-card{
+		margin: 2px;
+	}
+	#touch .site-card .site-touch-icon{
+		width: 30px;
+		height: 30px;
+	}
+	.site-list .site-icon img{
+		width: 25px;
+		height: 25px;
+	}
+	#touch .site-touch-title{
+		margin-bottom:0px;
+		font-size: 12px;
+		text-align: center;
+	}
+	
+	.container{
+		width: 100%;
+	}
+	.sidebar{
+		width: 100%;
+	}
+	
+	.site-list li{
+		height: 30px;
+		width: 115px;
+	}
+	.site-list .site-item{
+		padding: 5px 10px;
+	}
+	.site-list .site-icon{
+		margin-right: 5px;
+	}
+	.site-list .site-info{
+		width: 65px;
+	}
+	.site-list .site-info h3{
+		font-size: 12px;
+	}
+	.site-list .site-info p{
+		display: none;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 959px) {
+	.header{
+		padding: 0 10px;
+	}
+	.nav-item a {
+			font-size: 12px;
+	    padding: 0 5px;
+	}
+	.nav-item .el-avatar{
+		height: 30px;
+		width: 30px;
+		line-height:30px;
+	}
+	.header .logo{
+		width: 25px;
+	}
+	
+	.dropdown{
+	  top: -28px;
+	  left: 32px;
+	}
+	
+	#touch .site-card{
+		margin: 2px;
+	}
+	#touch .site-card .site-touch-icon{
+		width: 30px;
+		height: 30px;
+	}
+	.site-list .site-icon img{
+		width: 25px;
+		height: 25px;
+	}
+	#touch .site-touch-title{
+		margin-bottom:0px;
+		font-size: 12px;
+		text-align: center;
+	}
+	
+	.container{
+		width: 100%;
+	}
+	.sidebar{
+		width: 100%;
+	}
+	
+	.site-list li{
+		height: 30px;
+		width: 115px;
+	}
+	.site-list .site-item{
+		padding: 5px 10px;
+	}
+	.site-list .site-icon{
+		margin-right: 5px;
+	}
+	.site-list .site-info{
+		width: 65px;
+	}
+	.site-list .site-info h3{
+		font-size: 12px;
+	}
+	.site-list .site-info p{
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	.header{
+		padding: 0 10px;
+	}
+	.nav-item a {
+			font-size: 12px;
+	    padding: 0 5px;
+	}
+	.nav-item .el-avatar{
+		height: 30px;
+		width: 30px;
+		line-height:30px;
+	}
+	.header .logo{
+		width: 25px;
+	}
+	
+	.dropdown{
+	  top: -28px;
+	  left: 32px;
+	}
+	
+	#touch .site-card{
+		margin: 2px;
+	}
+	#touch .site-card .site-touch-icon{
+		width: 30px;
+		height: 30px;
+	}
+	.site-list .site-icon img{
+		width: 25px;
+		height: 25px;
+	}
+	#touch .site-touch-title{
+		margin-bottom:0px;
+		font-size: 12px;
+		text-align: center;
+	}
+	
+	.container{
+		width: 100%;
+	}
+	.sidebar{
+		width: 100%;
+	}
+	
+	.site-list li{
+		height: 30px;
+		width: 115px;
+	}
+	.site-list .site-item{
+		padding: 5px 10px;
+	}
+	.site-list .site-icon{
+		margin-right: 5px;
+	}
+	.site-list .site-info{
+		width: 65px;
+	}
+	.site-list .site-info h3{
+		font-size: 12px;
+	}
+	.site-list .site-info p{
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+	.header{
+		padding: 0 10px;
+	}
+	.nav-item a {
+			font-size: 12px;
+	    padding: 0 5px;
+	}
+	.nav-item .el-avatar{
+		height: 30px;
+		width: 30px;
+		line-height:30px;
+	}
+	.header .logo{
+		width: 25px;
+	}
+	
+	.dropdown{
+	  top: -28px;
+	  left: 32px;
+	}
+	
+	#touch .site-card{
+		margin: 2px;
+	}
+	#touch .site-card .site-touch-icon{
+		width: 30px;
+		height: 30px;
+	}
+	.site-list .site-icon img{
+		width: 25px;
+		height: 25px;
+	}
+	#touch .site-touch-title{
+		margin-bottom:0px;
+		font-size: 12px;
+		text-align: center;
+	}
+	
+	.container{
+		width: 100%;
+	}
+	.sidebar{
+		width: 100%;
+	}
+	
+	.site-list li{
+		height: 30px;
+		width: 115px;
+	}
+	.site-list .site-item{
+		padding: 5px 10px;
+	}
+	.site-list .site-icon{
+		margin-right: 5px;
+	}
+	.site-list .site-info{
+		width: 65px;
+	}
+	.site-list .site-info h3{
+		font-size: 12px;
+	}
+	.site-list .site-info p{
+		display: none;
+	}
+}
 </style>
