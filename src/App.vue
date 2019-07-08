@@ -215,6 +215,20 @@ export default {
 		this.getData();
 	}
 }
+
+window.onload=function(){
+	scroll();
+}
+function scroll(){
+		var cards = document.getElementsByClassName("site-card");
+		for(var card of cards){
+			var text = card.getElementsByClassName("site-touch-title")[0];
+			console.log(text)
+			var card_w = card.offsetWidth;
+			var text_w = text.offsetWidth;
+			console.log("card_w="+card_w+",text_w"+text_w);
+		}
+    }
 </script>
 
 <style>
@@ -500,9 +514,6 @@ body{
 		justify-content: center;
 	}
 	.image-placeholder .block{
-		width: 193px;
-		height: 123px;
-		margin: 0 2px;
 		overflow: hidden;
 	}
 	.image-placeholder .block img{
@@ -582,7 +593,7 @@ body{
 		float: left;
 	}
 	.sidebar{
-		width: 30%;
+		width: 28%;
 		float: right;
 	}
 	
@@ -700,6 +711,7 @@ body{
 	
 	#touch .site-card{
 		margin: 2px;
+		width: 50px;
 	}
 	#touch .site-card .site-touch-icon{
 		width: 30px;
@@ -740,6 +752,12 @@ body{
 	}
 	.site-list .site-info p{
 		display: none;
+	}
+	
+	.image-placeholder .block{
+		width: 190px;
+		height: 123px;
+		margin: 0 2px;
 	}
 }
 
@@ -808,6 +826,12 @@ body{
 	.site-list .site-info p{
 		display: none;
 	}
+	
+	.image-placeholder .block{
+		width: 190px;
+		height: 123px;
+		margin: 0 2px;
+	}
 }
 
 @media only screen and (max-width: 479px) {
@@ -834,6 +858,7 @@ body{
 	
 	#touch .site-card{
 		margin: 2px;
+		width: 50px;
 	}
 	#touch .site-card .site-touch-icon{
 		width: 30px;
@@ -874,6 +899,12 @@ body{
 	}
 	.site-list .site-info p{
 		display: none;
+	}
+	
+	.image-placeholder .block{
+		width: 168px;
+		height: 112px;
+		margin: 1px 1px;
 	}
 }
 </style>
