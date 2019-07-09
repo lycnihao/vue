@@ -3,14 +3,10 @@
 		<header class="header">
 		  <div class="float-left" style="height: 100%;">
 		    <a class="logo" href="#"><img src="./assets/logo.png" width="100%"></a>
-		    <!-- <el-menu :default-active="activeIndex" mode="horizontal">
-		      <el-menu-item index="1"><a href="#" target="_blank">首页</a></el-menu-item>
-		      <el-menu-item index="2">精选</el-menu-item>
-		    </el-menu> -->
-				<ul class="nav">
-					<li class="nav-item"><a  href="#" class="active">主页</a></li>
-					<li class="nav-item"><a  href="#test">其他</a></li>
-				</ul>
+			<ul class="nav">
+				<li class="nav-item"><a  href="#" class="active">主页</a></li>
+				<li class="nav-item"><a  href="#test">其他</a></li>
+			</ul>
 		  </div>
 		  <div class="float-right" style="height: 100%;">
 				<ul class="nav">
@@ -40,38 +36,39 @@
 		<section>
 		  <div id="search">
 				<div class="form">
+				<div class="dropdown">
+					<el-dropdown placement="bottom" @command="handleCommand">
+						<el-button type="text" class="el-dropdown-link">
+							<img width="20px" height="20px" v-bind:src="searchIcon">
+							<i class="el-icon-arrow-down"></i>
+						</el-button>
+						
+					  <el-dropdown-menu slot="dropdown">
+													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
+														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
+														百度
+													</el-dropdown-item>
+						<el-dropdown-item command="360,https://www.so.com/s?q=,https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
+														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
+														360
+													</el-dropdown-item>
+						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
+														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
+														Bing
+													</el-dropdown-item>
+						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
+														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
+														搜狗
+													</el-dropdown-item>
+													<el-dropdown-item command="谷歌,https://www.google.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
+														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
+														谷歌
+													</el-dropdown-item>
+					  </el-dropdown-menu>
+					</el-dropdown>
+				</div>
 		      <input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
 		      <button id="search_but" @click="search">{{searchTitle}}搜索</button>
-				</div>
-				<div class="dropdown">
-				  <el-dropdown placement="bottom" @command="handleCommand">
-				    <span class="el-dropdown-link">
-				      <img width="20px" height="20px" v-bind:src="searchIcon">
-				      <i class="el-icon-arrow-down"></i>
-				    </span>
-				    <el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="百度,https://www.baidu.com/s?word=,https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
-									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
-									百度
-								</el-dropdown-item>
-				      <el-dropdown-item command="360,https://www.so.com/s?q=,https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
-									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
-									360
-								</el-dropdown-item>
-				      <el-dropdown-item command="Bing,https://cn.bing.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
-									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
-									Bing
-								</el-dropdown-item>
-				      <el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
-									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
-									搜狗
-								</el-dropdown-item>
-								<el-dropdown-item command="谷歌,https://www.google.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
-									<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
-									谷歌
-								</el-dropdown-item>
-				    </el-dropdown-menu>
-				  </el-dropdown>
 				</div>
 		   </div>
 				
@@ -151,6 +148,15 @@
 			 </div>
 			
 			</section>
+			<footer class="box">
+				<ul class="menu">
+					<li class="nav-item"><el-link>关于我们</el-link></li>
+					<li class="nav-item"><el-link>商务合作</el-link></li>
+					<li class="nav-item"><el-link>申请收录</el-link></li>
+					<li class="nav-item"><el-link>意见反馈</el-link></li>
+				</ul>
+				<p>红衣导航 - hom1.cn @ All rights Reserved ，本站收录的网站若侵害到您的利益，请联系我们删除处理</p>
+			</footer>
   </div>
 </template>
 
@@ -232,7 +238,7 @@ function scroll(){
 </script>
 
 <style>
-body{
+	body{
 	  background-color: #f5f5f5;
 	}
 	body,header,section,footer,ul{
@@ -356,11 +362,11 @@ body{
 	}
 	
 	#search #search_text{
-	  padding: 10px 15px 10px 58px;
-		width: 50%;
-		-webkit-transition: ease .3s;
-	    transition: ease .3s;
-	    -webkit-transform-origin: 50% 50%;
+	  padding: 10px 15px 10px 62px;
+	width: 50%;
+	-webkit-transition: ease .3s;
+	transition: ease .3s;
+	-webkit-transform-origin: 50% 50%;
 	}
 	
 	#search_text:hover{
@@ -377,13 +383,7 @@ body{
 	}
 	
 	.dropdown{
-		width: 36px;
 	  position: relative;
-	  padding: 0 6px;
-	  display: flex;
-	  align-items:center;
-	  /* background-color: #eeeeeeed;
-	  border-right:0.5px #f5f5f5 solid; */
 	}
 	
 	
@@ -535,13 +535,37 @@ body{
 	.el-dialog__body{
 		padding: 0 20px 30px;
 	}
-	.el-dropdown-link{
+	#search .el-dropdown{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	
+	
+	footer .box{
+	margin: 10px 0px 0px;
+    padding: 25px 0px;
+	}
+	footer .menu{
+	    padding: 0px 18%;
+		display: flex;
+		justify-content: space-around;	
+	}
+	footer p{
+		text-align: center;
+		font-size: 12px;
+	}
+	.dropdown-link{
 	  cursor: pointer;
 	  color: #ccc;
+	  background: #fff;
+	  width: 40px;
+	  height: 100%;
 	}
-	.el-dropdown-link i{
-	  margin-left: -2px;
+	.dropdown-link:hover{
+	  background: #fff;
 	}
+
 	.el-menu.el-menu--horizontal{
 	      border-bottom: none;
 	}
@@ -563,11 +587,6 @@ body{
 	}
 	.header .logo{
 		width: 25px;
-	}
-	
-	.dropdown{
-	  top: -28px;
-	  left: 19%;
 	}
 	
 	#touch .site-card{
@@ -618,6 +637,12 @@ body{
 	.site-list .site-info h3{
 		font-size: 14px;
 	}
+	
+	.image-placeholder .block{
+		width: 190px;
+		height: 123px;
+		margin: 0 2px;
+	}
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
@@ -635,11 +660,6 @@ body{
 	}
 	.header .logo{
 		width: 25px;
-	}
-	
-	.dropdown{
-	  top: -28px;
-	  left: 32px;
 	}
 	
 	#touch .site-card{
@@ -702,11 +722,6 @@ body{
 	}
 	.header .logo{
 		width: 25px;
-	}
-	
-	.dropdown{
-	  top: -28px;
-	  left: 32px;
 	}
 	
 	#touch .site-card{
@@ -778,11 +793,6 @@ body{
 		width: 25px;
 	}
 	
-	.dropdown{
-	  top: -28px;
-	  left: 32px;
-	}
-	
 	#touch .site-card{
 		margin: 2px;
 	}
@@ -851,11 +861,6 @@ body{
 		width: 25px;
 	}
 	
-	.dropdown{
-	  top: -28px;
-	  left: 32px;
-	}
-	
 	#touch .site-card{
 		margin: 2px;
 		width: 50px;
@@ -883,10 +888,10 @@ body{
 	
 	.site-list li{
 		height: 30px;
-		width: 115px;
+		width: 100px;
 	}
 	.site-list .site-item{
-		padding: 5px 10px;
+		padding: 5px 0;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;
@@ -902,9 +907,16 @@ body{
 	}
 	
 	.image-placeholder .block{
-		width: 168px;
+		width: 49%;
 		height: 112px;
 		margin: 1px 1px;
+	}
+	footer .menu{
+	    padding: 0px 10%;
+	}
+	
+	footer p{
+		margin: 0 6%;
 	}
 }
 </style>
