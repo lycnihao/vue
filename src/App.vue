@@ -5,7 +5,7 @@
 		    <a class="logo" href="#"><img src="./assets/logo.png" width="100%"></a>
 			<ul class="nav">
 				<li class="nav-item"><a  href="#" class="active">主页</a></li>
-				<li class="nav-item"><a  href="#test">其他</a></li>
+				<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
 			</ul>
 		  </div>
 		  <div class="float-right" style="height: 100%;">
@@ -82,12 +82,23 @@
 			 
 			 <!-- 功能导航块 -->
 			 <div class="box">
-				 <div class="float-left">
-					 <ul class="nav" style="line-height: 30px;">
-						 <li class="nav-item"><a href="#" class="active">导航</a></li> 
-						 <li class="nav-item"><a href="#test">其他</a></li></ul>
+				 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
+					 <div class="float-left">
+						 <ul class="nav" style="line-height: 30px;">
+							 <li class="nav-item"><a href="#" class="active">导航</a></li> 
+							 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
+						</ul>
+					 </div>
+					 <div class="float-right"></div>
 				 </div>
-				 <div class="float-right"></div>
+				 <div style="margin: 3px 5px 5px 5px;">
+					 <ul class="menu">
+					 	 <li class="nav-item-radius"><a href="#" class="active"><i class="el-icon-goods"></i>购物</a></li> 
+						 <li class="nav-item-radius"><a href="#"><i class="el-icon-video-play"></i>视频</a></li> 
+						 <li class="nav-item-radius"><a href="#"><i class="el-icon-video-camera"></i>直播</a></li> 
+						 <li class="nav-item-radius"><a href="#"><i class="el-icon-data-analysis"></i>财经</a></li> 
+					 </ul>
+				 </div>
 			 </div>
 			 
 			 <div class="main">
@@ -95,7 +106,7 @@
 				 <div class="container">	 
 						<div class="box" style="margin-top: 3px;">
 							 <div class="box-header">
-								 <h3>常用</h3>
+								 <h3>推荐</h3>
 								 <span><i class="el-icon-setting"></i></span>
 							 </div>
 							 <div class="box-body">
@@ -122,19 +133,22 @@
 								</el-carousel-item>
 							</el-carousel>
 						</div>
-						<div class="box">
+						<div class="box link">
 							<div class="box-header">
-								<h3>每日推荐</h3>
+								<h3>今日推荐 * 精选</h3>
 							</div>
-							<div class="box-body" v-for="(item,index) in ranking">
-								<p style="display: inline-flex;">{{ index+1 }}.<el-link :href="item.url" target="_blank">{{ item.title }}</el-link></p>
+							<div class="box-body">
+								<a v-for="item in ranking" :href="item.url" target="_blank">
+									<img :src="item.icon">
+									{{ item.title }}-{{ item.summary }}
+								</a>
 							</div>
 						</div>
 				 </div>
 				
 				<div class="box">
 					<div class="box-header">
-						<h3>精选图片</h3>
+						<h3>精选图集</h3>
 					</div>
 					<div class="box-body">
 						<div class="image-placeholder">
@@ -246,6 +260,7 @@ function scroll(){
 		padding: 0;
 	}
 	a{
+		font-size: 14px;
 		color: #909399;
 		text-decoration:none
 	}
@@ -280,17 +295,17 @@ function scroll(){
 	    margin: 0;
 		}
 		
-		.nav-item {
-	    margin: 0;
-			height: 100%;
+		.nav-item ,.nav-item-radius{
+	    margin: 0 5px;
+		height: 100%;
 	    float: left;
 	    list-style: none;
 	    position: relative;
 	    cursor: pointer;
-			vertical-align: middle;
+		vertical-align: middle;
 	}
 	
-	.nav-item a {
+	.nav-item a ,.nav-item-radius a{
 	    text-decoration: none;
 	    color:#909399;
 	    display: block;
@@ -309,6 +324,18 @@ function scroll(){
 	    width: 30px;
 	    height: 2px;
 	    background: #409eff;
+	}
+	.nav-item-radius {
+		margin: 0;
+		height: 25px!important;
+		line-height: 25px!important;
+	}
+	.nav-item-radius a{
+		padding: 2px 15px;
+		border-radius: 20px;
+	}
+	.nav-item-radius a:hover{
+		background-color: #f1f1f1;
 	}
 	
 	
@@ -429,8 +456,8 @@ function scroll(){
 	}
 	
 	.menu li{
-		height: 35px!important;
-		line-height:35px!important;
+		height: 35px;
+		line-height:35px;
 	}
 	
 	.box{
@@ -497,6 +524,26 @@ function scroll(){
 		color: #131313a1;
 	}
 	
+	.link a{
+		transition: all .1s linear;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		height: 24px;
+		display: inherit;
+		font-size: 14px;
+		margin: 5px 0;
+	}
+	.link a:hover{
+		background: linear-gradient(to right,rgba(221,221,221,0),#f2f2f2,rgba(222,222,222,0));
+	}
+	.link img{
+		width: 16px;
+		height: 16px;
+		margin-right: 5px;
+	}
+	
+	
 	.main{
 	}
 
@@ -555,6 +602,7 @@ function scroll(){
 		text-align: center;
 		font-size: 12px;
 	}
+	
 	.dropdown-link{
 	  cursor: pointer;
 	  color: #ccc;
