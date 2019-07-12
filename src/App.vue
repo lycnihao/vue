@@ -11,8 +11,8 @@
 		  <div class="float-right" style="height: 100%;">
 				<ul class="nav">
 					<li class="nav-item"><a  href="#"><i class="el-icon-edit"></i></a></li>
-					<li class="nav-item"><a  href="#test"><i class="el-icon-share"></i></a></li>
-					<li class="nav-item"><a  href="#test"><i class="el-icon-delete"></i></a></li>
+					<li class="nav-item"><a  href="#test"><i class="el-icon-discount"></i></a></li>
+					<li class="nav-item"><a  href="#test"><i class="el-icon-milk-tea"></i></a></li>
 					<li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li>
 					<!-- <li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
 					<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li> -->
@@ -151,11 +151,11 @@
 						<h3>精选图集</h3>
 					</div>
 					<div class="box-body">
-						<div class="image-placeholder">
-							<a href="#" class="block bordercss"  v-for="thumbnail in thumbnails">
-								<img class="thumbnail" :src="thumbnail.url" >
-							</a>
-						</div>
+						<ul class="accordion-container">
+						  <li class="accordion-item" :style="{'background-image': 'url('+thumbnail.url+')'}" v-for="thumbnail in thumbnails">
+							<a href="#"><p class="accordion-title">{{thumbnail.title}}</p></a>
+						  </li>
+						</ul>
 					</div>
 				</div>
 				
@@ -418,6 +418,7 @@ function scroll(){
 		margin: 1rem 0;
 		height: 5rem;
 		display: flex;
+		border-radius: 4px;
 		align-items: center;
 		justify-content: center;
 	}
@@ -530,11 +531,13 @@ function scroll(){
 		overflow: hidden;
 		white-space: nowrap;
 		height: 24px;
+		line-height: 24px;
 		display: inherit;
 		font-size: 14px;
 		margin: 5px 0;
 	}
 	.link a:hover{
+		color: #1989FA;
 		background: linear-gradient(to right,rgba(221,221,221,0),#f2f2f2,rgba(222,222,222,0));
 	}
 	.link img{
@@ -548,36 +551,66 @@ function scroll(){
 	}
 
 	
-	.thumbnail{
+	
+	/* 手风琴样式 开始*/
+	 .accordion-container {
+      overflow: hidden;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+	.accordion-item {
+	  list-style: none;
+	  height: 125px;
+	  transition: width 0.5s;
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	  background-position: center center;
+	  position: relative;
+	}
+	.accordion-item:not(:hover) {
+	  width: 20%;
+	}
+	.accordion-item:hover {
+	  width: 400px;
+	}
+	.accordion-item:hover .accordion-title{
+		display: inherit;
+		padding: 10px 15px;
+		font-size: 14px;
+	}
+	.accordion-item:hover .accordion-title:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
+		-webkit-filter: blur(10px);
+		filter: blur(10px);
+		z-index: -1;
 	}
-	
-	.image-placeholder{
-		display: flex;
-		flex-wrap: wrap;
-		overflow: hidden;
-		justify-content: center;
+	.accordion-item a{
+	  content:'';
+	  width: 100%;
+	  height: 100%;
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  z-index: 1;
+	  transition: opacity 0.5s;
+	  display: flex;
+	  justify-content: center;
+	  align-items:center;
 	}
-	.image-placeholder .block{
-		overflow: hidden;
+	.accordion-title {
+	  color: #fff;
+	  font-size: 18px;
+	  display: none;
+	  /* filter: blur(1px); */
+	  text-align: center;
 	}
-	.image-placeholder .block img{
-		-webkit-transition: ease .3s;
-		transition: ease .3s;
-		-webkit-transform-origin: 50% 50%;
-		transform-origin: 50% 50%;
-	}
-	.image-placeholder .block:hover img{
-		
-		-webkit-transform: translateY(-4px) scale(1.05);
-    -moz-transform: translateY(-4px) scale(1.05);
-    -ms-transform: translateY(-4px) scale(1.05);
-    -o-transform: translateY(-4px) scale(1.05);
-    transform: translateY(-4px) scale(1.05);
-	}
-	
+	/* 手风琴样式 结束*/
 	
 	.el-dialog__body{
 		padding: 0 20px 30px;
@@ -589,9 +622,9 @@ function scroll(){
 	}
 	
 	
-	footer .box{
-	margin: 10px 0px 0px;
-    padding: 25px 0px;
+	footer{
+	margin: 10px 0px 0px !important;
+    padding: 25px 0px !important;;
 	}
 	footer .menu{
 	    padding: 0px 18%;
