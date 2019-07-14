@@ -138,7 +138,7 @@
 								<h3>今日推荐 * 精选</h3>
 							</div>
 							<div class="box-body">
-								<a v-for="item in ranking" :href="item.url" target="_blank">
+								<a v-for="item in recommend" :href="item.url" target="_blank">
 									<img :src="item.icon">
 									{{ item.title }}-{{ item.summary }}
 								</a>
@@ -194,7 +194,7 @@ export default {
 					apiUrlTouch:'http://localhost:8080/getTouch',
 					sites:null,
 					touch:null,
-					ranking:null,
+					recommend:null,
 					thumbnails:null
 				};
       },
@@ -225,10 +225,25 @@ export default {
 			this.$message('切换至搜索引擎 ' + str[0]);
 		},
 		getData:function(){
-			this.touch = dataJson.getTouch;
-			this.sites = dataJson.getList;
-			this.ranking = dataJson.getRanking;
+			//this.touch = dataJson.getTouch;
+			//this.sites = dataJson.getList;
+			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
+			this.$http.get('http://127.0.0.1:3302/api/getList').then(function(res){
+                    this.sites =res.body;    
+                },function(){
+                    console.log('请求失败处理');
+                });
+			this.$http.get('http://127.0.0.1:3302/api/getTouch').then(function(res){
+					this.touch =res.body;    
+				},function(){
+					console.log('请求失败处理');
+				});
+			this.$http.get('http://127.0.0.1:3302/api/getRecommend').then(function(res){
+					this.recommend =res.body;    
+				},function(){
+					console.log('请求失败处理');
+				});
 		}
   },
 	mounted() {
@@ -237,7 +252,7 @@ export default {
 }
 
 window.onload=function(){
-	scroll();
+	/* scroll(); */
 }
 function scroll(){
 		var cards = document.getElementsByClassName("site-card");
