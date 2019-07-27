@@ -44,24 +44,24 @@
 						</el-button>
 						
 					  <el-dropdown-menu slot="dropdown">
-													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
-														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg">
+													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://www.hom1.cn:3302/upload/baidu.svg">
+														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/baidu.svg">
 														百度
 													</el-dropdown-item>
-						<el-dropdown-item command="360,https://www.so.com/s?q=,https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
-														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd8020cce_R1YvwXqlRNM4p7C.svg">
+						<el-dropdown-item command="360,https://www.so.com/s?q=,http://www.hom1.cn:3302/upload/360.svg">
+														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/360.svg">
 														360
 													</el-dropdown-item>
-						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
-														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd87e721ag7BQ-YtbrOxEJjfI.svg">
+						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://www.hom1.cn:3302/upload/bing.svg">
+														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/bing.svg">
 														Bing
 													</el-dropdown-item>
-						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
-														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd9104ff3DM3FSyYOTj98PTEB.svg">
+						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://www.hom1.cn:3302/upload/sogou.svg">
+														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/sogou.svg">
 														搜狗
 													</el-dropdown-item>
-													<el-dropdown-item command="谷歌,https://www.google.com/search?q=,https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
-														<img width="20" alt="" src="https://img.bidianer.com/engine/201905/06/5ccffd97e20e47wW-I6ThCs_DGqfc.svg">
+													<el-dropdown-item command="谷歌,http://www.hom1.cn:3302/upload/google.svg">
+														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/google.svg">
 														谷歌
 													</el-dropdown-item>
 					  </el-dropdown-menu>
@@ -188,7 +188,7 @@ export default {
 					registerOpen:false,
 					username:'',
 					password:'',
-					searchIcon: 'https://img.bidianer.com/engine/201905/06/5ccffcbb848d1_6VmFZFyC397EDMO.svg',
+					searchIcon: 'http://www.hom1.cn:3302/upload/baidu.svg',
 					imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
 					apiUrlSites:'http://localhost:8080/getList',
 					apiUrlTouch:'http://localhost:8080/getTouch',
@@ -229,17 +229,17 @@ export default {
 			//this.sites = dataJson.getList;
 			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
-			this.$http.get('http://127.0.0.1:3302/api/getList').then(function(res){
+			this.$http.get('http://www.hom1.cn:3302/api/getList').then(function(res){
                     this.sites =res.body;    
                 },function(){
                     console.log('请求失败处理');
                 });
-			this.$http.get('http://127.0.0.1:3302/api/getTouch').then(function(res){
+			this.$http.get('http://www.hom1.cn:3302/api/getTouch').then(function(res){
 					this.touch =res.body;    
 				},function(){
 					console.log('请求失败处理');
 				});
-			this.$http.get('http://127.0.0.1:3302/api/getRecommend').then(function(res){
+			this.$http.get('http://www.hom1.cn:3302/api/getRecommend').then(function(res){
 					this.recommend =res.body;    
 				},function(){
 					console.log('请求失败处理');
