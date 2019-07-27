@@ -44,24 +44,24 @@
 						</el-button>
 						
 					  <el-dropdown-menu slot="dropdown">
-													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://www.hom1.cn:3302/upload/baidu.svg">
-														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/baidu.svg">
+													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
+														<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
 														百度
 													</el-dropdown-item>
-						<el-dropdown-item command="360,https://www.so.com/s?q=,http://www.hom1.cn:3302/upload/360.svg">
-														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/360.svg">
+						<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
+														<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
 														360
 													</el-dropdown-item>
-						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://www.hom1.cn:3302/upload/bing.svg">
-														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/bing.svg">
+						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
+														<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
 														Bing
 													</el-dropdown-item>
-						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://www.hom1.cn:3302/upload/sogou.svg">
-														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/sogou.svg">
+						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
+														<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
 														搜狗
 													</el-dropdown-item>
-													<el-dropdown-item command="谷歌,http://www.hom1.cn:3302/upload/google.svg">
-														<img width="20" alt="" src="http://www.hom1.cn:3302/upload/google.svg">
+													<el-dropdown-item command="谷歌,http://47.106.84.166:3302/upload/google.svg">
+														<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
 														谷歌
 													</el-dropdown-item>
 					  </el-dropdown-menu>
@@ -188,7 +188,7 @@ export default {
 					registerOpen:false,
 					username:'',
 					password:'',
-					searchIcon: 'http://www.hom1.cn:3302/upload/baidu.svg',
+					searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
 					imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
 					apiUrlSites:'http://localhost:8080/getList',
 					apiUrlTouch:'http://localhost:8080/getTouch',
@@ -229,17 +229,17 @@ export default {
 			//this.sites = dataJson.getList;
 			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
-			this.$http.get('http://www.hom1.cn:3302/api/getList').then(function(res){
+			this.$http.get('http://47.106.84.166:3302/api/getList').then(function(res){
                     this.sites =res.body;    
                 },function(){
                     console.log('请求失败处理');
                 });
-			this.$http.get('http://www.hom1.cn:3302/api/getTouch').then(function(res){
+			this.$http.get('http://47.106.84.166:3302/api/getTouch').then(function(res){
 					this.touch =res.body;    
 				},function(){
 					console.log('请求失败处理');
 				});
-			this.$http.get('http://www.hom1.cn:3302/api/getRecommend').then(function(res){
+			this.$http.get('http://47.106.84.166:3302/api/getRecommend').then(function(res){
 					this.recommend =res.body;    
 				},function(){
 					console.log('请求失败处理');
