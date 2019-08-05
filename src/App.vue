@@ -1,41 +1,10 @@
 <template>
   <div id="app">
-		<header class="header">
-		  <div class="float-left" style="height: 100%;">
-		    <a class="logo" href="#"><img src="./assets/logo.png" width="100%"></a>
-			<ul class="nav">
-				<li class="nav-item"><a  href="#" class="active">主页</a></li>
-				<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
-			</ul>
-		  </div>
-		  <div class="float-right" style="height: 100%;">
-				<ul class="nav">
-					<li class="nav-item"><a  href="#"><i class="el-icon-edit"></i></a></li>
-					<li class="nav-item"><a  href="#test"><i class="el-icon-discount"></i></a></li>
-					<li class="nav-item"><a  href="#test"><i class="el-icon-milk-tea"></i></a></li>
-					<li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li>
-					<!-- <li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
-					<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li> -->
-				</ul>
-				
-				<el-dialog title="登录" :visible.sync="loginOpen" width="30%">
-					<el-input v-model="username" placeholder="请输入账号"></el-input>
-					<el-input v-model="password" placeholder="请输入密码"></el-input>
-					<el-button type="primary" style="width: 100%;" @click="login()">登录</el-button>
-					<p @click="loginOpen = false,registerOpen=true">没有账号？<a href="#">立即注册</a></p>
-					
-				</el-dialog>
-				<el-dialog title="注册" :visible.sync="registerOpen" width="30%">
-					<el-input v-model="username" placeholder="请输入账号"></el-input>
-					<el-input v-model="password" placeholder="请输入密码"></el-input>
-					<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
-					<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
-				</el-dialog>
-		  </div>
-		</header>
+	  
+		<head-top></head-top>
+		
 		<section>
-		  <div id="search">
-				<div class="form">
+			<div id="search">
 				<div class="dropdown">
 					<el-dropdown placement="bottom" @command="handleCommand">
 						<el-button type="text" class="el-dropdown-link">
@@ -43,45 +12,44 @@
 							<i class="el-icon-arrow-down"></i>
 						</el-button>
 						
-					  <el-dropdown-menu slot="dropdown">
-													<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
-														<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
-														百度
-													</el-dropdown-item>
-						<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
-														<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
-														360
-													</el-dropdown-item>
-						<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
-														<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
-														Bing
-													</el-dropdown-item>
-						<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
-														<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
-														搜狗
-													</el-dropdown-item>
-													<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
-														<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
-														谷歌
-													</el-dropdown-item>
-		
-					  </el-dropdown-menu>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
+								<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
+								百度
+							</el-dropdown-item>
+							<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
+								<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
+								360
+							</el-dropdown-item>
+							<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
+								<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
+								Bing
+							</el-dropdown-item>
+							<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
+								<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
+								搜狗
+							</el-dropdown-item>
+							<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
+								<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
+								谷歌
+							</el-dropdown-item>
+						</el-dropdown-menu>
+						
 					</el-dropdown>
 				</div>
-		      <input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
-		      <button id="search_but" @click="search">{{searchTitle}}搜索</button>
-				</div>
-		   </div>
+				<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
+				<button id="search_but" @click="search">{{searchTitle}}搜索</button>
+			</div>
 				
-				<!-- touch图标块 -->
-				<div id="touch" class="box">
-					<a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
-					 <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
-					 <div class="site-touch-title">{{ t.title }}</div>
-					</a>
+			<!-- touch图标板块 -->
+			<div id="touch" class="box">
+				<a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
+				 <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
+				 <div class="site-touch-title">{{ t.title }}</div>
+				</a>
 			 </div>
 			 
-			 <!-- 功能导航块 -->
+			 <!-- 功能导航板块 -->
 			 <div class="box">
 				 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 					 <div class="float-left">
@@ -102,6 +70,7 @@
 				 </div>
 			 </div>
 			 
+			 <!-- 主体板块 -->
 			 <div class="main">
 				 <!-- 主体显示块 -->
 				 <div class="container">	 
@@ -162,58 +131,36 @@
 				
 			 </div>
 			
-			</section>
-			<footer class="box">
-				<ul class="menu">
-					<li class="nav-item"><el-link>关于我们</el-link></li>
-					<li class="nav-item"><el-link>商务合作</el-link></li>
-					<li class="nav-item"><el-link>申请收录</el-link></li>
-					<li class="nav-item"><el-link>意见反馈</el-link></li>
-				</ul>
-				<p>红衣导航 - hom1.cn @ All rights Reserved ，本站收录的网站若侵害到您的利益，请联系我们删除处理</p>
-			</footer>
+		</section>
+			
+		<foot></foot>
+		
   </div>
 </template>
 
 
 <script>
 import dataJson from './data.json';
+import header from './components/common/header/head'
+import footer from './components/common/footer/foot'
 
 export default {
   data() {
         return {
-          activeIndex: '1',
-					searchTitle: '百度',
-					searchUrl:'https://www.baidu.com/s?word=',
-					loginOpen:false,
-					registerOpen:false,
-					username:'',
-					password:'',
-					searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
-					imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-					apiUrlSites:'http://localhost:8080/getList',
-					apiUrlTouch:'http://localhost:8080/getTouch',
-					sites:null,
-					touch:null,
-					recommend:null,
-					thumbnails:null
-				};
+			activeIndex: '1',
+			searchTitle: '百度',
+			searchUrl:'https://www.baidu.com/s?word=',
+			searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
+			imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
+			apiUrlSites:'http://localhost:8080/getList',
+			apiUrlTouch:'http://localhost:8080/getTouch',
+			sites:null,
+			touch:null,
+			recommend:null,
+			thumbnails:null
+		};
       },
   methods: {
-		login:function(){
-			this.$message({
-          message: '登录成功',
-          type: 'success'
-        });
-				this.loginOpen=false
-		},
-		register:function(){
-			this.$message({
-			    message: '注册成功',
-			    type: 'success'
-			  });
-				this.registerOpen=false
-		},
 		search:function(){
 			var url = this.searchUrl + document.getElementById("search_text").value;
 			window.open(url,"_blank")
@@ -231,21 +178,19 @@ export default {
 			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
 			this.$http.get('http://47.106.84.166:3302/api/getList').then(function(res){
-                    this.sites =res.body;    
-                },function(){
-                    console.log('请求失败处理');
-                });
+                this.sites =res.body;    
+            },function(){console.log('请求失败处理')});
 			this.$http.get('http://47.106.84.166:3302/api/getTouch').then(function(res){
-					this.touch =res.body;    
-				},function(){
-					console.log('请求失败处理');
-				});
+				this.touch =res.body;    
+			},function(){console.log('请求失败处理')});
 			this.$http.get('http://47.106.84.166:3302/api/getRecommend').then(function(res){
-					this.recommend =res.body;    
-				},function(){
-					console.log('请求失败处理');
-				});
+				this.recommend =res.body;    
+			},function(){console.log('请求失败处理')});
 		}
+  },
+  components:{
+      'headTop' : header,
+	  'foot' : footer
   },
 	mounted() {
 		this.getData();
@@ -296,7 +241,7 @@ function scroll(){
 	    font-weight: 400;
 	}
 	
-		.float-left{
+	.float-left{
 	    float: left;
 	}
 	.float-right{
@@ -358,44 +303,18 @@ function scroll(){
 	#app {
 	  font-family: Helvetica, sans-serif;
 	}
-	header{
-		width: 100%;
-		height: 3.75rem;
-	  line-height: 3.75rem;
-		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-	  background-color: #fff;
-		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
-	  box-shadow: 0 1px 3px rgba(26,26,26,.1);
-	}
-	
-	.header .logo{
-	    width: 40px;
-	    float: left;
-	}
-	.logo img{
-	  vertical-align: middle;
-	}
-	
-	
-	
-	
-	
-	
+
 	section{
 	  padding-top: 2%;
 		margin: 0;
 		display: inherit;
 		/* margin: 0 16%; */
 	}
-	.form{
-		display: flex;
-		justify-content:center;
-	}
 	
 	#search{
 		padding: 20px 0;
+		display: flex;
+		justify-content:center;
 	}
 	#search input,#search button{
 		margin: 0;
@@ -638,20 +557,6 @@ function scroll(){
 	}
 	
 	
-	footer{
-	margin: 10px 0px 0px !important;
-    padding: 25px 0px !important;;
-	}
-	footer .menu{
-	    padding: 0px 18%;
-		display: flex;
-		justify-content: space-around;	
-	}
-	footer p{
-		text-align: center;
-		font-size: 12px;
-	}
-	
 	.dropdown-link{
 	  cursor: pointer;
 	  color: #ccc;
@@ -670,21 +575,6 @@ function scroll(){
 	
 	
 @media screen and (min-width:1200px) {
-	.header{
-		padding: 0 6%;
-	}
-	.nav-item a {
-			font-size: 14px;
-	    padding: 0 5px;
-	}
-	.nav-item .el-avatar{
-		height: 30px;
-		width: 30px;
-		line-height:30px;
-	}
-	.header .logo{
-		width: 25px;
-	}
 	
 	#touch .site-card{
 		margin: 5px;
@@ -743,21 +633,6 @@ function scroll(){
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
-	.header{
-		padding: 0 10px;
-	}
-	.nav-item a {
-			font-size: 12px;
-	    padding: 0 5px;
-	}
-	.nav-item .el-avatar{
-		height: 30px;
-		width: 30px;
-		line-height:30px;
-	}
-	.header .logo{
-		width: 25px;
-	}
 	
 	#touch .site-card{
 		margin: 2px;
@@ -805,21 +680,6 @@ function scroll(){
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
-	.header{
-		padding: 0 10px;
-	}
-	.nav-item a {
-			font-size: 12px;
-	    padding: 0 5px;
-	}
-	.nav-item .el-avatar{
-		height: 30px;
-		width: 30px;
-		line-height:30px;
-	}
-	.header .logo{
-		width: 25px;
-	}
 	
 	#touch .site-card{
 		margin: 2px;
@@ -874,21 +734,6 @@ function scroll(){
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-	.header{
-		padding: 0 10px;
-	}
-	.nav-item a {
-			font-size: 12px;
-	    padding: 0 5px;
-	}
-	.nav-item .el-avatar{
-		height: 30px;
-		width: 30px;
-		line-height:30px;
-	}
-	.header .logo{
-		width: 25px;
-	}
 	
 	#touch .site-card{
 		margin: 2px;
@@ -942,21 +787,6 @@ function scroll(){
 }
 
 @media only screen and (max-width: 479px) {
-	.header{
-		padding: 0 10px;
-	}
-	.nav-item a {
-			font-size: 12px;
-	    padding: 0 5px;
-	}
-	.nav-item .el-avatar{
-		height: 30px;
-		width: 30px;
-		line-height:30px;
-	}
-	.header .logo{
-		width: 25px;
-	}
 	
 	#touch .site-card{
 		margin: 2px;
@@ -1007,13 +837,6 @@ function scroll(){
 		width: 49%;
 		height: 112px;
 		margin: 1px 1px;
-	}
-	footer .menu{
-	    padding: 0px 10%;
-	}
-	
-	footer p{
-		margin: 0 6%;
 	}
 }
 </style>
