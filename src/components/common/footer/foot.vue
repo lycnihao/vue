@@ -1,7 +1,7 @@
 <template>
 	<footer class="box">
 		<ul class="menu">
-			<li class="nav-item"><el-link href="#about">关于我们</el-link></li>
+			<li class="nav-item"><el-link @click="about">关于我们</el-link></li>
 			<li class="nav-item"><el-link>商务合作</el-link></li>
 			<li class="nav-item"><el-link>申请收录</el-link></li>
 			<li class="nav-item"><el-link>意见反馈</el-link></li>
@@ -12,6 +12,11 @@
 
 <script>
 	export default {
+		 methods:{
+			about:function(){
+				this.$router.push('/about')
+			}
+		}
 	}
 </script>
 
