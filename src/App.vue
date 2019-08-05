@@ -60,10 +60,11 @@
 														<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
 														搜狗
 													</el-dropdown-item>
-													<el-dropdown-item command="谷歌,http://47.106.84.166:3302/upload/google.svg">
+													<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
 														<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
 														谷歌
 													</el-dropdown-item>
+		
 					  </el-dropdown-menu>
 					</el-dropdown>
 				</div>
