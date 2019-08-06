@@ -12,7 +12,20 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
 
-
+// vue router
+router.beforeEach((to, from, next) => {
+	var _hmt = _hmt || [];
+	window._hmt = _hmt;
+	
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?f4cfe8a2f0d23f5be4788a065ecd9a79";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+	
+    // _hmt.push(['_trackPageview', pageURL]) 必须是以"/"（斜杠）开头的相对路径
+    if (to.path) window._hmt.push(['_trackPageview', '/#' + to.fullPath])
+    next()
+})
 
 /* eslint-disable no-new */
 new Vue({
@@ -21,3 +34,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+

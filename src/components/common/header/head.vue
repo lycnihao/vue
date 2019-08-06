@@ -35,6 +35,19 @@
 </template>
 
 <script>
+var _hmt = _hmt || [];
+window._hmt = _hmt;
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f4cfe8a2f0d23f5be4788a065ecd9a79";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script>
 	export default {
 		data(){
 			return{
