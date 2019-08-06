@@ -6,18 +6,18 @@
 			<el-row :gutter="20">
 				<el-col :span="3">
 					<ul class="menu">
-						<li class="nav-item"><a href="/about" class="active"><i class="el-icon-s-custom"></i>关于我们</a></li> 
-						<li class="nav-item"><a href="/cooperation"><i class="el-icon-s-cooperation"></i>商务合作</a></li> 
+						<li class="nav-item"><a href="/about"><i class="el-icon-s-custom"></i>关于我们</a></li> 
+						<li class="nav-item"><a href="/cooperation" class="active"><i class="el-icon-s-cooperation"></i>商务合作</a></li> 
 						<li class="nav-item"><a href="https://wj.qq.com/s2/4216300/3ed1" target="_blank"><i class="el-icon-document-add"></i>申请收录</a></li>
 						<li class="nav-item"><a href="https://wj.qq.com/s2/4216517/3dd6" target="_blank"><i class="el-icon-edit-outline"></i>意见反馈</a></li>
 					</ul>
 				</el-col>
 				<el-col :span="17">
 					<div class="title">
-						<h3>关于我们</h3>
+						<h3>商务合作</h3>
 					</div>
 					<div class="content">
-						<p>红衣导航(www.hom1.cn)创立于2019年8月6日。目前处于开发环节，各个功能还有待完善，感谢大家使用红衣，我们会越做越好😘。</p>
+						<p>留白</p>
 					</div>
 				</el-col>
 			</el-row>

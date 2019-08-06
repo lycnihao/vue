@@ -1,14 +1,14 @@
 <template>
 	<header id="head_top" class="header">
 	  <div class="float-left" style="height: 100%;">
-	    <a class="logo" href="#"><img src="./../../../assets/logo.png" width="100%"></a>
+	    <a class="logo" href="/"><img src="./../../../assets/logo.png" width="100%"></a>
 		<ul class="nav">
-			<li class="nav-item"><a  href="#" class="active">主页</a></li>
+			<li class="nav-item"><a  href="/" class="active">主页</a></li>
 			<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
 		</ul>
 	  </div>
 	  <div class="float-right" style="height: 100%;">
-			<ul class="nav">
+			<ul class="nav menu-inline">
 				<li class="nav-item"><a  href="#"><i class="el-icon-edit"></i></a></li>
 				<li class="nav-item"><a  href="#test"><i class="el-icon-discount"></i></a></li>
 				<li class="nav-item"><a  href="#test"><i class="el-icon-milk-tea"></i></a></li>
