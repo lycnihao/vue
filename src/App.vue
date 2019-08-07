@@ -4,7 +4,7 @@
   </div>
 </template>
 <style>
-		body{
+	body{
 	  background-color: #f5f5f5;
 	}
 	body,header,section,footer,ul{

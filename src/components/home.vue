@@ -71,13 +71,14 @@
 			 
 			 <!-- 主体板块 -->
 			 <div class="main">
-				 <!-- 主体显示块 -->
-				 <div class="container">	 
+				<el-row :gutter="10">
+					<!-- 主体显示块 -->
+					<el-col :md="18" :lg="18" :xl="18" class="container">
 						<div class="box" style="margin-top: 3px;">
-							 <div class="box-header">
+							<div class="box-header">
 								 <h3>推荐</h3>
 								 <span><i class="el-icon-setting"></i></span>
-							 </div>
+							</div>
 							 <div class="box-body">
 								 <ul class="site-list">
 									 <li v-for="site in sites">
@@ -91,10 +92,23 @@
 									 </li>
 								 </ul>
 							 </div>
-						 </div>
-				 </div>
-				 <!-- 侧边栏 -->
-				 <div class="sidebar">
+						</div>
+						 
+						<div class="box">
+							<div class="box-header">
+								<h3>精选图集</h3>
+							</div>
+							<div class="box-body">
+								<ul class="accordion-container">
+								  <li class="accordion-item" :style="{'background-image': 'url('+thumbnail.url+')'}" v-for="thumbnail in thumbnails">
+									<a href="#"><p class="accordion-title">{{thumbnail.title}}</p></a>
+								  </li>
+								</ul>
+							</div>
+						</div>
+					</el-col>
+					<!-- 侧边栏 -->
+					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
 						<div class="box">
 							<el-carousel trigger="click" height="130px">
 								<el-carousel-item v-for="item in imgs" :key="item">
@@ -113,20 +127,9 @@
 								</a>
 							</div>
 						</div>
-				 </div>
+					</el-col>
+				</el-row>
 				
-				<div class="box">
-					<div class="box-header">
-						<h3>精选图集</h3>
-					</div>
-					<div class="box-body">
-						<ul class="accordion-container">
-						  <li class="accordion-item" :style="{'background-image': 'url('+thumbnail.url+')'}" v-for="thumbnail in thumbnails">
-							<a href="#"><p class="accordion-title">{{thumbnail.title}}</p></a>
-						  </li>
-						</ul>
-					</div>
-				</div>
 				
 			 </div>
 			
@@ -498,14 +501,7 @@ function scroll(){
 		text-align: center;
 	}
 	
-	.container{
-		width: 70%;
-		float: left;
-	}
-	.sidebar{
-		width: 28%;
-		float: right;
-	}
+
 	
 	.site-list li{
 		height: 60px;

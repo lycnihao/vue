@@ -3,8 +3,8 @@
 		<head-top></head-top>
 		
 		<section>
-			<el-row :gutter="20">
-				<el-col :span="3">
+			<el-row :gutter="10">
+				<el-col :md="3" :lg="3" :xl="3" style="text-align: center;">
 					<ul class="menu">
 						<li class="nav-item"><a href="/about" class="active"><i class="el-icon-s-custom"></i>关于我们</a></li> 
 						<li class="nav-item"><a href="/cooperation"><i class="el-icon-s-cooperation"></i>商务合作</a></li> 
@@ -12,7 +12,7 @@
 						<li class="nav-item"><a href="https://wj.qq.com/s2/4216517/3dd6" target="_blank"><i class="el-icon-edit-outline"></i>意见反馈</a></li>
 					</ul>
 				</el-col>
-				<el-col :span="17">
+				<el-col :md="7" :lg="7" :xl="7">
 					<div class="title">
 						<h3>关于我们</h3>
 					</div>
@@ -81,6 +81,32 @@
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
 		section{
 			margin: 0 10%;
+		}
+	}
+	
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+		section{
+			margin: 0 5%;
+		}
+		.nav-item{
+			float: left;
+		}
+		._nav{
+			border-bottom: 1px solid #ececec;
+			margin-bottom: 15px;
+		}
+	}
+	
+	@media only screen and (max-width: 479px) {
+		section{
+			margin: 0 5%;
+		}
+		.nav-item{
+			float: left;
+		}
+		._nav{
+			border-bottom: 1px solid #ececec;
+			margin-bottom: 15px;
 		}
 	}
 </style>
