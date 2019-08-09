@@ -335,6 +335,9 @@ function scroll(){
 		justify-content: center;
 		margin-bottom: 10px;
 	}	
+	.site-list li{
+		height: 100%;
+	}
 	.site-list .site-item{
 		height: 100%;
 		font-size: 14px;
@@ -501,12 +504,6 @@ function scroll(){
 		text-align: center;
 	}
 	
-
-	
-	.site-list li{
-		height: 60px;
-		width: 190px;
-	}
 	.site-list .site-icon img{
 		width: 32px;
 		height: 32px;
@@ -514,6 +511,8 @@ function scroll(){
 	
 	.site-list .site-item{
 		padding: 5px 15px;
+		height: 60px;
+		width: 190px;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;
@@ -561,12 +560,10 @@ function scroll(){
 		width: 100%;
 	}
 	
-	.site-list li{
-		height: 30px;
-		width: 115px;
-	}
 	.site-list .site-item{
 		padding: 5px 10px;
+		height: 30px;
+		width: 115px;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;
@@ -609,12 +606,10 @@ function scroll(){
 		width: 100%;
 	}
 	
-	.site-list li{
-		height: 30px;
-		width: 115px;
-	}
 	.site-list .site-item{
 		padding: 5px 10px;
+		height: 30px;
+		width: 115px;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;
@@ -662,12 +657,10 @@ function scroll(){
 		width: 100%;
 	}
 	
-	.site-list li{
-		height: 30px;
-		width: 115px;
-	}
 	.site-list .site-item{
 		padding: 5px 10px;
+		height: 30px;
+		width: 115px;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;
@@ -716,12 +709,10 @@ function scroll(){
 		width: 100%;
 	}
 	
-	.site-list li{
-		height: 30px;
-		width: 100px;
-	}
 	.site-list .site-item{
 		padding: 5px 0;
+		height: 30px;
+		width: 100px;
 	}
 	.site-list .site-icon{
 		margin-right: 5px;

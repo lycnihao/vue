@@ -3,7 +3,7 @@
 		<head-top></head-top>
 		
 		<section>
-			<el-row :gutter="10">
+			<el-row :gutter="20">
 				<el-col :md="3" :lg="3" :xl="3" style="text-align: center;">
 					<ul class="menu">
 						<li class="nav-item"><a href="/about" class="active"><i class="el-icon-s-custom"></i>关于我们</a></li> 
@@ -12,7 +12,7 @@
 						<li class="nav-item"><a href="https://wj.qq.com/s2/4216517/3dd6" target="_blank"><i class="el-icon-edit-outline"></i>意见反馈</a></li>
 					</ul>
 				</el-col>
-				<el-col :md="7" :lg="7" :xl="7">
+				<el-col :md="17" :lg="17" :xl="17">
 					<div class="title">
 						<h3>关于我们</h3>
 					</div>
