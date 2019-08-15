@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<head-top></head-top>
-		
+
 		<section>
 			<div id="search">
 				<div class="dropdown">
@@ -10,7 +10,7 @@
 							<img width="20px" height="20px" v-bind:src="searchIcon">
 							<i class="el-icon-arrow-down"></i>
 						</el-button>
-						
+
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
 								<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
@@ -33,13 +33,13 @@
 								谷歌
 							</el-dropdown-item>
 						</el-dropdown-menu>
-						
+
 					</el-dropdown>
 				</div>
 				<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
 				<button id="search_but" @click="search">{{searchTitle}}搜索</button>
 			</div>
-				
+
 			<!-- touch图标板块 -->
 			<div id="touch" class="box">
 				<a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
@@ -47,13 +47,13 @@
 				 <div class="site-touch-title">{{ t.title }}</div>
 				</a>
 			 </div>
-			 
+
 			 <!-- 功能导航板块 -->
 			 <div class="box">
 				 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 					 <div class="float-left">
 						 <ul class="nav menu-inline" style="line-height: 30px;">
-							 <li class="nav-item"><a href="#" class="active">导航</a></li> 
+							 <li class="nav-item"><a href="#" class="active">导航</a></li>
 							 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
 						</ul>
 					 </div>
@@ -61,39 +61,36 @@
 				 </div>
 				 <div style="margin: 3px 5px 5px 5px;">
 					 <ul class="menu menu-inline">
-					 	 <li class="nav-item-radius"><a href="#" class="active"><i class="el-icon-goods"></i>购物</a></li> 
-						 <li class="nav-item-radius"><a href="#"><i class="el-icon-video-play"></i>视频</a></li> 
-						 <li class="nav-item-radius"><a href="#"><i class="el-icon-video-camera"></i>直播</a></li> 
-						 <li class="nav-item-radius"><a href="#"><i class="el-icon-data-analysis"></i>财经</a></li> 
+             <li class="nav-item-radius" v-for="(category, index) in categorys"><a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')"><i :class="category.icon"></i>{{category.name}}</a></li>
 					 </ul>
 				 </div>
 			 </div>
-			 
+
 			 <!-- 主体板块 -->
 			 <div class="main">
 				<el-row :gutter="10">
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
-						<div class="box" style="margin-top: 3px;">
-							<div class="box-header">
-								 <h3>推荐</h3>
-								 <span><i class="el-icon-setting"></i></span>
-							</div>
-							 <div class="box-body">
-								 <ul class="site-list">
-									 <li v-for="site in sites">
-										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-											 <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
-											 <div class="site-info float-right">
-												 <h3>{{ site.title }}</h3>
-												 <p>{{ site.summary }}</p>
-											 </div>
-										 </a>
-									 </li>
-								 </ul>
-							 </div>
-						</div>
-						 
+            <div class="box" style="margin-top: 3px;" v-for="category in sites">
+              <div class="box-header">
+                 <h3>{{category.name}}</h3>
+                 <span><i class="el-icon-setting"></i></span>
+              </div>
+               <div class="box-body">
+                 <ul class="site-list">
+                   <li v-for="site in category.list">
+                     <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+                       <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
+                       <div class="site-info float-right">
+                         <h3>{{ site.title }}</h3>
+                         <p>{{ site.summary }}</p>
+                       </div>
+                     </a>
+                   </li>
+                 </ul>
+               </div>
+            </div>
+
 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -129,12 +126,12 @@
 						</div>
 					</el-col>
 				</el-row>
-				
-				
+
+
 			 </div>
-			
+
 		</section>
-			
+
 		<foot></foot>
 	</div>
 </template>
@@ -154,6 +151,7 @@ export default {
 			imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
 			apiUrlSites:'http://localhost:8080/getList',
 			apiUrlTouch:'http://localhost:8080/getTouch',
+      categorys:[],
 			sites:null,
 			touch:null,
 			recommend:null,
@@ -177,19 +175,27 @@ export default {
 			//this.sites = dataJson.getList;
 			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
-			this.$http.get('http://47.106.84.166:3302/api/getList').then(function(res){
-                this.sites =res.body;    
-            },function(){console.log('请求失败处理')});
+			this.$http.get('http://127.0.0.1:3302/api/getList').then(function(res){
+        console.log(res.body)
+        for(var category of res.body){
+          var cate = {
+            name:category.name,
+            slugName: category.slugName
+          };
+          this.categorys.push(cate);
+        }
+        this.sites = res.body;
+      },function(){console.log('请求失败处理')});
 			this.$http.get('http://47.106.84.166:3302/api/getTouch').then(function(res){
-				this.touch =res.body;    
+				this.touch = res.body;
 			},function(){console.log('请求失败处理')});
 			this.$http.get('http://47.106.84.166:3302/api/getRecommend').then(function(res){
-				this.recommend =res.body;    
+				this.recommend = res.body;
 			},function(){console.log('请求失败处理')});
 		}
   },
   components:{
-      'headTop' : header,
+    'headTop' : header,
 	  'foot' : footer
   },
 	mounted() {
@@ -219,7 +225,7 @@ function scroll(){
 		display: inherit;
 		/* margin: 0 16%; */
 	}
-	
+
 	#search{
 		padding: 20px 0;
 		display: flex;
@@ -231,7 +237,7 @@ function scroll(){
 		outline: 0;
 	  border: none;
 	}
-	
+
 	#search #search_text{
 	  padding: 10px 15px 10px 62px;
 	width: 50%;
@@ -239,12 +245,12 @@ function scroll(){
 	transition: ease .3s;
 	-webkit-transform-origin: 50% 50%;
 	}
-	
+
 	#search_text:hover{
 		/* box-shadow: 0 8px 43px rgba(0,0,0,0.15); */
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 	}
-	
+
 	#search #search_but{
 		color: #fff;
 		border-radius: 0;
@@ -252,12 +258,12 @@ function scroll(){
 	  background-color: #909399;
 		cursor: pointer;
 	}
-	
+
 	.dropdown{
 	  position: relative;
 	}
-	
-	
+
+
 	#touch{
 		margin: 1rem 0;
 		height: 5rem;
@@ -266,16 +272,16 @@ function scroll(){
 		align-items: center;
 		justify-content: center;
 	}
-	
+
 	#touch .site-card{
 		text-align: center;
 	}
-	
+
 	#touch .site-card .site-touch-icon{
 		display: inline-block;
 		transition: .5s;
 	}
-	
+
 	#touch .site-card:hover .site-touch-icon{
 		margin-top: -10px;
 		margin-bottom: 10px;
@@ -286,22 +292,22 @@ function scroll(){
 		  -o-transform: translateY(-4px) scale(1.15);
 		  transform: translateY(-4px) scale(1.15);
 	}
-	
+
 	#touch .site-touch-title{
 		line-height: 26px;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
 	}
-	
+
 	#touch img{
 		width: 100%;
 		height: 100%;;
 		border-radius: 50%;
 	}
-	
-	
-	
+
+
+
 	.box{
 		width: 100%;
 		padding: 0;
@@ -326,15 +332,15 @@ function scroll(){
 	.box-body{
 		padding: 10px;
 	}
-	
-	
+
+
 	.site-list{
 		width: 100%;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		margin-bottom: 10px;
-	}	
+	}
 	.site-list li{
 		height: 100%;
 	}
@@ -345,7 +351,7 @@ function scroll(){
 		align-items:center;
 		overflow: hidden;
 	}
-	
+
 	.site-info h3{
 		color: #444444;
 	}
@@ -356,19 +362,19 @@ function scroll(){
     overflow: hidden;
     white-space: nowrap;
 	}
-	
+
 	.site-list .site-item:hover{
 		background: rgba(241,242,249,.5);
 	}
-	
+
 	.site-list .site-item:hover h3{
 		color: #409EFF;
 	}
-	
+
 	.site-list .site-item:hover p{
 		color: #131313a1;
 	}
-	
+
 	.link a{
 		transition: all .1s linear;
 		text-overflow: ellipsis;
@@ -389,13 +395,13 @@ function scroll(){
 		height: 16px;
 		margin-right: 5px;
 	}
-	
-	
+
+
 	.main{
 	}
 
-	
-	
+
+
 	/* 手风琴样式 开始*/
 	 .accordion-container {
       overflow: hidden;
@@ -455,7 +461,7 @@ function scroll(){
 	  text-align: center;
 	}
 	/* 手风琴样式 结束*/
-	
+
 	.el-dialog__body{
 		padding: 0 20px 30px;
 	}
@@ -464,8 +470,8 @@ function scroll(){
 		top: 0;
 		left: 0;
 	}
-	
-	
+
+
 	.dropdown-link{
 	  cursor: pointer;
 	  color: #ccc;
@@ -480,15 +486,15 @@ function scroll(){
 	.el-menu.el-menu--horizontal{
 	      border-bottom: none;
 	}
-	
-	
-	
+
+
+
 @media screen and (min-width:1200px) {
-	
+
 	section{
 		margin: 0 10%;
 	}
-	
+
 	#touch .site-card{
 		margin: 5px;
 		width: 60px;
@@ -503,12 +509,12 @@ function scroll(){
 		font-size: 14px;
 		text-align: center;
 	}
-	
+
 	.site-list .site-icon img{
 		width: 32px;
 		height: 32px;
 	}
-	
+
 	.site-list .site-item{
 		padding: 5px 15px;
 		height: 60px;
@@ -523,7 +529,7 @@ function scroll(){
 	.site-list .site-info h3{
 		font-size: 14px;
 	}
-	
+
 	.image-placeholder .block{
 		width: 190px;
 		height: 123px;
@@ -535,7 +541,7 @@ function scroll(){
 	section{
 		margin: 0 10%;
 	}
-	
+
 	#touch .site-card{
 		margin: 2px;
 	}
@@ -552,14 +558,14 @@ function scroll(){
 		font-size: 12px;
 		text-align: center;
 	}
-	
+
 	.container{
 		width: 100%;
 	}
 	.sidebar{
 		width: 100%;
 	}
-	
+
 	.site-list .site-item{
 		padding: 5px 10px;
 		height: 30px;
@@ -580,7 +586,7 @@ function scroll(){
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
-	
+
 	#touch .site-card{
 		margin: 2px;
 		width: 50px;
@@ -598,14 +604,14 @@ function scroll(){
 		font-size: 12px;
 		text-align: center;
 	}
-	
+
 	.container{
 		width: 100%;
 	}
 	.sidebar{
 		width: 100%;
 	}
-	
+
 	.site-list .site-item{
 		padding: 5px 10px;
 		height: 30px;
@@ -623,7 +629,7 @@ function scroll(){
 	.site-list .site-info p{
 		display: none;
 	}
-	
+
 	.image-placeholder .block{
 		width: 190px;
 		height: 123px;
@@ -632,7 +638,7 @@ function scroll(){
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-	
+
 	#touch .site-card{
 		margin: 2px;
 	}
@@ -649,14 +655,14 @@ function scroll(){
 		font-size: 12px;
 		text-align: center;
 	}
-	
+
 	.container{
 		width: 100%;
 	}
 	.sidebar{
 		width: 100%;
 	}
-	
+
 	.site-list .site-item{
 		padding: 5px 10px;
 		height: 30px;
@@ -674,7 +680,7 @@ function scroll(){
 	.site-list .site-info p{
 		display: none;
 	}
-	
+
 	.image-placeholder .block{
 		width: 190px;
 		height: 123px;
@@ -683,7 +689,7 @@ function scroll(){
 }
 
 @media only screen and (max-width: 479px) {
-	
+
 	#touch .site-card{
 		margin: 2px;
 		width: 50px;
@@ -701,14 +707,14 @@ function scroll(){
 		font-size: 12px;
 		text-align: center;
 	}
-	
+
 	.container{
 		width: 100%;
 	}
 	.sidebar{
 		width: 100%;
 	}
-	
+
 	.site-list .site-item{
 		padding: 5px 0;
 		height: 30px;
@@ -726,7 +732,7 @@ function scroll(){
 	.site-list .site-info p{
 		display: none;
 	}
-	
+
 	.image-placeholder .block{
 		width: 49%;
 		height: 112px;
@@ -734,4 +740,3 @@ function scroll(){
 	}
 }
 </style>
-

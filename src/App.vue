@@ -25,20 +25,20 @@
 	li{
 		list-style: none;
 	}
-	
+
 	h1, h2, h3, h4, ol, p, ul {
 	    padding: 0;
 	    margin: 0;
 	    font-weight: 400;
 	}
-	
+
 	.float-left{
 	    float: left;
 	}
 	.float-right{
 	    float: right;
 	}
-	
+
 	.nav{
 	    height: 100%;
 	    line-height: 60px;
@@ -46,7 +46,7 @@
 	    padding: 0;
 	    margin: 0;
 		}
-		
+
 	.nav-item ,.nav-item-radius{
 	    margin: 0 5px;
 			height: 100%;
@@ -55,22 +55,22 @@
 	    cursor: pointer;
 		vertical-align: middle;
 	}
-	
+
 	.menu-inline .nav-item ,.menu-inline .nav-item-radius{
 		float: left;
 	}
-	
-	
+
+
 	.nav-item a ,.nav-item-radius a{
 	    text-decoration: none;
 	    color:#909399;
 	    display: block;
 	}
-	
+
 	.nav-item a.active{
 		    color: #1989fa;
 	}
-	
+
 	.nav-item a.active:after {
 	    content: "";
 	    display: inline-block;
@@ -97,10 +97,10 @@
 		height: 35px;
 		line-height:35px;
 	}
-	
-	
+
+
 	#app {
 	  font-family: Helvetica, sans-serif;
 	}
-	
+
 </style>
