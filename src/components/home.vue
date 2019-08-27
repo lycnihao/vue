@@ -73,7 +73,7 @@
 					<el-col :md="18" :lg="18" :xl="18" class="container">
             <div class="box" style="margin-top: 3px;" v-for="category in sites">
               <div class="box-header">
-                 <h3>{{category.name}}</h3>
+                 <h3 :name="category.slugName">{{category.name}}</h3>
                  <span><i class="el-icon-setting"></i></span>
               </div>
                <div class="box-body">
@@ -91,7 +91,7 @@
                </div>
             </div>
 
-						<div class="box">
+<!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
 							</div>
@@ -102,7 +102,7 @@
 								  </li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
@@ -186,10 +186,10 @@ export default {
         }
         this.sites = res.body;
       },function(){console.log('请求失败处理')});
-			this.$http.get('http://47.106.84.166:3302/api/getTouch').then(function(res){
+			this.$http.get('http://127.0.0.1:3302/api/getTouch').then(function(res){
 				this.touch = res.body;
 			},function(){console.log('请求失败处理')});
-			this.$http.get('http://47.106.84.166:3302/api/getRecommend').then(function(res){
+			this.$http.get('http://127.0.0.1:3302/api/getRecommend').then(function(res){
 				this.recommend = res.body;
 			},function(){console.log('请求失败处理')});
 		}
