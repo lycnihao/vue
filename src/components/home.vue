@@ -106,14 +106,37 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
-						<div class="box">
+						<!-- <div class="box">
 							<el-carousel trigger="click" height="130px">
 								<el-carousel-item v-for="item in imgs" :key="item">
 									<img class="thumbnail" :src="item" width="100%" height="100%" />
 								</el-carousel-item>
 							</el-carousel>
-						</div>
-						<div class="box link">
+						</div> -->
+            <div class="box hot-link">
+            	<div class="box-header">
+            		<h3>热搜榜</h3>
+            	</div>
+            	<div class="box-body">
+            		<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
+            			<el-carousel-item v-for="array in hotList">
+                   <ul class="menu" style="width: 100%;">
+                     <li class="nav-item" v-for="item in array">
+                       <span style="display: inline-flex;">
+                         <em>{{ item.index }}</em>
+                         <a :href="item.url" target="_blank">{{ item.title }}</a>
+                         <span style="position: absolute;right: 0;top: 0;font-size: 13px;color: #999;">
+                         {{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i></span>
+                       </span>
+                     </li>
+                   </ul>
+
+
+            			</el-carousel-item>
+            		</el-carousel>
+            	</div>
+            </div>
+						<!-- <div class="box link">
 							<div class="box-header">
 								<h3>今日推荐 * 精选</h3>
 							</div>
@@ -123,7 +146,7 @@
 									{{ item.title }}-{{ item.summary }}
 								</a>
 							</div>
-						</div>
+						</div> -->
 					</el-col>
 				</el-row>
 
@@ -155,7 +178,8 @@ export default {
 			sites:null,
 			touch:null,
 			recommend:null,
-			thumbnails:null
+			thumbnails:null,
+      hotList:null
 		};
       },
   methods: {
@@ -192,6 +216,9 @@ export default {
 			this.$http.get('http://127.0.0.1:3302/api/getRecommend').then(function(res){
 				this.recommend = res.body;
 			},function(){console.log('请求失败处理')});
+      this.$http.get('http://127.0.0.1:3302/api/getHotList').then(function(res){
+      	this.hotList = res.body;
+      },function(){console.log('请求失败处理')});
 		}
   },
   components:{
@@ -374,8 +401,41 @@ function scroll(){
 	.site-list .site-item:hover p{
 		color: #131313a1;
 	}
+  .hot-link a{
+    color: #444;
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 0 5px;
+  }
+  .hot-link a:hover{
+      cursor:pointer;
+      color: #1989FA;
+      text-decoration: underline;
+  }
+  .hot-link em{
+    font-style: normal;
+    color: #a1a7b7;
+    font-size: 14px;
+    font-family: Constantia,Georgia;
+  }
 
-	.link a{
+  .hot-link em:after{
+    content: ".";
+    margin-right: 5px;
+   }
+
+   .hot-link span i{
+     margin: 0 2px;
+     font-size: 16px;
+     font-weight: 600;
+   }
+   .hot-link .rise{
+     color: #1989FA;
+   }
+   .hot-link .fall{
+     color: #f35c01;
+   }
+	/* .link a{
 		transition: all .1s linear;
 		text-overflow: ellipsis;
 		overflow: hidden;
@@ -385,6 +445,7 @@ function scroll(){
 		display: inherit;
 		font-size: 14px;
 		margin: 5px 0;
+    padding: 0 5px;
 	}
 	.link a:hover{
 		color: #1989FA;
@@ -394,7 +455,7 @@ function scroll(){
 		width: 16px;
 		height: 16px;
 		margin-right: 5px;
-	}
+	} */
 
 
 	.main{
