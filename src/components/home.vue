@@ -74,7 +74,7 @@
 								 </ul>
 							 </div>
 						 </div>
-						
+
 						<div class="box" style="margin-top: 3px;" v-for="category in sites">
 						  <div class="box-header">
 							 <h3 :name="category.slugName">{{category.name}}</h3>
@@ -94,7 +94,7 @@
 							 </ul>
 						   </div>
 						</div>
-				
+
 <!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -110,7 +110,7 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
-						
+
 						<!-- <div class="box">
 							<el-carousel trigger="click" height="130px">
 								<el-carousel-item v-for="item in imgs" :key="item">
@@ -123,11 +123,11 @@
 								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2822479734&auto=0&height=32"></iframe>
 								<div class="music-ing" style="position:absolute;top: 20px;margin-left: 11px;">
 									<a href="https://music.163.com/playlist?id=2822479734" target="_blank" rel="nofollow">
-										<img src="http://lackk.com/nav/img/music.svg" width="20" height="20">
+										<img src="http://47.106.84.166:3302/upload/music.svg" width="20" height="20">
 									</a>
 								</div>
 							</div>
-							
+
 						</div>
 			<div class="box hot-link">
             	<div class="box-header">
@@ -189,8 +189,7 @@ export default {
 			searchUrl:'https://www.baidu.com/s?word=',
 			searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
 			imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-			apiUrlSites:'http://localhost:8080/getList',
-			apiUrlTouch:'http://localhost:8080/getTouch',
+			apiUrl:'http://47.106.84.166:3302/',
       categorys:[],
 			sites:null,
 			touch:null,
@@ -216,7 +215,7 @@ export default {
 			//this.sites = dataJson.getList;
 			//this.recommend = dataJson.getRecommend;
 			this.thumbnails = dataJson.getThumbnail;
-			this.$http.get('http://127.0.0.1:3302/api/getList').then(function(res){
+			this.$http.get(this.apiUrl+'/api/getList').then(function(res){
         console.log(res.body)
         for(var category of res.body){
           var cate = {
@@ -228,13 +227,13 @@ export default {
         }
         this.sites = res.body;
       },function(){console.log('请求失败处理')});
-			this.$http.get('http://127.0.0.1:3302/api/getTouch').then(function(res){
+			this.$http.get(this.apiUrl+'api/getTouch').then(function(res){
 				this.touch = res.body;
 			},function(){console.log('请求失败处理')});
-			this.$http.get('http://127.0.0.1:3302/api/getRecommend').then(function(res){
+			this.$http.get(this.apiUrl+'api/getRecommend').then(function(res){
 				this.recommend = res.body;
 			},function(){console.log('请求失败处理')});
-      this.$http.get('http://127.0.0.1:3302/api/getHotList').then(function(res){
+      this.$http.get(this.apiUrl+'api/getHotList').then(function(res){
       	this.hotList = res.body;
       },function(){console.log('请求失败处理')});
 		},
@@ -243,7 +242,7 @@ export default {
 			window.open(this.searchUrl + options.target.innerText);
 		},
 		hotRefresh:function(){
-			this.$http.get('http://127.0.0.1:3302/api/getHotList').then(function(res){
+			this.$http.get(this.apiUrl+'api/getHotList').then(function(res){
 				this.hotList = res.body;
 				this.$notify({
 				  title: '刷新成功',
@@ -569,17 +568,17 @@ function scroll(){
 		top: 0;
 		left: 0;
 	}
-	
+
 	.music-ing {
 		width: 32px;
 		height: 32px;
 		background-color: #fff;
-		
+
 	}
 	.music-ing img{
 		padding: 6px 0 6px 11px;
 	}
-	
+
 	.cate-list i{
 		margin-right: 5px;
 	}
