@@ -48,49 +48,53 @@
 				</a>
 			 </div>
 
-			 <!-- 功能导航板块 -->
-			 <div class="box">
-				 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
-					 <div class="float-left">
-						 <ul class="nav menu-inline" style="line-height: 30px;">
-							 <li class="nav-item"><a href="#" class="active">导航</a></li>
-							 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
-						</ul>
-					 </div>
-					 <div class="float-right"></div>
-				 </div>
-				 <div style="margin: 3px 5px 5px 5px;">
-					 <ul class="menu menu-inline">
-             <li class="nav-item-radius" v-for="(category, index) in categorys"><a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')"><i :class="category.icon"></i>{{category.name}}</a></li>
-					 </ul>
-				 </div>
-			 </div>
-
 			 <!-- 主体板块 -->
 			 <div class="main">
 				<el-row :gutter="10">
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
-            <div class="box" style="margin-top: 3px;" v-for="category in sites">
-              <div class="box-header">
-                 <h3 :name="category.slugName">{{category.name}}</h3>
-                 <span><i class="el-icon-setting"></i></span>
-              </div>
-               <div class="box-body">
-                 <ul class="site-list">
-                   <li v-for="site in category.list">
-                     <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-                       <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
-                       <div class="site-info float-right">
-                         <h3>{{ site.title }}</h3>
-                         <p>{{ site.summary }}</p>
-                       </div>
-                     </a>
-                   </li>
-                 </ul>
-               </div>
-            </div>
-
+						<!-- 功能导航板块 -->
+						 <div class="box">
+							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
+								 <div class="float-left">
+									 <ul class="nav menu-inline" style="line-height: 30px;">
+										 <li class="nav-item"><a href="#" class="active">导航</a></li>
+										 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
+									</ul>
+								 </div>
+								 <div class="float-right"></div>
+							 </div>
+							 <div style="margin: 3px 5px 5px 5px;">
+								 <ul class="menu menu-inline cate-list">
+									 <li class="nav-item-radius" v-for="(category, index) in categorys">
+										 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+											<i :class="category.icon"></i>{{category.name}}
+										 </a>
+									 </li>
+								 </ul>
+							 </div>
+						 </div>
+						
+						<div class="box" style="margin-top: 3px;" v-for="category in sites">
+						  <div class="box-header">
+							 <h3 :name="category.slugName">{{category.name}}</h3>
+							 <span><i class="el-icon-setting"></i></span>
+						  </div>
+						   <div class="box-body">
+							 <ul class="site-list">
+							   <li v-for="site in category.list">
+								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+								   <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
+								   <div class="site-info float-right">
+									 <h3>{{ site.title }}</h3>
+									 <p>{{ site.summary }}</p>
+								   </div>
+								 </a>
+							   </li>
+							 </ul>
+						   </div>
+						</div>
+				
 <!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -106,6 +110,7 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
+						
 						<!-- <div class="box">
 							<el-carousel trigger="click" height="130px">
 								<el-carousel-item v-for="item in imgs" :key="item">
@@ -113,18 +118,30 @@
 								</el-carousel-item>
 							</el-carousel>
 						</div> -->
-            <div class="box hot-link">
+						<div class="box" style="background: #fff;">
+							<div class="box-body" style="position: relative;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2822479734&auto=0&height=32"></iframe>
+								<div class="music-ing" style="position:absolute;top: 20px;margin-left: 11px;">
+									<a href="https://music.163.com/playlist?id=2822479734" target="_blank" rel="nofollow">
+										<img src="http://lackk.com/nav/img/music.svg" width="20" height="20">
+									</a>
+								</div>
+							</div>
+							
+						</div>
+			<div class="box hot-link">
             	<div class="box-header">
-            		<h3>热搜榜</h3>
+            		<h3><img :src="searchIcon">热搜榜</h3>
+					<i @click="hotRefresh" class="el-icon-refresh"></i>
             	</div>
             	<div class="box-body">
             		<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
             			<el-carousel-item v-for="array in hotList">
                    <ul class="menu" style="width: 100%;">
-                     <li class="nav-item" v-for="item in array">
+                     <li class="nav-item" style="cursor: text;" v-for="item in array">
                        <span style="display: inline-flex;">
                          <em>{{ item.index }}</em>
-                         <a :href="item.url" target="_blank">{{ item.title }}</a>
+                         <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
                          <span style="position: absolute;right: 0;top: 0;font-size: 13px;color: #999;">
                          {{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i></span>
                        </span>
@@ -204,6 +221,7 @@ export default {
         for(var category of res.body){
           var cate = {
             name:category.name,
+			icon: category.icon,
             slugName: category.slugName
           };
           this.categorys.push(cate);
@@ -219,6 +237,21 @@ export default {
       this.$http.get('http://127.0.0.1:3302/api/getHotList').then(function(res){
       	this.hotList = res.body;
       },function(){console.log('请求失败处理')});
+		},
+		hotSearch:function(options){
+			console.log(options.target.innerText)
+			window.open(this.searchUrl + options.target.innerText);
+		},
+		hotRefresh:function(){
+			this.$http.get('http://127.0.0.1:3302/api/getHotList').then(function(res){
+				this.hotList = res.body;
+				this.$notify({
+				  title: '刷新成功',
+				  message: '热搜榜每2个小时更新一次~',
+				  type: 'success',
+				  position: 'bottom-right'
+				});
+			});
 		}
   },
   components:{
@@ -347,8 +380,9 @@ function scroll(){
 	}
 	.box-header{
 		color: #444;
-	  padding: 10px;
+		padding: 10px;
 		display: flex;
+		align-items:center;
 		justify-content:space-between;
 		border-bottom:1px rgba(245,245,245,1) solid;
 	}
@@ -403,8 +437,7 @@ function scroll(){
 	}
   .hot-link a{
     color: #444;
-    font-size: 14px;
-    margin: 5px 0;
+    font-size: 13px !important;
     padding: 0 5px;
   }
   .hot-link a:hover{
@@ -434,6 +467,11 @@ function scroll(){
    }
    .hot-link .fall{
      color: #f35c01;
+   }
+   .hot-link img{
+   	width: 17px;
+   	height: 17px;
+   	margin-right: 5px;
    }
 	/* .link a{
 		transition: all .1s linear;
@@ -531,7 +569,20 @@ function scroll(){
 		top: 0;
 		left: 0;
 	}
-
+	
+	.music-ing {
+		width: 32px;
+		height: 32px;
+		background-color: #fff;
+		
+	}
+	.music-ing img{
+		padding: 6px 0 6px 11px;
+	}
+	
+	.cate-list i{
+		margin-right: 5px;
+	}
 
 	.dropdown-link{
 	  cursor: pointer;
