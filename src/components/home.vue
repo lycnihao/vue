@@ -139,12 +139,15 @@
             			<el-carousel-item v-for="array in hotList">
                    <ul class="menu" style="width: 100%;">
                      <li class="nav-item" style="cursor: text;" v-for="item in array">
-                       <span style="display: inline-flex;">
-                         <em>{{ item.index }}</em>
-                         <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
-                         <span style="position: absolute;right: 0;top: 0;font-size: 13px;color: #999;">
-                         {{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i></span>
-                       </span>
+                       <div style="display: flex;justify-content:space-between">
+                         <span style="display: inherit;">
+                           <em>{{ item.index }}</em>
+                           <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
+                         </span>
+                         <span style="font-size: 13px;color: #999;">
+                            {{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i>
+                         </span>
+                       </div>
                      </li>
                    </ul>
 
