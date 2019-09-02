@@ -77,7 +77,7 @@
 
 						<div class="box" style="margin-top: 3px;" v-for="category in sites">
 						  <div class="box-header">
-							 <h3 :name="category.slugName">{{category.name}}</h3>
+							 <h3 :id="category.slugName">{{category.name}}</h3>
 							 <span><i class="el-icon-setting"></i></span>
 						  </div>
 						   <div class="box-body">
@@ -172,8 +172,9 @@
 
 
 			 </div>
-
+			<el-backtop :bottom="100"></el-backtop>
 		</section>
+	
 
 		<foot></foot>
 	</div>
@@ -184,297 +185,322 @@ import dataJson from './../data.json';
 import header from './common/header/head'
 import footer from './common/footer/foot'
 
-export default {
-  data() {
-        return {
-			activeIndex: '1',
-			searchTitle: '百度',
-			searchUrl:'https://www.baidu.com/s?word=',
-			searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
-			imgs:['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp','//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-			apiUrl:'http://47.106.84.166:3302/',
-      categorys:[],
-			sites:null,
-			touch:null,
-			recommend:null,
-			thumbnails:null,
-      hotList:null
-		};
-      },
-  methods: {
-		search:function(){
-			var url = this.searchUrl + document.getElementById("search_text").value;
-			window.open(url,"_blank")
-		},
-		handleCommand:function(command) {
-			var str = command.split(',')
-			this.searchTitle = str[0];
-			this.searchUrl = str[1];
-			this.searchIcon = str[2];
-			this.$message('切换至搜索引擎 ' + str[0]);
-		},
-		getData:function(){
-			//this.touch = dataJson.getTouch;
-			//this.sites = dataJson.getList;
-			//this.recommend = dataJson.getRecommend;
-			this.thumbnails = dataJson.getThumbnail;
-			this.$http.get(this.apiUrl+'/api/getList').then(function(res){
-        console.log(res.body)
-        for(var category of res.body){
-          var cate = {
-            name:category.name,
-			icon: category.icon,
-            slugName: category.slugName
-          };
-          this.categorys.push(cate);
+export
+default {
+        data() {
+            return {
+                activeIndex:
+                '1',
+                searchTitle: '百度',
+                searchUrl: 'https://www.baidu.com/s?word=',
+                searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
+                imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
+                apiUrl: 'http://47.106.84.166:3302/',
+                categorys: [],
+                sites: null,
+                touch: null,
+                recommend: null,
+                thumbnails: null,
+                hotList: null
+            };
+        },
+        methods: {
+            search: function() {
+                var url = this.searchUrl + document.getElementById("search_text").value;
+                window.open(url, "_blank")
+            },
+            handleCommand: function(command) {
+                var str = command.split(',');
+				this.searchTitle = str[0];
+                this.searchUrl = str[1];
+                this.searchIcon = str[2];
+                this.$message('切换至搜索引擎 ' + str[0]);
+            },
+            getData: function() {
+                //this.touch = dataJson.getTouch;
+                //this.sites = dataJson.getList;
+                //this.recommend = dataJson.getRecommend;
+                this.thumbnails = dataJson.getThumbnail;
+                this.$http.get(this.apiUrl + '/api/getList').then(function(res) {
+                    console.log(res.body);
+					for (var category of res.body) {
+                        var cate = {
+                            name: category.name,
+                            icon: category.icon,
+                            slugName: category.slugName
+                        };
+                        this.categorys.push(cate);
+                    }
+                    this.sites = res.body;
+                },
+                function() {
+					this.$message.error('数据请求失败，请稍后再试');
+                });
+                this.$http.get(this.apiUrl + 'api/getTouch').then(function(res) {
+                    this.touch = res.body;
+                },
+                function() {
+                    this.$message.error('数据请求失败，请稍后再试');
+                });
+                this.$http.get(this.apiUrl + 'api/getRecommend').then(function(res) {
+                    this.recommend = res.body;
+                },
+                function() {
+                    this.$message.error('数据请求失败，请稍后再试');
+                });
+                this.$http.get(this.apiUrl + 'api/getHotList').then(function(res) {
+                    this.hotList = res.body;
+                },
+                function() {
+                    this.$message.error('数据请求失败，请稍后再试');
+                });
+            },
+            hotSearch: function(options) {
+                console.log(options.target.innerText);
+				window.open(this.searchUrl + options.target.innerText);
+            },
+            hotRefresh: function() {
+                this.$http.get(this.apiUrl + 'api/getHotList').then(function(res) {
+                    this.hotList = res.body;
+                    this.$notify({
+                        title: '刷新成功',
+                        message: '热搜榜每2个小时更新一次~',
+                        type: 'success',
+                        position: 'bottom-right'
+                    });
+                });
+            }
+        },
+        components: {
+            'headTop': header,
+            'foot': footer
+        },
+        mounted() {
+            this.getData();
         }
-        this.sites = res.body;
-      },function(){console.log('请求失败处理')});
-			this.$http.get(this.apiUrl+'api/getTouch').then(function(res){
-				this.touch = res.body;
-			},function(){console.log('请求失败处理')});
-			this.$http.get(this.apiUrl+'api/getRecommend').then(function(res){
-				this.recommend = res.body;
-			},function(){console.log('请求失败处理')});
-      this.$http.get(this.apiUrl+'api/getHotList').then(function(res){
-      	this.hotList = res.body;
-      },function(){console.log('请求失败处理')});
-		},
-		hotSearch:function(options){
-			console.log(options.target.innerText)
-			window.open(this.searchUrl + options.target.innerText);
-		},
-		hotRefresh:function(){
-			this.$http.get(this.apiUrl+'api/getHotList').then(function(res){
-				this.hotList = res.body;
-				this.$notify({
-				  title: '刷新成功',
-				  message: '热搜榜每2个小时更新一次~',
-				  type: 'success',
-				  position: 'bottom-right'
-				});
-			});
-		}
-  },
-  components:{
-    'headTop' : header,
-	  'foot' : footer
-  },
-	mounted() {
-		this.getData();
-	}
-}
+    }
 
-window.onload=function(){
-	/* scroll(); */
-}
-function scroll(){
-		var cards = document.getElementsByClassName("site-card");
-		for(var card of cards){
-			var text = card.getElementsByClassName("site-touch-title")[0];
-			console.log(text)
+    window.onload = function() {
+        /* scroll(); */
+    }
+    function scroll() {
+        var cards = document.getElementsByClassName("site-card");
+        for (var card of cards) {
+            var text = card.getElementsByClassName("site-touch-title")[0];
+            console.log(text);
 			var card_w = card.offsetWidth;
-			var text_w = text.offsetWidth;
-			console.log("card_w="+card_w+",text_w"+text_w);
-		}
+            var text_w = text.offsetWidth;
+            console.log("card_w=" + card_w + ",text_w" + text_w);
+        }
     }
 </script>
 
 <style>
-	section{
-		padding-top: 2%;
-		margin: 0;
-		display: inherit;
+section {
+	padding-top: 5%;
+	margin: 0;
+	display: inherit;
 		/* margin: 0 16%; */
-	}
+}
 
-	#search{
-		padding: 20px 0;
-		display: flex;
-		justify-content:center;
-	}
-	#search input,#search button{
-		margin: 0;
-		padding: 10px 15px;
-		outline: 0;
-	  border: none;
-	}
+#search {
+	padding: 20px 0;
+	display: flex;
+	justify-content: center;
+}
 
-	#search #search_text{
-	  padding: 10px 15px 10px 62px;
+#search input,#search button {
+	margin: 0;
+	padding: 10px 15px;
+	outline: 0;
+	border: none;
+}
+
+#search #search_text {
+	padding: 10px 15px 10px 62px;
 	width: 50%;
 	-webkit-transition: ease .3s;
 	transition: ease .3s;
 	-webkit-transform-origin: 50% 50%;
-	}
+}
 
-	#search_text:hover{
+#search_text:hover {
 		/* box-shadow: 0 8px 43px rgba(0,0,0,0.15); */
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-	}
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
 
-	#search #search_but{
-		color: #fff;
-		border-radius: 0;
+#search #search_but {
+	color: #fff;
+	border-radius: 0;
 		/*background-color: #FF8C69;*/
-	  background-color: #909399;
-		cursor: pointer;
-	}
+	background-color: #909399;
+	cursor: pointer;
+}
 
-	.dropdown{
-	  position: relative;
-	}
+.dropdown {
+	position: relative;
+}
 
+#touch {
+	margin: 1rem 0;
+	height: 5rem;
+	display: flex;
+	border-radius: 4px;
+	align-items: center;
+	justify-content: center;
+}
 
-	#touch{
-		margin: 1rem 0;
-		height: 5rem;
-		display: flex;
-		border-radius: 4px;
-		align-items: center;
-		justify-content: center;
-	}
+#touch .site-card {
+	text-align: center;
+}
 
-	#touch .site-card{
-		text-align: center;
-	}
+#touch .site-card .site-touch-icon {
+	display: inline-block;
+	transition: .5s;
+}
 
-	#touch .site-card .site-touch-icon{
-		display: inline-block;
-		transition: .5s;
-	}
+#touch .site-card:hover .site-touch-icon {
+	margin-top: -10px;
+	margin-bottom: 10px;
+	-webkit-filter: drop-shadow(0 6px 6px rgba(100,100,100,0.6));
+	-webkit-transform: translateY(-4px) scale(1.15);
+	-moz-transform: translateY(-4px) scale(1.15);
+	-ms-transform: translateY(-4px) scale(1.15);
+	-o-transform: translateY(-4px) scale(1.15);
+	transform: translateY(-4px) scale(1.15);
+}
 
-	#touch .site-card:hover .site-touch-icon{
-		margin-top: -10px;
-		margin-bottom: 10px;
-		-webkit-filter: drop-shadow(0 6px 6px rgba(100,100,100,0.6));
-		-webkit-transform: translateY(-4px) scale(1.15);
-		  -moz-transform: translateY(-4px) scale(1.15);
-		  -ms-transform: translateY(-4px) scale(1.15);
-		  -o-transform: translateY(-4px) scale(1.15);
-		  transform: translateY(-4px) scale(1.15);
-	}
+#touch .site-touch-title {
+	line-height: 26px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 
-	#touch .site-touch-title{
-		line-height: 26px;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-
-	#touch img{
-		width: 100%;
-		height: 100%;;
+#touch img {
+	width: 100%;
+	height: 100%;
+	;
 		border-radius: 50%;
-	}
+}
 
+.box {
+	width: 100%;
+	padding: 0;
+	margin: 5px 0;
+	text-align: left;
+	border-radius: 2px;
+	background: #FFFFFF;
+	display: inline-block;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
 
+.box-header {
+	color: #444;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px rgba(245,245,245,1) solid;
+}
 
-	.box{
-		width: 100%;
-		padding: 0;
-		margin: 5px 0;
-		text-align: left;
-		border-radius: 2px;
-		background: #FFFFFF;
-		display: inline-block;
-		box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-	}
-	.box-header{
-		color: #444;
-		padding: 10px;
-		display: flex;
-		align-items:center;
-		justify-content:space-between;
-		border-bottom:1px rgba(245,245,245,1) solid;
-	}
-	.box-header>h3{
-		font-size: 16px;
-	  color: #6b7386;
-	}
-	.box-body{
-		padding: 10px;
-	}
+.box-header>h3 {
+	font-size: 16px;
+	color: #6b7386;
+}
 
+.box-body {
+	padding: 10px;
+}
 
-	.site-list{
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		margin-bottom: 10px;
-	}
-	.site-list li{
-		height: 100%;
-	}
-	.site-list .site-item{
-		height: 100%;
-		font-size: 14px;
-		display:flex;
-		align-items:center;
-		overflow: hidden;
-	}
+.site-list {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 10px;
+}
 
-	.site-info h3{
-		color: #444444;
-	}
-	.site-info p{
-		color: #a1a7b7;
-		font-size: 12px;
-		text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-	}
+.site-list li {
+	height: 100%;
+}
 
-	.site-list .site-item:hover{
-		background: rgba(241,242,249,.5);
-	}
+.site-list .site-item {
+	height: 100%;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
 
-	.site-list .site-item:hover h3{
-		color: #409EFF;
-	}
+.site-info h3 {
+	color: #444444;
+}
 
-	.site-list .site-item:hover p{
-		color: #131313a1;
-	}
-  .hot-link a{
-    color: #444;
-    font-size: 13px !important;
-    padding: 0 5px;
-  }
-  .hot-link a:hover{
-      cursor:pointer;
-      color: #1989FA;
-      text-decoration: underline;
-  }
-  .hot-link em{
-    font-style: normal;
-    color: #a1a7b7;
-    font-size: 14px;
-    font-family: Constantia,Georgia;
-  }
+.site-info p {
+	color: #a1a7b7;
+	font-size: 12px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 
-  .hot-link em:after{
-    content: ".";
-    margin-right: 5px;
-   }
+.site-list .site-item:hover {
+	/* background: rgba(241,242,249,.5); */
+	box-shadow: 0px 5px 28px 0px rgba(65, 106, 123, 0.2);
+}
 
-   .hot-link span i{
-     margin: 0 2px;
-     font-size: 16px;
-     font-weight: 600;
-   }
-   .hot-link .rise{
-     color: #1989FA;
-   }
-   .hot-link .fall{
-     color: #f35c01;
-   }
-   .hot-link img{
-   	width: 17px;
-   	height: 17px;
-   	margin-right: 5px;
-   }
+.site-list .site-item:hover h3 {
+	color: #409EFF;
+}
+
+.site-list .site-item:hover p {
+	color: #131313a1;
+}
+
+.hot-link a {
+	color: #444;
+	font-size: 13px !important;
+	padding: 0 5px;
+}
+
+.hot-link a:hover {
+	cursor: pointer;
+	color: #1989FA;
+	text-decoration: underline;
+}
+
+.hot-link em {
+	font-style: normal;
+	color: #a1a7b7;
+	font-size: 14px;
+	font-family: Constantia,Georgia;
+}
+
+.hot-link em:after {
+	content: ".";
+	margin-right: 5px;
+}
+
+.hot-link span i {
+	margin: 0 2px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.hot-link .rise {
+	color: #1989FA;
+}
+
+.hot-link .fall {
+	color: #f35c01;
+}
+
+.hot-link img {
+	width: 17px;
+	height: 17px;
+	margin-right: 5px;
+}
 	/* .link a{
 		transition: all .1s linear;
 		text-overflow: ellipsis;
@@ -498,153 +524,164 @@ function scroll(){
 	} */
 
 
-	.main{
-	}
+.main {
+}
 
 
 
 	/* 手风琴样式 开始*/
-	 .accordion-container {
-      overflow: hidden;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-	.accordion-item {
-	  list-style: none;
-	  height: 125px;
-	  transition: width 0.5s;
-	  background-repeat: no-repeat;
-	  background-size: cover;
-	  background-position: center center;
-	  position: relative;
-	}
-	.accordion-item:not(:hover) {
-	  width: 20%;
-	}
-	.accordion-item:hover {
-	  width: 400px;
-	}
-	.accordion-item:hover .accordion-title{
-		display: inherit;
-		padding: 10px 15px;
-		font-size: 14px;
-	}
-	.accordion-item:hover .accordion-title:after{
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		-webkit-filter: blur(10px);
-		filter: blur(10px);
-		z-index: -1;
-	}
-	.accordion-item a{
-	  content:'';
-	  width: 100%;
-	  height: 100%;
-	  position: absolute;
-	  left: 0;
-	  top: 0;
-	  z-index: 1;
-	  transition: opacity 0.5s;
-	  display: flex;
-	  justify-content: center;
-	  align-items:center;
-	}
-	.accordion-title {
-	  color: #fff;
-	  font-size: 18px;
-	  display: none;
+.accordion-container {
+	overflow: hidden;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.accordion-item {
+	list-style: none;
+	height: 125px;
+	transition: width 0.5s;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	position: relative;
+}
+
+.accordion-item:not(:hover) {
+	width: 20%;
+}
+
+.accordion-item:hover {
+	width: 400px;
+}
+
+.accordion-item:hover .accordion-title {
+	display: inherit;
+	padding: 10px 15px;
+	font-size: 14px;
+}
+
+.accordion-item:hover .accordion-title:after {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+	z-index: -1;
+}
+
+.accordion-item a {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	transition: opacity 0.5s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.accordion-title {
+	color: #fff;
+	font-size: 18px;
+	display: none;
 	  /* filter: blur(1px); */
-	  text-align: center;
-	}
+	text-align: center;
+}
 	/* 手风琴样式 结束*/
 
-	.el-dialog__body{
-		padding: 0 20px 30px;
-	}
-	#search .el-dropdown{
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
+.el-dialog__body {
+	padding: 0 20px 30px;
+}
 
-	.music-ing {
-		width: 32px;
-		height: 32px;
-		background-color: #fff;
+#search .el-dropdown {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 
-	}
-	.music-ing img{
-		padding: 6px 0 6px 11px;
-	}
+.music-ing {
+	width: 32px;
+	height: 32px;
+	background-color: #fff;
+}
 
-	.cate-list i{
-		margin-right: 5px;
-	}
+.music-ing img {
+	padding: 6px 0 6px 11px;
+}
 
-	.dropdown-link{
-	  cursor: pointer;
-	  color: #ccc;
-	  background: #fff;
-	  width: 40px;
-	  height: 100%;
-	}
-	.dropdown-link:hover{
-	  background: #fff;
-	}
+.cate-list i {
+	margin-right: 5px;
+}
 
-	.el-menu.el-menu--horizontal{
-	      border-bottom: none;
-	}
+.dropdown-link {
+	cursor: pointer;
+	color: #ccc;
+	background: #fff;
+	width: 40px;
+	height: 100%;
+}
 
+.dropdown-link:hover {
+	background: #fff;
+}
 
+.el-menu.el-menu--horizontal {
+	border-bottom: none;
+}
 
 @media screen and (min-width:1200px) {
 
-	section{
+	section {
 		margin: 0 10%;
 	}
 
-	#touch .site-card{
+	#touch .site-card {
 		margin: 5px;
 		width: 60px;
 	}
-	#touch .site-card .site-touch-icon{
+
+	#touch .site-card .site-touch-icon {
 		width: 36px;
 		height: 36px;
 	}
 
-	#touch .site-touch-title{
-		margin-bottom:0px;
+	#touch .site-touch-title {
+		margin-bottom: 0px;
 		font-size: 14px;
 		text-align: center;
 	}
 
-	.site-list .site-icon img{
+	.site-list .site-icon img {
 		width: 32px;
 		height: 32px;
 	}
 
-	.site-list .site-item{
+	.site-list .site-item {
 		padding: 5px 15px;
 		height: 60px;
 		width: 190px;
 	}
-	.site-list .site-icon{
+
+	.site-list .site-icon {
 		margin-right: 5px;
 	}
-	.site-list .site-info{
+
+	.site-list .site-info {
 		width: 130px;
 	}
-	.site-list .site-info h3{
+
+	.site-list .site-info h3 {
 		font-size: 14px;
 	}
 
-	.image-placeholder .block{
+	.image-placeholder .block {
 		width: 190px;
 		height: 123px;
 		margin: 0 2px;
@@ -652,99 +689,115 @@ function scroll(){
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
-	section{
+	section {
 		margin: 0 10%;
 	}
 
-	#touch .site-card{
+	#touch .site-card {
 		margin: 2px;
 	}
-	#touch .site-card .site-touch-icon{
+
+	#touch .site-card .site-touch-icon {
 		width: 30px;
 		height: 30px;
 	}
-	.site-list .site-icon img{
+
+	.site-list .site-icon img {
 		width: 25px;
 		height: 25px;
 	}
-	#touch .site-touch-title{
-		margin-bottom:0px;
+
+	#touch .site-touch-title {
+		margin-bottom: 0px;
 		font-size: 12px;
 		text-align: center;
 	}
 
-	.container{
-		width: 100%;
-	}
-	.sidebar{
+	.container {
 		width: 100%;
 	}
 
-	.site-list .site-item{
+	.sidebar {
+		width: 100%;
+	}
+
+	.site-list .site-item {
 		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
-	.site-list .site-icon{
+
+	.site-list .site-icon {
 		margin-right: 5px;
 	}
-	.site-list .site-info{
+
+	.site-list .site-info {
 		width: 65px;
 	}
-	.site-list .site-info h3{
+
+	.site-list .site-info h3 {
 		font-size: 12px;
 	}
-	.site-list .site-info p{
+
+	.site-list .site-info p {
 		display: none;
 	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
 
-	#touch .site-card{
+	#touch .site-card {
 		margin: 2px;
 		width: 50px;
 	}
-	#touch .site-card .site-touch-icon{
+
+	#touch .site-card .site-touch-icon {
 		width: 30px;
 		height: 30px;
 	}
-	.site-list .site-icon img{
+
+	.site-list .site-icon img {
 		width: 25px;
 		height: 25px;
 	}
-	#touch .site-touch-title{
-		margin-bottom:0px;
+
+	#touch .site-touch-title {
+		margin-bottom: 0px;
 		font-size: 12px;
 		text-align: center;
 	}
 
-	.container{
-		width: 100%;
-	}
-	.sidebar{
+	.container {
 		width: 100%;
 	}
 
-	.site-list .site-item{
+	.sidebar {
+		width: 100%;
+	}
+
+	.site-list .site-item {
 		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
-	.site-list .site-icon{
+
+	.site-list .site-icon {
 		margin-right: 5px;
 	}
-	.site-list .site-info{
+
+	.site-list .site-info {
 		width: 65px;
 	}
-	.site-list .site-info h3{
+
+	.site-list .site-info h3 {
 		font-size: 12px;
 	}
-	.site-list .site-info p{
+
+	.site-list .site-info p {
 		display: none;
 	}
 
-	.image-placeholder .block{
+	.image-placeholder .block {
 		width: 190px;
 		height: 123px;
 		margin: 0 2px;
@@ -753,49 +806,57 @@ function scroll(){
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
-	#touch .site-card{
+	#touch .site-card {
 		margin: 2px;
 	}
-	#touch .site-card .site-touch-icon{
+
+	#touch .site-card .site-touch-icon {
 		width: 30px;
 		height: 30px;
 	}
-	.site-list .site-icon img{
+
+	.site-list .site-icon img {
 		width: 25px;
 		height: 25px;
 	}
-	#touch .site-touch-title{
-		margin-bottom:0px;
+
+	#touch .site-touch-title {
+		margin-bottom: 0px;
 		font-size: 12px;
 		text-align: center;
 	}
 
-	.container{
-		width: 100%;
-	}
-	.sidebar{
+	.container {
 		width: 100%;
 	}
 
-	.site-list .site-item{
+	.sidebar {
+		width: 100%;
+	}
+
+	.site-list .site-item {
 		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
-	.site-list .site-icon{
+
+	.site-list .site-icon {
 		margin-right: 5px;
 	}
-	.site-list .site-info{
+
+	.site-list .site-info {
 		width: 65px;
 	}
-	.site-list .site-info h3{
+
+	.site-list .site-info h3 {
 		font-size: 12px;
 	}
-	.site-list .site-info p{
+
+	.site-list .site-info p {
 		display: none;
 	}
 
-	.image-placeholder .block{
+	.image-placeholder .block {
 		width: 190px;
 		height: 123px;
 		margin: 0 2px;
@@ -804,50 +865,58 @@ function scroll(){
 
 @media only screen and (max-width: 479px) {
 
-	#touch .site-card{
+	#touch .site-card {
 		margin: 2px;
 		width: 50px;
 	}
-	#touch .site-card .site-touch-icon{
+
+	#touch .site-card .site-touch-icon {
 		width: 30px;
 		height: 30px;
 	}
-	.site-list .site-icon img{
+
+	.site-list .site-icon img {
 		width: 25px;
 		height: 25px;
 	}
-	#touch .site-touch-title{
-		margin-bottom:0px;
+
+	#touch .site-touch-title {
+		margin-bottom: 0px;
 		font-size: 12px;
 		text-align: center;
 	}
 
-	.container{
-		width: 100%;
-	}
-	.sidebar{
+	.container {
 		width: 100%;
 	}
 
-	.site-list .site-item{
+	.sidebar {
+		width: 100%;
+	}
+
+	.site-list .site-item {
 		padding: 5px 0;
 		height: 30px;
 		width: 100px;
 	}
-	.site-list .site-icon{
+
+	.site-list .site-icon {
 		margin-right: 5px;
 	}
-	.site-list .site-info{
+
+	.site-list .site-info {
 		width: 65px;
 	}
-	.site-list .site-info h3{
+
+	.site-list .site-info h3 {
 		font-size: 12px;
 	}
-	.site-list .site-info p{
+
+	.site-list .site-info p {
 		display: none;
 	}
 
-	.image-placeholder .block{
+	.image-placeholder .block {
 		width: 49%;
 		height: 112px;
 		margin: 1px 1px;
