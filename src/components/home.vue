@@ -298,9 +298,7 @@ default {
 <style>
 section {
 	padding-top: 5%;
-	margin: 0;
 	display: inherit;
-		/* margin: 0 16%; */
 }
 
 #search {
