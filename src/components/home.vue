@@ -54,7 +54,7 @@
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
 						<!-- 功能导航板块 -->
-						 <div class="box">
+						 <div class="box site-nav">
 							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 								 <div class="float-left">
 									 <ul class="nav menu-inline" style="line-height: 30px;">
@@ -64,7 +64,7 @@
 								 </div>
 								 <div class="float-right"></div>
 							 </div>
-							 <div style="margin: 3px 5px 5px 5px;">
+							 <div class="item">
 								 <ul class="menu menu-inline cate-list">
 									 <li class="nav-item-radius" v-for="(category, index) in categorys">
 										 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
@@ -73,6 +73,16 @@
 									 </li>
 								 </ul>
 							 </div>
+						 </div>
+						 
+						 <div v-if="menuTop" class="header-top-nav">
+							 <ul class="menu menu-inline cate-list">
+								 <li class="nav-item-radius" v-for="(category, index) in categorys">
+									 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+										<i :class="category.icon"></i>{{category.name}}
+									 </a>
+								 </li>
+							 </ul>
 						 </div>
 
 						<div class="box" style="margin-top: 3px;" v-for="category in sites">
@@ -195,13 +205,14 @@ default {
                 searchUrl: 'https://www.baidu.com/s?word=',
                 searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
                 imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-                apiUrl: 'http://47.106.84.166:3302/',
+                apiUrl: 'http://localhost:3302/',
                 categorys: [],
                 sites: null,
                 touch: null,
                 recommend: null,
                 thumbnails: null,
-                hotList: null
+                hotList: null,
+				menuTop:false
             };
         },
         methods: {
@@ -269,7 +280,16 @@ default {
                         position: 'bottom-right'
                     });
                 });
-            }
+            },
+			handleScroll: function(){
+				//变量t是滚动条滚动时，距离顶部的距离
+				var t = document.documentElement.scrollTop||document.body.scrollTop;
+				if ( t > 244) {
+					this.menuTop = true;
+				} else{
+					this.menuTop = false;
+				}
+			}
         },
         components: {
             'headTop': header,
@@ -277,27 +297,28 @@ default {
         },
         mounted() {
             this.getData();
-        }
-    }
-
-    window.onload = function() {
-        /* scroll(); */
-    }
-    function scroll() {
-        var cards = document.getElementsByClassName("site-card");
-        for (var card of cards) {
-            var text = card.getElementsByClassName("site-touch-title")[0];
-            console.log(text);
-			var card_w = card.offsetWidth;
-            var text_w = text.offsetWidth;
-            console.log("card_w=" + card_w + ",text_w" + text_w);
+			window.addEventListener('scroll', this.handleScroll, true);
         }
     }
 </script>
 
 <style>
+.site-nav .item{
+	padding: 10px 15px;
+}
+.header-top-nav{
+	position: fixed;
+    top: 58px;
+	z-index: 1;
+	width: 58%;
+	padding: 10px 15px;
+	background-color: #fff;
+    border-radius: 2px 2px 6px 6px;
+	box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
+}
+	
 section {
-	padding-top: 5%;
+	padding-top: 75px;
 	display: inherit;
 }
 
@@ -636,7 +657,7 @@ section {
 
 @media screen and (min-width:1200px) {
 
-	section {
+	section{
 		margin: 0 10%;
 	}
 
@@ -687,7 +708,12 @@ section {
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
-	section {
+	
+	.header-top-nav{
+		display: none;
+	}
+	
+	section{
 		margin: 0 10%;
 	}
 
@@ -743,6 +769,10 @@ section {
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
+
+	.header-top-nav{
+		display: none;
+	}
 
 	#touch .site-card {
 		margin: 2px;
@@ -803,7 +833,11 @@ section {
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-
+	
+	.header-top-nav{
+		display: none;
+	}
+	
 	#touch .site-card {
 		margin: 2px;
 	}
@@ -862,7 +896,11 @@ section {
 }
 
 @media only screen and (max-width: 479px) {
-
+	
+	.header-top-nav{
+		display: none;
+	}
+	
 	#touch .site-card {
 		margin: 2px;
 		width: 50px;
