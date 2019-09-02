@@ -74,15 +74,18 @@
 								 </ul>
 							 </div>
 						 </div>
-						 
-						 <div v-if="menuTop" class="header-top-nav">
-							 <ul class="menu menu-inline cate-list">
-								 <li class="nav-item-radius" v-for="(category, index) in categorys">
-									 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-										<i :class="category.icon"></i>{{category.name}}
-									 </a>
-								 </li>
-							 </ul>
+
+						 <div v-if="menuTop" v-bind:class="['header-top-nav', !headerNav ? 'hide' : '']">
+                 <transition v-if="headerNav" name="slide-fade">
+                   <ul class="menu menu-inline cate-list">
+                     <li class="nav-item-radius" v-for="(category, index) in categorys">
+                       <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+                        <i :class="category.icon"></i>{{category.name}}
+                       </a>
+                     </li>
+                   </ul>
+                 </transition>
+                 <span v-on:click="headerNav = !headerNav"><i class="el-icon-arrow-up"></i></span>
 						 </div>
 
 						<div class="box" style="margin-top: 3px;" v-for="category in sites">
@@ -184,7 +187,7 @@
 			 </div>
 			<el-backtop :bottom="100"></el-backtop>
 		</section>
-	
+
 
 		<foot></foot>
 	</div>
@@ -199,8 +202,7 @@ export
 default {
         data() {
             return {
-                activeIndex:
-                '1',
+                activeIndex:'1',
                 searchTitle: '百度',
                 searchUrl: 'https://www.baidu.com/s?word=',
                 searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
@@ -212,7 +214,8 @@ default {
                 recommend: null,
                 thumbnails: null,
                 hotList: null,
-				menuTop:false
+                headerNav:true,
+                menuTop:false
             };
         },
         methods: {
@@ -222,7 +225,7 @@ default {
             },
             handleCommand: function(command) {
                 var str = command.split(',');
-				this.searchTitle = str[0];
+                this.searchTitle = str[0];
                 this.searchUrl = str[1];
                 this.searchIcon = str[2];
                 this.$message('切换至搜索引擎 ' + str[0]);
@@ -303,23 +306,45 @@ default {
 </script>
 
 <style>
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.hide{
+  	box-shadow:none !important;
+    background-color:transparent !important;
+}
+.hide span{
+  display: none;
+}
+.hide:hover span{
+  display: inline-flex;
+}
 .site-nav .item{
 	padding: 10px 15px;
 }
 .header-top-nav{
 	position: fixed;
-    top: 58px;
+  top: 58px;
 	z-index: 1;
 	width: 58%;
+  display: flex;
 	padding: 10px 15px;
 	background-color: #fff;
-    border-radius: 2px 2px 6px 6px;
+  border-radius: 2px 2px 6px 6px;
 	box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
-}
-	
-section {
-	padding-top: 75px;
-	display: inherit;
+  justify-content:center;
+  align-items:center;
 }
 
 #search {
@@ -708,11 +733,11 @@ section {
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
-	
+
 	.header-top-nav{
 		display: none;
 	}
-	
+
 	section{
 		margin: 0 10%;
 	}
@@ -833,11 +858,11 @@ section {
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-	
+
 	.header-top-nav{
 		display: none;
 	}
-	
+
 	#touch .site-card {
 		margin: 2px;
 	}
@@ -896,11 +921,11 @@ section {
 }
 
 @media only screen and (max-width: 479px) {
-	
+
 	.header-top-nav{
 		display: none;
 	}
-	
+
 	#touch .site-card {
 		margin: 2px;
 		width: 50px;

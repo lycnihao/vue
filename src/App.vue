@@ -103,4 +103,8 @@
 	  font-family: Helvetica, sans-serif;
 	}
 
+section {
+	padding-top: 75px;
+	display: inherit;
+}
 </style>

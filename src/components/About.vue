@@ -42,13 +42,6 @@
 </script>
 
 <style>
-	section{
-		padding-top: 2%;
-		margin: 0;
-		display: inherit;
-		/* margin: 0 16%; */
-	}
-
 	.title h3 {
 		line-height: 40px;
 		color: #333;
