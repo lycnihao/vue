@@ -54,7 +54,7 @@
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
 						<!-- 功能导航板块 -->
-						 <div class="box site-nav">
+						 <div class="box">
 							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 								 <div class="float-left" style="margin-bottom: -5px;">
 									 <ul class="nav menu-inline" style="line-height: 30px;">
@@ -64,7 +64,7 @@
 								 </div>
 								 <div class="float-right"></div>
 							 </div>
-							 <div class="item">
+							 <div class="box-body">
 								 <ul class="menu menu-inline cate-list">
 									 <li class="nav-item-radius" v-for="(category, index) in categorys">
 										 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
@@ -132,7 +132,7 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
-						
+
 						<div class="box">
 						  <el-tabs class="tabs box-body" v-model="activeName" type="card" @tab-click="handleClick">
 							<el-tab-pane label="预留" name="first">
@@ -157,7 +157,7 @@
 							<el-tab-pane label="预留" name="third">预留</el-tab-pane>
 						  </el-tabs>
 						</div>
-						
+
 			<div class="box hot-link">
             	<div class="box-header">
             		<h3><img :src="searchIcon">热搜榜</h3>
@@ -325,7 +325,7 @@ default {
 </script>
 
 <style>
-	
+
 .tabs .el-tabs__header ,.tabs .el-tabs__header .el-tabs__nav{
 	border:none;
 }
@@ -339,9 +339,9 @@ default {
 .tabs .el-tabs__item{
 	margin-right:10px;
 	height:22px;
-	line-height:22px;
+	line-height:25px;
 	padding: 0 12px !important;
-    border-radius: 22px;
+  border-radius: 22px;
 	text-align: center;
 }
 .tabs .el-tabs__item:hover{
@@ -353,8 +353,8 @@ default {
 	background-color: #eef5fe;
 	border-bottom-color:#E6F1FE;
 }
-	
-	
+
+
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
 .slide-fade-enter-active {

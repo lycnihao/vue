@@ -82,11 +82,9 @@
 	}
 	.nav-item-radius {
 		margin:0 10px 0 0;
-		height: 25px!important;
-		line-height: 25px!important;
 	}
 	.nav-item-radius a{
-		padding: 6px 12px;
+		padding: 8px 12px;
 		border-radius: 20px;
 	}
 	.nav-item-radius a:hover{
@@ -95,6 +93,7 @@
 	.menu li{
 		height: 35px;
 		line-height:35px;
+
 	}
 
 
@@ -106,8 +105,8 @@
 		padding-top: 75px;
 		display: inherit;
 	}
-	
-	
+
+
 	/* 自定义滚动条 start */
 ::-webkit-scrollbar {
 	/*滚动条整体样式*/
