@@ -205,7 +205,7 @@ default {
                 searchUrl: 'https://www.baidu.com/s?word=',
                 searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
                 imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-                apiUrl: 'http://localhost:3302/',
+                apiUrl: 'http://47.106.84.166:3302/',
                 categorys: [],
                 sites: null,
                 touch: null,
