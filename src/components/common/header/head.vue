@@ -1,7 +1,7 @@
 <template>
 	<header id="head_top" class="header">
 	  <div class="float-left" style="height: 100%;">
-	    <a class="logo" href="/"><img src="./../../../assets/logo.png" width="100%"></a>
+	    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
 		<ul class="nav">
 			<li class="nav-item"><a  href="/" class="active">主页</a></li>
 			<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
@@ -9,22 +9,37 @@
 	  </div>
 	  <div class="float-right" style="height: 100%;">
 			<ul class="nav menu-inline">
-				<li class="nav-item"><a  href="#"><i class="el-icon-edit"></i></a></li>
-				<li class="nav-item"><a  href="#test"><i class="el-icon-discount"></i></a></li>
-				<li class="nav-item"><a  href="#test"><i class="el-icon-milk-tea"></i></a></li>
-				<li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li>
-				<!-- <li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
-				<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li> -->
+				<li class="nav-item">
+					<el-tooltip class="item" effect="dark" content="便签">
+						<a  href="/"><img src="@/assets/img/note.svg" width="31px"></a>
+					</el-tooltip>
+				</li>
+				<li class="nav-item">
+					<el-popover placement="bottom" title="小工具" width="280" trigger="hover">
+						<a href="javascript:void(0);" slot="reference"><img src="@/assets/img/app.svg" width="18px"></a>
+						<ul class="tool-list">
+							<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-full-screen"></i></span><span class="title">二维码生成</span></a></li>
+							<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-link"></i></span><span class="title">短链接生成</span></a></li>
+						</ul>
+					</el-popover>
+				</li>
+				<li class="nav-item">
+					<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
+					  <a href="/"><img src="@/assets/img/skin.svg" width="18px"></a>
+					</el-tooltip>
+				</li>
+				<!-- <li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li> -->
+				<li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
+				<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li>
 			</ul>
 			
-			<el-dialog title="登录" :visible.sync="loginOpen" width="30%">
+			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false">
 				<el-input v-model="username" placeholder="请输入账号"></el-input>
 				<el-input v-model="password" placeholder="请输入密码"></el-input>
 				<el-button type="primary" style="width: 100%;" @click="login()">登录</el-button>
-				<p @click="loginOpen = false,registerOpen=true">没有账号？<a href="#">立即注册</a></p>
-				
+				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
 			</el-dialog>
-			<el-dialog title="注册" :visible.sync="registerOpen" width="30%">
+			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false">
 				<el-input v-model="username" placeholder="请输入账号"></el-input>
 				<el-input v-model="password" placeholder="请输入密码"></el-input>
 				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
@@ -91,13 +106,50 @@ window._hmt = _hmt;
 	    width: 40px;
 	    float: left;
 	}
+	
 	.logo img{
 	  vertical-align: middle;
 	}
 	
+	.el-dialog{
+		width: 500px;
+	}
+	
+	.tool-list {
+		width: 100%;
+	}
+	
+	.tool-list li{
+		display: inherit;
+		width: 49%;
+	}
+	
+	.tool-list a{
+		display: inline-block;
+		width: 100%;
+		border-radius:18px;
+		background-color: #E6F1FE;
+	}
+	
+	.tool-list a:hover {
+		color: #fff;
+		background-color: #409EFF;
+	}
+	
+	.tool-list a:hover .icon{
+		color: #F35C01;
+	}
+	
+	.tool-list .icon i{
+		margin: 2px 8px 2px 2px;
+		padding: 10px;
+		border-radius: 50%;
+		background-color: #fff;
+	}
+	
 	@media screen and (min-width:1200px) {
 		.header{
-			padding: 0 6%;
+			padding: 0 10%;
 		}
 		.nav-item a {
 			font-size: 14px;
@@ -165,6 +217,11 @@ window._hmt = _hmt;
 		.header .logo{
 			width: 25px;
 		}
+		
+		.el-dialog{
+			width: 90%;
+		}
+		
 	}
 	
 	@media only screen and (max-width: 479px) {
@@ -182,6 +239,10 @@ window._hmt = _hmt;
 		}
 		.header .logo{
 			width: 25px;
+		}
+		
+		.el-dialog{
+			width: 90%;
 		}
 	}
 	

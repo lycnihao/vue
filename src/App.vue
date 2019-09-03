@@ -64,7 +64,6 @@
 	.nav-item a ,.nav-item-radius a{
 	    text-decoration: none;
 	    color:#909399;
-	    display: block;
 	}
 
 	.nav-item a.active{
@@ -87,7 +86,7 @@
 		line-height: 25px!important;
 	}
 	.nav-item-radius a{
-		padding: 2px 12px;
+		padding: 6px 12px;
 		border-radius: 20px;
 	}
 	.nav-item-radius a:hover{
@@ -103,8 +102,32 @@
 	  font-family: Helvetica, sans-serif;
 	}
 
-section {
-	padding-top: 75px;
-	display: inherit;
+	section {
+		padding-top: 75px;
+		display: inherit;
+	}
+	
+	
+	/* 自定义滚动条 start */
+::-webkit-scrollbar {
+	/*滚动条整体样式*/
+	width: 5px;
+	/*高宽分别对应横竖滚动条的尺寸*/
+	height: 1px;
 }
+
+::-webkit-scrollbar-thumb {
+	/*滚动条里面小方块*/
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+	background: #1459fb52;
+}
+
+::-webkit-scrollbar-track {
+	/*滚动条里面轨道*/
+	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	background: #EDEDED;
+}
+/* 自定义滚动条 end */
 </style>

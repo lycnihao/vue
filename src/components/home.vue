@@ -338,9 +338,9 @@ default {
 }
 .tabs .el-tabs__item{
 	margin-right:10px;
-	height:20px;
-	line-height:20px;
-	padding: 0 8px !important;
+	height:22px;
+	line-height:22px;
+	padding: 0 12px !important;
     border-radius: 22px;
 	text-align: center;
 }
