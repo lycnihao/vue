@@ -49,7 +49,7 @@
 
 	.nav-item ,.nav-item-radius{
 	    margin: 0 5px;
-			height: 100%;
+		height: 100%;
 	    list-style: none;
 	    position: relative;
 	    cursor: pointer;
@@ -82,12 +82,12 @@
 	    background: #409eff;
 	}
 	.nav-item-radius {
-		margin: 0;
+		margin:0 10px 0 0;
 		height: 25px!important;
 		line-height: 25px!important;
 	}
 	.nav-item-radius a{
-		padding: 2px 15px;
+		padding: 2px 12px;
 		border-radius: 20px;
 	}
 	.nav-item-radius a:hover{

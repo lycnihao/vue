@@ -56,7 +56,7 @@
 						<!-- 功能导航板块 -->
 						 <div class="box site-nav">
 							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
-								 <div class="float-left">
+								 <div class="float-left" style="margin-bottom: -5px;">
 									 <ul class="nav menu-inline" style="line-height: 30px;">
 										 <li class="nav-item"><a href="#" class="active">导航</a></li>
 										 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
@@ -75,17 +75,26 @@
 							 </div>
 						 </div>
 
-						 <div v-if="menuTop" v-bind:class="['header-top-nav', !headerNav ? 'hide' : '']">
-                 <transition v-if="headerNav" name="slide-fade">
-                   <ul class="menu menu-inline cate-list">
-                     <li class="nav-item-radius" v-for="(category, index) in categorys">
-                       <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-                        <i :class="category.icon"></i>{{category.name}}
-                       </a>
-                     </li>
-                   </ul>
-                 </transition>
-                 <span v-on:click="headerNav = !headerNav"><i class="el-icon-arrow-up"></i></span>
+						 <div v-show="menuTop" v-bind:class="['header-top-nav', !headerNav ? 'hide' : '']">
+							<transition name="slide-fade">
+							   <ul v-show="headerNav" class="menu menu-inline cate-list">
+								 <li class="nav-item-radius" v-for="(category, index) in categorys">
+								   <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+									<i :class="category.icon"></i>{{category.name}}
+								   </a>
+								 </li>
+							   </ul>
+							</transition>
+							<transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav"  v-show="headerNav">
+									 <i class="el-icon-caret-top"></i>
+								</span>
+							</transition>
+							<transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav" v-show="!headerNav">
+									<i class="el-icon-caret-bottom"></i>显示导航
+								</span>
+							</transition>
 						 </div>
 
 						<div class="box" style="margin-top: 3px;" v-for="category in sites">
@@ -123,25 +132,32 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
-
-						<!-- <div class="box">
-							<el-carousel trigger="click" height="130px">
-								<el-carousel-item v-for="item in imgs" :key="item">
-									<img class="thumbnail" :src="item" width="100%" height="100%" />
-								</el-carousel-item>
-							</el-carousel>
-						</div> -->
-						<div class="box" style="background: #fff;">
-							<div class="box-body" style="position: relative;">
-								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2822479734&auto=0&height=32"></iframe>
-								<div class="music-ing" style="position:absolute;top: 20px;margin-left: 11px;">
-									<a href="https://music.163.com/playlist?id=2822479734" target="_blank" rel="nofollow">
-										<img src="http://47.106.84.166:3302/upload/music.svg" width="20" height="20">
-									</a>
+						
+						<div class="box">
+						  <el-tabs class="tabs box-body" v-model="activeName" type="card" @tab-click="handleClick">
+							<el-tab-pane label="预留" name="first">
+								<el-carousel trigger="click" height="130px">
+									<el-carousel-item v-for="item in imgs" :key="item">
+										<img class="thumbnail" :src="item" width="100%" height="100%" />
+									</el-carousel-item>
+								</el-carousel>
+							</el-tab-pane>
+							<el-tab-pane label="音乐" name="second">
+								<div style="position: relative;display: flex;justify-content:center">
+									<div>
+										<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2822479734&auto=0&height=32"></iframe>
+										<div class="music-ing" style="position:absolute;top: 10px;margin-left: 11px;">
+											<a href="https://music.163.com/playlist?id=2822479734" target="_blank" rel="nofollow">
+												<img src="http://47.106.84.166:3302/upload/music.svg" width="20" height="20">
+											</a>
+										</div>
+									</div>
 								</div>
-							</div>
-
+							</el-tab-pane>
+							<el-tab-pane label="预留" name="third">预留</el-tab-pane>
+						  </el-tabs>
 						</div>
+						
 			<div class="box hot-link">
             	<div class="box-header">
             		<h3><img :src="searchIcon">热搜榜</h3>
@@ -151,8 +167,8 @@
             		<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
             			<el-carousel-item v-for="array in hotList">
                    <ul class="menu" style="width: 100%;">
-                     <li class="nav-item" style="cursor: text;" v-for="item in array">
-                       <div style="display: flex;justify-content:space-between">
+                     <li class="nav-item" style="width: 100%;"  v-for="item in array">
+                       <div style="display: flex;justify-content:space-between;">
                          <span style="display: inherit;">
                            <em>{{ item.index }}</em>
                            <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
@@ -182,7 +198,6 @@
 						</div> -->
 					</el-col>
 				</el-row>
-
 
 			 </div>
 			<el-backtop :bottom="100"></el-backtop>
@@ -215,7 +230,8 @@ default {
                 thumbnails: null,
                 hotList: null,
                 headerNav:true,
-                menuTop:false
+                menuTop:false,
+				activeName: 'first'
             };
         },
         methods: {
@@ -292,6 +308,9 @@ default {
 				} else{
 					this.menuTop = false;
 				}
+			},
+			handleClick(tab, event) {
+				console.log(tab, event);
 			}
         },
         components: {
@@ -306,10 +325,40 @@ default {
 </script>
 
 <style>
+	
+.tabs .el-tabs__header ,.tabs .el-tabs__header .el-tabs__nav{
+	border:none;
+}
+.tabs .el-tabs__header .el-tabs__nav{
+	background-color: transparent;
+}
+.tabs .el-tabs__header .el-tabs__item{
+	border-left:none;
+	color: #ccc;
+}
+.tabs .el-tabs__item{
+	margin-right:10px;
+	height:20px;
+	line-height:20px;
+	padding: 0 8px !important;
+    border-radius: 22px;
+	text-align: center;
+}
+.tabs .el-tabs__item:hover{
+	color: #409EFF;
+	background-color: #eef5fe;
+}
+.tabs .el-tabs__header .el-tabs__item.is-active{
+	color: #409EFF;
+	background-color: #eef5fe;
+	border-bottom-color:#E6F1FE;
+}
+	
+	
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all .5s ease;
 }
 .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
@@ -326,25 +375,36 @@ default {
 }
 .hide span{
   display: none;
+  color: #CCCCCC;
 }
 .hide:hover span{
-  display: inline-flex;
+  color: #CCCCCC;
+  display: flex;
+  align-items:center;
 }
+
+
 .site-nav .item{
 	padding: 10px 15px;
 }
 .header-top-nav{
 	position: fixed;
-  top: 58px;
+	top: 58px;
 	z-index: 1;
 	width: 58%;
-  display: flex;
+	display: flex;
 	padding: 10px 15px;
 	background-color: #fff;
-  border-radius: 2px 2px 6px 6px;
+	border-radius: 2px 2px 6px 6px;
 	box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
-  justify-content:center;
-  align-items:center;
+	justify-content:center;
+	align-items:center;
+}
+.header-top-nav span{
+	color: #ccc;
+}
+.header-top-nav span:hover{
+	color: #409EFF;
 }
 
 #search {
