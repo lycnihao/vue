@@ -1,13 +1,15 @@
 <template>
 	<header id="head_top" class="header">
-	  <div class="float-left" style="height: 100%;">
+	  <div class="header-item" style="height: 100%;">
 	    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
 		<ul class="nav">
 			<li class="nav-item"><a  href="/" class="active">主页</a></li>
 			<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
 		</ul>
 	  </div>
-	  <div class="float-right" style="height: 100%;">
+	  <div class="header-item">
+	  </div>
+	  <div class="header-item" style="height: 100%;">
 			<ul class="nav menu-inline">
 				<li class="nav-item">
 					<el-tooltip class="item" effect="dark" content="便签">
@@ -100,6 +102,9 @@ window._hmt = _hmt;
 		background-color: #fff;
 		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
 		box-shadow: 0 1px 3px rgba(26,26,26,.1);
+		display: flex;
+		justify-content:space-between;
+		align-items:center;
 	}
 
 	.header .logo{
