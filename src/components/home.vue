@@ -231,7 +231,7 @@ default {
                 hotList: null,
                 headerNav:true,
                 menuTop:false,
-				activeName: 'first'
+                activeName: 'first'
             };
         },
         methods: {
@@ -251,7 +251,7 @@ default {
                 //this.sites = dataJson.getList;
                 //this.recommend = dataJson.getRecommend;
                 this.thumbnails = dataJson.getThumbnail;
-                this.$http.get(this.apiUrl + '/api/getList').then(function(res) {
+                this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
                     console.log(res.body);
 					for (var category of res.body) {
                         var cate = {
@@ -327,13 +327,13 @@ default {
 <style>
 
 .tabs .el-tabs__header ,.tabs .el-tabs__header .el-tabs__nav{
-	border:none;
+	border:none !important;
 }
 .tabs .el-tabs__header .el-tabs__nav{
 	background-color: transparent;
 }
 .tabs .el-tabs__header .el-tabs__item{
-	border-left:none;
+	border-left:none !important;
 	color: #ccc;
 }
 .tabs .el-tabs__item{

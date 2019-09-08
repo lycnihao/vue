@@ -29,10 +29,10 @@
 					</el-tooltip>
 				</li>
 				<!-- <li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li> -->
-				<li class="nav-item" @click="loginOpen = true"><a href="#">登录</a></li>
-				<li class="nav-item" @click="registerOpen = true"><a href="#">注册</a></li>
+				<li class="nav-item" @click="loginOpen = true"><a>登录</a></li>
+				<li class="nav-item" @click="registerOpen = true"><a>注册</a></li>
 			</ul>
-			
+
 			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false">
 				<el-input v-model="username" placeholder="请输入账号"></el-input>
 				<el-input v-model="password" placeholder="请输入密码"></el-input>
@@ -55,7 +55,7 @@ window._hmt = _hmt;
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?f4cfe8a2f0d23f5be4788a065ecd9a79";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
@@ -101,52 +101,52 @@ window._hmt = _hmt;
 		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
 		box-shadow: 0 1px 3px rgba(26,26,26,.1);
 	}
-	
+
 	.header .logo{
 	    width: 40px;
 	    float: left;
 	}
-	
+
 	.logo img{
 	  vertical-align: middle;
 	}
-	
+
 	.el-dialog{
-		width: 500px;
+		width: 500px!important;
 	}
-	
+
 	.tool-list {
 		width: 100%;
 	}
-	
+
 	.tool-list li{
 		display: inherit;
 		width: 49%;
 	}
-	
+
 	.tool-list a{
 		display: inline-block;
 		width: 100%;
 		border-radius:18px;
 		background-color: #E6F1FE;
 	}
-	
+
 	.tool-list a:hover {
 		color: #fff;
 		background-color: #409EFF;
 	}
-	
+
 	.tool-list a:hover .icon{
 		color: #F35C01;
 	}
-	
+
 	.tool-list .icon i{
 		margin: 2px 8px 2px 2px;
 		padding: 10px;
 		border-radius: 50%;
 		background-color: #fff;
 	}
-	
+
 	@media screen and (min-width:1200px) {
 		.header{
 			padding: 0 10%;
@@ -164,7 +164,7 @@ window._hmt = _hmt;
 			width: 25px;
 		}
 	}
-	
+
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
 		.header{
 			padding: 0 10px;
@@ -182,7 +182,7 @@ window._hmt = _hmt;
 			width: 25px;
 		}
 	}
-	
+
 	@media screen and (min-width: 768px) and (max-width: 959px) {
 		.header{
 			padding: 0 10px;
@@ -200,7 +200,7 @@ window._hmt = _hmt;
 			width: 25px;
 		}
 	}
-	
+
 	@media only screen and (min-width: 480px) and (max-width: 767px) {
 		.header{
 			padding: 0 10px;
@@ -217,13 +217,13 @@ window._hmt = _hmt;
 		.header .logo{
 			width: 25px;
 		}
-		
+
 		.el-dialog{
-			width: 90%;
+			width: 90%!important;;
 		}
-		
+
 	}
-	
+
 	@media only screen and (max-width: 479px) {
 		.header{
 			padding: 0 10px;
@@ -240,10 +240,10 @@ window._hmt = _hmt;
 		.header .logo{
 			width: 25px;
 		}
-		
+
 		.el-dialog{
 			width: 90%;
 		}
 	}
-	
+
 </style>
