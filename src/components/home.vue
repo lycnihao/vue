@@ -158,10 +158,10 @@
 						  </el-tabs>
 						</div>
 
-			<div class="box hot-link">
+            <div class="box hot-link">
             	<div class="box-header">
             		<h3><img :src="searchIcon">热搜榜</h3>
-					<i @click="hotRefresh" class="el-icon-refresh"></i>
+                <i @click="hotRefresh" class="el-icon-refresh"></i>
             	</div>
             	<div class="box-body">
             		<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
@@ -231,7 +231,8 @@ default {
                 hotList: null,
                 headerNav:true,
                 menuTop:false,
-                activeName: 'first'
+                activeName: 'first',
+                loading:true
             };
         },
         methods: {
@@ -250,22 +251,13 @@ default {
                 //this.touch = dataJson.getTouch;
                 //this.sites = dataJson.getList;
                 //this.recommend = dataJson.getRecommend;
-                this.thumbnails = dataJson.getThumbnail;
-                this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
-                    console.log(res.body);
-					for (var category of res.body) {
-                        var cate = {
-                            name: category.name,
-                            icon: category.icon,
-                            slugName: category.slugName
-                        };
-                        this.categorys.push(cate);
-                    }
-                    this.sites = res.body;
-                },
-                function() {
-					this.$message.error('数据请求失败，请稍后再试');
+                const loading = this.$loading({
+                  lock: true,
+                  text: 'Loading',
+                  spinner: 'el-icon-loading',
+                  background: 'rgba(0, 0, 0, 0.2)'
                 });
+                this.thumbnails = dataJson.getThumbnail;
                 this.$http.get(this.apiUrl + 'api/getTouch').then(function(res) {
                     this.touch = res.body;
                 },
@@ -280,6 +272,22 @@ default {
                 });
                 this.$http.get(this.apiUrl + 'api/getHotList').then(function(res) {
                     this.hotList = res.body;
+                },
+                function() {
+                    this.$message.error('数据请求失败，请稍后再试');
+                });
+                this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
+                    console.log(res.body);
+                    for (var category of res.body) {
+                        var cate = {
+                            name: category.name,
+                            icon: category.icon,
+                            slugName: category.slugName
+                        };
+                        this.categorys.push(cate);
+                    }
+                    this.sites = res.body;
+                    loading.close();
                 },
                 function() {
                     this.$message.error('数据请求失败，请稍后再试');
