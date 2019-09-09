@@ -49,7 +49,7 @@
 
 	.nav-item ,.nav-item-radius{
 	    margin: 0 5px;
-		height: 100%;
+      height: 100%;
 	    list-style: none;
 	    position: relative;
 	    cursor: pointer;
@@ -129,4 +129,13 @@
 	background: #EDEDED;
 }
 /* 自定义滚动条 end */
+
+@media only screen and (max-width: 479px) {
+  .nav-item, .nav-item-radius{
+    margin:0;
+  }
+  .nav-item a{
+    padding: 0 3px;
+  }
+}
 </style>

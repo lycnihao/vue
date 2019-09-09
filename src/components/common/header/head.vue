@@ -108,7 +108,7 @@ window._hmt = _hmt;
 	}
 
 	.header .logo{
-	    width: 40px;
+	    width: 100px;
 	    float: left;
 	}
 
@@ -164,9 +164,6 @@ window._hmt = _hmt;
 			height: 30px;
 			width: 30px;
 			line-height:30px;
-		}
-		.header .logo{
-			width: 25px;
 		}
 	}
 
@@ -242,8 +239,13 @@ window._hmt = _hmt;
 			width: 30px;
 			line-height:30px;
 		}
+
+    .el-dialog{
+    	width: 90%!important;;
+    }
+
 		.header .logo{
-			width: 25px;
+			width: 55px;
 		}
 
 		.el-dialog{

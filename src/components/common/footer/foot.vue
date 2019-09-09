@@ -9,7 +9,7 @@
 		<p>红衣导航 - hom1.cn @ All rights Reserved ，本站收录的网站若侵害到您的利益，请联系我们删除处理</p>
 
     <el-dialog title="关于" :visible.sync="aboutVisible">
-        <strong>红衣导航</strong>(www.hom1.cn)。目前处于开发环节，更多功能会持续上线，感谢大家使用。(如有问题联系QQ<em><strong>38707145</strong></em>)
+        <strong>红衣导航</strong>(www.hom1.cn)。目前处于开发环节，更多功能会持续上线，感谢大家使用。(如有问题联系邮箱<u><em><strong>38707145@qq.com</strong></em></u>)
     </el-dialog>
 
 	</footer>
