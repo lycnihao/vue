@@ -97,14 +97,14 @@
 							</transition>
 						 </div>
 
-						<div class="box" style="margin-top: 3px;" v-for="category in sites">
+						<div class="box" style="margin-top: 3px;" v-for="category in categorys">
 						  <div class="box-header">
 							 <h3 :id="category.slugName">{{category.name}}</h3>
 							 <span><i class="el-icon-setting"></i></span>
 						  </div>
 						   <div class="box-body">
 							 <ul class="site-list">
-							   <li v-for="site in category.list">
+							   <li v-for="site in sites[category.categoryId]">
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
 								   <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
 								   <div class="site-info float-right">
@@ -222,7 +222,8 @@ default {
                 searchUrl: 'https://www.baidu.com/s?word=',
                 searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
                 imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-                apiUrl: 'http://47.106.84.166:3302/',
+                /* apiUrl: 'http://47.106.84.166:3302/', */
+                apiUrl: 'http://127.0.0.1:3302/',
                 categorys: [],
                 sites: null,
                 touch: null,
@@ -278,15 +279,8 @@ default {
                 });
                 this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
                     console.log(res.body);
-                    for (var category of res.body) {
-                        var cate = {
-                            name: category.name,
-                            icon: category.icon,
-                            slugName: category.slugName
-                        };
-                        this.categorys.push(cate);
-                    }
-                    this.sites = res.body;
+                    this.categorys = res.body.categories;
+                    this.sites = res.body.webSites;
                     loading.close();
                 },
                 function() {
