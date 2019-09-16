@@ -102,7 +102,6 @@
 	}
 
 	section {
-		padding-top: 75px;
 		display: inherit;
 	}
 

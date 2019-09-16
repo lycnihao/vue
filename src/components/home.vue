@@ -37,20 +37,19 @@
 					</el-dropdown>
 				</div>
 				<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
-				<button id="search_but" @click="search">{{searchTitle}}搜索</button>
+				<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
 			</div>
-
-			<!-- touch图标板块 -->
-			<div id="touch" class="box">
-				<a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
-				 <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
-				 <div class="site-touch-title">{{ t.title }}</div>
-				</a>
-			 </div>
 
 			 <!-- 主体板块 -->
 			 <div class="main">
-				<el-row :gutter="10">
+         <!-- touch图标板块 -->
+         <!-- <div id="touch" class="box">
+          <a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
+           <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
+           <div class="site-touch-title">{{ t.title }}</div>
+          </a>
+          </div> -->
+				<el-row :gutter="10" style="margin-top: 20px;">
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
 						<!-- 功能导航板块 -->
@@ -222,8 +221,8 @@ default {
                 searchUrl: 'https://www.baidu.com/s?word=',
                 searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
                 imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-                /* apiUrl: 'http://47.106.84.166:3302/', */
-                apiUrl: 'http://127.0.0.1:3302/',
+                apiUrl: 'http://47.106.84.166:3302/',
+                /* apiUrl: 'http://127.0.0.1:3302/', */
                 categorys: [],
                 sites: null,
                 touch: null,
@@ -278,7 +277,6 @@ default {
                     this.$message.error('数据请求失败，请稍后再试');
                 });
                 this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
-                    console.log(res.body);
                     this.categorys = res.body.categories;
                     this.sites = res.body.webSites;
                     loading.close();
@@ -410,9 +408,10 @@ default {
 }
 
 #search {
-	padding: 20px 0;
+	padding: 220px 0 200px 0;
 	display: flex;
 	justify-content: center;
+  background-image: url(../assets/bg/bg2.png);
 }
 
 #search input,#search button {
@@ -423,7 +422,7 @@ default {
 }
 
 #search #search_text {
-	padding: 10px 15px 10px 62px;
+	padding: 13px 15px 13px 62px;
 	width: 50%;
 	-webkit-transition: ease .3s;
 	transition: ease .3s;
@@ -438,7 +437,6 @@ default {
 #search #search_but {
 	color: #fff;
 	border-radius: 0;
-		/*background-color: #FF8C69;*/
 	background-color: #909399;
 	cursor: pointer;
 }
@@ -708,7 +706,6 @@ default {
 
 #search .el-dropdown {
 	position: absolute;
-	top: 0;
 	left: 0;
 }
 
@@ -744,7 +741,7 @@ default {
 
 @media screen and (min-width:1200px) {
 
-	section{
+	.main{
 		margin: 0 10%;
 	}
 
@@ -800,7 +797,7 @@ default {
 		display: none;
 	}
 
-	section{
+	.main{
 		margin: 0 10%;
 	}
 
@@ -987,6 +984,18 @@ default {
 	.header-top-nav{
 		display: none;
 	}
+
+  #search {
+  	padding: 130px 0 80px 0;
+  }
+
+  #search #search_text{
+    padding: 13px 8px 13px 58px!important;
+  }
+
+  #search input,#search button {
+  	padding: 10px 15px!important;
+  }
 
 	#touch .site-card {
 		margin: 2px;
