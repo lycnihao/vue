@@ -74,26 +74,50 @@
 							 </div>
 						 </div>
 
-						 <div v-show="menuTop" v-bind:class="['header-top-nav', !headerNav ? 'hide' : '']">
-							<transition name="slide-fade">
-							   <ul v-show="headerNav" class="menu menu-inline cate-list">
-								 <li class="nav-item-radius" v-for="(category, index) in categorys">
-								   <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-									<i :class="category.icon"></i>{{category.name}}
-								   </a>
-								 </li>
-							   </ul>
-							</transition>
-							<transition name="slide-fade">
-								<span v-on:click="headerNav = !headerNav"  v-show="headerNav">
-									 <i class="el-icon-caret-top"></i>
-								</span>
-							</transition>
-							<transition name="slide-fade">
-								<span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-									<i class="el-icon-caret-bottom"></i>显示导航
-								</span>
-							</transition>
+						 <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
+              <el-row :gutter="10">
+               	<!-- 主体显示块 -->
+               	<el-col :md="18" :lg="18" :xl="18" class="block">
+                  <transition name="slide-fade">
+                     <ul v-show="headerNav" class="menu menu-inline cate-list">
+                     <li class="nav-item-radius" v-for="(category, index) in categorys">
+                       <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+                      <i :class="category.icon"></i>{{category.name}}
+                       </a>
+                     </li>
+                     </ul>
+                  </transition>
+                  <transition name="slide-fade">
+                    <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
+                       <i class="el-icon-caret-top"></i>
+                    </span>
+                  </transition>
+                  <transition name="slide-fade">
+                    <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
+                      <i class="el-icon-caret-bottom"></i>显示导航
+                    </span>
+                  </transition>
+                </el-col>
+              </el-row>
+                <!-- <transition name="slide-fade">
+                   <ul v-show="headerNav" class="menu menu-inline cate-list">
+                   <li class="nav-item-radius" v-for="(category, index) in categorys">
+                     <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+                    <i :class="category.icon"></i>{{category.name}}
+                     </a>
+                   </li>
+                   </ul>
+                </transition>
+                <transition name="slide-fade">
+                  <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
+                     <i class="el-icon-caret-top"></i>
+                  </span>
+                </transition>
+                <transition name="slide-fade">
+                  <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
+                    <i class="el-icon-caret-bottom"></i>显示导航
+                  </span>
+                </transition> -->
 						 </div>
 
 						<div class="box" style="margin-top: 3px;" v-for="category in categorys">
@@ -303,7 +327,7 @@ default {
 			handleScroll: function(){
 				//变量t是滚动条滚动时，距离顶部的距离
 				var t = document.documentElement.scrollTop||document.body.scrollTop;
-				if ( t > 244) {
+				if ( t > 478) {
 					this.menuTop = true;
 				} else{
 					this.menuTop = false;
@@ -390,18 +414,26 @@ default {
 .header-top-nav{
 	position: fixed;
 	top: 58px;
-	z-index: 1;
-	width: 58%;
-	display: flex;
-	padding: 10px 15px;
-	background-color: #fff;
-	border-radius: 2px 2px 6px 6px;
-	box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
-	justify-content:center;
-	align-items:center;
+  left: 0;
+  right: 0;
+  padding: 0 7px;
 }
+
+.header-top-nav .block{
+  z-index: 99;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 2px 2px 6px 6px;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 .header-top-nav span{
 	color: #ccc;
+  margin: 0 18px;
 }
 .header-top-nav span:hover{
 	color: #409EFF;
