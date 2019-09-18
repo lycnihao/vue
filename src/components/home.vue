@@ -4,6 +4,17 @@
 
 		<section>
 			<div id="search">
+				<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+					<defs>
+						<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+					</defs>
+					<g class="parallax">
+						<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7"></use>
+						<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)"></use>
+						<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)"></use>
+						<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
+					</g>
+				</svg>
 				<div class="dropdown">
 					<el-dropdown placement="bottom" @command="handleCommand">
 						<el-button type="text" class="el-dropdown-link">
@@ -75,52 +86,33 @@
 						 </div>
 
 						 <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-              <el-row :gutter="10">
-               	<!-- 主体显示块 -->
-               	<el-col :md="18" :lg="18" :xl="18" class="block">
-                  <transition name="slide-fade">
-                     <ul v-show="headerNav" class="menu menu-inline cate-list">
-                     <li class="nav-item-radius" v-for="(category, index) in categorys">
-                       <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-                      <i :class="category.icon"></i>{{category.name}}
-                       </a>
-                     </li>
-                     </ul>
-                  </transition>
-                  <transition name="slide-fade">
-                    <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
-                       <i class="el-icon-caret-top"></i>
-                    </span>
-                  </transition>
-                  <transition name="slide-fade">
-                    <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-                      <i class="el-icon-caret-bottom"></i>显示导航
-                    </span>
-                  </transition>
-                </el-col>
-              </el-row>
-                <!-- <transition name="slide-fade">
-                   <ul v-show="headerNav" class="menu menu-inline cate-list">
-                   <li class="nav-item-radius" v-for="(category, index) in categorys">
-                     <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-                    <i :class="category.icon"></i>{{category.name}}
-                     </a>
-                   </li>
-                   </ul>
-                </transition>
-                <transition name="slide-fade">
-                  <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
-                     <i class="el-icon-caret-top"></i>
-                  </span>
-                </transition>
-                <transition name="slide-fade">
-                  <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-                    <i class="el-icon-caret-bottom"></i>显示导航
-                  </span>
-                </transition> -->
+						  <el-row :gutter="10">
+							<!-- 主体显示块 -->
+							<el-col :md="18" :lg="18" :xl="18" class="block">
+							  <transition name="slide-fade">
+								 <ul v-show="headerNav" class="menu menu-inline cate-list">
+								 <li class="nav-item-radius" v-for="(category, index) in categorys">
+								   <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+								  <i :class="category.icon"></i>{{category.name}}
+								   </a>
+								 </li>
+								 </ul>
+							  </transition>
+							  <transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav"  v-show="headerNav">
+								   <i class="el-icon-caret-top"></i>
+								</span>
+							  </transition>
+							  <transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav" v-show="!headerNav">
+								  <i class="el-icon-caret-bottom"></i>显示导航
+								</span>
+							  </transition>
+							</el-col>
+						  </el-row>
 						 </div>
 
-						<div class="box" style="margin-top: 3px;" v-for="category in categorys">
+						<div class="box" v-for="category in categorys">
 						  <div class="box-header">
 							 <h3 :id="category.slugName">{{category.name}}</h3>
 							 <span><i class="el-icon-setting"></i></span>
@@ -129,7 +121,7 @@
 							 <ul class="site-list">
 							   <li v-for="site in sites[category.categoryId]">
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-								   <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
+								   <div class="site-icon float-left"><el-image :src="site.icon" :alt="site.title" lazy></el-image></div>
 								   <div class="site-info float-right">
 									 <h3>{{ site.title }}</h3>
 									 <p>{{ site.summary }}</p>
@@ -414,9 +406,9 @@ default {
 .header-top-nav{
 	position: fixed;
 	top: 58px;
-  left: 0;
-  right: 0;
-  padding: 0 7px;
+	left: 0;
+	right: 0;
+	padding: 0 7px;
 }
 
 .header-top-nav .block{
@@ -428,7 +420,6 @@ default {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .header-top-nav span{
@@ -439,11 +430,54 @@ default {
 	color: #409EFF;
 }
 
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+
+.bg {
+    position: absolute;
+	bottom: 0;
+    width: 100%;
+	height: 15vh;
+}
+
+section {
+	margin: 0 !important;
+}
+
 #search {
 	padding: 220px 0 200px 0;
 	display: flex;
 	justify-content: center;
-  background-image: url(../assets/bg/bg2.png);
+	position: relative;
+	background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
 }
 
 #search input,#search button {
@@ -476,6 +510,7 @@ default {
 .dropdown {
 	position: relative;
 }
+
 
 #touch {
 	margin: 1rem 0;
@@ -771,6 +806,10 @@ default {
 	border-bottom: none;
 }
 
+.site-icon .el-image{
+	position: inherit!important; 
+}
+
 @media screen and (min-width:1200px) {
 
 	.main{
@@ -1016,7 +1055,10 @@ default {
 	.header-top-nav{
 		display: none;
 	}
-
+  .bg {
+    height:40px;
+    min-height:40px;
+  }
   #search {
   	padding: 130px 0 80px 0;
   }
