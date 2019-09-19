@@ -74,10 +74,10 @@
 								 </div>
 								 <div class="float-right"></div>
 							 </div>
-							 <div class="box-body">
+							 <div class="box-body" ref="menuWrapper1">
 								 <ul class="menu menu-inline cate-list">
 									 <li class="nav-item-radius" v-for="(category, index) in categorys">
-										 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+										 <a  :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
 											<i :class="category.icon"></i>{{category.name}}
 										 </a>
 									 </li>
@@ -89,10 +89,10 @@
 						  <el-row :gutter="10">
 							<!-- 主体显示块 -->
 							<el-col :md="18" :lg="18" :xl="18" class="block">
-							  <transition name="slide-fade">
-								 <ul v-show="headerNav" class="menu menu-inline cate-list">
+							  <transition name="slide-fade" >
+								 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
 								 <li class="nav-item-radius" v-for="(category, index) in categorys">
-								   <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+								   <a :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
 								  <i :class="category.icon"></i>{{category.name}}
 								   </a>
 								 </li>
@@ -111,27 +111,30 @@
 							</el-col>
 						  </el-row>
 						 </div>
-
-						<div class="box" v-for="category in categorys">
-						  <div class="box-header">
-							 <h3 :id="category.slugName">{{category.name}}</h3>
-							 <span><i class="el-icon-setting"></i></span>
-						  </div>
-						   <div class="box-body">
-							 <ul class="site-list">
-							   <li v-for="site in sites[category.categoryId]">
-								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-								   <div class="site-icon float-left"><el-image :src="site.icon" :alt="site.title" lazy></el-image></div>
-								   <div class="site-info float-right">
-									 <h3>{{ site.title }}</h3>
-									 <p>{{ site.summary }}</p>
+						
+						<div id="wrapper" ref="sitesWrapper">
+							<ul>
+								<li v-for="category in categorys" class="box site-list-hook">
+								  <div class="box-header">
+									 <h3 :id="category.slugName">{{category.name}}</h3>
+									 <span><i class="el-icon-setting"></i></span>
+								  </div>
+								   <div class="box-body">
+									 <ul class="site-list">
+									   <li v-for="site in sites[category.categoryId]">
+										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+										   <div class="site-icon float-left"><el-image :src="site.icon" :alt="site.title" lazy></el-image></div>
+										   <div class="site-info float-right">
+											 <h3>{{ site.title }}</h3>
+											 <p>{{ site.summary }}</p>
+										   </div>
+										 </a>
+									   </li>
+									 </ul>
 								   </div>
-								 </a>
-							   </li>
-							 </ul>
-						   </div>
+								</li>
+							</ul>
 						</div>
-
 <!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -149,7 +152,7 @@
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
 
 						<div class="box">
-						  <el-tabs class="tabs box-body" v-model="activeName" type="card" @tab-click="handleClick">
+						  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 							<el-tab-pane label="预留" name="first">
 								<el-carousel trigger="click" height="130px">
 									<el-carousel-item v-for="item in imgs" :key="item">
@@ -227,11 +230,15 @@
 import dataJson from './../data.json';
 import header from './common/header/head'
 import footer from './common/footer/foot'
+import BScroll from 'better-scroll'
 
 export
 default {
         data() {
             return {
+				listHeight: [],
+				sitesScrollY: 0,
+				
                 activeIndex:'1',
                 searchTitle: '百度',
                 searchUrl: 'https://www.baidu.com/s?word=',
@@ -252,6 +259,29 @@ default {
             };
         },
         methods: {
+			_initScroll() {
+			  new BScroll(this.$refs.menuWrapper1, { click: true });
+			  new BScroll(this.$refs.menuWrapper2, { click: true });
+			},
+			_calculateHeight() {
+			  let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook")
+			  let search = document.getElementById("search");
+			  let height = 400
+			  this.listHeight.push(height)
+			  for (let i = 0, l = foodList.length; i < l; i++) {
+			    let item = foodList[i]
+			    height += item.clientHeight
+			    this.listHeight.push(height)
+			  }
+			  console.log(this.listHeight)
+			},
+			menuClick(index, event) {
+			  if (!event._constructed) {
+			    return
+			  }
+			  console.log(this.listHeight[index])
+			  window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
+			},
             search: function() {
                 var url = this.searchUrl + document.getElementById("search_text").value;
                 window.open(url, "_blank")
@@ -296,6 +326,10 @@ default {
                     this.categorys = res.body.categories;
                     this.sites = res.body.webSites;
                     loading.close();
+					this.$nextTick(() => {
+					  this._initScroll(); // 初始化scroll
+					  this._calculateHeight(); // 初始化列表高度列表
+					})
                 },
                 function() {
                     this.$message.error('数据请求失败，请稍后再试');
@@ -319,24 +353,23 @@ default {
 			handleScroll: function(){
 				//变量t是滚动条滚动时，距离顶部的距离
 				var t = document.documentElement.scrollTop||document.body.scrollTop;
-				if ( t > 478) {
+				if ( t > 450) {
 					this.menuTop = true;
 				} else{
 					this.menuTop = false;
 				}
-			},
-			handleClick(tab, event) {
-				console.log(tab, event);
 			}
         },
         components: {
             'headTop': header,
             'foot': footer
         },
-        mounted() {
-            this.getData();
+		mounted() {
+		},
+		created() {
+			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
-        }
+		  }
     }
 </script>
 
@@ -413,7 +446,7 @@ default {
 
 .header-top-nav .block{
   z-index: 99;
-  padding: 10px 15px;
+  padding: 6px 10px;
   background-color: #fff;
   border-radius: 2px 2px 6px 6px;
   box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
@@ -424,7 +457,8 @@ default {
 
 .header-top-nav span{
 	color: #ccc;
-  margin: 0 18px;
+	margin: 0 18px;
+	cursor: pointer;
 }
 .header-top-nav span:hover{
 	color: #409EFF;
