@@ -15,58 +15,97 @@
 						<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
 					</g>
 				</svg>
-				<div class="dropdown">
-					<el-dropdown placement="bottom" @command="handleCommand">
-						<el-button type="text" class="el-dropdown-link">
-							<img width="20px" height="20px" v-bind:src="searchIcon">
-							<i class="el-icon-arrow-down"></i>
-						</el-button>
-
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
-								<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
-								百度
-							</el-dropdown-item>
-							<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
-								<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
-								360
-							</el-dropdown-item>
-							<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
-								<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
-								Bing
-							</el-dropdown-item>
-							<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
-								<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
-								搜狗
-							</el-dropdown-item>
-							<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
-								<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
-								谷歌
-							</el-dropdown-item>
-						</el-dropdown-menu>
-
-					</el-dropdown>
+				<h3>以高效的方式获取想要的资源</h3>
+				<div class="search-tools" style="height: 40px; line-height: 40px;">
+					<ul class="nav menu-inline" style="line-height: 30px;">
+						<li class="nav-item"><a href="javascript::void(0)" class="active">搜索引擎</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">站点搜索</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">文章搜索</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">图片</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">素材</a></li>
+					</ul>
 				</div>
-				<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
-				<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
+				<div class="search-center">
+					<div class="dropdown">
+						<el-dropdown placement="bottom" @command="handleCommand">
+							<el-button type="text" class="el-dropdown-link">
+								<img width="20px" height="20px" v-bind:src="searchIcon">
+								<i class="el-icon-arrow-down"></i>
+							</el-button>
+
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
+									<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
+									百度
+								</el-dropdown-item>
+								<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
+									<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
+									360
+								</el-dropdown-item>
+								<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
+									<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
+									Bing
+								</el-dropdown-item>
+								<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
+									<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
+									搜狗
+								</el-dropdown-item>
+								<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
+									<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
+									谷歌
+								</el-dropdown-item>
+							</el-dropdown-menu>
+
+						</el-dropdown>
+					</div>
+					<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="您的搜索小能手"/>
+					<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
+				</div>
+
 			</div>
 
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
-         <!-- user-block图标板块 -->
-         <div id="user-block">
-            <ul class="user-website">
-              <li>
-                 <a class="site-item" href="#" target='_blank' title="测试">
-                   <div class="site-icon float-left"><el-image src="http://47.106.84.166:3302/upload/www_ipmtalk_com.png" lazy></el-image></div>
-                   <div class="site-info float-right">
-                   <h3>测试标题</h3>
-                   <p>测试描述</p>
-                   </div>
-                 </a>
-              </li>
-            </ul>
+           <!-- user-block图标板块 -->
+           <div class="box">
+              <div class="box-header">
+               <h3>常用链接</h3>
+              </div>
+             <div class="box-body">
+                <div id="user-block">
+                   <ul class="user-website">
+                     <li>
+                        <a class="site-item" href="#" target='_blank' title="测试">
+                          <div class="site-icon float-left"><el-image src="http://47.106.84.166:3302/upload/www_ipmtalk_com.png" lazy></el-image></div>
+                          <div class="site-info float-right">
+                          <h3>测试标题</h3>
+                          <p>测试描述</p>
+                          </div>
+                        </a>
+                     </li>
+                     <li>
+                        <a class="site-item" href="#" target='_blank' title="测试">
+                          <div class="site-icon float-left"><el-image src="http://47.106.84.166:3302/upload/www_ipmtalk_com.png" lazy></el-image></div>
+                          <div class="site-info float-right">
+                          <h3>测试标题</h3>
+                          <p>测试描述</p>
+                          </div>
+                        </a>
+                     </li>
+                     <li>
+                        <a class="site-item" href="#" target='_blank' title="测试">
+                          <div class="site-icon float-left"><el-image src="http://47.106.84.166:3302/upload/www_ipmtalk_com.png" lazy></el-image></div>
+                          <div class="site-info float-right">
+                          <h3>测试标题</h3>
+                          <p>测试描述</p>
+                          </div>
+                        </a>
+                     </li>
+                   </ul>
+                </div>
+             </div>
          </div>
+
 				<el-row :gutter="10">
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
@@ -130,7 +169,10 @@
 									 <ul class="site-list">
 									   <li v-for="site in sites[category.categoryId]">
 										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-										   <div class="site-icon float-left"><el-image :src="site.icon" :alt="site.title" lazy></el-image></div>
+										   <div class="site-icon float-left">
+												<el-image :src="site.icon" :alt="site.title" lazy>
+													<div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+												</div>
 										   <div class="site-info float-right">
 											 <h3>{{ site.title }}</h3>
 											 <p>{{ site.summary }}</p>
@@ -273,14 +315,13 @@ default {
 			_calculateHeight() {
 			  let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook")
 			  let search = document.getElementById("search");
-			  let height = 400
+			  let height = 550
 			  this.listHeight.push(height)
 			  for (let i = 0, l = foodList.length; i < l; i++) {
 			    let item = foodList[i]
 			    height += item.clientHeight
 			    this.listHeight.push(height)
 			  }
-			  console.log(this.listHeight)
 			},
 			menuClick(index, event) {
 			  if (!event._constructed) {
@@ -298,7 +339,6 @@ default {
                 this.searchTitle = str[0];
                 this.searchUrl = str[1];
                 this.searchIcon = str[2];
-                this.$message('切换至搜索引擎 ' + str[0]);
             },
             getData: function() {
                 //this.touch = dataJson.getTouch;
@@ -360,7 +400,7 @@ default {
 			handleScroll: function(){
 				//变量t是滚动条滚动时，距离顶部的距离
 				var t = document.documentElement.scrollTop||document.body.scrollTop;
-				if ( t > 450) {
+				if ( t > 600) {
 					this.menuTop = true;
 				} else{
 					this.menuTop = false;
@@ -446,21 +486,24 @@ default {
 .header-top-nav{
 	position: fixed;
 	top: 58px;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  padding: 0 7px;
+	left: -2px;
+	right: 0;
+	padding: 0 7px;
 }
 
 .header-top-nav .block{
   z-index: 99;
-  padding: 6px 10px;
+  padding: 6px;
   background-color: #fff;
-  border-radius: 2px 2px 6px 6px;
+  border-radius: 2px;
   box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.header-top-nav .block ul{
+	padding: 0 5px;
 }
 
 .header-top-nav span{
@@ -515,11 +558,28 @@ section {
 }
 
 #search {
-	padding: 220px 0 200px 0;
+	position: relative;
+	padding: 180px 0 230px 0;
+	background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
+	background-image: url(../assets/bg/bg2.png);
+}
+
+#search .search-center,#search .search-tools{
 	display: flex;
 	justify-content: center;
-	position: relative;
-	background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+}
+
+#search .search-tools li{
+	margin: 0 12px;
+}
+
+#search .search-tools .nav .nav-item a{
+	color: #fff;
+}
+
+#search .search-tools .nav .nav-item a.active:after{
+	width: 100%;
+	left: 0;
 }
 
 #search input,#search button {
@@ -529,17 +589,33 @@ section {
 	border: none;
 }
 
+#search h3{
+	text-align: center;
+	margin-bottom: 60px;
+	color: #fff;
+	font-size: 40px;
+    font-weight: 100!important;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif!important;
+;
+	}
+
 #search #search_text {
-	padding: 13px 15px 13px 62px;
-	width: 50%;
+	padding: 15px 15px 15px 62px;
+	width: 40%;
 	-webkit-transition: ease .3s;
 	transition: ease .3s;
 	-webkit-transform-origin: 50% 50%;
 }
-
+#search_text{
+	border-radius:5px 0 0 5px;
+}
 #search_text:hover {
 		/* box-shadow: 0 8px 43px rgba(0,0,0,0.15); */
 	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
+
+#search_but{
+	border-radius:0 5px 5px 0 !important;
 }
 
 #search #search_but {
@@ -551,6 +627,9 @@ section {
 
 .dropdown {
 	position: relative;
+}
+.dropdown span i{
+	color: #909399;
 }
 
 #user-block{
@@ -566,13 +645,16 @@ section {
   background-color: #fff;
 }
 .user-website>li{
-  width: 190px;
-  border-radius: 4px;
+  margin: 2px 5px;
+  border-radius: 6px;
+  display: inline-block;
   border: 1px solid #b59b751c;
-  box-shadow: 0 2px 0 rgba(170,170,170,.1);
+  box-shadow: 0 4px 10px rgba(36, 37, 38, 0.06);
+  transition: box-shadow 0.25s ease-out, transform 0.25s ease-out, -webkit-box-shadow 0.25s ease-out, -webkit-transform 0.25s ease-out;
 }
 .user-website>li:hover{
-  box-shadow: 2px 2px 5px rgba(170,170,170,.3)
+  box-shadow: 5px 8px 10px rgba(36, 37, 38, 0.13);
+  transform: translate(0%, -4px);
 }
 .user-website>li>a{
   padding: 5px 15px;
@@ -600,8 +682,8 @@ section {
 }
 
 .user-website>li>a img{
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
 }
 
 #touch {
@@ -685,32 +767,40 @@ section {
 }
 
 .site-list li {
-	height: 100%;
+	height: 80px;
+  width: 25%;
+  display: inline-flex;
 }
 
 .site-list .site-item {
+  padding: 10px 15px;
 	height: 100%;
 	font-size: 14px;
 	display: flex;
 	align-items: center;
 	overflow: hidden;
+  transition: all .4s cubic-bezier(.175,.885,.32,1);
 }
 
-.site-info h3 {
+.site-list .site-item:hover {
+	/* background: rgba(241,242,249,.5); */
+  background: #eee;
+}
+
+.site-list .site-info {
+  width: 88%;
+}
+
+.site-list .site-info h3 {
 	color: #444444;
 }
 
-.site-info p {
+.site-list .site-info p {
 	color: #a1a7b7;
 	font-size: 12px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-}
-
-.site-list .site-item:hover {
-	/* background: rgba(241,242,249,.5); */
-	box-shadow: 0px 5px 28px 0px rgba(65, 106, 123, 0.2);
 }
 
 .site-list .site-item:hover h3 {
@@ -866,6 +956,7 @@ section {
 #search .el-dropdown {
 	position: absolute;
 	left: 0;
+	top: 2px;
 }
 
 .music-ing {
@@ -925,22 +1016,17 @@ section {
 	}
 
 	.site-list .site-icon img {
-		width: 32px;
-		height: 32px;
+		width: 36px;
+		height: 36px;
 	}
 
 	.site-list .site-item {
-		padding: 5px 15px;
 		height: 60px;
-		width: 190px;
+		width: 100%;
 	}
 
 	.site-list .site-icon {
 		margin-right: 5px;
-	}
-
-	.site-list .site-info {
-		width: 130px;
 	}
 
 	.site-list .site-info h3 {
@@ -993,17 +1079,12 @@ section {
 	}
 
 	.site-list .site-item {
-		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
 
 	.site-list .site-icon {
 		margin-right: 5px;
-	}
-
-	.site-list .site-info {
-		width: 65px;
 	}
 
 	.site-list .site-info h3 {
@@ -1051,17 +1132,12 @@ section {
 	}
 
 	.site-list .site-item {
-		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
 
 	.site-list .site-icon {
 		margin-right: 5px;
-	}
-
-	.site-list .site-info {
-		width: 65px;
 	}
 
 	.site-list .site-info h3 {
@@ -1113,18 +1189,17 @@ section {
 		width: 100%;
 	}
 
+	.site-list li {
+		height: 45px;
+	}
+
 	.site-list .site-item {
-		padding: 5px 10px;
 		height: 30px;
 		width: 115px;
 	}
 
 	.site-list .site-icon {
 		margin-right: 5px;
-	}
-
-	.site-list .site-info {
-		width: 65px;
 	}
 
 	.site-list .site-info h3 {
@@ -1155,12 +1230,53 @@ section {
   	padding: 130px 0 80px 0;
   }
 
+	#search h3{
+		margin-bottom: 22px;
+		font-size: 22px;
+		}
+
+	#search .search-tools li{
+		margin: 0 3px;
+	}
+
   #search #search_text{
     padding: 13px 8px 13px 58px!important;
   }
 
   #search input,#search button {
   	padding: 10px 15px!important;
+  }
+
+  .user-website{
+    padding: 0;
+  }
+
+  .user-website>li{
+    display: inline-flex;
+    margin: 2px;
+    width: 47%;
+  }
+
+  .user-website>li>a{
+    height: 40px;
+    padding: 5px 15px;
+  }
+
+  .user-website>li>a .site-icon{
+    margin-right: 2px;
+  }
+
+  .user-website>li>a .site-info h3{
+      font-size: 14px;
+  }
+
+  .user-website>li>a .site-info p{
+      font-size: 11px;
+  }
+
+  .user-website>li>a img{
+      width: 30px;
+      height: 30px;
   }
 
 	#touch .site-card {
@@ -1192,18 +1308,18 @@ section {
 		width: 100%;
 	}
 
+	.site-list li {
+		height: 45px;
+    width: 33.3%;
+	}
+
 	.site-list .site-item {
-		padding: 5px 0;
 		height: 30px;
 		width: 100px;
 	}
 
 	.site-list .site-icon {
 		margin-right: 5px;
-	}
-
-	.site-list .site-info {
-		width: 65px;
 	}
 
 	.site-list .site-info h3 {

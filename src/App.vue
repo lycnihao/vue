@@ -131,5 +131,8 @@
   .nav-item a{
     padding: 0 3px;
   }
+  .nav-item-radius a{
+  	padding: 8px 3px;
+  }
 }
 </style>
