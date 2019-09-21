@@ -133,7 +133,7 @@ window._hmt = _hmt;
 		display: inline-block;
 		width: 100%;
 		border-radius:18px;
-		background-color: #E6F1FE;
+		background-color: #9e9e9e24;
 	}
 
 	.tool-list a:hover {

@@ -4,6 +4,17 @@
 
 		<section>
 			<div id="search">
+				<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+					<defs>
+						<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+					</defs>
+					<g class="parallax">
+						<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7"></use>
+						<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)"></use>
+						<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)"></use>
+						<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
+					</g>
+				</svg>
 				<div class="dropdown">
 					<el-dropdown placement="bottom" @command="handleCommand">
 						<el-button type="text" class="el-dropdown-link">
@@ -41,15 +52,22 @@
 			</div>
 
 			 <!-- 主体板块 -->
-			 <div class="main">
-         <!-- touch图标板块 -->
-         <!-- <div id="touch" class="box">
-          <a target='_blank' class="site-card" v-for="t in touch" :href="t.url" :title="t.summary" >
-           <div class="site-touch-icon"><img :src="t.icon" :alt="t.title"></div>
-           <div class="site-touch-title">{{ t.title }}</div>
-          </a>
-          </div> -->
-				<el-row :gutter="10" style="margin-top: 20px;">
+			 <div class="main" style="margin-top: 20px;">
+         <!-- user-block图标板块 -->
+         <div id="user-block">
+            <ul class="user-website">
+              <li>
+                 <a class="site-item" href="#" target='_blank' title="测试">
+                   <div class="site-icon float-left"><el-image src="http://47.106.84.166:3302/upload/www_ipmtalk_com.png" lazy></el-image></div>
+                   <div class="site-info float-right">
+                   <h3>测试标题</h3>
+                   <p>测试描述</p>
+                   </div>
+                 </a>
+              </li>
+            </ul>
+         </div>
+				<el-row :gutter="10">
 					<!-- 主体显示块 -->
 					<el-col :md="18" :lg="18" :xl="18" class="container">
 						<!-- 功能导航板块 -->
@@ -63,10 +81,10 @@
 								 </div>
 								 <div class="float-right"></div>
 							 </div>
-							 <div class="box-body">
+							 <div class="box-body" ref="menuWrapper1">
 								 <ul class="menu menu-inline cate-list">
 									 <li class="nav-item-radius" v-for="(category, index) in categorys">
-										 <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
+										 <a  :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
 											<i :class="category.icon"></i>{{category.name}}
 										 </a>
 									 </li>
@@ -75,71 +93,55 @@
 						 </div>
 
 						 <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-              <el-row :gutter="10">
-               	<!-- 主体显示块 -->
-               	<el-col :md="18" :lg="18" :xl="18" class="block">
-                  <transition name="slide-fade">
-                     <ul v-show="headerNav" class="menu menu-inline cate-list">
-                     <li class="nav-item-radius" v-for="(category, index) in categorys">
-                       <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-                      <i :class="category.icon"></i>{{category.name}}
-                       </a>
-                     </li>
-                     </ul>
-                  </transition>
-                  <transition name="slide-fade">
-                    <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
-                       <i class="el-icon-caret-top"></i>
-                    </span>
-                  </transition>
-                  <transition name="slide-fade">
-                    <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-                      <i class="el-icon-caret-bottom"></i>显示导航
-                    </span>
-                  </transition>
-                </el-col>
-              </el-row>
-                <!-- <transition name="slide-fade">
-                   <ul v-show="headerNav" class="menu menu-inline cate-list">
-                   <li class="nav-item-radius" v-for="(category, index) in categorys">
-                     <a :href='"#" + category.slugName' :class="(index == 0 ? 'active':'')">
-                    <i :class="category.icon"></i>{{category.name}}
-                     </a>
-                   </li>
-                   </ul>
-                </transition>
-                <transition name="slide-fade">
-                  <span v-on:click="headerNav = !headerNav"  v-show="headerNav">
-                     <i class="el-icon-caret-top"></i>
-                  </span>
-                </transition>
-                <transition name="slide-fade">
-                  <span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-                    <i class="el-icon-caret-bottom"></i>显示导航
-                  </span>
-                </transition> -->
+						  <el-row :gutter="10">
+							<!-- 主体显示块 -->
+							<el-col :md="18" :lg="18" :xl="18" class="block">
+							  <transition name="slide-fade" >
+								 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
+								 <li class="nav-item-radius" v-for="(category, index) in categorys">
+								   <a :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
+								  <i :class="category.icon"></i>{{category.name}}
+								   </a>
+								 </li>
+								 </ul>
+							  </transition>
+							  <transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav"  v-show="headerNav">
+								   <i class="el-icon-caret-top"></i>
+								</span>
+							  </transition>
+							  <transition name="slide-fade">
+								<span v-on:click="headerNav = !headerNav" v-show="!headerNav">
+								  <i class="el-icon-caret-bottom"></i>显示导航
+								</span>
+							  </transition>
+							</el-col>
+						  </el-row>
 						 </div>
 
-						<div class="box" style="margin-top: 3px;" v-for="category in categorys">
-						  <div class="box-header">
-							 <h3 :id="category.slugName">{{category.name}}</h3>
-							 <span><i class="el-icon-setting"></i></span>
-						  </div>
-						   <div class="box-body">
-							 <ul class="site-list">
-							   <li v-for="site in sites[category.categoryId]">
-								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-								   <div class="site-icon float-left"><img :src="site.icon" :alt="site.title"/></div>
-								   <div class="site-info float-right">
-									 <h3>{{ site.title }}</h3>
-									 <p>{{ site.summary }}</p>
+						<div id="wrapper" ref="sitesWrapper">
+							<ul>
+								<li v-for="category in categorys" class="box site-list-hook">
+								  <div class="box-header">
+									 <h3 :id="category.slugName">{{category.name}}</h3>
+									 <span><i class="el-icon-setting"></i></span>
+								  </div>
+								   <div class="box-body">
+									 <ul class="site-list">
+									   <li v-for="site in sites[category.categoryId]">
+										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+										   <div class="site-icon float-left"><el-image :src="site.icon" :alt="site.title" lazy></el-image></div>
+										   <div class="site-info float-right">
+											 <h3>{{ site.title }}</h3>
+											 <p>{{ site.summary }}</p>
+										   </div>
+										 </a>
+									   </li>
+									 </ul>
 								   </div>
-								 </a>
-							   </li>
-							 </ul>
-						   </div>
+								</li>
+							</ul>
 						</div>
-
 <!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -157,7 +159,7 @@
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
 
 						<div class="box">
-						  <el-tabs class="tabs box-body" v-model="activeName" type="card" @tab-click="handleClick">
+						  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 							<el-tab-pane label="预留" name="first">
 								<el-carousel trigger="click" height="130px">
 									<el-carousel-item v-for="item in imgs" :key="item">
@@ -235,11 +237,15 @@
 import dataJson from './../data.json';
 import header from './common/header/head'
 import footer from './common/footer/foot'
+import BScroll from 'better-scroll'
 
 export
 default {
         data() {
             return {
+				listHeight: [],
+				sitesScrollY: 0,
+
                 activeIndex:'1',
                 searchTitle: '百度',
                 searchUrl: 'https://www.baidu.com/s?word=',
@@ -260,6 +266,29 @@ default {
             };
         },
         methods: {
+			_initScroll() {
+			  new BScroll(this.$refs.menuWrapper1, { click: true });
+			  new BScroll(this.$refs.menuWrapper2, { click: true });
+			},
+			_calculateHeight() {
+			  let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook")
+			  let search = document.getElementById("search");
+			  let height = 400
+			  this.listHeight.push(height)
+			  for (let i = 0, l = foodList.length; i < l; i++) {
+			    let item = foodList[i]
+			    height += item.clientHeight
+			    this.listHeight.push(height)
+			  }
+			  console.log(this.listHeight)
+			},
+			menuClick(index, event) {
+			  if (!event._constructed) {
+			    return
+			  }
+			  console.log(this.listHeight[index])
+			  window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
+			},
             search: function() {
                 var url = this.searchUrl + document.getElementById("search_text").value;
                 window.open(url, "_blank")
@@ -304,6 +333,10 @@ default {
                     this.categorys = res.body.categories;
                     this.sites = res.body.webSites;
                     loading.close();
+					this.$nextTick(() => {
+					  this._initScroll(); // 初始化scroll
+					  this._calculateHeight(); // 初始化列表高度列表
+					})
                 },
                 function() {
                     this.$message.error('数据请求失败，请稍后再试');
@@ -327,24 +360,23 @@ default {
 			handleScroll: function(){
 				//变量t是滚动条滚动时，距离顶部的距离
 				var t = document.documentElement.scrollTop||document.body.scrollTop;
-				if ( t > 478) {
+				if ( t > 450) {
 					this.menuTop = true;
 				} else{
 					this.menuTop = false;
 				}
-			},
-			handleClick(tab, event) {
-				console.log(tab, event);
 			}
         },
         components: {
             'headTop': header,
             'foot': footer
         },
-        mounted() {
-            this.getData();
+		mounted() {
+		},
+		created() {
+			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
-        }
+		  }
     }
 </script>
 
@@ -422,29 +454,72 @@ default {
 
 .header-top-nav .block{
   z-index: 99;
-  padding: 10px 15px;
+  padding: 6px 10px;
   background-color: #fff;
   border-radius: 2px 2px 6px 6px;
   box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .header-top-nav span{
 	color: #ccc;
-  margin: 0 18px;
+	margin: 0 18px;
+	cursor: pointer;
 }
 .header-top-nav span:hover{
 	color: #409EFF;
+}
+
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% {
+    transform: translate3d(85px,0,0);
+  }
+}
+
+.bg {
+    position: absolute;
+	bottom: 0;
+    width: 100%;
+	height: 15vh;
+}
+
+section {
+	margin: 0 !important;
 }
 
 #search {
 	padding: 220px 0 200px 0;
 	display: flex;
 	justify-content: center;
-  background-image: url(../assets/bg/bg2.png);
+	position: relative;
+	background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
 }
 
 #search input,#search button {
@@ -476,6 +551,57 @@ default {
 
 .dropdown {
 	position: relative;
+}
+
+#user-block{
+  width: 100%;
+  margin: 5px 0;
+  border-radius: 2px;
+  background-color: #f9f9f9;
+  display: flex;
+}
+.user-website{
+  width: 100%;
+  padding: 20px 15px;
+  background-color: #fff;
+}
+.user-website>li{
+  width: 190px;
+  border-radius: 4px;
+  border: 1px solid #b59b751c;
+  box-shadow: 0 2px 0 rgba(170,170,170,.1);
+}
+.user-website>li:hover{
+  box-shadow: 2px 2px 5px rgba(170,170,170,.3)
+}
+.user-website>li>a{
+  padding: 5px 15px;
+  height: 60px;
+  width: 190px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.user-website>li>a .site-icon{
+  margin-right: 5px;
+}
+
+.user-website>li>a .site-info {
+    width: 130px;
+}
+
+.user-website>li>a .site-info p{
+    color: #a1a7b7;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.user-website>li>a img{
+    width: 32px;
+    height: 32px;
 }
 
 #touch {
@@ -772,6 +898,10 @@ default {
 	border-bottom: none;
 }
 
+.site-icon .el-image{
+	position: inherit!important;
+}
+
 @media screen and (min-width:1200px) {
 
 	.main{
@@ -1017,7 +1147,10 @@ default {
 	.header-top-nav{
 		display: none;
 	}
-
+  .bg {
+    height:40px;
+    min-height:40px;
+  }
   #search {
   	padding: 130px 0 80px 0;
   }

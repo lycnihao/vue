@@ -101,11 +101,6 @@
 	  font-family: Helvetica, sans-serif;
 	}
 
-	section {
-		display: inherit;
-	}
-
-
 	/* 自定义滚动条 start */
 ::-webkit-scrollbar {
 	/*滚动条整体样式*/
