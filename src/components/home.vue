@@ -67,7 +67,7 @@
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
            <!-- user-block图标板块 -->
-           <div class="box">
+           <!-- <div class="box">
               <div class="box-header">
                <h3>常用链接</h3>
               </div>
@@ -104,7 +104,7 @@
                    </ul>
                 </div>
              </div>
-         </div>
+         </div> -->
 
 				<el-row :gutter="10">
 					<!-- 主体显示块 -->
@@ -401,8 +401,6 @@ default {
             'headTop': header,
             'foot': footer
         },
-		mounted() {
-		},
 		created() {
 			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
