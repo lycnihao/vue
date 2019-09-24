@@ -12,13 +12,18 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
 
+/* Vue.http.options.emulateJSON = true; */
+/* Vue.http.options.xhr = { withCredentials: true }
+Vue.http.options.crossOrigin = true */
+Vue.http.interceptors.push(function(request, next) {/* 跨域携带cookie */ request.credentials = true; next() }) 
+
 // vue router
 router.beforeEach((to, from, next) => {
 	var _hmt = _hmt || [];
 	window._hmt = _hmt;
 	
     var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?f4cfe8a2f0d23f5be4788a065ecd9a79";
+    hm.src = "https://hm.baidu.com/hm.js?b14e8cb38dafe28ede1af1dfd1f498dc";
     var s = document.getElementsByTagName("script")[0]; 
     s.parentNode.insertBefore(hm, s);
 	

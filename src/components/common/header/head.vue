@@ -30,9 +30,9 @@
 					  <a href="/"><img src="@/assets/img/skin.svg" width="18px"></a>
 					</el-tooltip>
 				</li>
-				<!-- <li class="nav-item"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li> -->
-				<li class="nav-item" @click="loginOpen = true"><a>登录</a></li>
-				<li class="nav-item" @click="registerOpen = true"><a>注册</a></li>
+				<li class="nav-item" v-show="isLogin"><el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></li>
+				<li class="nav-item" v-show="!isLogin" @click="loginOpen = true"><a>登录</a></li>
+				<li class="nav-item" v-show="!isLogin" @click="registerOpen = true"><a>注册</a></li>
 			</ul>
 
 			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false">
@@ -42,8 +42,8 @@
 				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
 			</el-dialog>
 			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false">
-				<el-input v-model="username" placeholder="请输入账号"></el-input>
-				<el-input v-model="password" placeholder="请输入密码"></el-input>
+				<el-input  placeholder="请输入账号"></el-input>
+				<el-input  placeholder="请输入密码"></el-input>
 				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
 				<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
 			</el-dialog>
@@ -71,17 +71,36 @@ window._hmt = _hmt;
 				username:'',
 				password:'',
 				loginOpen:false,
-				registerOpen:false
+				registerOpen:false,
+				isLogin:false
 			}
 		},
 		methods: {
 			login:function(){
-				this.$message({message: '登录成功',type: 'success'});
-				this.loginOpen=false
+				this.$http.post('http://localhost:3302/api/user/login',{'username': this.username,'password': this.password },{emulateJSON:true})
+				.then(function(res) {
+				    if(res.body.code == 1){
+						this.$message({message: '登录成功',type: 'success'});
+						this.loginOpen=false;
+					} else{
+						this.$message.error(res.body.msg);
+					}
+				},function() {
+                    this.$message.error('发送请求失败，请检查网络是否通畅');
+                });
 			},
 			register:function(){
 				this.$message({message: '注册成功',type: 'success'});
 				this.registerOpen=false
+			}
+		},
+		mounted() {
+			let name = "user_session";
+			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+			console.log(arr)
+			if(arr != null){
+				this.isLogin = true;
+				
 			}
 		}
 	}
