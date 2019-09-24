@@ -202,24 +202,15 @@
 
 						<div class="box">
 						  <el-tabs class="tabs box-body" v-model="activeName" type="card">
-							<el-tab-pane label="预留" name="first">
-								<el-carousel trigger="click" height="160px">
-									<el-carousel-item v-for="item in imgs" :key="item">
-										<img class="thumbnail" :src="item" width="100%" height="100%" />
-									</el-carousel-item>
-								</el-carousel>
+							<el-tab-pane label="音乐" name="first">
+
 							</el-tab-pane>
-							<el-tab-pane label="音乐" name="second">
-								<div style="position: relative;display: flex;justify-content:center">
-									<div>
-										<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2822479734&auto=0&height=32"></iframe>
-										<div class="music-ing" style="position:absolute;top: 10px;margin-left: 11px;">
-											<a href="https://music.163.com/playlist?id=2822479734" target="_blank" rel="nofollow">
-												<img src="http://47.106.84.166:3302/upload/music.svg" width="20" height="20">
-											</a>
-										</div>
-									</div>
-								</div>
+							<el-tab-pane label="预留" name="second">
+                <!-- <el-carousel trigger="click" height="160px">
+                	<el-carousel-item v-for="item in imgs" :key="item">
+                		<img class="thumbnail" :src="item" width="100%" height="100%" />
+                	</el-carousel-item>
+                </el-carousel> -->
 							</el-tab-pane>
 							<el-tab-pane label="预留" name="third">预留</el-tab-pane>
 						  </el-tabs>
