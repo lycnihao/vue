@@ -31,17 +31,17 @@
 					</el-tooltip>
 				</li>
 				<li class="nav-item" v-show="isLogin">
-          <el-dropdown trigger="click" placement="top" @command="handleCommand">
-            <span class="el-dropdown-link">
-              <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="1">个人中心</el-dropdown-item>
-              <el-dropdown-item command="2">修改密码</el-dropdown-item>
-              <el-dropdown-item command="3">修改头像</el-dropdown-item>
-              <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+				<el-dropdown trigger="click" placement="top" @command="handleCommand">
+					<span class="el-dropdown-link">
+					  <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+					</span>
+					<el-dropdown-menu slot="dropdown">
+					  <el-dropdown-item command="1">个人中心</el-dropdown-item>
+					  <el-dropdown-item command="2">修改密码</el-dropdown-item>
+					  <el-dropdown-item command="3">修改头像</el-dropdown-item>
+					  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
 
         </li>
 				<li class="nav-item" v-show="!isLogin" @click="loginOpen = true"><a>登录</a></li>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<head-top></head-top>
+		<v-header></v-header>
 
 		<section>
 			<div id="search">
@@ -113,9 +113,9 @@
 						 <div class="box">
 							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 								 <div class="float-left" style="margin-bottom: -5px;">
-									 <ul class="nav menu-inline" style="line-height: 30px;">
-										 <li class="nav-item"><a href="#" class="active">导航</a></li>
-										 <!-- <li class="nav-item"><a href="#test">其他</a></li> -->
+									 <ul class="nav menu-inline" style="line-height: 36px;">
+										 <li class="nav-item"><a style="font-size: 15px;" href="#" class="active">导航</a></li>
+										 <li class="nav-item"><a style="font-size: 15px;" href="#">新闻</a></li>
 									</ul>
 								 </div>
 								 <div class="float-right"></div>
@@ -200,49 +200,53 @@
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
 
-						<div class="box">
+						<!-- <div class="box">
 						  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 							<el-tab-pane label="音乐" name="first">
 
 							</el-tab-pane>
 							<el-tab-pane label="预留" name="second">
-                <!-- <el-carousel trigger="click" height="160px">
-                	<el-carousel-item v-for="item in imgs" :key="item">
-                		<img class="thumbnail" :src="item" width="100%" height="100%" />
-                	</el-carousel-item>
-                </el-carousel> -->
+								<el-carousel trigger="click" height="160px">
+									<el-carousel-item v-for="item in imgs" :key="item">
+										<img class="thumbnail" :src="item" width="100%" height="100%" />
+									</el-carousel-item>
+								</el-carousel>
 							</el-tab-pane>
 							<el-tab-pane label="预留" name="third">预留</el-tab-pane>
 						  </el-tabs>
+						</div> -->
+						<div class="box calendar">
+							<div class="box-body">
+								<calendar></calendar>
+							</div>
 						</div>
+						<div class="box hot-link">
+							<div class="box-header">
+								<h3><img :src="searchIcon">热搜榜</h3>
+							<i @click="hotRefresh" class="el-icon-refresh"></i>
+							</div>
+							<div class="box-body">
+								<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
+									<el-carousel-item v-for="array in hotList">
+							   <ul class="menu" style="width: 100%;">
+								 <li class="nav-item" style="width: 100%;"  v-for="item in array">
+								   <div style="display: flex;justify-content:space-between;">
+									 <span style="display: inherit;">
+									   <em>{{ item.index }}</em>
+									   <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
+									 </span>
+									 <span style="font-size: 13px;color: #999;">
+										{{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i>
+									 </span>
+								   </div>
+								 </li>
+							   </ul>
 
-            <div class="box hot-link">
-            	<div class="box-header">
-            		<h3><img :src="searchIcon">热搜榜</h3>
-                <i @click="hotRefresh" class="el-icon-refresh"></i>
-            	</div>
-            	<div class="box-body">
-            		<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
-            			<el-carousel-item v-for="array in hotList">
-                   <ul class="menu" style="width: 100%;">
-                     <li class="nav-item" style="width: 100%;"  v-for="item in array">
-                       <div style="display: flex;justify-content:space-between;">
-                         <span style="display: inherit;">
-                           <em>{{ item.index }}</em>
-                           <a :href="item.url" @click="hotSearch">{{ item.title }}</a>
-                         </span>
-                         <span style="font-size: 13px;color: #999;">
-                            {{ item.level }}<i :class="item.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i>
-                         </span>
-                       </div>
-                     </li>
-                   </ul>
 
-
-            			</el-carousel-item>
-            		</el-carousel>
-            	</div>
-            </div>
+									</el-carousel-item>
+								</el-carousel>
+							</div>
+						</div>
 						<!-- <div class="box link">
 							<div class="box-header">
 								<h3>今日推荐 * 精选</h3>
@@ -262,14 +266,15 @@
 		</section>
 
 
-		<foot></foot>
+		<v-footer></v-footer>
 	</div>
 </template>
 
 <script>
 import dataJson from './../data.json';
-import header from './common/header/head'
-import footer from './common/footer/foot'
+import header from './common/module/header'
+import footer from './common/module/footer'
+import calendar from './common/widget/calendar'
 import BScroll from 'better-scroll'
 
 export
@@ -398,8 +403,9 @@ default {
 			}
         },
         components: {
-            'headTop': header,
-            'foot': footer
+            'v-header': header,
+            'v-footer': footer,
+			'calendar': calendar
         },
 		created() {
 			this.getData();

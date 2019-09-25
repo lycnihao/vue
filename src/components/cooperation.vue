@@ -29,8 +29,8 @@
 </template>
 
 <script>
-	import header from './common/header/head'
-	import footer from './common/footer/foot'
+	import header from './common/module/header'
+	import footer from './common/module/footer'
 
 	export default {
 	  name: 'About',
