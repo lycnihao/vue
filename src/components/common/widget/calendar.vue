@@ -6,14 +6,14 @@
 				<span>{{nowYear}} 年 &nbsp;{{nowMonth}} 月</span>
 				<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
 			</h3>
-			<p class="info">{{lunarcalendar}} · {{week}} · 
+			<p class="info">{{lunarcalendar}} · {{week}} ·
 			<a :href="'http://www.tianqi.com/index.php?c=history&md='+num(nowMonth)+num(nowDay)" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
 		</div>
 		<div class="week"><ul><li class="week-item" v-for="week in weekArr"><span>{{week}}</span></li></ul></div>
 		<div class="day">
 			<ul class="week-day" v-for="row in 6">
 				<li class="day-item" v-for="item in 7">
-					<a href="javascript:(0);" :class="days[(row-1) * 7 + item -1].style" 
+					<a href="javascript:(0);" :class="days[(row-1) * 7 + item -1].style"
 					:title="days[(row-1) * 7 + item -1].significant ? days[(row-1) * 7 + item -1].text:''"
 					@click="updateCalendar(nowYear,days[(row-1) * 7 + item -1].month - 1,days[(row-1) * 7 + item -1].value)">
 					<span v-html="days[(row-1) * 7 + item -1].text"></span></a>
@@ -63,7 +63,7 @@ default {
 		// 获得每个月的日期有多少，注意 month - [0-11]
 		getMonthCount : function(year, month) {
 			let arr = [
-			  31, null, 31, 30, 
+			  31, null, 31, 30,
 			  31, 30, 31, 31,
 			  30, 31, 30, 31
 			];
@@ -92,7 +92,7 @@ default {
 			if (tmp2 == day)
 				solarTerms = solarTerm[month * 2];
 			return solarTerms;
-		},	
+		},
 		//获取节假日
 		getFestival:function(month, day){
 			let t='t';
@@ -107,11 +107,11 @@ default {
 		},
 		//获取农历
 		getLunarcalendar:function(year, month, day){
-			
+
 			var GetBit = function(m, n) {
 		    return (m >> n) & 1;
 			}
-		
+
 			var total, m, n, k;
 			total = (year - 1921) * 365 + Math.floor((year - 1921) / 4) + this.madd[month-1] + day - 38;
 		    if (year % 4 == 0 && month > 1) {
@@ -125,12 +125,12 @@ default {
 		            if (total <= 29 + bit){
 						break ok ;
 					}
-		                
+
 		            total = total - 29 - bit;
 		        }
 		    }
-			
-			
+
+
 			day = total;
 			let month_ = k - n + 1;
 			if (k == 12) {
@@ -143,7 +143,7 @@ default {
 		    }
 			let tmp = '';
 			if (month_ < 1) {
-		        //tmp += "(闰)";  
+		        //tmp += "(闰)";
 		        tmp += this.MonString.charAt(-month_ - 1);
 		    } else {
 		        tmp += this.MonString.charAt(month_ - 1);
@@ -154,7 +154,7 @@ default {
 				tmp += this.NumString.charAt((day - 1) % 10);
 			} */
 			tmp += this.NumString.charAt((day - 1) % 10);
-			
+
 			return tmp;
 		},
 		// 获取农历 数字类型
@@ -204,7 +204,7 @@ default {
 			this.lunarcalendar = this.getLunarcalendar(year,month + 1,day);
 			let whereMonday = this.getWeekday(year, month);
 			this.week = "星期" + this.weekArr[whereMonday]
-			
+
 			// 生成日历数据，上个月的 x 天 + 当月的 [28,29,30,31]天 + 下个月的 y 天 = 42
 			let currentMonth = this.getMonthCount(year, month);
 			let preMonth = this.getPreMonthCount(year, month);
@@ -214,32 +214,32 @@ default {
 			let res = [].concat(preArr, currentMonth, nextArr);
 			this.days = [];
 			for(let i = 0;i < res.length;i++){
-				
+
 				let res_day = res[i];
 				let year_ = year;
 				let month_ = month;
-				
+
 				let style = 'day';
-				console.log(month_)
+        console.log(month_)
 				if(i <= 7 && i < whereMonday){
-					if(month_ == 1){
+					if(month_ == 0){
 						month_ = 11
-						year_ = year_ - 1
+            year_ = year_ - 1
 					}
-						
-					style = ''
+          month_ = month_ - 1
+					style = 'preMonth'
 				}
 				else if ( i + 1 > whereMonday + currentMonth.length){
-					if(month_ > 11){
-						year_ = year_ + 1;
+					if(month_ > 10){
 						month_ = 1
+            year_ = year_ + 1
 					}
-					style = ''
+          month_ = month_ + 1
+					style = 'nextMonth'
 				}
 				else if(res_day == day)
 					style = 'active'
-					
-				console.log("year-"+year_)
+
 				let solarTerm = this.getSolarTerm(year_, month_, res_day);
 				let lunarcalendar = this.getLunarcalendar(year_,month_ + 1,res_day);
 				let festival = this.getFestival(month_ + 1,res_day);
@@ -252,10 +252,10 @@ default {
 					text = festival
 				}
 				/* console.log(this.getNumLunarcalendar(lunarcalendar)) */
-				this.days.push({month:month_+1,value:res_day, text:text, style:style ,significant: style == 'significant' })
+				this.days.push({month:month_ + 1,value:res_day, text:text, style:style ,significant: style == 'significant' })
 			}
 		},
-		
+
 		//上个月
 		perCalendar : function(){
 			if (this.nowMonth - 1  <= 0) {
@@ -272,7 +272,7 @@ default {
 			  this.updateCalendar(this.nowYear, this.nowMonth, this.nowDay);
 			}
 		}
-	
+
 	},
 	created(){
 		this.updateCalendar();
@@ -285,26 +285,27 @@ default {
 		text-align: center;
 		margin-top: 3px;
 	}
-	
+
 	.calendar-header .btn-prev i{
 		font-size: 20px;
 		margin-right: 5px;
 	}
-	
+
 	.calendar-header .btn-next i{
 		font-size: 20px;
 		margin-left: 5px;
 	}
-	
-	
+
+
 	.week-item {
 		width: 14%;
 		display: inline-block;
 		text-align: center;
 	}
-	
+
 	.week ul,.week-day{
 		width: 100%;
+    margin: 5px 0;
 	}
 	.week ul{
 		border-bottom: 1px silver solid;
@@ -313,53 +314,53 @@ default {
 		line-height: 32px;
 		font-size: 13px;
 	}
-	
+
 	.day-item {
 		width: 14%;
 		height: 40px;
 		line-height: 40px;
 		display: inline-block;
-		text-align: center;
 	}
-	
+
 	.day-item a{
-		width: 30px;
-		height: 30px;
-		line-height: 30px;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
 		border-radius: 50%;
+    text-align: center;
 		overflow: hidden;
 		display: inline-block;
 		transition: all .4s cubic-bezier(.175,.885,.32,1);
 	}
-	
+
 	.day-item a:hover{
 		background-color: #f98a0024;
 	}
-	
+
 	.day-item .day{
 		color: #343951!important;
 	}
-	
+
 	.day-item .active{
 		color: #fff;
 		background-color: #9875dc!important;
 	}
-	
+
 	.significant span{
 		font-size: 12px!important;
 		color: #b1906f;
 	}
-	
+
 	.active.significant span{
 		color: #fff;
 	}
-	
-	
+
+
 	.info{
 		margin-top: 2px;
 		margin-bottom: 5px;
 		font-size: 12px;
 		color: #a2a2a2;
 	}
-	
+
 </style>
