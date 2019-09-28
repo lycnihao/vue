@@ -220,7 +220,7 @@ default {
 				let month_ = month;
 
 				let style = 'day';
-        console.log(month_)
+        /* console.log(month_) */
 				if(i <= 7 && i < whereMonday){
 					if(month_ == 0){
 						month_ = 11

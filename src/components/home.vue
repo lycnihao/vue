@@ -166,20 +166,25 @@
 									 <span><i class="el-icon-setting"></i></span>
 								  </div>
 								   <div class="box-body">
-									 <ul class="site-list">
-									   <li v-for="site in sites[category.categoryId]">
-										 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-										   <div class="site-icon float-left">
-												<el-image :src="site.icon" :alt="site.title" lazy>
-													<div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
-												</div>
-										   <div class="site-info float-right">
-											 <h3>{{ site.title }}</h3>
-											 <p>{{ site.summary }}</p>
-										   </div>
-										 </a>
-									   </li>
-									 </ul>
+                     <el-tabs v-model="activeSubCategorys[category.categoryId]">
+
+                      <el-tab-pane v-for="subCategory in subCategorys[category.categoryId]" :label="subCategory.name" :name="subCategory.slugName">
+                          <ul class="site-list">
+                            <li v-for="site in sites[subCategory.categoryId]">
+                               <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+                                 <div class="site-icon float-left">
+                                  <el-image :src="site.icon" :alt="site.title" lazy>
+                                    <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+                                  </div>
+                                 <div class="site-info float-right">
+                                 <h3>{{ site.title }}</h3>
+                                 <p>{{ site.summary }}</p>
+                                 </div>
+                               </a>
+                            </li>
+                          </ul>
+                      </el-tab-pane>
+                    </el-tabs>
 								   </div>
 								</li>
 							</ul>
@@ -288,9 +293,11 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              apiUrl: 'http://47.106.84.166:3302/',
-              /* apiUrl: 'http://127.0.0.1:3302/', */
+              /* apiUrl: 'http://47.106.84.166:3302/', */
+              apiUrl: 'http://127.0.0.1:3302/',
               categorys: [],
+              subCategorys: {},
+              activeSubCategorys: {},
               sites: null,
               touch: null,
               recommend: null,
@@ -322,7 +329,7 @@ default {
 			  if (!event._constructed) {
 			    return
 			  }
-			  console.log(this.listHeight[index])
+			  /* console.log(this.listHeight[index]) */
 			  window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
 			},
             search: function() {
@@ -365,9 +372,24 @@ default {
                     this.$message.error('数据请求失败，请稍后再试');
                 });
                 this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
-                    this.categorys = res.body.categories;
-                    this.sites = res.body.webSites;
                     loading.close();
+                    for(let categorie of res.body.categories){
+                      if(categorie.parentId == 0){
+                        this.categorys.push(categorie)
+                      }else{
+                        let value = this.subCategorys[categorie.parentId];
+                        if(value == undefined)
+                          value = []
+                        value.push(categorie)
+                        this.subCategorys[categorie.parentId] = value;
+
+                        //默认选择tab项
+                        if(this.activeSubCategorys[categorie.parentId] == undefined)
+                          this.activeSubCategorys[categorie.parentId] = categorie.slugName
+
+                      }
+                    }
+                    this.sites = res.body.webSites;
 					this.$nextTick(() => {
 					  this._initScroll(); // 初始化scroll
 					  this._calculateHeight(); // 初始化列表高度列表
@@ -378,7 +400,7 @@ default {
                 });
             },
             hotSearch: function(options) {
-                console.log(options.target.innerText);
+                /* console.log(options.target.innerText); */
 				window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
