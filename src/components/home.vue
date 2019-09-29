@@ -172,14 +172,14 @@
 									 </div>
 								  </div>
 								   <div class="box-body">
-									   
+
 										<div class="tabs-content" v-if="subCategorys[category.categoryId]">
 											<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName">
 												<ul class="site-list">
 												  <li v-for="site in sites[subCategory.categoryId]">
 													 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
 													   <div class="site-icon float-left">
-														<el-image :src="site.icon" :alt="site.title">
+														<el-image :src="site.icon" :alt="site.title" lazy>
 														  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
 														</div>
 													   <div class="site-info float-right">
@@ -207,7 +207,7 @@
 											  </li>
 											</ul>
 										</div>
-				
+
 								   </div>
 								</li>
 							</ul>
@@ -316,8 +316,8 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              apiUrl: 'http://47.106.84.166:3302/',
-              /* apiUrl: 'http://127.0.0.1:3302/', */
+              /* apiUrl: 'http://47.106.84.166:3302/', */
+              apiUrl: 'http://127.0.0.1:3302/',
               categorys: [],
               subCategorys: {},
               activeSubCategorys: {},
@@ -453,7 +453,7 @@ default {
 				event.target.className = "active";
 				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
-				
+
 				this._calculateHeight();
 			}
         },
