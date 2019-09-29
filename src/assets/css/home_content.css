@@ -296,15 +296,56 @@ section {
 	border-bottom: 1px rgba(245,245,245,1) solid;
 }
 
-.box-header>h3 {
-	font-size: 16px;
-	color: #6b7386;
+.box-header h3 {
+	font-size: 18px;
+	font-weight: 600;
+	color: #3280fc;
 }
 
 .box-body {
 	padding: 10px;
 }
 
+	.tabs{
+       width:100%;
+   }
+   .tabs-nav .tablist li{
+       margin: 0 5px;
+       padding:0;
+       list-style: none;
+       text-align: center;
+   }
+   .tabpanel{
+       width:100%;
+       display: none;
+   }
+   .show{
+       display: block;
+   }
+   
+   
+.site-tabs{
+	width: 100%;
+}
+.site-tabs h3{
+	display: initial;
+}
+.site-tabs .tabs-nav{
+	width: 90%;
+	display: inline-block;
+}
+.site-tabs .tablist li{
+	display: inherit;
+}
+
+.site-tabs .tablist li a{
+	padding: 5px 12px;
+    border-radius: 20px;
+}
+.site-tabs .tablist li a.active{
+	color: #fff;
+    background-color: #1989fa;
+}
 .site-list {
 	width: 100%;
 	display: flex;

@@ -252,7 +252,9 @@ default {
 					text = festival
 				}
 				/* console.log(this.getNumLunarcalendar(lunarcalendar)) */
-				this.days.push({month:month_ + 1,value:res_day, text:text, style:style ,significant: style == 'significant' })
+				let significant = style.indexOf("significant");
+				
+				this.days.push({month:month_ + 1,value:res_day, text:text, style:style ,significant: significant != -1 })
 			}
 		},
 

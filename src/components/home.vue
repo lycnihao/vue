@@ -123,7 +123,7 @@
 							 <div class="box-body" ref="menuWrapper1">
 								 <ul class="menu menu-inline cate-list">
 									 <li class="nav-item-radius" v-for="(category, index) in categorys">
-										 <a  :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
+										 <a @click="menuClick(index,$event)">
 											<i :class="category.icon"></i>{{category.name}}
 										 </a>
 									 </li>
@@ -160,31 +160,54 @@
 
 						<div id="wrapper" ref="sitesWrapper">
 							<ul>
-								<li v-for="category in categorys" class="box site-list-hook">
+								<li v-for="category in categorys" class="box site-list-hook tabs">
 								  <div class="box-header">
-									 <h3 :id="category.slugName">{{category.name}}</h3>
-									 <span><i class="el-icon-setting"></i></span>
+									 <div class="site-tabs">
+										 <h3 :id="category.slugName">{{category.name}}</h3>
+										 <div class="tabs-nav">
+										 	<ul class="tablist">
+										 		<li class="tabs-item" v-for="(subCategory,index) in subCategorys[category.categoryId]" @click="tabs(subCategory.slugName,$event)"><a :class="index == 0 ? 'active':''" href="javascript:void(0);">{{subCategory.name}}</a></li>
+										 	</ul>
+										 </div>
+									 </div>
 								  </div>
 								   <div class="box-body">
-                     <el-tabs v-model="activeSubCategorys[category.categoryId]">
-
-                      <el-tab-pane v-for="subCategory in subCategorys[category.categoryId]" :label="subCategory.name" :name="subCategory.slugName">
-                          <ul class="site-list">
-                            <li v-for="site in sites[subCategory.categoryId]">
-                               <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-                                 <div class="site-icon float-left">
-                                  <el-image :src="site.icon" :alt="site.title" lazy>
-                                    <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
-                                  </div>
-                                 <div class="site-info float-right">
-                                 <h3>{{ site.title }}</h3>
-                                 <p>{{ site.summary }}</p>
-                                 </div>
-                               </a>
-                            </li>
-                          </ul>
-                      </el-tab-pane>
-                    </el-tabs>
+									   
+										<div class="tabs-content" v-if="subCategorys[category.categoryId]">
+											<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName">
+												<ul class="site-list">
+												  <li v-for="site in sites[subCategory.categoryId]">
+													 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+													   <div class="site-icon float-left">
+														<el-image :src="site.icon" :alt="site.title">
+														  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+														</div>
+													   <div class="site-info float-right">
+													   <h3>{{ site.title }}</h3>
+													   <p>{{ site.summary }}</p>
+													   </div>
+													 </a>
+												  </li>
+												</ul>
+											</div>
+										</div>
+										<div v-else>
+											<ul class="site-list">
+											  <li v-for="site in sites[category.categoryId]">
+												 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+												   <div class="site-icon float-left">
+													<el-image :src="site.icon" :alt="site.title">
+													  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+													</div>
+												   <div class="site-info float-right">
+												   <h3>{{ site.title }}</h3>
+												   <p>{{ site.summary }}</p>
+												   </div>
+												 </a>
+											  </li>
+											</ul>
+										</div>
+				
 								   </div>
 								</li>
 							</ul>
@@ -318,6 +341,7 @@ default {
 			  let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook")
 			  let search = document.getElementById("search");
 			  let height = 550
+			  this.listHeight  = []
 			  this.listHeight.push(height)
 			  for (let i = 0, l = foodList.length; i < l; i++) {
 			    let item = foodList[i]
@@ -422,6 +446,14 @@ default {
 				} else{
 					this.menuTop = false;
 				}
+			},
+			tabs:function(name,event){
+				event.path[2].querySelector(".tablist .active").className = "";
+				event.target.className = "active";
+				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+				
+				this._calculateHeight();
 			}
         },
         components: {
@@ -432,7 +464,7 @@ default {
 		created() {
 			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
-		  }
+		}
     }
 </script>
 

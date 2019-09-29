@@ -49,13 +49,13 @@
 
 	.nav-item ,.nav-item-radius{
 	    margin: 0 5px;
-      height: 100%;
+		height: 100%;
 	    list-style: none;
 	    position: relative;
 	    cursor: pointer;
 		vertical-align: middle;
 	}
-
+	
 	.menu-inline .nav-item ,.menu-inline .nav-item-radius{
 		float: left;
 	}
@@ -67,7 +67,7 @@
 	}
 
 	.nav-item a.active{
-		    color: #1989fa;
+		color: #1989fa;
 	}
 
 	.nav-item a.active:after {
@@ -84,11 +84,15 @@
 		margin:0 10px 0 0;
 	}
 	.nav-item-radius a{
-		padding: 8px 12px;
+		padding: 5px 12px;
 		border-radius: 20px;
 	}
 	.nav-item-radius a:hover{
 		background-color: #f1f1f1;
+	}
+	.nav-item-radius a.active{
+		color: #fff;
+		background-color: #1989fa;
 	}
 	.menu li{
 		height: 35px;
