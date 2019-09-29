@@ -138,7 +138,7 @@
 							  <transition name="slide-fade" >
 								 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
 								 <li class="nav-item-radius" v-for="(category, index) in categorys">
-								   <a :class="(index == 0 ? 'active':'')" @click="menuClick(index,$event)">
+								   <a @click="menuClick(index,$event)">
 								  <i :class="category.icon"></i>{{category.name}}
 								   </a>
 								 </li>
@@ -396,7 +396,7 @@ default {
                     this.$message.error('数据请求失败，请稍后再试');
                 });
                 this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
-                    loading.close();
+					loading.close();
                     for(let categorie of res.body.categories){
                       if(categorie.parentId == 0){
                         this.categorys.push(categorie)
@@ -420,6 +420,7 @@ default {
 					})
                 },
                 function() {
+					loading.close();
                     this.$message.error('数据请求失败，请稍后再试');
                 });
             },
