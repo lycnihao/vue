@@ -108,7 +108,8 @@ section {
 	position: relative;
 	padding: 180px 0 230px 0;
 	background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
-	background-image: url(../bg/bg2.png);
+	background-image: url(http://p5.img.cctvpic.com/photoAlbum/templet/common/DEPA1551606095934165/xxxxhaowai70zhounian.jpg);
+	background-size: cover;
 }
 
 #search .search-center,#search .search-tools{
@@ -310,7 +311,7 @@ section {
        width:100%;
    }
    .tabs-nav .tablist li{
-       margin: 0 5px;
+       margin: 3px;
        padding:0;
        list-style: none;
        text-align: center;
@@ -332,6 +333,10 @@ section {
 }
 .site-tabs .tabs-nav{
 	display: inline-block;
+	width: 90%;
+}
+.site-tabs .tablist{
+	display: inline-table;
 }
 .site-tabs .tablist li{
 	display: inherit;

@@ -156,6 +156,7 @@ window._hmt = _hmt;
 		justify-content:space-between;
 		align-items:center;
 	}
+	
 
 	.header .logo{
 	    width: 100px;

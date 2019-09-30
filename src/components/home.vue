@@ -4,6 +4,7 @@
 
 		<section>
 			<div id="search">
+				
 				<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
 					<defs>
 						<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
@@ -14,6 +15,7 @@
 						<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)"></use>
 						<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
 					</g>
+					
 				</svg>
 				<h3>以高效的方式获取想要的资源</h3>
 				<div class="search-tools" style="height: 40px; line-height: 40px;">
@@ -227,7 +229,11 @@
 					</el-col>
 					<!-- 侧边栏 -->
 					<el-col :md="6" :lg="6" :xl="6" class="sidebar">
-
+						<div class="box">
+							<div class="box-body">
+								<img src="../assets/bg/70.png" width="100%" />
+							</div>
+						</div>
 						<!-- <div class="box">
 						  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 							<el-tab-pane label="音乐" name="first">
@@ -316,8 +322,8 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              /* apiUrl: 'http://47.106.84.166:3302/', */
-              apiUrl: 'http://127.0.0.1:3302/',
+              apiUrl: 'http://47.106.84.166:3302/',
+              /* apiUrl: 'http://127.0.0.1:3302/', */
               categorys: [],
               subCategorys: {},
               activeSubCategorys: {},
@@ -449,11 +455,23 @@ default {
 				}
 			},
 			tabs:function(name,event){
+				
+				function getScrollTop() {
+				var scroll_top = 0;
+				if (document.documentElement && document.documentElement.scrollTop) {
+					scroll_top = document.documentElement.scrollTop;
+				}
+				else if (document.body) {
+					scroll_top = document.body.scrollTop;
+				}
+				return scroll_top;
+			}
+				
 				event.path[2].querySelector(".tablist .active").className = "";
 				event.target.className = "active";
 				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
-
+				
 				this._calculateHeight();
 			}
         },
