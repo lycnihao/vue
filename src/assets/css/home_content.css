@@ -835,7 +835,12 @@ section {
     padding: 2px;
 	}
 
-  .site-list .site-icon .el-image {
+/*  .site-list .site-icon .el-image {
+  	width: 25px;
+  	height: 25px;
+  } */
+  
+  .site-icon img{
   	width: 25px;
   	height: 25px;
   }
