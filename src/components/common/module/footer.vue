@@ -1,12 +1,12 @@
 <template>
-	<footer class="box">
+	<footer>
 		<ul class="menu">
 			<li class="nav-item"><el-link @click="aboutVisible = true">关于我们</el-link></li>
-			<li class="nav-item"><el-link >商务合作</el-link></li>
+			<li class="nav-item"><el-link >更新日志</el-link></li>
 			<li class="nav-item"><el-link href="https://wj.qq.com/s2/4216300/3ed1" target="_blank">申请收录</el-link></li>
 			<li class="nav-item"><el-link href="https://wj.qq.com/s2/4216517/3dd6" target="_blank">意见反馈</el-link></li>
 		</ul>
-		<p>红衣导航 - hom1.cn @ All rights Reserved ，当前版本:测试版 </p>
+		<p style="color: #EBEEF5;margin-top: 10px;">Copyright &copy; 2019 红衣导航 - hom1.cn All rights Reserved</p>
 
     <el-dialog title="关于" :visible.sync="aboutVisible">
     <strong>168红衣导航 www.168dh.cn</strong> 上线时间 2019-09-28<br />
@@ -38,9 +38,8 @@
 </script>
 <style>
 	footer{
-		margin: 10px 0px 0px !important;
-		padding: 25px 0px !important;;
-
+		padding: 25px 0px !important;
+		background-color: #303133;
 	}
 	footer .menu{
 	    padding: 0px 18%;

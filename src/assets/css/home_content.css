@@ -503,10 +503,20 @@ section {
 .site-icon .el-image{
 	position: inherit!important;
 }
+.links{
+	width: 100%;
+	margin-top: 30px;
+	padding: 22px 0 10px 0;
+	background-color: #fff;
+	display: inline-flex;
+}
+.links .box{
+	box-shadow:none;
+}
 
 @media screen and (min-width:1200px) {
 
-	.main{
+	.main, .links .box{
 		margin: 0 10%;
 	}
 
@@ -557,7 +567,7 @@ section {
 		display: none;
 	}
 
-	.main{
+	.main, .links .box{
 		margin: 0 10%;
 	}
 

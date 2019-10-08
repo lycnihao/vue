@@ -69,7 +69,7 @@
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
            <!-- user-block图标板块 -->
-           <!-- <div class="box">
+			<!-- <div class="box">
               <div class="box-header">
                <h3>常用链接</h3>
               </div>
@@ -106,7 +106,7 @@
                    </ul>
                 </div>
              </div>
-         </div> -->
+			</div> -->
 
 				<el-row :gutter="10">
 					<!-- 主体显示块 -->
@@ -294,12 +294,29 @@
 						</div> -->
 					</el-col>
 				</el-row>
-
+				
 			 </div>
+			 
 			<el-backtop :bottom="100"></el-backtop>
 		</section>
 
-
+		<div class="links">
+			 <div class="box">
+				 <div class="box-header">
+					 <h4><strong>友情链接</strong></h4>
+				 </div>
+				 <div class="box-body">
+					<table width="100%" border="0" cellpadding="3" cellspacing="0">
+						<tbody>
+							<tr>
+								<td><el-link href="" target="_blank" type="info">信息链接</el-link></td>
+							</tr>
+						</tbody>
+					</table>
+				 </div>
+			 </div>
+		</div>
+		
 		<v-footer></v-footer>
 	</div>
 </template>
