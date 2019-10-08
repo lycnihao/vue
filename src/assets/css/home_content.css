@@ -333,7 +333,6 @@ section {
 }
 .site-tabs .tabs-nav{
 	display: inline-block;
-	width: 90%;
 }
 .site-tabs .tablist{
 	display: inline-table;
@@ -378,6 +377,7 @@ section {
 	/* background: rgba(241,242,249,.5); */
   background: #eee;
 }
+
 
 .site-list .site-info {
   width: 88%;
@@ -500,9 +500,14 @@ section {
 	border-bottom: none;
 }
 
+.site-icon img{
+	width: 36px;
+}
+
 .site-icon .el-image{
 	position: inherit!important;
 }
+
 .links{
 	width: 100%;
 	margin-top: 30px;
@@ -806,6 +811,17 @@ section {
 
 	.container {
 		width: 100%;
+	}
+	
+
+	
+	.tabs-nav{
+		margin-top: 8px;
+	}
+	
+	.site-tabs .tablist li a {
+		padding: 3px 6px;
+		border-radius: 20px;
 	}
 
 	.site-list li {

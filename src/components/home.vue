@@ -181,8 +181,7 @@
 												  <li v-for="site in sites[subCategory.categoryId]">
 													 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
 													   <div class="site-icon float-left">
-														<el-image :src="site.icon" :alt="site.title" lazy>
-														  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+														<img :data-src="site.icon" :alt="site.title"></img>
 														</div>
 													   <div class="site-info float-right">
 													   <h3>{{ site.title }}</h3>
@@ -309,7 +308,7 @@
 					<table width="100%" border="0" cellpadding="3" cellspacing="0">
 						<tbody>
 							<tr>
-								<td><el-link href="" target="_blank" type="info">信息链接</el-link></td>
+								<td><el-link href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=d05FTkBPTk5GRjcGBlkUGBo" target="_blank" type="info">申请友链</el-link></td>
 							</tr>
 						</tbody>
 					</table>
@@ -440,6 +439,9 @@ default {
 					this.$nextTick(() => {
 					  this._initScroll(); // 初始化scroll
 					  this._calculateHeight(); // 初始化列表高度列表
+					  var img=document.querySelectorAll("img[data-src]")
+					  for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
+					  this.lazy();
 					})
                 },
                 function() {
@@ -470,26 +472,44 @@ default {
 				} else{
 					this.menuTop = false;
 				}
+				
+				
+				var img=document.querySelectorAll("img[data-src]")
+				for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
+				//图片懒加载
+				this.lazy();
+				
 			},
-			tabs:function(name,event){
-				
-				function getScrollTop() {
-				var scroll_top = 0;
-				if (document.documentElement && document.documentElement.scrollTop) {
-					scroll_top = document.documentElement.scrollTop;
-				}
-				else if (document.body) {
-					scroll_top = document.body.scrollTop;
-				}
-				return scroll_top;
-			}
-				
+			tabs:function(name,event){					
 				event.path[2].querySelector(".tablist .active").className = "";
 				event.target.className = "active";
 				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 				
 				this._calculateHeight();
+			},
+			lazy:function(){
+				var viewHeight=document.documentElement.clientHeight
+				var t=document.documentElement.scrollTop||document.body.scrollTop;
+				var limg=document.querySelectorAll("img[data-src]")
+					Array.prototype.forEach.call(limg,function(item,index){
+						
+					var rect
+					if(item.getAttribute("data-src")==="")
+					return
+					
+					rect=item.getBoundingClientRect()
+					if(rect.bottom>=0&&rect.top<viewHeight){(function(){
+						var img=new Image()
+						img.src=item.getAttribute("data-src")
+						item.src=img.src
+						var j=0
+						setInterval(function(){j+=0.2
+						if(j<=1){item.style.opacity=j
+						return}},100)
+						item.removeAttribute('data-src')
+					})()}
+				})
 			}
         },
         components: {
