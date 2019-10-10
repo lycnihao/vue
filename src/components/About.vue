@@ -56,14 +56,14 @@
 		}
 	.content{
 		font-size: 15px;
-		margin-top: 52px;
+		margin-top: 62px;
 		border-radius: 5px;
 		padding: 10px 10px 100px 10px;
 		color: #616161;
 		text-align: center;
 		background-color: #fff;
 	}
-	
+
 	.large .h1{
 		line-height: 70px;
 		font-size: 3em;
@@ -75,7 +75,7 @@
 	.large .blue{
 		color: #1bc3fb;
 	}
-	
+
 	.num em{
 		margin: 0;
 		font-style: inherit;
@@ -85,7 +85,7 @@
 		font-family: "新宋体";
 		font-style: inherit;
 	}
-	
+
 	.block .p{
 		line-height: 70px;
 		letter-spacing:5px;

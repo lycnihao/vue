@@ -52,7 +52,7 @@
 	}
 	.content{
 		font-size: 15px;
-		margin-top: 52px;
+		margin-top: 62px;
 		border-radius: 5px;
 		padding: 10px 10px 100px 10px;
 		color: #616161;

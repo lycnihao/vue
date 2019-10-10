@@ -108,8 +108,7 @@ section {
 	position: relative;
 	padding: 180px 0 230px 0;
 	background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
-	background-image: url(http://p5.img.cctvpic.com/photoAlbum/templet/common/DEPA1551606095934165/xxxxhaowai70zhounian.jpg);
-	background-size: cover;
+	background-image: url(../bg/bg.png);
 }
 
 #search .search-center,#search .search-tools{
@@ -189,10 +188,10 @@ section {
 }
 .user-website{
   width: 100%;
-  padding: 20px 15px;
   background-color: #fff;
 }
 .user-website>li{
+  width: 10%;
   margin: 2px 5px;
   border-radius: 6px;
   display: inline-block;
@@ -206,8 +205,7 @@ section {
 }
 .user-website>li>a{
   padding: 5px 15px;
-  height: 60px;
-  width: 190px;
+  height: 32px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -217,21 +215,26 @@ section {
   margin-right: 5px;
 }
 
-.user-website>li>a .site-info {
-    width: 130px;
+.user-website>li>a .site-icon img{
+    width: 28px;
+    height: 28px;
 }
 
-.user-website>li>a .site-info p{
-    color: #a1a7b7;
-    font-size: 12px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+
+.user .badge{
+    padding: 3px;
+    margin: 0 4px 2px 0;
+    border-radius: 50%;
+    display: inline-block;
 }
 
-.user-website>li>a .el-image{
-    width: 36px;
-    height: 36px;
+.user .tabs-nav .active .badge{
+  display: none;
+}
+
+#user-block .null{
+  text-align: center;
+  background-color: #fff;
 }
 
 #touch {
@@ -273,8 +276,7 @@ section {
 #touch img {
 	width: 100%;
 	height: 100%;
-	;
-		border-radius: 50%;
+	border-radius: 50%;
 }
 
 .box {
@@ -323,8 +325,8 @@ section {
    .show{
        display: block;
    }
-   
-   
+
+
 .site-tabs{
 	width: 100%;
 }
@@ -342,8 +344,9 @@ section {
 }
 
 .site-tabs .tablist li a{
-	padding: 5px 12px;
+    padding: 5px 12px;
     border-radius: 20px;
+    display: inline-block;
 }
 .site-tabs .tablist li a.active{
 	color: #fff;
@@ -812,13 +815,13 @@ section {
 	.container {
 		width: 100%;
 	}
-	
 
-	
+
+
 	.tabs-nav{
 		margin-top: 8px;
 	}
-	
+
 	.site-tabs .tablist li a {
 		padding: 3px 6px;
 		border-radius: 20px;
@@ -839,7 +842,7 @@ section {
   	width: 25px;
   	height: 25px;
   } */
-  
+
   .site-icon img{
   	width: 25px;
   	height: 25px;

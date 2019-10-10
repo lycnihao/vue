@@ -1,8 +1,8 @@
 <template>
 	<footer>
 		<ul class="menu">
-			<li class="nav-item"><el-link href="/about">关于我们</el-link></li>
-			<li class="nav-item"><el-link href="/milestone">更新日志</el-link></li>
+			<li class="nav-item"><el-link href="/about" target="_blank">关于我们</el-link></li>
+			<li class="nav-item"><el-link href="/milestone" target="_blank">更新日志</el-link></li>
 			<li class="nav-item"><el-link href="https://wj.qq.com/s2/4216300/3ed1" target="_blank">申请收录</el-link></li>
 			<li class="nav-item"><el-link href="https://wj.qq.com/s2/4216517/3dd6" target="_blank">意见反馈</el-link></li>
 		</ul>
