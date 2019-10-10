@@ -31,6 +31,14 @@
 	    margin: 0;
 	    font-weight: 400;
 	}
+	
+	.h4{
+		font-weight: 400;
+		color: #1f2f3d;
+	}
+	.h3{
+		font-weight: 600;
+	}
 
 	.float-left{
 	    float: left;

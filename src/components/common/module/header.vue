@@ -36,9 +36,8 @@
 					  <el-avatar style="vertical-align: middle;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
 					</span>
 					<el-dropdown-menu slot="dropdown">
-					  <el-dropdown-item command="1">个人中心</el-dropdown-item>
-					  <el-dropdown-item command="2">修改密码</el-dropdown-item>
-					  <el-dropdown-item command="3">修改头像</el-dropdown-item>
+					  <el-dropdown-item command="1">我的主页</el-dropdown-item>
+					  <el-dropdown-item command="2">设置</el-dropdown-item>
 					  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -96,8 +95,9 @@ window._hmt = _hmt;
 				.then(function(res) {
 				    if(res.body.code == 1){
 						this.$message({message: '登录成功',type: 'success'});
-            this.isLogin=true;
+						this.isLogin=true;
 						this.loginOpen=false;
+						document.cookie
 					} else{
 						this.$message.error(res.body.msg);
 					}
@@ -106,26 +106,35 @@ window._hmt = _hmt;
                 });
 			},
 			register:function(){
-				this.$message({message: '注册成功',type: 'success'});
-				this.registerOpen=false
+				this.$http.post('http://localhost:3302/api/user/register',{'username': this.r_username,'password': this.r_password },{emulateJSON:true})
+				.then(function(res) {
+				    if(res.body.code == 1){
+						this.$message({message: '注册成功',type: 'success'});
+						this.registerOpen=false
+					} else{
+						this.$message.error(res.body.msg);
+					}
+				},function() {
+				    this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
 			},
-      handleCommand:function(command){
-        switch(command){
-           case 'logout':
-            this.logout();
-            break;
-        }
-      },
-      logout:function(){
-        let name = "user_session";
-        var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-        if(arr != null){
-        	for (var i = arr.length; i--;){
-            document.cookie = arr[i] + '=0;expires=' + new Date(0).toUTCString()
-          }
-          this.isLogin = false;
-        }
-      }
+		  handleCommand:function(command){
+			switch(command){
+			   case 'logout':
+				this.logout();
+				break;
+			}
+		  },
+		  logout:function(){
+			let name = "user_session";
+			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+			if(arr != null){
+				for (var i = arr.length; i--;){
+				document.cookie = arr[i] + '=0;expires=' + new Date(0).toUTCString()
+			  }
+			  this.isLogin = false;
+			}
+		  }
 		},
 		mounted() {
 			let name = "user_session";

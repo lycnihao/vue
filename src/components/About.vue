@@ -3,27 +3,36 @@
 		<head-top></head-top>
 
 		<section>
-			<el-row :gutter="20">
-				<el-col :md="3" :lg="3" :xl="3" style="text-align: center;">
-					<ul class="menu">
-						<li class="nav-item"><a href="/about" class="active"><i class="el-icon-s-custom"></i>关于我们</a></li>
-						<li class="nav-item"><a href="/cooperation"><i class="el-icon-s-cooperation"></i>商务合作</a></li>
-						<li class="nav-item"><a href="https://wj.qq.com/s2/4216300/3ed1" target="_blank"><i class="el-icon-document-add"></i>申请收录</a></li>
-						<li class="nav-item"><a href="https://wj.qq.com/s2/4216517/3dd6" target="_blank"><i class="el-icon-edit-outline"></i>意见反馈</a></li>
-					</ul>
-				</el-col>
-				<el-col :md="17" :lg="17" :xl="17">
-					<div class="title">
-						<h3>关于我们</h3>
-					</div>
-					<div class="content">
-						<p>红衣导航(www.hom1.cn)。目前处于开发环节，各个功能还有待完善，感谢大家使用红衣，我们会越做越好😘。</p>
-					</div>
-				</el-col>
-			</el-row>
-
+			<div class="content large">
+				<h3 class="h1">
+					<span class="red" style="font-size: 1.3em;"><i class="el-icon-s-home"></i></span>
+					<span class="num">
+						<em class="blue">1</em>
+						<em class="red">6</em>
+						<em class="blue">8</em>
+					</span>
+					<span class="str">
+						<em class="red">红</em>
+						<em class="blue">衣</em>
+					</span>
+				</h3>
+				<p style="margin: 32px 0 50px 0;">分享有价值的优质书签和工具，欢迎大家使用！</p>
+				<div class="block">
+					<p class="p">
+						168红衣导航 <a href="/">www.168dh.cn</a> 上线于2019年秋<!-- 2019年09月28日 -->，为大家提供发现、收藏、整理网站的平台，希望大家能够喜欢。
+					</p>
+					<p style="margin-top: 32px;">
+						<h3><p style="font-weight:600">与我联系</p></h3>
+						<p>欢迎用以下方式和我联系：</p>
+						<p>邮箱：38707145@qq.com      QQ：929789911</p>
+					</p>
+					<p style="margin-top: 50px;">
+						<h3><p style="font-weight:600">版权说明</p></h3>
+						<p>本站资源均收集整理于互联网或站内用户分享，如果侵犯了您的合法权益，请来信告知，我们将尽快作出处理。</p>
+					</p>
+				</div>
+			</div>
 		</section>
-
 		<foot></foot>
 	</div>
 </template>
@@ -42,30 +51,48 @@
 </script>
 
 <style>
-	.title h3 {
-		line-height: 40px;
-		color: #333;
-		font-size: 17px;
-		position: relative;
-		padding-left: 20px;
-	}
-
-	.title h3:before {
-		content: " ";
-		position: absolute;
-		left: 0;
-		top: 11px;
-		height: 18px;
-		width: 3px;
-		background: #1989fa;
-	}
+		section{
+			padding: 15px 0;
+		}
 	.content{
-		line-height: 30px;
 		font-size: 15px;
-		margin-top: 15px;
+		margin-top: 52px;
+		border-radius: 5px;
+		padding: 10px 10px 100px 10px;
 		color: #616161;
+		text-align: center;
+		background-color: #fff;
 	}
-
+	
+	.large .h1{
+		line-height: 70px;
+		font-size: 3em;
+		margin-top: 2em;
+	}
+	.large .red{
+		color: #fe5f58;
+	}
+	.large .blue{
+		color: #1bc3fb;
+	}
+	
+	.num em{
+		margin: 0;
+		font-style: inherit;
+	}
+	.str em{
+		margin: 0;
+		font-family: "新宋体";
+		font-style: inherit;
+	}
+	
+	.block .p{
+		line-height: 70px;
+		letter-spacing:5px;
+	}
+	.block p{
+		line-height: 30px;
+	}
 	@media screen and (min-width:1200px) {
 		section{
 			margin: 0 10%;
@@ -81,25 +108,11 @@
 		section{
 			margin: 0 5%;
 		}
-		.nav-item{
-			float: left;
-		}
-		._nav{
-			border-bottom: 1px solid #ececec;
-			margin-bottom: 15px;
-		}
 	}
 
 	@media only screen and (max-width: 479px) {
 		section{
 			margin: 0 5%;
-		}
-		.nav-item{
-			float: left;
-		}
-		._nav{
-			border-bottom: 1px solid #ececec;
-			margin-bottom: 15px;
 		}
 	}
 </style>
