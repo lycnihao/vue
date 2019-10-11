@@ -13,6 +13,8 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
 
+axios.defaults.withCredentials=true
+
 Vue.prototype.$ajax= axios
 
 
@@ -20,12 +22,12 @@ Vue.prototype.$ajax= axios
 router.beforeEach((to, from, next) => {
 	var _hmt = _hmt || [];
 	window._hmt = _hmt;
-	
+
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?b14e8cb38dafe28ede1af1dfd1f498dc";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
-	
+
     // _hmt.push(['_trackPageview', pageURL]) 必须是以"/"（斜杠）开头的相对路径
     if (to.path) window._hmt.push(['_trackPageview', '/#' + to.fullPath])
     next()
@@ -38,4 +40,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-

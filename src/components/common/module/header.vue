@@ -100,6 +100,7 @@ window._hmt = _hmt;
 						this.$message({message: '登录成功',type: 'success'});
 						this.isLogin=true;
 						this.loginOpen=false;
+            document.cookie="user_session="+res.body.result;
 					} else{
 						this.$message.error(res.body.msg);
 					}
@@ -112,7 +113,7 @@ window._hmt = _hmt;
 				.then(function(res) {
 				    if(res.body.code == 1){
 						this.$message({message: '注册成功',type: 'success'});
-						this.registerOpen=false
+						this.registerOpen=false;
 					} else{
 						this.$message.error(res.body.msg);
 					}
@@ -139,14 +140,15 @@ window._hmt = _hmt;
 		  }
 		},
 		mounted() {
-			this.$ajax.defaults.headers.common['token'] = "token";
+      let name = "user_session";
+      var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+      console.log(arr)
+			this.$ajax.defaults.headers.common['token'] = arr[2];
 			 this.$ajax.get(this.apiUrl + 'api/user/info').then((response)=>{
-				 if(res.body.code == 1){
-					 this.user = response.body;
+				 if(response.data.code == 1){
+					 this.user = response.data;
 					 this.isLogin = true;
 				 }
-			}).catch((response)=>{
-				this.$message.error('数据请求失败，请稍后再试')
 			});
 		}
 	}
@@ -171,7 +173,7 @@ window._hmt = _hmt;
 		justify-content:space-between;
 		align-items:center;
 	}
-	
+
 
 	.header .logo{
 	    width: 100px;
