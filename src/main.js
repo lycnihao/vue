@@ -6,16 +6,15 @@ import router from './router'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(ElementUI)
 
-/* Vue.http.options.emulateJSON = true; */
-/* Vue.http.options.xhr = { withCredentials: true }
-Vue.http.options.crossOrigin = true */
-Vue.http.interceptors.push(function(request, next) {/* 跨域携带cookie */ request.credentials = true; next() }) 
+Vue.prototype.$ajax= axios
+
 
 // vue router
 router.beforeEach((to, from, next) => {

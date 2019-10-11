@@ -441,21 +441,24 @@ default {
                 function() {
                     this.$message.error('数据请求失败，请稍后再试');
                 }); */
-                this.$http.get(this.apiUrl + 'api/getHotList').then(function(res) {
-                    this.hotList = res.body;
-                },
-                function() {
-                    this.$message.error('数据请求失败，请稍后再试');
-                });
-                this.$http.get(this.apiUrl + 'api/getUserWebSite').then(function(res) {
-                    this.userSites = res.body;
-                },
-                function() {
-                    this.$message.error('数据请求失败，请稍后再试');
-                });
-                this.$http.get(this.apiUrl + 'api/getList').then(function(res) {
+                this.$ajax.get(this.apiUrl + 'api/getHotList')
+				.then((response)=>{
+                    this.hotList = response.data;
+                }).catch((response)=>{
+					this.$message.error('数据请求失败，请稍后再试');
+				});
+				
+                this.$ajax.get(this.apiUrl + 'api/getUserWebSite')
+				.then((response)=>{
+                    this.userSites = response.data;
+                }).catch((response)=>{
+					this.$message.error('数据请求失败，请稍后再试');
+				});
+				
+                this.$ajax.get(this.apiUrl + 'api/getList')
+				.then((response)=>{
 					loading.close();
-                    for(let categorie of res.body.categories){
+                    for(let categorie of response.data.categories){
                       if(categorie.parentId == 0){
                         this.categorys.push(categorie)
                       }else{
@@ -471,7 +474,7 @@ default {
 
                       }
                     }
-                    this.sites = res.body.webSites;
+                    this.sites = response.data.webSites;
 					this.$nextTick(() => {
 					  this._initScroll(); // 初始化scroll
 					  this._calculateHeight(); // 初始化列表高度列表
@@ -479,19 +482,19 @@ default {
 					  for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
 					  this.lazy();
 					})
-                },
-                function() {
+                }).catch((response)=>{
 					loading.close();
-                    this.$message.error('数据请求失败，请稍后再试');
-                });
+					this.$message.error('数据请求失败，请稍后再试');
+				});;
             },
             hotSearch: function(options) {
                 /* console.log(options.target.innerText); */
 				window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$http.get(this.apiUrl + 'api/getHotList').then(function(res) {
-                    this.hotList = res.body;
+                this.$ajax.get(this.apiUrl + 'api/getHotList')
+				.then((response)=>{
+                    this.hotList = response.data;
                     this.$notify({
                         title: '刷新成功',
                         message: '热搜榜每2个小时更新一次~',

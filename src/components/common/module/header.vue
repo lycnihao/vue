@@ -82,11 +82,14 @@ window._hmt = _hmt;
 			return{
 				username:'',
 				password:'',
-        r_username:'',
-        r_password:'',
+				r_username:'',
+				r_password:'',
 				loginOpen:false,
 				registerOpen:false,
-				isLogin:false
+				isLogin:false,
+				user:null,
+				/* apiUrl: 'http://47.106.84.166:3302/', */
+				apiUrl: 'http://127.0.0.1:3302/',
 			}
 		},
 		methods: {
@@ -97,7 +100,6 @@ window._hmt = _hmt;
 						this.$message({message: '登录成功',type: 'success'});
 						this.isLogin=true;
 						this.loginOpen=false;
-						document.cookie
 					} else{
 						this.$message.error(res.body.msg);
 					}
@@ -137,11 +139,15 @@ window._hmt = _hmt;
 		  }
 		},
 		mounted() {
-			let name = "user_session";
-			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-			if(arr != null){
-				this.isLogin = true;
-			}
+			this.$ajax.defaults.headers.common['token'] = "token";
+			 this.$ajax.get(this.apiUrl + 'api/user/info').then((response)=>{
+				 if(res.body.code == 1){
+					 this.user = response.body;
+					 this.isLogin = true;
+				 }
+			}).catch((response)=>{
+				this.$message.error('数据请求失败，请稍后再试')
+			});
 		}
 	}
 </script>
