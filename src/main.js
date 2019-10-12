@@ -3,20 +3,24 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueResource from 'vue-resource'
+/* import VueResource from 'vue-resource' */
+/* Vue.use(VueResource) */
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 
 Vue.config.productionTip = false
 
-Vue.use(VueResource)
+
 Vue.use(ElementUI)
+
+/* axios.defaults.headers.common['Authorization'] = AUTH_TOKEN; */
 
 axios.defaults.withCredentials=true
 
 Vue.prototype.$ajax= axios
 
+/* axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; */
 
 // vue router
 router.beforeEach((to, from, next) => {
