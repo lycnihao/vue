@@ -185,6 +185,7 @@ section {
   background-color: #f9f9f9;
 }
 .user-website{
+  padding: 2px 12px;
   background-color: #fff;
 }
 .user-website .site-item{
@@ -229,6 +230,21 @@ section {
 .user .tabs-nav .active .badge{
   display: none;
 }
+
+.user .user-button{
+  width: auto;
+  text-align: right;
+}
+
+.user .user-button ul{
+  display: flex;
+}
+
+.user .user-button ul li{
+  margin: 0 3px;
+}
+
+
 
 #user-block .null{
   text-align: center;
@@ -565,6 +581,34 @@ section {
 		height: 123px;
 		margin: 0 2px;
 	}
+
+  #sidebar{
+    width: 40px;
+    height: 0;
+    margin: 0 auto;
+    cursor: pointer;
+    display: inherit;
+  }
+
+  #sidebar:before {
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    font-size: 24px;
+    line-height: 40px;
+    color: #ccc;
+    text-align: center;
+    background: #111;
+    border-radius: 50%;
+    transition: .3s;
+    display: inline-block;
+}
+
+#sidebar:hover:before {
+    transform: rotate(180deg);
+}
+
+
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
