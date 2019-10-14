@@ -148,3 +148,15 @@
   }
 }
 </style>
+<script>
+	export
+	default {
+		created() {
+			this.$nextTick(() => {
+				console.clear()
+				console.log("%c%c168红衣网址导航", "line-height:28px;", "line-height:28px;padding:4px 8px;color:#fff;font-size:16px;background-image:-webkit-gradient(linear,left top,right top,color-stop(0,#ff22ff),color-stop(1,#5500ff));-webkit-background-clip:text;");
+				console.log("%c%c哎呦~ 小老弟你来啦！","line-height:28px;","line-height:28px;padding:4px 0px;color:#ff0000;font-size:10px;");
+			})
+		}
+	}
+</script>

@@ -41,6 +41,7 @@
 .header-top-nav .block{
   z-index: 99;
   padding: 6px;
+  margin: 0!important;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
@@ -205,10 +206,11 @@ section {
 .user-website .site-item .site-icon{
 	margin-right: 5px;
 }
-
 .user-website .site-item .site-icon img{
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+	border-radius: 20%;
+	display: inline-flex;
 }
 .user-website .site-info{
 	overflow: hidden;
@@ -536,6 +538,32 @@ section {
 	box-shadow:none;
 }
 
+  #sidebar{
+    width: 40px;
+    height: 0;
+    margin: 0 auto;
+    cursor: pointer;
+    display: inherit;
+  }
+
+  #sidebar:before {
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    font-size: 24px;
+    line-height: 40px;
+    color: #ccc;
+    text-align: center;
+    background: #303133;
+    border-radius: 50%;
+    transition: .3s;
+    display: inline-block;
+}
+
+#sidebar:hover:before {
+    transform: rotate(180deg);
+}
+
 @media screen and (min-width:1200px) {
 
 	.main, .links .box{
@@ -581,34 +609,6 @@ section {
 		height: 123px;
 		margin: 0 2px;
 	}
-
-  #sidebar{
-    width: 40px;
-    height: 0;
-    margin: 0 auto;
-    cursor: pointer;
-    display: inherit;
-  }
-
-  #sidebar:before {
-    width: 40px;
-    height: 40px;
-    margin-top: -20px;
-    font-size: 24px;
-    line-height: 40px;
-    color: #ccc;
-    text-align: center;
-    background: #111;
-    border-radius: 50%;
-    transition: .3s;
-    display: inline-block;
-}
-
-#sidebar:hover:before {
-    transform: rotate(180deg);
-}
-
-
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {

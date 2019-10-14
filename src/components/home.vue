@@ -24,7 +24,7 @@
 						<li class="nav-item"><a href="javascript::void(0)">站点搜索</a></li>
 						<li class="nav-item"><a href="javascript::void(0)">文章搜索</a></li>
 						<li class="nav-item"><a href="javascript::void(0)">图片</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">素材</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">功能计划中</a></li>
 					</ul>
 				</div>
 				<div class="search-center">
@@ -99,10 +99,16 @@
               <div class="tabpanel show" name="常用链接">
                 <el-row class="user-website" v-if="userSites.length != 0">
                   <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites">
-                    <a class="site-item" :href="webSite.url" target='_blank' :title="webSite.summary">
-                      <div class="site-icon"><el-image :src="webSite.icon"></el-image></div>
+                    <a class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
+                      <div class="site-icon">
+						  <el-image :src="webSite.websiteIcon">
+							  <div slot="error" class="image-slot">
+								<i class="el-icon-picture-outline"></i>
+							  </div>
+						  </el-image>
+					  </div>
                       <div class="site-info">
-                        <h3>{{webSite.title}}</h3>
+                        <h3>{{webSite.websiteTitle}}</h3>
                       </div>
                     </a>
                   </el-col>
@@ -330,18 +336,21 @@
 		</div>
 
     <el-dialog title="添加网址" :visible.sync="siteManage.add" :modal-append-to-body="false" :close-on-click-modal="false">
+		<el-alert
+				title="抱歉当前功能暂时还不能使用"
+				type="info">
+		</el-alert>
     	<div style="margin-top: 15px;">
         <el-input placeholder="网站地址，如：http://www.baidu.com">
           <template slot="append">抓取标题</template>
         </el-input>
       </div>
       <div style="margin-top: 15px;">
-
         <el-row :gutter="10">
-          <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="16">
+          <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
             <el-input placeholder="网站名称"></el-input>
           </el-col>
-          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="8">
+          <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-select v-model="value" placeholder="请选择">
               <el-option
                 v-for="item in options"
@@ -386,8 +395,8 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              /* apiUrl: 'http://47.106.84.166:3302/', */
-              apiUrl: 'http://127.0.0.1:3302/',
+              apiUrl: 'http://47.106.84.166:3302/',
+              /* apiUrl: 'http://127.0.0.1:3302/', */
               categorys: [],
               subCategorys: {},
               activeSubCategorys: {},
@@ -425,7 +434,7 @@ default {
           _calculateHeight() {
             let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook")
             let search = document.getElementById("search");
-            let height = 550
+            let height = 750
             this.listHeight  = []
             this.listHeight.push(height)
             for (let i = 0, l = foodList.length; i < l; i++) {
@@ -487,17 +496,19 @@ default {
                 }).catch((response)=>{
                 this.$message.error('数据请求失败，请稍后再试');
                 });
+				
+				
                 let name = "user_session";
                 var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
                 if(arr != null){
                   this.$ajax.defaults.headers.common['token'] = arr[2];
-                  this.$ajax.get(this.apiUrl + 'api/user/userWebSite')
-                  .then((response)=>{
-                    this.userSites = response.data;
-                  }).catch((response)=>{
-                  this.$message.error('数据请求失败，请稍后再试');
-                  });
                 }
+				this.$ajax.get(this.apiUrl + 'api/userWebSite')
+				.then((response)=>{
+				  this.userSites = response.data;
+				}).catch((response)=>{
+				this.$message.error('数据请求失败，请稍后再试');
+				});
 
 
                 this.$ajax.get(this.apiUrl + 'api/getList')

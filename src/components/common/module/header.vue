@@ -122,8 +122,8 @@
 				registerOpen:false,
 				isLogin:false,
 				user:null,
-				/* apiUrl: 'http://47.106.84.166:3302/', */
-				apiUrl: 'http://127.0.0.1:3302/'
+				apiUrl: 'http://47.106.84.166:3302/',
+				/* apiUrl: 'http://127.0.0.1:3302/' */
 			}
 		},
 		methods: {
@@ -136,7 +136,7 @@
 				data.append('password',this.logForm.password);
 				this.$refs.logForm.validate((valid) => {
 					if (valid) {
-						this.$ajax.post('http://localhost:3302/api/user/login',data)
+						this.$ajax.post('http://47.106.84.166:3302/api/user/login',data)
 						.then((response)=>{
 						    if(response.data.code == 1){
 								this.$message({message: '登录成功',type: 'success'});
