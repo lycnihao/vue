@@ -107,7 +107,36 @@
 		line-height:35px;
 
 	}
-
+	
+	.box {
+		width: 100%;
+		padding: 0;
+		margin: 5px 0;
+		text-align: left;
+		border-radius: 2px;
+		background: #FFFFFF;
+		display: inline-block;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+	}
+	
+	.box-header {
+		color: #444;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px rgba(245,245,245,1) solid;
+	}
+	
+	.box-header h3 {
+		font-size: 18px;
+		font-weight: 600;
+		color: #3280fc;
+	}
+	
+	.box-body {
+		padding: 10px;
+	}
 
 	#app {
 	  font-family: Helvetica, sans-serif;
@@ -148,3 +177,15 @@
   }
 }
 </style>
+<script>
+	export
+	default {
+		created() {
+			this.$nextTick(() => {
+				console.clear()
+				console.log("%c%c168红衣网址导航", "line-height:28px;", "line-height:28px;padding:4px 8px;color:#fff;font-size:16px;background-image:-webkit-gradient(linear,left top,right top,color-stop(0,#ff22ff),color-stop(1,#5500ff));-webkit-background-clip:text;");
+				console.log("%c%c哎呦~ 小老弟你来啦！","line-height:28px;","line-height:28px;padding:4px 0px;color:#ff0000;font-size:10px;");
+			})
+		}
+	}
+</script>

@@ -2,7 +2,7 @@
 	<div>
 		<head-top></head-top>
 
-		<section>
+		<section class="section">
 			<div class="content large">
 				<h3 class="h1">
 					<span class="red" style="font-size: 1.3em;"><i class="el-icon-s-home"></i></span>
@@ -51,7 +51,7 @@
 </script>
 
 <style>
-		section{
+		.section{
 			padding: 15px 0;
 		}
 	.content{
@@ -94,25 +94,25 @@
 		line-height: 30px;
 	}
 	@media screen and (min-width:1200px) {
-		section{
-			margin: 0 10%;
+		.section{
+			margin: 0 10% !important;;
 		}
 	}
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
-		section{
-			margin: 0 10%;
+		.section{
+			margin: 0 10% !important;;
 		}
 	}
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-		section{
-			margin: 0 5%;
+		.section{
+			margin: 0 5% !important;;
 		}
 	}
 
 	@media only screen and (max-width: 479px) {
-		section{
-			margin: 0 5%;
+		.section{
+			margin: 0 5% !important;;
 		}
 	}
 </style>

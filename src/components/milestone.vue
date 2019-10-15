@@ -2,7 +2,7 @@
 	<div>
 		<head-top></head-top>
 
-		<section>
+		<section class="section">
 			<div class="content">
 				<div class="block">
 				  <el-timeline>
@@ -23,6 +23,12 @@
 					  <el-card>
 						<h4 class="h4">优化分类,优化了网站合集板块并加入标签页以更便于使用,加入友情链接板块,加入“关于我们”&“更新日志”页面</h4>
 						<p>会飞的虾 提交于 2019/10/10 16:01</p>
+					  </el-card>
+					</el-timeline-item>
+					<el-timeline-item timestamp="2019/10/14" placement="top">
+					  <el-card>
+						<h4 class="h4">新增用户注册、登陆、注销功能，新增用户网站板块</h4>
+						<p>会飞的虾 提交于 2019/10/14 15:05</p>
 					  </el-card>
 					</el-timeline-item>
 				  </el-timeline>
@@ -47,7 +53,7 @@
 </script>
 
 <style>
-	section{
+	.section{
 		padding: 15px 0;
 	}
 	.content{
@@ -69,24 +75,24 @@
 		line-height: 2em;
 	}
 	@media screen and (min-width:1200px) {
-		section{
-			margin: 0 10%;
+		.section{
+			margin: 0 10% !important;
 		}
 	}
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
-		section{
-			margin: 0 10%;
+		.section{
+			margin: 0 10% !important;;
 		}
 	}
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-		section{
-			margin: 0 5%;
+		.section{
+			margin: 0 5% !important;;
 		}
 	}
 
 	@media only screen and (max-width: 479px) {
-		section{
+		.section{
 			margin: 0 5%;
 		}
 	}
