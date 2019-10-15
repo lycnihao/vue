@@ -355,7 +355,7 @@
       </div>
     </el-dialog>
 
-    <div id="sidebar" title="加载边栏" class="el-icon-discover"></div>
+    <div id="sidebar" title="加载边栏" class="el-icon-s-help"></div>
 
     <v-footer></v-footer>
 
