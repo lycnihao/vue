@@ -295,36 +295,6 @@ section {
 	border-radius: 50%;
 }
 
-.box {
-	width: 100%;
-	padding: 0;
-	margin: 5px 0;
-	text-align: left;
-	border-radius: 2px;
-	background: #FFFFFF;
-	display: inline-block;
-	box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
-
-.box-header {
-	color: #444;
-	padding: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border-bottom: 1px rgba(245,245,245,1) solid;
-}
-
-.box-header h3 {
-	font-size: 18px;
-	font-weight: 600;
-	color: #3280fc;
-}
-
-.box-body {
-	padding: 10px;
-}
-
 	.tabs{
        width:100%;
    }
