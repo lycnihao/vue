@@ -24,7 +24,7 @@
 						<li class="nav-item"><a href="javascript::void(0)">站点搜索</a></li>
 						<li class="nav-item"><a href="javascript::void(0)">文章搜索</a></li>
 						<li class="nav-item"><a href="javascript::void(0)">图片</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">素材</a></li>
+						<li class="nav-item"><a href="javascript::void(0)">功能计划中</a></li>
 					</ul>
 				</div>
 				<div class="search-center">
@@ -99,10 +99,16 @@
               <div class="tabpanel show" name="常用链接">
                 <el-row class="user-website" v-if="userSites.length != 0">
                   <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites">
-                    <a class="site-item" :href="webSite.url" target='_blank' :title="webSite.summary">
-                      <div class="site-icon"><el-image :src="webSite.icon"></el-image></div>
+                    <a class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
+                      <div class="site-icon">
+                        <el-image :src="webSite.websiteIcon">
+                          <div slot="error" class="image-slot">
+                          <i class="el-icon-picture-outline"></i>
+                          </div>
+                        </el-image>
+                      </div>
                       <div class="site-info">
-                        <h3>{{webSite.title}}</h3>
+                        <h3>{{webSite.websiteTitle}}</h3>
                       </div>
                     </a>
                   </el-col>
