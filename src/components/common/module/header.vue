@@ -50,7 +50,7 @@
 			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false">
 				<el-form :model="logForm" ref="logForm" :rules="rules" status-icon>
 					<el-form-item prop="username">
-						<el-input v-model="logForm.username" placeholder="输入您的邮箱地址"></el-input>
+						<el-input v-model="logForm.username" placeholder="输入您的用户名或邮箱地址"></el-input>
 					</el-form-item>
 					<el-form-item prop="password">
 						<el-input v-model="logForm.password" placeholder="输入您的密码" show-password></el-input>
