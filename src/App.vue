@@ -20,7 +20,7 @@
 	  vertical-align: middle;
 	}
 	ul{
-		display: inline-block;
+		display: block;
 	}
 	li{
 		list-style: none;
@@ -53,6 +53,7 @@
 	    background: transparent;
 	    padding: 0;
 	    margin: 0;
+		display: inline-block;
 		}
 
 	.nav-item ,.nav-item-radius{

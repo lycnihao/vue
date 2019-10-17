@@ -81,9 +81,9 @@
                </div>
              </div>
              <div class="user-button">
-               <el-dropdown trigger="click" @command="userWebSite">
+               <el-dropdown trigger="click" @command="userWebSite" v-if="!enabled">
                   <span class="el-dropdown-link">
-                    <el-button size="mini" round @click="userTools = true"><i class="el-icon-s-tools" style="margin-right: 3px;"></i>自定义</el-button>
+                    <el-button size="mini" round><i class="el-icon-s-tools" style="margin-right: 3px;"></i>自定义</el-button>
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item icon="el-icon-circle-plus" command="add">添加网址</el-dropdown-item>
@@ -91,6 +91,7 @@
                     <el-dropdown-item icon="el-icon-menu" command="sort">分类管理</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
+				<el-button type="primary" size="mini" @click="enabled = false" round v-else><i class="el-icon-success"></i>&nbsp;完成</el-button>
              </div>
           </div>
          <div class="box-body">
@@ -103,15 +104,15 @@
 					:disabled="!enabled"
 					class="list-group"
 					ghost-class="ghost"
-					:move="checkMove"
-					@start="dragging = true"
-					@end="dragging = false">
-					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites" style="border: 2px #fff dotted;">
-						<a class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
+					animation=400
+					chosenClass = ".site-item"
+					@update="checkEdit">
+					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites">
+						<a v-if="!enabled" class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
 						  <div class="site-icon">
 							<el-image :src="webSite.websiteIcon">
 							  <div slot="error" class="image-slot">
-							  <i class="el-icon-picture-outline"></i>
+								<i class="el-icon-picture-outline"></i>
 							  </div>
 							</el-image>
 						  </div>
@@ -119,6 +120,21 @@
 							<h3>{{webSite.websiteTitle}}</h3>
 						  </div>
 						</a>
+						<div class="site-item" @click="siteManage.edit = true" v-else>
+							<div class="site-edit">
+								<i class="el-icon-remove"></i>
+							</div>
+							<div class="site-icon">
+								<el-image :src="webSite.websiteIcon">
+								  <div slot="error" class="image-slot">
+								  <i class="el-icon-picture-outline"></i>
+								  </div>
+								</el-image>
+							</div>
+							<div class="site-info">
+								<h3>{{webSite.websiteTitle}}</h3>
+							</div>
+						</div>
 					  </el-col>
 				  </draggable>
                 </el-row>
@@ -350,35 +366,65 @@
 		<!-- <div id="sidebar" title="加载边栏" class="el-icon-discover"></div> -->
 
     <el-dialog title="添加网址" :visible.sync="siteManage.add" :modal-append-to-body="false" :close-on-click-modal="false">
-    	<div style="margin-top: 15px;">
-        <el-input placeholder="网站地址，如：http://www.baidu.com">
-          <template slot="append">抓取标题</template>
-        </el-input>
-      </div>
-      <div style="margin-top: 15px;">
-
-        <el-row :gutter="10">
-          <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
-            <el-input placeholder="网站名称"></el-input>
-          </el-col>
-          <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-      </div>
+		<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
+			<el-form-item prop="href">
+				<el-input v-model="addForm.href" placeholder="网站地址，如：http://www.baidu.com">
+				  <template slot="append">抓取标题</template>
+				</el-input>
+			</el-form-item>
+			<el-row :gutter="10">
+			  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
+				<el-form-item prop="title">
+					<el-input v-model="addForm.title" placeholder="网站名称"></el-input>
+				</el-form-item>
+			  </el-col>
+			  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
+				<el-form-item prop="category">
+					<el-select v-model="addForm.category" placeholder="请选择">
+					  <el-option
+						v-for="item in options"
+						:key="item.value"
+						:label="item.label"
+						:value="item.value">
+					  </el-option>
+					</el-select>
+				</el-form-item>
+			  </el-col>
+			</el-row>
+		</el-form>
+		<el-button type="primary" style="width: 100%;">立即保存</el-button>
     </el-dialog>
 
     <v-footer></v-footer>
 
     <el-dialog title="修改网址" :visible.sync="siteManage.edit" :modal-append-to-body="false" :close-on-click-modal="false">
-    	修改网址
+    	<el-form :model="editForm" ref="editForm" :rules="rules" status-icon>
+    		<el-form-item prop="href">
+    			<el-input v-model="editForm.href" placeholder="网站地址，如：http://www.baidu.com">
+    			  <template slot="append">抓取标题</template>
+    			</el-input>
+    		</el-form-item>
+    		<el-row :gutter="10">
+    		  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
+    			<el-form-item prop="title">
+    				<el-input v-model="editForm.title" placeholder="网站名称"></el-input>
+    			</el-form-item>
+    		  </el-col>
+    		  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
+    			<el-form-item prop="category">
+    				<el-select v-model="editForm.category" placeholder="请选择">
+    				  <el-option
+    					v-for="item in options"
+    					:key="item.value"
+    					:label="item.label"
+    					:value="item.value">
+    				  </el-option>
+    				</el-select>
+    			</el-form-item>
+    		  </el-col>
+    		</el-row>
+    	</el-form>
+    	<el-button type="primary" style="width: 100%;">立即保存</el-button>
     </el-dialog>
     <el-dialog title="分类管理" :visible.sync="siteManage.sort" :modal-append-to-body="false" :close-on-click-modal="false">
     	分类管理
@@ -420,7 +466,6 @@ default {
               menuTop:false,
               activeName: 'first',
               loading:true,
-              userTools:false,
               siteManage:{
                 add:false,
                 edit:false,
@@ -433,9 +478,21 @@ default {
                 value: '选项2',
                 label: '生活必备'
               }],
-              value: '我的常用网址',
-			  dragging: false,
 			  enabled: false,
+			  addForm:{
+				  href:'',
+				  title:'',
+				  category:'我的常用网址'
+			  },
+			  editForm:{
+				  href:'http://www.168dh.cn',
+				  title:'168导航',
+				  category:'我的常用网址'
+			  },
+			  rules: {
+			  	href: [{ required: true, message: '请输入正确的网站链接URL', trigger: 'blur' }],
+				title: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
+			  },
             };
         },
         methods: {
@@ -464,18 +521,23 @@ default {
             window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
           },
             userWebSite:function(command){
-              switch(command){
-                 case 'add':
-                  this.siteManage.add = true
-                 break;
-                 case 'edit':
-                  /* this.siteManage.edit = true */
-				  this.enabled = true;
-                 break;
-                 case 'sort':
-                  this.siteManage.sort = true
-                 break;
-              }
+				console.log(this.$children[0].isLogin)
+			if(!this.$children[0].isLogin){
+				this.$children[0].loginOpen = true;
+			}else{
+				switch(command){
+				   case 'add':
+				    this.siteManage.add = true
+				   break;
+				   case 'edit':
+				    /* this.siteManage.edit = true */
+					this.enabled = true;
+				   break;
+				   case 'sort':
+				    this.siteManage.sort = true
+				   break;
+				}
+			}
             },
             search: function() {
                 var url = this.searchUrl + document.getElementById("search_text").value;
@@ -619,8 +681,13 @@ default {
 					})()}
 				})
 			},
-			checkMove: function(e) {
-			  window.console.log("Future index: " + e.draggedContext.futureIndex);
+			checkEdit: function(e) {
+				console.log(e)
+				this.$notify({
+					  title: '成功',
+					  message: '排序已经自动保存~',
+					  type: 'success'
+				});
 			}
 
       },

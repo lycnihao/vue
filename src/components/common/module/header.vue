@@ -166,7 +166,7 @@
 					data.append('password',this.regForm.password);
 					data.append('email',this.regForm.email);
 					data.append('qq',this.regForm.qq);
-					this.$ajax.post('http://localhost:3302/api/user/register',data)
+					this.$ajax.post(this.apiUrl+'/api/user/register',data)
 					.then((response)=>{
 					    if(response.data.code == 1){
 							this.$message({message: '注册成功',type: 'success'});
@@ -258,6 +258,7 @@
 
 	.tool-list {
 		width: 100%;
+		display: inline-block;
 	}
 
 	.tool-list li{
