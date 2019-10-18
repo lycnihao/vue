@@ -88,7 +88,7 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item icon="el-icon-circle-plus" command="add">添加网址</el-dropdown-item>
                     <el-dropdown-item icon="el-icon-edit" command="edit">编辑网址</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-menu" command="sort">分类管理</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-menu" command="sort" disabled>分类管理</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
 				<el-button type="primary" size="mini" @click="enabled = false" round v-else><i class="el-icon-success"></i>&nbsp;完成</el-button>
@@ -120,9 +120,9 @@
 							<h3>{{webSite.websiteTitle}}</h3>
 						  </div>
 						</a>
-						<div class="site-item" @click="siteManage.edit = true" v-else>
+						<div class="site-item" @click="editOpen(webSite.id)" v-else>
 							<div class="site-edit">
-								<i class="el-icon-remove"></i>
+								<i class="el-icon-remove" @click.stop="removeSite(webSite.id)"></i>
 							</div>
 							<div class="site-icon">
 								<el-image :src="webSite.websiteIcon">
@@ -367,8 +367,8 @@
 
     <el-dialog title="添加网址" :visible.sync="siteManage.add" :modal-append-to-body="false" :close-on-click-modal="false">
 		<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
-			<el-form-item prop="href">
-				<el-input v-model="addForm.href" placeholder="网站地址，如：http://www.baidu.com">
+			<el-form-item prop="url">
+				<el-input v-model="addForm.url" placeholder="网站地址，如：http://www.baidu.com">
 				  <template slot="append">抓取标题</template>
 				</el-input>
 			</el-form-item>
@@ -391,16 +391,48 @@
 				</el-form-item>
 			  </el-col>
 			</el-row>
+			<el-divider class="divider">
+				<span>文字格式设置</span>
+			</el-divider>
+			<el-row :gutter="15" class="option">
+				<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+					<div class="option-item">
+					  <div class="item">
+						  <el-upload
+							  ref="upload"
+							  :action="apiUrl+'api/user/upload'"
+							  :show-file-list="false"
+							  :http-request="avatarUpload"
+							  >
+							  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+							  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
+								  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
+								</el-tooltip>
+							</el-upload>
+					  </div>
+					  <span class="title">图标</span>
+					</div>
+					
+				</el-col>
+				<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+					<div class="option-item">
+					  <div class="item">
+					  	<el-color-picker size="small"></el-color-picker>
+					  </div>
+					  <span class="title">颜色</span>
+					</div>
+				</el-col>
+			</el-row>
 		</el-form>
-		<el-button type="primary" style="width: 100%;">立即保存</el-button>
+		<el-button type="primary" style="width: 100%;" @click="addSite()">立即保存</el-button>
     </el-dialog>
 
     <v-footer></v-footer>
 
     <el-dialog title="修改网址" :visible.sync="siteManage.edit" :modal-append-to-body="false" :close-on-click-modal="false">
     	<el-form :model="editForm" ref="editForm" :rules="rules" status-icon>
-    		<el-form-item prop="href">
-    			<el-input v-model="editForm.href" placeholder="网站地址，如：http://www.baidu.com">
+    		<el-form-item prop="url">
+    			<el-input v-model="editForm.url" placeholder="网站地址，如：http://www.baidu.com">
     			  <template slot="append">抓取标题</template>
     			</el-input>
     		</el-form-item>
@@ -423,8 +455,39 @@
     			</el-form-item>
     		  </el-col>
     		</el-row>
+			<el-divider class="divider">
+				<span>文字格式设置</span>
+			</el-divider>
+			<el-row :gutter="15" class="option">
+				<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+					<div class="option-item">
+					  <div class="item">
+						 <el-upload
+						  ref="upload"
+						  :action="apiUrl+'api/user/upload'"
+						  :show-file-list="false"
+						  :http-request="avatarUpload">
+						  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+						  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
+							  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
+							</el-tooltip>
+						</el-upload>
+					  </div>
+					  <span class="title">图标</span>
+					</div>
+					
+				</el-col>
+				<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+					<div class="option-item">
+					  <div class="item">
+					  	<el-color-picker size="small"></el-color-picker>
+					  </div>
+					  <span class="title">颜色</span>
+					</div>
+				</el-col>
+			</el-row>
     	</el-form>
-    	<el-button type="primary" style="width: 100%;">立即保存</el-button>
+    	<el-button type="primary" style="width: 100%;" @click="editSite()">立即保存</el-button>
     </el-dialog>
     <el-dialog title="分类管理" :visible.sync="siteManage.sort" :modal-append-to-body="false" :close-on-click-modal="false">
     	分类管理
@@ -451,8 +514,8 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              apiUrl: 'http://47.106.84.166:3302/',
-              /* apiUrl: 'http://127.0.0.1:3302/', */
+              /* apiUrl: 'http://47.106.84.166:3302/', */
+              apiUrl: 'http://127.0.0.1:3302/',
               categorys: [],
               subCategorys: {},
               activeSubCategorys: {},
@@ -469,30 +532,34 @@ default {
               siteManage:{
                 add:false,
                 edit:false,
-                sort:false
+                sort:false,
+				imageUrl:''
               },
               options: [{
-                value: '选项1',
+                value: '1',
                 label: '我的常用网址'
               }, {
-                value: '选项2',
+                value: '0',
                 label: '生活必备'
               }],
 			  enabled: false,
 			  addForm:{
-				  href:'',
+				  url:'',
+				  icon:'',
 				  title:'',
-				  category:'我的常用网址'
+				  category:'0'
 			  },
 			  editForm:{
-				  href:'http://www.168dh.cn',
+				  id:'1',
+				  icon:'',
+				  url:'http://www.168dh.cn',
 				  title:'168导航',
-				  category:'我的常用网址'
+				  category:'0'
 			  },
 			  rules: {
-			  	href: [{ required: true, message: '请输入正确的网站链接URL', trigger: 'blur' }],
+			  	url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
 				title: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
-			  },
+			  }
             };
         },
         methods: {
@@ -520,24 +587,23 @@ default {
             /* console.log(this.listHeight[index]) */
             window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
           },
-            userWebSite:function(command){
-				console.log(this.$children[0].isLogin)
-			if(!this.$children[0].isLogin){
-				this.$children[0].loginOpen = true;
-			}else{
-				switch(command){
-				   case 'add':
-				    this.siteManage.add = true
-				   break;
-				   case 'edit':
-				    /* this.siteManage.edit = true */
-					this.enabled = true;
-				   break;
-				   case 'sort':
-				    this.siteManage.sort = true
-				   break;
+			userWebSite:function(command){
+				if(!this.$children[0].isLogin){
+					this.$children[0].loginOpen = true;
+				}else{
+					switch(command){
+					   case 'add':
+						this.siteManage.add = true
+					   break;
+					   case 'edit':
+						/* this.siteManage.edit = true */
+						this.enabled = true;
+					   break;
+					   case 'sort':
+						this.siteManage.sort = true
+					   break;
+					}
 				}
-			}
             },
             search: function() {
                 var url = this.searchUrl + document.getElementById("search_text").value;
@@ -560,12 +626,9 @@ default {
                   background: 'rgba(0, 0, 0, 0.2)'
                 });
                 this.thumbnails = dataJson.getThumbnail;
-                /* this.$http.get(this.apiUrl + 'api/getTouch').then(function(res) {
-                    this.touch = res.body;
-                },
-                function() {
-                    this.$message.error('数据请求失败，请稍后再试');
-                }); */
+				
+				this.getUserSites();
+				
                 this.$ajax.get(this.apiUrl + 'api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
@@ -573,18 +636,6 @@ default {
                 this.$message.error('数据请求失败，请稍后再试');
                 });
 				
-                let name = "user_session";
-                var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-                if(arr != null){
-                  this.$ajax.defaults.headers.common['token'] = arr[2];
-                }
-				this.$ajax.get(this.apiUrl + 'api/userWebSite')
-				.then((response)=>{
-					this.userSites = response.data;
-				}).catch((response)=>{
-				  this.$message.error('数据请求失败，请稍后再试');
-				});
-
                 this.$ajax.get(this.apiUrl + 'api/getList')
                 .then((response)=>{
                   loading.close();
@@ -681,6 +732,19 @@ default {
 					})()}
 				})
 			},
+			getUserSites:function(){
+				let name = "user_session";
+				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+				if(arr != null){
+				  this.$ajax.defaults.headers.common['token'] = arr[2];
+				}
+				this.$ajax.get(this.apiUrl + 'api/userWebSite')
+				.then((response)=>{
+					this.userSites = response.data;
+				}).catch((response)=>{
+				  this.$message.error('数据请求失败，请稍后再试');
+				});
+			},
 			checkEdit: function(e) {
 				console.log(e)
 				this.$notify({
@@ -688,8 +752,128 @@ default {
 					  message: '排序已经自动保存~',
 					  type: 'success'
 				});
-			}
+			},
+			avatarUpload:function(file) {
+				const isJPG = file.type === 'image/jpeg';
+				const isLt2M = file.size / 1024 / 1024 < 2;
 
+				/* if (!isJPG) {
+				  this.$message.error('上传头像图片只能是 JPG 格式!');
+				  return false
+				} */
+				/* if (!isLt2M) {
+				  this.$message.error('上传头像图片大小不能超过 2MB!');
+				  return false
+				} */
+				let data = new FormData();
+				data.append('file',file.file);
+				let name = "user_session";
+				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+				if(arr != null){
+				  this.$ajax.defaults.headers.common['token'] = arr[2];
+				}
+				this.$ajax.post(this.apiUrl + '/api/user/upload',data)
+				.then((response)=>{
+				    if(response.data.code == 1){
+						if(this.siteManage.add){
+							this.addForm.icon = this.siteManage.imageUrl = this.apiUrl + response.data.result.filePath;
+						}else{
+							this.editForm.icon = this.siteManage.imageUrl = this.apiUrl + response.data.result.filePath;
+						}
+						
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+				    this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			},
+			saveSite:function(data){
+				let name = "user_session";
+				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+				if(arr != null){
+				  this.$ajax.defaults.headers.common['token'] = arr[2];
+				}
+				this.$ajax.post(this.apiUrl + '/api/user/saveSite',data)
+				.then((response)=>{
+					if(response.data.code == 1){
+						this.$message({message: '保存成功！',type: 'success'});
+						this.siteManage.add = false;
+						this.siteManage.edit = false;
+						this.getUserSites();
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+					this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			},
+			addSite:function(){
+				let data = new FormData();
+				data.append('websiteTitle',this.addForm.title);
+				data.append('websiteUrl',this.addForm.url);
+				data.append('websiteIcon',this.addForm.icon);
+				data.append('websiteCate',this.addForm.category);
+				this.$refs.addForm.validate((valid) => {
+					if (valid) {
+						this.saveSite(data)
+					}else{
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			editOpen:function(siteId){
+				this.siteManage.edit = true;
+				this.editForm.id = siteId;
+				this.$ajax.post(this.apiUrl + '/api/userWebSite/'+siteId)
+				.then((response)=>{
+				    if(response.data.code == 1){
+						this.editForm.title = response.data.result.websiteTitle;
+						this.editForm.icon = response.data.result.websiteIcon;
+						this.editForm.category = response.data.result.websiteCate;
+						this.siteManage.imageUrl = this.editForm.websiteIcon = response.data.result.websiteIcon;
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+				    this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			},
+			editSite:function(){
+				let data = new FormData();
+				data.append('id',this.editForm.id);
+				data.append('websiteTitle',this.editForm.title);
+				data.append('websiteUrl',this.editForm.url);
+				data.append('websiteIcon',this.editForm.icon);
+				data.append('websiteCate',this.editForm.category);
+				this.$refs.editForm.validate((valid) => {
+					if (valid) {
+						this.saveSite(data)
+					}else{
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			removeSite:function(siteId){
+				let name = "user_session";
+				var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+				if(arr != null){
+				  this.$ajax.defaults.headers.common['token'] = arr[2];
+				}
+				this.$ajax.post(this.apiUrl + '/api/user/removeSite/'+siteId)
+				.then((response)=>{
+					if(response.data.code == 1){
+						this.$message({message: '删除成功！',type: 'success'});
+						this.getUserSites();
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+					this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			}
       },
       components: {
           'v-header': header,

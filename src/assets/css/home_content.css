@@ -233,8 +233,55 @@ section {
     right: -8px;
 	color: #ff3d00;
 	font-size: 18px;
+	z-index: 50;
+}
+.option {
+	margin-bottom: 15px;
+}
+.option > div{
+	border-right: 1px solid #f5f5f5;
 }
 
+.option > div:last-child{
+	border-right: none;
+}
+
+.option .option-item{
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.option .option-item .item{
+	display: block;
+	height: 32px;
+    line-height: 32px;
+	margin-bottom: 5px;
+}
+.option .option-item .item i{
+	font-size: 32px;
+	vertical-align: middle;
+}
+.option .option-item .title{
+	color: #8492a6;
+	font-size: 14px;
+}
+.divider{
+	margin:5px 0 15px 0;
+}
+.divider > div{
+	background: #f9f9f9;
+	border-radius: 10px;
+}
+.divider > div > span{
+	color: #a1a7b7;
+}
+.avatar{
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+}
 
 #user-block{
   width: 100%;

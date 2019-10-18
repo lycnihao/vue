@@ -122,8 +122,9 @@
 				registerOpen:false,
 				isLogin:false,
 				user:null,
-				apiUrl: 'http://47.106.84.166:3302/',
-				/* apiUrl: 'http://127.0.0.1:3302/' */
+				/* apiUrl: 'http://47.106.84.166:3302/', */
+				apiUrl: 'http://127.0.0.1:3302/',
+				token:''
 			}
 		},
 		methods: {
@@ -136,7 +137,7 @@
 				data.append('password',this.logForm.password);
 				this.$refs.logForm.validate((valid) => {
 					if (valid) {
-						this.$ajax.post('http://47.106.84.166:3302/api/user/login',data)
+						this.$ajax.post(this.apiUrl + '/api/user/login',data)
 						.then((response)=>{
 						    if(response.data.code == 1){
 								this.$message({message: '登录成功',type: 'success'});
@@ -205,6 +206,7 @@
 			  let name = "user_session";
 			  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 			  if(arr != null){
+				  this.token = arr[2];
 				  this.$ajax.defaults.headers.common['token'] = arr[2];
 				  this.$ajax.get(this.apiUrl + 'api/user/info')
 				  .then((response)=>{
