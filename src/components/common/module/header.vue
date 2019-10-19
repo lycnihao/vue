@@ -122,8 +122,8 @@
 				registerOpen:false,
 				isLogin:false,
 				user:null,
-				/* apiUrl: 'http://47.106.84.166:3302/', */
-				apiUrl: 'http://127.0.0.1:3302/',
+				apiUrl: 'http://106.54.255.9:3302/',
+				/* apiUrl: 'http://127.0.0.1:3302/', */
 				token:''
 			}
 		},
