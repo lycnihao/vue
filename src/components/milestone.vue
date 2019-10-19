@@ -27,8 +27,8 @@
 					</el-timeline-item>
 					<el-timeline-item timestamp="2019/10/14" placement="top">
 					  <el-card>
-						<h4 class="h4">新增用户注册、登陆、注销功能，新增用户网站板块</h4>
-						<p>会飞的虾 提交于 2019/10/14 15:05</p>
+						<h4 class="h4">新增用户注册、登陆、注销功能，常用网址板块</h4>
+						<p>会飞的虾 提交于 2019/10/19 12:48</p>
 					  </el-card>
 					</el-timeline-item>
 				  </el-timeline>
@@ -64,9 +64,6 @@
 		color: #616161;
 		background-color: #fff;
 	}
-	.block{
-		margin: 30px 180px 0 180px;
-	}
 	.block .h4{
 		margin: 2px 0 10px 0;
 	}
@@ -78,22 +75,34 @@
 		.section{
 			margin: 0 10% !important;
 		}
+    .block{
+    	margin: 30px 180px 0 180px;
+    }
 	}
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
 		.section{
 			margin: 0 10% !important;;
 		}
+    .block{
+    	margin: 30px 180px 0 180px;
+    }
 	}
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 		.section{
 			margin: 0 5% !important;;
 		}
+    	.block{
+    	margin: 30px 100px 0 100px;
+    }
 	}
 
 	@media only screen and (max-width: 479px) {
 		.section{
 			margin: 0 5%;
 		}
+    	.block{
+    	margin: 30px 0 0 0;
+    }
 	}
 </style>

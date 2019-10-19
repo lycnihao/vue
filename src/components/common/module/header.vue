@@ -47,7 +47,7 @@
 				<li class="nav-item" v-show="!isLogin" @click="registerOpen = true"><a>注册</a></li>
 			</ul>
 
-			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false">
+			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
 				<el-form :model="logForm" ref="logForm" :rules="rules" status-icon>
 					<el-form-item prop="username">
 						<el-input v-model="logForm.username" placeholder="输入您的用户名或邮箱地址"></el-input>
@@ -59,7 +59,7 @@
 				<el-button type="primary" style="width: 100%;" @click="login()">登录</el-button>
 				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
 			</el-dialog>
-			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false">				
+			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
 				<el-form :model="regForm" ref="regForm" :rules="rules" status-icon>
 				  <el-form-item prop="username">
 					<el-input v-model="regForm.username" placeholder="请输入您的用户名"></el-input>
@@ -77,7 +77,7 @@
 				  		<el-input v-model="regForm.email" placeholder="请输入您的邮箱地址"></el-input>
 				  </el-form-item>
 				</el-form>
-				
+
 				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
 				<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
 			</el-dialog>
