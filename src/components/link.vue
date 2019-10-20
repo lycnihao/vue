@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-header></v-header>
-		<section class="section">
+		<section class="section link">
 			<el-breadcrumb separator="/">
 			  <el-breadcrumb-item :to="{ path: '/' }"><a href="/">首页</a></el-breadcrumb-item>
 			  <el-breadcrumb-item>酷站</el-breadcrumb-item>
@@ -77,15 +77,15 @@ default {
 		color: #616161;
 		background-color: #fff;
 	}
-	.box .box-header h3{
+	.link .box .box-header h3{
 		font-size: 26px;
     color: #444;
 	}
-  .box .box-header p{
+  .link .box .box-header p{
     font-size: 13px;
 	color: #7f7f7f;
   }
-  .box .box-header p span{
+  .link .box .box-header p span{
     margin: 5px;
   }
 	.content .info{
