@@ -107,7 +107,7 @@
 					animation=400
 					chosenClass = ".site-item"
 					@update="checkEdit">
-					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites">
+					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites" :data_id="webSite.id">
 						<a v-if="!enabled" class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
 						  <div class="site-icon">
 							<el-image :src="webSite.websiteIcon">
@@ -513,8 +513,8 @@ default {
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
-              apiUrl: 'http://106.54.255.9:3302/',
-              /* apiUrl: 'http://127.0.0.1:3302/', */
+              /* apiUrl: 'http://106.54.255.9:3302/', */
+              apiUrl: 'http://127.0.0.1:3302/',
               categorys: [],
               subCategorys: {},
               activeSubCategorys: {},
@@ -742,12 +742,25 @@ default {
 				});
 			},
 			checkEdit: function(e) {
-				console.log(e)
-				this.$notify({
-					  title: '成功',
-					  message: '排序已经自动保存~',
-					  type: 'success'
+				console.log("之前位置"+e.oldIndex)
+				console.log("当前位置"+e.newIndex)
+				let id = e.clone.attributes.data_id.value;
+				
+				let data = new FormData();
+				data.append('oldIndex',e.oldIndex);
+				data.append('newIndex',e.newIndex);
+				
+				this.$ajax.post(this.apiUrl + 'api/user/sortSite/' + id,data)
+				.then((response)=>{
+					if(response.data.code == 1){
+						this.$notify({
+				    	  title: '成功',
+				    	  message: '排序已经自动保存~',
+				    	  type: 'success'
+						});
+					}
 				});
+				
 			},
 			avatarUpload:function(file) {
 				const isJPG = file.type === 'image/jpeg';
