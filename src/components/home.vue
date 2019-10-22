@@ -60,12 +60,22 @@
 
 						</el-dropdown>
 					</div>
-					<input type="text" id="search_text" size="30" @keyup.enter="search" placeholder="输入关键字 搜你所想"/>
+					 <el-popover
+						trigger="manual"
+						data-html="true"
+						placement="bottom"
+						class="search-input"
+						popper-class="suggest"
+						v-model="suggestOpen">
+						<div class="popover-content" v-html="suggestContent"></div>
+						<input slot="reference" type="text" id="search_text" size="30" v-model="keywords"
+						@keyup.enter="search" placeholder="输入关键字 搜你所想"/>
+					  </el-popover>
 					<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
+					
 				</div>
 
 			</div>
-
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
         <!-- user-block图标板块 -->
@@ -512,6 +522,7 @@ default {
               searchTitle: '百度',
               searchUrl: 'https://www.baidu.com/s?word=',
               searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
+			  keywords:"",
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               /* apiUrl: 'http://106.54.255.9:3302/', */
               apiUrl: 'http://127.0.0.1:3302/',
@@ -555,7 +566,9 @@ default {
 			  rules: {
 			  	url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
 				title: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
-			  }
+			  },
+			  suggestOpen:false,
+			  suggestContent:""
             };
         },
         methods: {
@@ -602,7 +615,7 @@ default {
 				}
             },
             search: function() {
-                var url = this.searchUrl + document.getElementById("search_text").value;
+                var url = this.searchUrl + this.keywords;
                 window.open(url, "_blank")
             },
             handleCommand: function(command) {
@@ -884,6 +897,30 @@ default {
 				});
 			}
       },
+	   watch : {
+		   keywords:function(val){
+			   if(this.keywords==''){
+			   	this.suggestOpen = false;
+			   	return
+			   }
+			   this.suggestOpen = true;
+			   this.$ajax.get(`/suggestion/su?wd=${this.keywords}&cb=window.baidu.sug`)
+			   .then((response)=>{
+			       let res_str = response.data;
+			   	console.log(res_str)
+			   	let str = res_str.split("window.baidu.sug(")[1].split(");")[0];
+			   	let strObj = eval("("+str+")");
+			   	
+			   	this.suggestContent = "";
+			   	this.suggestContent +='<ul>'
+			   	for(let item of strObj.s){
+			   		console.log(item)
+			   		this.suggestContent += `<li><a href="${this.searchUrl}${item}" target="_blank">${item}</a></li>`
+			   	}
+			   	this.suggestContent += "</ul>";
+			   });
+		   }
+		},
       components: {
           'v-header': header,
           'v-footer': footer,

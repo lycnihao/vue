@@ -11,7 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-
+		'/suggestion': {
+			target:'https://suggestion.baidu.com',
+			// secure: false, // 如果是https接口，需要配置这个参数
+			changeOrigin:true,
+			pathRewrite:{
+			  '^/suggestion': ''
+			},
+		}
 	},
 
     // Various Dev Server settings

@@ -10,17 +10,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 
 Vue.config.productionTip = false
-
-
 Vue.use(ElementUI)
 
-/* axios.defaults.headers.common['Authorization'] = AUTH_TOKEN; */
-
-axios.defaults.withCredentials=true
-
 Vue.prototype.$ajax= axios
-
-/* axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; */
+axios.defaults.withCredentials=true
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // vue router
 router.beforeEach((to, from, next) => {
