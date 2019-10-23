@@ -114,117 +114,7 @@ section {
 	margin: 0 !important;
 }
 
-#search {
-	position: relative;
-	padding: 180px 0 230px 0;
-	background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
-	background-image: url(../bg/bg.png);
-}
 
-#search .search-center,#search .search-tools{
-	display: flex;
-	justify-content: center;
-}
-
-#search .search-center{
-	position: relative;
-}
-
-#search .search-tools li{
-	margin: 0 12px;
-}
-
-#search .search-tools .nav .nav-item a{
-	color: #fff;
-}
-
-#search .search-tools .nav .nav-item a.active:after{
-	width: 100%;
-	left: 0;
-}
-
-#search input,#search button {
-	margin: 0;
-	padding: 10px 15px;
-	outline: 0;
-	border: none;
-}
-
-	
-#search .search-input{
-	width: 75%;
-	display: inherit;
-}
-
-.suggest{
-	z-index: 1!important;
-	padding: 0!important;
-}
-.suggest .popper__arrow{
-	left: 68px!important;
-}
-
-.suggest .popover-content{
-	padding: 10px 0;
-}
-
-.suggest .popover-content li{
-	padding-left: 15px;
-}
-
-.suggest .popover-content li:hover{
-	background: #f1f1f1;
-}
-
-.suggest .popover-content a{
-	height: 32px;
-	line-height: 32px;
-	color: #606266;
-	display: inherit;
-}
-
-#search h3{
-	text-align: center;
-	margin-bottom: 60px;
-	color: #fff;
-	font-size: 40px;
-    font-weight: 100!important;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif!important;
-	}
-
-#search #search_text {
-	padding: 15px 15px 15px 62px;
-	width: 100%;
-	-webkit-transition: ease .3s;
-	transition: ease .3s;
-	-webkit-transform-origin: 50% 50%;
-}
-#search_text{
-	border-radius:5px 0 0 5px;
-}
-#search_text:hover {
-		/* box-shadow: 0 8px 43px rgba(0,0,0,0.15); */
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-}
-
-#search_but{
-	border-radius:0 5px 5px 0 !important;
-}
-
-#search #search_but {
-	color: #fff;
-	border-radius: 0;
-	background-color: #909399;
-	cursor: pointer;
-}
-
-.dropdown {
-	position: relative;
-	z-index: 1;
-}
-.dropdown span i{
-	color: #909399;
-}
 
 .user.edit{
 	border:1px #008eff solid;
@@ -616,12 +506,6 @@ section {
 	padding: 0 20px 30px;
 }
 
-#search .dropdown .el-dropdown {
-	position: absolute;
-	left: 0;
-	top: 2px;
-}
-
 .cate-list i {
 	margin-right: 5px;
 }
@@ -971,7 +855,7 @@ section {
 		margin: 0 3px;
 	}
 
-  #search #search_text{
+  #search .search_text{
     padding: 13px 8px 13px 58px!important;
   }
 

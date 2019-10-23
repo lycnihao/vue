@@ -3,79 +3,8 @@
 		<v-header></v-header>
 
 		<section>
-			<div id="search">
-
-				<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-					<defs>
-						<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-					</defs>
-					<g class="parallax">
-						<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7"></use>
-						<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)"></use>
-						<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)"></use>
-						<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
-					</g>
-
-				</svg>
-				<h3>以高效的方式获取想要的资源</h3>
-				<div class="search-tools" style="height: 40px; line-height: 40px;">
-					<ul class="nav menu-inline" style="line-height: 30px;">
-						<li class="nav-item"><a href="javascript::void(0)" class="active">搜索引擎</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">站点搜索</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">文章搜索</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">图片</a></li>
-						<li class="nav-item"><a href="javascript::void(0)">功能计划中</a></li>
-					</ul>
-				</div>
-				<div class="search-center">
-					<div class="dropdown">
-						<el-dropdown placement="bottom" @command="handleCommand">
-							<el-button type="text" class="el-dropdown-link">
-								<img width="20px" height="20px" v-bind:src="searchIcon">
-								<i class="el-icon-arrow-down"></i>
-							</el-button>
-
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item command="百度,https://www.baidu.com/s?word=,http://47.106.84.166:3302/upload/baidu.svg">
-									<img width="20" alt="" src="http://47.106.84.166:3302/upload/baidu.svg">
-									百度
-								</el-dropdown-item>
-								<el-dropdown-item command="360,https://www.so.com/s?q=,http://47.106.84.166:3302/upload/360.svg">
-									<img width="20" alt="" src="http://47.106.84.166:3302/upload/360.svg">
-									360
-								</el-dropdown-item>
-								<el-dropdown-item command="Bing,https://cn.bing.com/search?q=,http://47.106.84.166:3302/upload/bing.svg">
-									<img width="20" alt="" src="http://47.106.84.166:3302/upload/bing.svg">
-									Bing
-								</el-dropdown-item>
-								<el-dropdown-item command="搜狗,https://www.sogou.com/web?query=,http://47.106.84.166:3302/upload/sogou.svg">
-									<img width="20" alt="" src="http://47.106.84.166:3302/upload/sogou.svg">
-									搜狗
-								</el-dropdown-item>
-								<el-dropdown-item command="谷歌,https://www.google.com/search?q=,http://47.106.84.166:3302/upload/google.svg">
-									<img width="20" alt="" src="http://47.106.84.166:3302/upload/google.svg">
-									谷歌
-								</el-dropdown-item>
-							</el-dropdown-menu>
-
-						</el-dropdown>
-					</div>
-					 <el-popover
-						trigger="manual"
-						data-html="true"
-						placement="bottom"
-						class="search-input"
-						popper-class="suggest"
-						v-model="suggestOpen">
-						<div class="popover-content" v-html="suggestContent"></div>
-						<input slot="reference" type="text" id="search_text" size="30" v-model="keywords"
-						@keyup.enter="search" placeholder="输入关键字 搜你所想"/>
-					  </el-popover>
-					<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
-					
-				</div>
-
-			</div>
+			<!-- 搜索功能模块 -->
+			<v-search></v-search>
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
         <!-- user-block图标板块 -->
@@ -511,18 +440,15 @@ import footer from './common/module/footer'
 import calendar from './common/widget/calendar'
 import BScroll from 'better-scroll'
 import draggable from 'vuedraggable'
+import search from './common/widget/search'
 
 export
 default {
         data() {
             return {
+			  searchIcon: '',
               listHeight: [],
               sitesScrollY: 0,
-              activeIndex:'1',
-              searchTitle: '百度',
-              searchUrl: 'https://www.baidu.com/s?word=',
-              searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
-			  keywords:"",
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               /* apiUrl: 'http://106.54.255.9:3302/', */
               apiUrl: 'http://127.0.0.1:3302/',
@@ -566,9 +492,7 @@ default {
 			  rules: {
 			  	url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
 				title: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
-			  },
-			  suggestOpen:false,
-			  suggestContent:""
+			  }
             };
         },
         methods: {
@@ -613,16 +537,6 @@ default {
 					   break;
 					}
 				}
-            },
-            search: function() {
-                var url = this.searchUrl + this.keywords;
-                window.open(url, "_blank")
-            },
-            handleCommand: function(command) {
-                var str = command.split(',');
-                this.searchTitle = str[0];
-                this.searchUrl = str[1];
-                this.searchIcon = str[2];
             },
             getData: function() {
                 //this.touch = dataJson.getTouch;
@@ -897,39 +811,20 @@ default {
 				});
 			}
       },
-	   watch : {
-		   keywords:function(val){
-			   if(this.keywords==''){
-			   	this.suggestOpen = false;
-			   	return
-			   }
-			   this.suggestOpen = true;
-			   this.$ajax.get(`/suggestion/su?wd=${this.keywords}&cb=window.baidu.sug`)
-			   .then((response)=>{
-			       let res_str = response.data;
-			   	console.log(res_str)
-			   	let str = res_str.split("window.baidu.sug(")[1].split(");")[0];
-			   	let strObj = eval("("+str+")");
-			   	
-			   	this.suggestContent = "";
-			   	this.suggestContent +='<ul>'
-			   	for(let item of strObj.s){
-			   		console.log(item)
-			   		this.suggestContent += `<li><a href="${this.searchUrl}${item}" target="_blank">${item}</a></li>`
-			   	}
-			   	this.suggestContent += "</ul>";
-			   });
-		   }
-		},
+
       components: {
           'v-header': header,
           'v-footer': footer,
 		  'draggable':draggable,
-    'calendar': calendar
+		  'v-search':search,
+		  'calendar': calendar
       },
 		created() {
 			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
+		},
+		mounted(){
+			this.searchIcon = this.$children[1].searchIcon;
 		}
     }
 </script>
