@@ -61,32 +61,21 @@
 					class="search-input"
 					popper-class="suggest"
 					v-model="popovers.picture">
-					<div class="dropdown" slot="reference" style="width: 140px;padding:0">
-						<!-- <el-dropdown placement="bottom" @command="checkSearch">
-							<el-button type="text" class="el-dropdown-link">
-								{{searchTitle}}
-								<i class="el-icon-arrow-down"></i>
-							</el-button>
-						
-							<el-dropdown-menu slot="dropdown">
-								<el-dropdown-item v-for="picture in pictures" :command="picture.title+','+picture.url">
-									{{picture.title}}
-								</el-dropdown-item>
-							</el-dropdown-menu>
-						
-						</el-dropdown> -->
-						<el-select v-model="value" placeholder="请选择" @change="checkSearch">
-							<el-option
-							  v-for="picture in pictures"
-							  :key="picture.title"
-							  :label="picture.title"
-							  :value="picture">
-							</el-option>
-						</el-select>
-					</div>
 					<div class="popover-content" v-html="suggestContent"></div>
-					<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-					@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
+					<div slot="reference" style="width: 100%;display: inherit;">
+						<div class="dropdown"  style="width: 140px;padding:0">
+							<el-select v-model="value" placeholder="请选择" @change="checkSearch">
+								<el-option
+								  v-for="picture in pictures"
+								  :key="picture.title"
+								  :label="picture.title"
+								  :value="picture">
+								</el-option>
+							</el-select>
+						</div>
+						<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
+						@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
+					</div>
 				  </el-popover>
 				<button id="search_but" @click="search" style="padding: 10px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
 			</div>
