@@ -18,6 +18,7 @@
 			<ul class="nav menu-inline" style="line-height: 30px;">
 				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('searchEngine',$event)" class="active">搜索引擎</a></li>
 				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('picture',$event)">图片</a></li>
+				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('icon',$event)">图标</a></li>
 			</ul>
 		</div>
 		<div class="search-center">
@@ -31,7 +32,7 @@
 						</el-button>
 					
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item v-for="(searchEngine,index) in searchEngines" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
+							<el-dropdown-item v-for="(searchEngine,index) in searchList.searchEngines" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
 								<img width="20" alt="" :src="searchEngine.icon">
 								{{searchEngine.title}}
 							</el-dropdown-item>
@@ -45,16 +46,16 @@
 					placement="bottom"
 					class="search-input"
 					popper-class="suggest"
-					v-model="popovers.searchEngine">
+					v-model="suggest">
 					<div class="popover-content" v-html="suggestContent"></div>
 					<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-					@focus="keywords!='' ? popovers.searchEngine = !popovers.searchEngine :''" @blur="keywords!='' ? popovers.searchEngine = !popovers.searchEngine :''" placeholder="输入关键字 搜你所想"/>
+					@focus="keywords!='' ? suggest = !suggest :''" @blur="keywords!='' ? suggest = !suggest :''" placeholder="输入关键字 搜你所想"/>
 				  </el-popover>
 				<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
 			</div>
 			
 			<div class="tabpanel" name="picture">
-				 <el-popover
+				 <!-- <el-popover
 					trigger="manual"
 					data-html="true"
 					placement="bottom"
@@ -62,22 +63,52 @@
 					popper-class="suggest"
 					v-model="popovers.picture">
 					<div class="popover-content" v-html="suggestContent"></div>
-					<div class="dropdown" slot="reference" style="width: 140px;padding:0">
+					<div slot="reference" style="width: 100%;display: inherit;">
+						<div class="dropdown">
+							<el-select v-model="value" placeholder="请选择" @change="checkSearch">
+								<el-option
+								  v-for="picture in pictures"
+								  :key="picture.title"
+								  :label="picture.title"
+								  :value="picture.url">
+								</el-option>
+							</el-select>
+						</div>
+						<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
+						@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
+					</div>
+					</el-popover> -->
+					<div class="search-input select">
+							<div class="dropdown">
+								<el-select v-model="value" placeholder="请选择" @change="checkSearch">
+									<el-option
+									  v-for="picture in searchList.pictures"
+									  :key="picture.title"
+									  :label="picture.title"
+									  :value="picture.url">
+									</el-option>
+								</el-select>
+							</div>
+							<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search" :placeholder="searchDescribe"/>
+					</div>
+				<button id="search_but" @click="search" style="padding: 12px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
+			</div>
+			<div class="tabpanel" name="icon">
+				<div class="search-input select">
+					<div class="dropdown">
 						<el-select v-model="value" placeholder="请选择" @change="checkSearch">
 							<el-option
-							  v-for="picture in pictures"
-							  :key="picture.title"
-							  :label="picture.title"
-							  :value="picture">
+							  v-for="icon in searchList.icons"
+							  :key="icon.title"
+							  :label="icon.title"
+							  :value="icon.url">
 							</el-option>
 						</el-select>
 					</div>
-					<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-					@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
-				  </el-popover>
-				<button id="search_but" @click="search" style="padding: 10px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
+					<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search" :placeholder="searchDescribe"/>
+				</div>
+				<button id="search_but" @click="search" style="padding: 12px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
 			</div>
-			
 		</div>
 	
 	</div>
@@ -93,25 +124,34 @@ default {
 	      searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
 		  searchDescribe: '输入关键字 搜你所想',
 		  keywords:"",
+		  suggest:false,
 		  suggestContent:"",
-		  searchEngines:[
-			  {title:'百度',url:'https://www.baidu.com/s?word=',icon:'http://47.106.84.166:3302/upload/baidu.svg'},
-			  {title:'360',url:'https://www.so.com/s?q=',icon:'http://47.106.84.166:3302/upload/360.svg'},
-			  {title:'Bing',url:'https://cn.bing.com/search?q=',icon:'http://47.106.84.166:3302/upload/bing.svg'},
-			  {title:'搜狗',url:'https://www.sogou.com/web?query=',icon:'http://47.106.84.166:3302/upload/sogou.svg'},
-			  {title:'谷歌',url:'https://www.google.com/search?q=',icon:'http://47.106.84.166:3302/upload/google.svg'},
-		  ],
-		  pictures:[
-			  {title:'高图网',describe:'免费无版权高清图片下载',url:'http://www.gaoimg.com/plus/search.php?kwtype=0&q='},
-			  {title:'Pexels',describe:'免费无版权高清图片下载',url:'https://www.pexels.com/search/'},
-			  {title:'Unsplash',describe:'免费无版权高清图片下载',url:'https://unsplash.com/s/photos/'},
-			  {title:'Wallhaven',describe:'免费无版权高清图片下载',url:'https://wallhaven.cc/search?q='},
-		  ],
-		  value:{title:'高图网',describe:'免费无版权高清图片下载',url:'http://www.gaoimg.com/plus/search.php?kwtype=0&q='},
-		  popovers:{
-			  searchEngine:false,
-			  picture:false
+		  searchList:{
+			  searchEngines:[
+				  {title:'百度',url:'https://www.baidu.com/s?word=',icon:'http://47.106.84.166:3302/upload/baidu.svg'},
+				  {title:'360',url:'https://www.so.com/s?q=',icon:'http://47.106.84.166:3302/upload/360.svg'},
+				  {title:'Bing',url:'https://cn.bing.com/search?q=',icon:'http://47.106.84.166:3302/upload/bing.svg'},
+				  {title:'搜狗',url:'https://www.sogou.com/web?query=',icon:'http://47.106.84.166:3302/upload/sogou.svg'},
+				  {title:'谷歌',url:'https://www.google.com/search?q=',icon:'http://47.106.84.166:3302/upload/google.svg'},
+			  ],
+			  pictures:[
+				  {title:'高图网',describe:'免费无版权高清图片下载',url:'http://www.gaoimg.com/plus/search.php?kwtype=0&q='},
+				  {title:'Pexels',describe:'免费无版权高清图片下载',url:'https://www.pexels.com/search/'},
+				  {title:'Unsplash',describe:'免费无版权高清图片下载',url:'https://unsplash.com/s/photos/'},
+				  {title:'Wallhaven',describe:'免费无版权高清图片下载',url:'https://wallhaven.cc/search?q='},
+			  ],
+			  material:[
+				  {title:'包图网',describe:'专注原创商用设计图片下载',url:'https://ibaotu.com/tupian/niao.html?spm=stdhrs&utm_source=BD&utm_medium=168导航&utm_campaign='},
+			  ],
+			  icons:[
+				  {title:'iconfont',describe:'国内功能很强大且图标内容很丰富的矢量图标库',url:'https://www.iconfont.cn/search/index?searchType=icon&q='},
+				  {title:'easyicon',describe:'超过五十万个SVG、PNG、ICO、ICNS格式图标',url:'https://www.easyicon.net/iconsearch/'},
+				  {title:'iconfinder',describe:'290万加优质图标搜索',url:'https://www.iconfinder.com/search/?q='},
+				  {title:'flaticon',describe:'128万加免费矢量图标下载',url:'https://www.flaticon.com/search?word='},
+				  {title:'iconarchive',describe:'3.5万个免费矢量图标下载',url:'http://www.iconarchive.com/search?q='},
+			  ]
 		  },
+		  value:'',
 		  tabName:'searchEngine'
 		}
 	},
@@ -121,9 +161,10 @@ default {
 		    this.searchTitle = str[0];
 		    this.searchUrl = str[1];
 		    this.searchIcon = str[2];
+			this.$emit('setSearchIcon', this.searchIcon)
 		},
 		checkSearch: function() {
-			this.searchUrl = this.value.url;
+			this.searchUrl = this.value;
 		},
 		search: function() {
 		    var url = this.searchUrl + this.keywords;
@@ -137,25 +178,29 @@ default {
 			
 			this.keywords = '';
 			this.tabName = name;
-			
-			if(name == 'SearchEngine'){
+			if(name == 'searchEngine'){
 				this.searchTitle = '百度'
 				this.searchUrl = 'https://www.baidu.com/s?word='
 			}else
-			if(name == 'Picture'){
+			if(name == 'picture'){
 				this.searchTitle = '高图网',
 				this.searchDescribe = '免费无版权高清图片下载'
-				this.searchUrl = 'http://www.gaoimg.com/plus/search.php?kwtype=0&q='
+				this.searchUrl = this.value = 'http://www.gaoimg.com/plus/search.php?kwtype=0&q='
+			}else
+			if(name == 'icon'){
+				this.searchTitle = 'iconfont',
+				this.searchDescribe = '国内功能很强大且图标内容很丰富的矢量图标库'
+				this.searchUrl = this.value = 'https://www.iconfont.cn/search/index?searchType=icon&q='
 			}
 		},
 	},
 	watch : {
 	   keywords:function(val){
-		   if(this.keywords.trim() == ''){
-			this.popovers[this.tabName] = false
+		   if(this.keywords.trim() == '' || this.tabName != 'searchEngine'){
+			this.suggest = false
 		   	return
 		   }
-		   this.popovers[this.tabName] = true
+		   this.suggest = true
 		   this.$ajax.get(`/suggestion/su?wd=${this.keywords}&cb=window.baidu.sug`)
 		   .then((response)=>{
 		       let res_str = response.data;
@@ -164,7 +209,7 @@ default {
 		   	let strObj = eval("("+str+")");
 		   	
 			if(strObj.s.length == 0){
-				this.popovers[this.tabName] = false
+				this.suggest = false
 				return
 			}
 			
@@ -315,88 +360,5 @@ default {
 	
 	.el-select-dropdown__item.selected{
 		color: #000!important;
-	}
-	
-	@media screen and (min-width:1200px) {
-		#search .search-center{
-			margin: 0 25%;
-		}
-		
-		.suggest{
-			width: 37%;
-		}
-		
-		.dropdown .el-select{
-			top: 2px;
-		}
-	}
-	
-	@media screen and (min-width: 960px) and (max-width: 1199px) {
-		
-		#search .search-center{
-			margin: 0 18%;
-		}
-		
-		#search #search-input{
-			width: 72%;
-		}
-		
-		.suggest{
-			width: 44%;
-		}
-	}
-	
-	@media screen and (min-width: 768px) and (max-width: 959px) {
-		
-		.suggest{
-			width: 52%;
-		}
-		
-		#search .search-center{
-			margin: 0 12%;
-		}
-		
-		#search #search_input{
-			width: 68%;
-		}
-	}
-	
-	@media only screen and (min-width: 480px) and (max-width: 767px) {
-		
-		#search .search-center{
-			margin: 0 8%;
-		}
-	
-		#search #search_input{
-			width: 56%;
-		}
-		
-		.suggest{
-			width: 57%;
-		}
-	
-		#search h3 {
-			margin-bottom: 22px;
-			font-size: 32px;
-		}
-	}
-	
-	@media only screen and (max-width: 479px) {
-		
-		.dropdown{
-			padding: 0 8px 0 10px;
-		}
-		
-		#search .search-input{
-			width: 45%;
-		}
-		
-		#search .search-input.select{
-			width: 72%;
-		}
-		
-		.suggest{
-			width: 97%;
-		}
 	}
 </style>

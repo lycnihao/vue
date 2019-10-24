@@ -566,6 +566,32 @@ section {
 
 
 @media screen and (min-width:1200px) {
+	
+	#search .search-input{
+		width: 72%;
+	}
+	
+	#search .search-input.select{
+		width: 88%;
+	}
+	
+	#search .search-center{
+		margin: 0 25%;
+	}
+	
+	.suggest{
+		width: 36%;
+	}
+	
+	.select .dropdown{
+		width: 150px; 
+		padding: 0px;
+	}
+	
+	.dropdown .el-select{
+		top: 2px;
+	}
+	
 	.main, .links .box{
 		margin: 0 10%;
 	}
@@ -612,6 +638,19 @@ section {
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
+	
+	#search .search-center{
+		margin: 0 18%;
+	}
+	
+	#search .search-input{
+		width: 72%;
+	}
+	
+	.suggest{
+		width: 44%;
+	}
+	
 	.header-top-nav{
 		display: none;
 	}
@@ -663,6 +702,24 @@ section {
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
+	
+	.suggest{
+		width: 52%;
+	}
+	
+	#search .search-center{
+		margin: 0 12%;
+	}
+	
+	#search #search_input{
+		width: 68%;
+	}
+	
+	.select .dropdown{
+		width: 168px; 
+		padding: 0px;
+	}
+	
 	.header-top-nav{
 		display: none;
 	}
@@ -717,6 +774,24 @@ section {
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+	#search .search-center{
+		margin: 0 8%;
+	}
+		
+	#search #search_input{
+		width: 56%;
+	}
+	
+	.suggest{
+		width: 57%;
+	}
+		
+	#search h3 {
+		margin-bottom: 22px;
+		font-size: 32px;
+	}
+	
 	.header-top-nav{
 		display: none;
 	}
@@ -774,6 +849,28 @@ section {
 }
 
 @media only screen and (max-width: 479px) {
+	
+	.dropdown{
+		padding: 0 8px 0 10px;
+	}
+	
+	.select .dropdown{
+		width: 198px; 
+		padding: 0px;
+	}
+	
+	#search .search-input{
+		width: 45%;
+	}
+	
+	#search .search-input.select{
+		width: 72%;
+	}
+	
+	.suggest{
+		width: 97%;
+	}
+	
 	.header-top-nav{
 		display: none;
 	}

@@ -3,7 +3,7 @@
 		<div class="calendar-header">
 			<h3>
 				<span class="btn-prev" @click="perCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-left"></i></a></span>
-				<span>{{nowYear}} 年 &nbsp;{{nowMonth}} 月</span>
+				<span><strong>{{nowYear}}</strong> <small>年</small> &nbsp;<strong>{{nowMonth}}</strong> <small>日</small></span>
 				<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
 			</h3>
 			<p class="info">{{lunarcalendar}} · {{week}} ·
@@ -239,7 +239,11 @@ default {
 				}
 				else if(res_day == day)
 					style = 'active'
-
+				
+				if(new Date().getMonth() == month && new Date().getDate() == res_day){
+					style = 'today'
+				}
+				
 				let solarTerm = this.getSolarTerm(year_, month_, res_day);
 				let lunarcalendar = this.getLunarcalendar(year_,month_ + 1,res_day);
 				let festival = this.getFestival(month_ + 1,res_day);
@@ -329,14 +333,15 @@ default {
 		height: 40px;
 		line-height: 40px;
 		border-radius: 50%;
-    text-align: center;
+		text-align: center;
 		overflow: hidden;
 		display: inline-block;
 		transition: all .4s cubic-bezier(.175,.885,.32,1);
 	}
 
 	.day-item a:hover{
-		background-color: #f98a0024;
+		background-color: #f8f8f8;
+		box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
 	}
 
 	.day-item .day{
@@ -345,7 +350,16 @@ default {
 
 	.day-item .active{
 		color: #fff;
+		background-color: #ffb72b!important;
+		box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+	}
+	
+	.day-item .today{
 		background-color: #9875dc!important;
+		box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+	}
+	.day-item .today span{
+		color: #fff;
 	}
 
 	.significant span{

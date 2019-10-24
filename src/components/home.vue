@@ -4,7 +4,7 @@
 
 		<section>
 			<!-- 搜索功能模块 -->
-			<v-search></v-search>
+			<v-search @setSearchIcon="setSearchIcon"></v-search>
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
         <!-- user-block图标板块 -->
@@ -442,11 +442,12 @@ import BScroll from 'better-scroll'
 import draggable from 'vuedraggable'
 import search from './common/widget/search'
 
+
 export
 default {
         data() {
             return {
-			  searchIcon: '',
+			  searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               listHeight: [],
               sitesScrollY: 0,
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
@@ -809,8 +810,12 @@ default {
 				}).catch((response)=>{
 					this.$message.error('发送请求失败，请检查网络是否通畅');
 				});
+			},
+			setSearchIcon:function(data){
+				console.log(data)
+				this.searchIcon = data
 			}
-      },
+	  },
 
       components: {
           'v-header': header,
@@ -822,9 +827,6 @@ default {
 		created() {
 			this.getData();
 			window.addEventListener('scroll', this.handleScroll, true);
-		},
-		mounted(){
-			this.searchIcon = this.$children[1].searchIcon;
 		}
     }
 </script>
