@@ -79,7 +79,7 @@ default {
 	}
 	.link .box .box-header h3{
 		font-size: 26px;
-    color: #444;
+		color: #444;
 	}
   .link .box .box-header p{
     font-size: 13px;

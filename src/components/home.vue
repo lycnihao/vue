@@ -309,7 +309,7 @@
 		<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
 			<el-form-item prop="url">
 				<el-input v-model="addForm.url" placeholder="网站地址，如：http://www.baidu.com">
-				  <template slot="append">抓取标题</template>
+				  <template slot="append"><el-button @click="getContent(addForm.url)">抓取标题</el-button></template>
 				</el-input>
 			</el-form-item>
 			<el-row :gutter="10">
@@ -371,7 +371,7 @@
     	<el-form :model="editForm" ref="editForm" :rules="rules" status-icon>
     		<el-form-item prop="url">
     			<el-input v-model="editForm.url" placeholder="网站地址，如：http://www.baidu.com">
-    			  <template slot="append">抓取标题</template>
+    			  <template slot="append"><el-button @click="getContent(editForm.url)">抓取标题</el-button></template>
     			</el-input>
     		</el-form-item>
     		<el-row :gutter="10">
@@ -553,14 +553,14 @@ default {
 
 				this.getUserSites();
 
-                this.$ajax.get(this.apiUrl + 'api/getHotList')
+                this.$ajax.get('/hom1/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
                 this.$message.error('数据请求失败，请稍后再试');
                 });
 
-                this.$ajax.get(this.apiUrl + 'api/getList')
+                this.$ajax.get('/hom1/api/getList')
                 .then((response)=>{
                   loading.close();
                             for(let categorie of response.data.categories){
@@ -597,7 +597,7 @@ default {
                 window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$ajax.get(this.apiUrl + 'api/getHotList')
+                this.$ajax.get('/hom1/api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
                     this.$notify({
@@ -662,7 +662,7 @@ default {
 				if(arr != null){
 				  this.$ajax.defaults.headers.common['token'] = arr[2];
 				}
-				this.$ajax.get(this.apiUrl + 'api/userWebSite')
+				this.$ajax.get('/hom1/api/userWebSite')
 				.then((response)=>{
 					this.userSites = response.data;
 				}).catch((response)=>{
@@ -678,7 +678,7 @@ default {
 				data.append('oldIndex',e.oldIndex);
 				data.append('newIndex',e.newIndex);
 				
-				this.$ajax.post(this.apiUrl + 'api/user/sortSite/' + id,data)
+				this.$ajax.post('/hom1/api/user/sortSite/' + id,data)
 				.then((response)=>{
 					if(response.data.code == 1){
 						this.$notify({
@@ -709,13 +709,13 @@ default {
 				if(arr != null){
 				  this.$ajax.defaults.headers.common['token'] = arr[2];
 				}
-				this.$ajax.post(this.apiUrl + '/api/user/upload',data)
+				this.$ajax.post('/hom1/api/user/upload',data)
 				.then((response)=>{
 				    if(response.data.code == 1){
 						if(this.siteManage.add){
-							this.addForm.icon = this.siteManage.imageUrl = this.apiUrl + response.data.result.filePath;
+							this.addForm.icon = this.siteManage.imageUrl = response.data.result.filePath;
 						}else{
-							this.editForm.icon = this.siteManage.imageUrl = this.apiUrl + response.data.result.filePath;
+							this.editForm.icon = this.siteManage.imageUrl = response.data.result.filePath;
 						}
 
 					} else{
@@ -731,7 +731,7 @@ default {
 				if(arr != null){
 				  this.$ajax.defaults.headers.common['token'] = arr[2];
 				}
-				this.$ajax.post(this.apiUrl + '/api/user/saveSite',data)
+				this.$ajax.post('/hom1/api/user/saveSite',data)
 				.then((response)=>{
 					if(response.data.code == 1){
 						this.$message({message: '保存成功！',type: 'success'});
@@ -763,7 +763,7 @@ default {
 			editOpen:function(siteId){
 				this.siteManage.edit = true;
 				this.editForm.id = siteId;
-				this.$ajax.post(this.apiUrl + '/api/userWebSite/'+siteId)
+				this.$ajax.post('/hom1/api/userWebSite/'+siteId)
 				.then((response)=>{
 				    if(response.data.code == 1){
 						this.editForm.title = response.data.result.websiteTitle;
@@ -799,7 +799,7 @@ default {
 				if(arr != null){
 				  this.$ajax.defaults.headers.common['token'] = arr[2];
 				}
-				this.$ajax.post(this.apiUrl + '/api/user/removeSite/'+siteId)
+				this.$ajax.post('/hom1/api/user/removeSite/'+siteId)
 				.then((response)=>{
 					if(response.data.code == 1){
 						this.$message({message: '删除成功！',type: 'success'});
@@ -812,8 +812,23 @@ default {
 				});
 			},
 			setSearchIcon:function(data){
-				console.log(data)
 				this.searchIcon = data
+			},
+			getContent:function(url){
+				this.$ajax.get('/hom1/api/getWebContent?url=' + url)
+				.then((response)=>{
+					if(response.data.code == 1){
+						if(this.siteManage.add){
+							this.addForm.title = response.data.result.name
+							this.addForm.icon = this.siteManage.imageUrl = response.data.result.iconFile
+						}else{
+							this.editForm.title = response.data.result.name
+							this.editForm.icon = this.siteManage.imageUrl = response.data.result.iconFile
+						}
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				})
 			}
 	  },
 
