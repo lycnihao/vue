@@ -58,24 +58,22 @@
 					trigger="manual"
 					data-html="true"
 					placement="bottom"
-					class="search-input"
+					class="search-input select"
 					popper-class="suggest"
 					v-model="popovers.picture">
 					<div class="popover-content" v-html="suggestContent"></div>
-					<div slot="reference" style="width: 100%;display: inherit;">
-						<div class="dropdown"  style="width: 140px;padding:0">
-							<el-select v-model="value" placeholder="请选择" @change="checkSearch">
-								<el-option
-								  v-for="picture in pictures"
-								  :key="picture.title"
-								  :label="picture.title"
-								  :value="picture">
-								</el-option>
-							</el-select>
-						</div>
-						<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-						@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
+					<div class="dropdown" slot="reference" style="width: 140px;padding:0">
+						<el-select v-model="value" placeholder="请选择" @change="checkSearch">
+							<el-option
+							  v-for="picture in pictures"
+							  :key="picture.title"
+							  :label="picture.title"
+							  :value="picture">
+							</el-option>
+						</el-select>
 					</div>
+					<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
+					@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
 				  </el-popover>
 				<button id="search_but" @click="search" style="padding: 10px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
 			</div>
@@ -223,7 +221,6 @@ default {
 	
 		
 	#search .search-input{
-		width: 75%;
 		display: inherit;
 	}
 	
@@ -301,10 +298,6 @@ default {
 		line-height:inherit!important;
 	}
 	
-	.dropdown .el-select{
-		top: 2px;
-	}
-	
 	.dropdown span{
 		color: #606266;
 		font-size: 15px;
@@ -322,5 +315,88 @@ default {
 	
 	.el-select-dropdown__item.selected{
 		color: #000!important;
+	}
+	
+	@media screen and (min-width:1200px) {
+		#search .search-center{
+			margin: 0 25%;
+		}
+		
+		.suggest{
+			width: 37%;
+		}
+		
+		.dropdown .el-select{
+			top: 2px;
+		}
+	}
+	
+	@media screen and (min-width: 960px) and (max-width: 1199px) {
+		
+		#search .search-center{
+			margin: 0 18%;
+		}
+		
+		#search #search-input{
+			width: 72%;
+		}
+		
+		.suggest{
+			width: 44%;
+		}
+	}
+	
+	@media screen and (min-width: 768px) and (max-width: 959px) {
+		
+		.suggest{
+			width: 52%;
+		}
+		
+		#search .search-center{
+			margin: 0 12%;
+		}
+		
+		#search #search_input{
+			width: 68%;
+		}
+	}
+	
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+		
+		#search .search-center{
+			margin: 0 8%;
+		}
+	
+		#search #search_input{
+			width: 56%;
+		}
+		
+		.suggest{
+			width: 57%;
+		}
+	
+		#search h3 {
+			margin-bottom: 22px;
+			font-size: 32px;
+		}
+	}
+	
+	@media only screen and (max-width: 479px) {
+		
+		.dropdown{
+			padding: 0 8px 0 10px;
+		}
+		
+		#search .search-input{
+			width: 45%;
+		}
+		
+		#search .search-input.select{
+			width: 72%;
+		}
+		
+		.suggest{
+			width: 97%;
+		}
 	}
 </style>
