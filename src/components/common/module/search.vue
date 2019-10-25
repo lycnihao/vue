@@ -160,8 +160,7 @@ default {
 		    var str = command.split(',');
 		    this.searchTitle = str[0];
 		    this.searchUrl = str[1];
-		    this.searchIcon = str[2];
-			this.$emit('setSearchIcon', this.searchIcon)
+		    this.searchIcon = this.$parent.searchIcon = str[2];
 		},
 		checkSearch: function() {
 			this.searchUrl = this.value;
