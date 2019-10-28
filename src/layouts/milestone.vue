@@ -40,8 +40,8 @@
 </template>
 
 <script>
-	import header from './common/module/header'
-	import footer from './common/module/footer'
+	import header from '../pages/header'
+	import footer from '../pages/footer'
 
 	export default {
 	  name: 'About',

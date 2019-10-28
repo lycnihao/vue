@@ -17,8 +17,8 @@
 							 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;">
 								 <div class="float-left" style="margin-bottom: -5px;">
 									 <ul class="nav menu-inline" style="line-height: 36px;">
-										 <li class="nav-item"><a style="font-size: 15px;" href="#" class="active">导航</a></li>
-										 <li class="nav-item"><a style="font-size: 15px;" href="#">新闻</a></li>
+										 <li class="nav-item"><v-link href="/">导航</v-link></li>
+										 <li class="nav-item"><v-link href="/hot">热榜</v-link></li>
 									</ul>
 								 </div>
 								 <div class="float-right"></div>
@@ -33,89 +33,9 @@
 								 </ul>
 							 </div>
 						 </div>
-
-						 <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-						  <el-row :gutter="10">
-							<!-- 主体显示块 -->
-							<el-col :md="18" :lg="18" :xl="18" class="block">
-							  <transition name="el-zoom-in-top" >
-								 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
-								 <li class="nav-item-radius" v-for="(category, index) in categorys">
-								   <a @click="menuClick(index,$event)">
-								  <i :class="category.icon"></i>{{category.name}}
-								   </a>
-								 </li>
-								 </ul>
-							  </transition>
-							  <transition name="el-zoom-in-top">
-								<div style="position: relative;">
-									<span v-on:click="headerNav = !headerNav"  v-show="headerNav" style="position: absolute;left: -28px;top: -8px;">
-									   <a href="javascript:(0);;" title="收起"><i class="el-icon-caret-top"></i></a>
-									</span>
-								</div>
-							  </transition>
-							  <transition name="el-zoom-in-top">
-								<span v-on:click="headerNav = !headerNav" v-show="!headerNav">
-								  <i class="el-icon-caret-bottom"></i>
-								</span>
-							  </transition>
-							</el-col>
-						  </el-row>
-						 </div>
-
-						<div id="wrapper" ref="sitesWrapper">
-							<ul>
-								<li v-for="category in categorys" class="box site-list-hook tabs">
-								  <div class="box-header">
-									 <div class="site-tabs">
-										 <h3 :id="category.slugName">{{category.name}}</h3>
-										 <div class="tabs-nav">
-										 	<ul class="tablist">
-										 		<li class="tabs-item" v-for="(subCategory,index) in subCategorys[category.categoryId]" @click="tabs(subCategory.slugName,$event)"><a :class="index == 0 ? 'active':''" href="javascript:void(0);">{{subCategory.name}}</a></li>
-										 	</ul>
-										 </div>
-									 </div>
-								  </div>
-								   <div class="box-body">
-
-										<div class="tabs-content" v-if="subCategorys[category.categoryId]">
-											<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName">
-												<ul class="site-list">
-												  <li v-for="site in sites[subCategory.categoryId]">
-													 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-													   <div class="site-icon">
-														<img :data-src="site.icon" :alt="site.title"></img>
-														</div>
-													   <div class="site-info">
-													   <h3>{{ site.title }}</h3>
-													   <p>{{ site.summary }}</p>
-													   </div>
-													 </a>
-												  </li>
-												</ul>
-											</div>
-										</div>
-										<div v-else>
-											<ul class="site-list">
-											  <li v-for="site in sites[category.categoryId]">
-												 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
-												   <div class="site-icon float-left">
-													<el-image :src="site.icon" :alt="site.title">
-													  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
-													</div>
-												   <div class="site-info float-right">
-												   <h3>{{ site.title }}</h3>
-												   <p>{{ site.summary }}</p>
-												   </div>
-												 </a>
-											  </li>
-											</ul>
-										</div>
-
-								   </div>
-								</li>
-							</ul>
-						</div>
+							
+						<slot></slot>
+							
 <!-- 						<div class="box">
 							<div class="box-header">
 								<h3>精选图集</h3>
@@ -158,8 +78,8 @@
 							</div>
 							<div class="box-body">
 								<el-carousel trigger="click" :autoplay="false" indicator-position="none" height= "350px">
-									<el-carousel-item v-for="array in hotList">
-							   <ul class="menu" style="width: 100%;">
+									<el-carousel-item>
+							   <ul v-for="array in hotList" class="menu" style="width: 100%;">
 								 <li class="nav-item" style="width: 100%;"  v-for="item in array">
 								   <div style="display: flex;justify-content:space-between;">
 									 <span style="display: inherit;">
@@ -196,31 +116,9 @@
 
 			<el-backtop :bottom="100"></el-backtop>
 		</section>
-
-		<div class="links">
-			 <div class="box">
-				 <div class="box-header">
-					 <h4><strong>友情链接</strong></h4>
-				 </div>
-				 <div class="box-body">
-					<!-- <table width="100%" border="0" cellpadding="3" cellspacing="0">
-						<tbody>
-							<tr>
-								<td><el-link href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=d05FTkBPTk5GRjcGBlkUGBo" target="_blank" type="info">申请友链</el-link></td>
-							</tr>
-						</tbody>
-					</table> -->
-					<table border="0" cellpadding="3" cellspacing="0">
-						<tbody>
-							<tr>
-								<td style=" padding-right: 20px;"><el-link href="https://daohang.aizhancloud.cn/76" target="_blank" type="info">免费收录网站</el-link></td>
-								<td><el-link href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=d05FTkBPTk5GRjcGBlkUGBo" target="_blank" type="info">申请友链</el-link></td>
-							</tr>
-						</tbody>
-					</table>
-				 </div>
-			 </div>
-		</div>
+		
+		<!-- 友情链接 -->
+		<v-links></v-links>
 
 		<!-- <div id="sidebar" title="加载边栏" class="el-icon-discover"></div> -->
     <v-footer></v-footer>
@@ -229,13 +127,17 @@
 </template>
 
 <script>
-import dataJson from './../data.json';
-import header from './common/module/header'
-import footer from './common/module/footer'
-import calendar from './common/widget/calendar'
 import BScroll from 'better-scroll'
-import search from './common/module/search'
-import userBlock from './common/module/userSite'
+import dataJson from '../data.json';
+import header from '../pages/header'
+import footer from '../pages/footer'
+
+import search from '../pages/search'
+import userBlock from '../pages/userSite'
+import links from '../pages/links'
+import calendar from '../components/calendar'
+import VLink from '../components/VLink'
+
 
 
 export
@@ -256,7 +158,6 @@ default {
               recommend: null,
               thumbnails: null,
               hotList: null,
-              headerNav:true,
               menuTop:false,
               activeName: 'first',
               loading:true,
@@ -299,46 +200,13 @@ default {
                   background: 'rgba(0, 0, 0, 0.2)'
                 });
                 this.thumbnails = dataJson.getThumbnail;
-
                 this.$ajax.get('/hom1/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
                 this.$message.error('数据请求失败，请稍后再试');
                 });
-
-                this.$ajax.get('/hom1/api/getList')
-                .then((response)=>{
-                  loading.close();
-                            for(let categorie of response.data.categories){
-                              if(categorie.parentId == 0){
-                                this.categorys.push(categorie)
-                              }else{
-                                let value = this.subCategorys[categorie.parentId];
-                                if(value == undefined)
-                                  value = []
-                                value.push(categorie)
-                                this.subCategorys[categorie.parentId] = value;
-
-                                //默认选择tab项
-                                if(this.activeSubCategorys[categorie.parentId] == undefined)
-                                  this.activeSubCategorys[categorie.parentId] = categorie.slugName
-
-                              }
-                            }
-                            this.sites = response.data.webSites;
-							  this.$nextTick(() => {
-								this.$refs.userSite.getUserSites();
-								this._initScroll(); // 初始化scroll
-								this._calculateHeight(); // 初始化列表高度列表
-								var img=document.querySelectorAll("img[data-src]")
-								for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
-								this.lazy();
-							  })
-                }).catch((response)=>{
-                  loading.close();
-                  this.$message.error('数据请求失败，请稍后再试');
-                });
+				loading.close();
             },
             hotSearch: function(options) {
                 /* console.log(options.target.innerText); */
@@ -411,7 +279,9 @@ default {
           'v-footer': footer,
 		  'v-search':search,
 		  'calendar': calendar,
-		  'v-user':userBlock
+		  'v-user':userBlock,
+		  'v-links':links,
+		  'v-link':VLink,
       },
 		created() {
 			this.getData();

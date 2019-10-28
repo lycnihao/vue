@@ -32,7 +32,7 @@
 						</el-button>
 					
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item v-for="(searchEngine,index) in searchList.searchEngines" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
+							<el-dropdown-item v-for="(searchEngine,index) in searchList.searchEngines" :key="index" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
 								<img width="20" alt="" :src="searchEngine.icon">
 								{{searchEngine.title}}
 							</el-dropdown-item>
@@ -230,7 +230,7 @@ default {
 		position: relative;
 		padding: 180px 0 230px 0;
 		background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
-		background-image: url(../../../assets/bg/bg.png);
+		background-image: url(../assets/bg/bg.png);
 	}
 	
 	#search .search-center .tabpanel.show,#search .search-tools{
