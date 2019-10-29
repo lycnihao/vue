@@ -39,7 +39,7 @@ const app = new Vue({
     ViewComponent () {
       const matchingView = routes[this.currentRoute]
       return matchingView
-        ? require('./layouts/' + matchingView + '.vue').default
+        ? require('./pages/' + matchingView + '.vue').default
         : require('./pages/404.vue')
     }
   },

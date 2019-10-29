@@ -4,7 +4,7 @@ import Home from '@/layouts/home'
 import About from '@/layouts/about'
 import Milestone from '@/layouts/milestone'
 import Link from '@/layouts/link'
-import Hot from '@/pages/hot'
+import Hot from '@/layouts/hot'
 
 Vue.use(Router)
 
@@ -36,5 +36,6 @@ export default new Router({
 
 export default {
   '/': 'home',
-  '/about': 'About'
+  '/about': 'about',
+  '/hot': 'hot'
 }

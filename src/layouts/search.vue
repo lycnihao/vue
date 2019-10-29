@@ -32,7 +32,7 @@
 						</el-button>
 					
 						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item v-for="(searchEngine,index) in searchList.searchEngines" :key="index" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
+							<el-dropdown-item v-for="(searchEngine,index) in searchSite.searchEngines" :key="index" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
 								<img width="20" alt="" :src="searchEngine.icon">
 								{{searchEngine.title}}
 							</el-dropdown-item>
@@ -82,10 +82,10 @@
 							<div class="dropdown">
 								<el-select v-model="value" placeholder="请选择" @change="checkSearch">
 									<el-option
-									  v-for="picture in searchList.pictures"
+									  v-for="picture in searchSite.pictures"
 									  :key="picture.title"
 									  :label="picture.title"
-									  :value="picture.url">
+									  :value="picture.url+','+picture.describe">
 									</el-option>
 								</el-select>
 							</div>
@@ -98,10 +98,10 @@
 					<div class="dropdown">
 						<el-select v-model="value" placeholder="请选择" @change="checkSearch">
 							<el-option
-							  v-for="icon in searchList.icons"
+							  v-for="icon in searchSite.icons"
 							  :key="icon.title"
 							  :label="icon.title"
-							  :value="icon.url">
+							  :value="icon.url+','+icon.describe">
 							</el-option>
 						</el-select>
 					</div>
@@ -126,7 +126,7 @@ default {
 		  keywords:"",
 		  suggest:false,
 		  suggestContent:"",
-		  searchList:{
+		  searchSite:{
 			  searchEngines:[
 				  {title:'百度',url:'https://www.baidu.com/s?word=',icon:'http://47.106.84.166:3302/upload/baidu.svg'},
 				  {title:'360',url:'https://www.so.com/s?q=',icon:'http://47.106.84.166:3302/upload/360.svg'},
@@ -159,11 +159,13 @@ default {
 		checkSearchIcon: function(command) {
 		    var str = command.split(',');
 		    this.searchTitle = str[0];
-		    this.searchUrl = str[1];
+		    this.searchUrl  = this.$parent.searchUrl = str[1];
 		    this.searchIcon = this.$parent.searchIcon = str[2];
 		},
 		checkSearch: function() {
-			this.searchUrl = this.value;
+			let obj = this.value.split(',');
+			this.searchUrl = obj[0];
+			this.searchDescribe = obj[1];
 		},
 		search: function() {
 		    var url = this.searchUrl + this.keywords;
@@ -184,13 +186,16 @@ default {
 			if(name == 'picture'){
 				this.searchTitle = '高图网',
 				this.searchDescribe = '免费无版权高清图片下载'
-				this.searchUrl = this.value = 'http://www.gaoimg.com/plus/search.php?kwtype=0&q='
+				this.searchUrl = 'http://www.gaoimg.com/plus/search.php?kwtype=0&q='
+				this.value = this.searchUrl +","+ this.searchDescribe
 			}else
 			if(name == 'icon'){
 				this.searchTitle = 'iconfont',
 				this.searchDescribe = '国内功能很强大且图标内容很丰富的矢量图标库'
-				this.searchUrl = this.value = 'https://www.iconfont.cn/search/index?searchType=icon&q='
+				this.searchUrl = 'https://www.iconfont.cn/search/index?searchType=icon&q='
+				this.value = this.searchUrl +","+ this.searchDescribe
 			}
+			
 		},
 	},
 	watch : {

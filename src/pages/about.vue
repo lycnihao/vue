@@ -38,8 +38,8 @@
 </template>
 
 <script>
-	import header from '../pages/header'
-	import footer from '../pages/footer'
+	import header from '../layouts/header'
+	import footer from '../layouts/footer'
 
 	export default {
 	  name: 'About',
