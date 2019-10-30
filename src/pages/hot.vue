@@ -1,92 +1,100 @@
 <template>
 	<main-layout>
-		<el-container>
+		<el-container style="margin: 5px 0!important;">
 		  <el-aside width="180px">
 			  <ul class="aside">
-				  <li v-for="i of 10"><a href="javascript:void(0)">v2ex</a></li>
+				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event)">百度风云榜单</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">微博热搜榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">知乎热搜榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">豆瓣排行榜</a></li>
 			  </ul>
 		  </el-aside>
 		  <el-main class="content">
-			  <el-tabs v-model="activeName" type="card">
-				<el-tab-pane label="百度实时热点榜" name="tab1">
-					<div class="hot-header">
-						<span>刚刚更新-数据源自百度</span>
-					</div>
-					<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
-					  <table>
-						 <tr title="一个人的时光也很美好" v-for="i of 50">
-							<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
-									 <span class="number">01</span>
-									 一个人的时光也很美好
-							</a></td>
-							<td width="15%">
-								<span class="level">4,411,840</span>
-							</td>
-							<td width="8%" style="text-align: center;">
-								<span class="trend">↑</span>
-							</td>
-						 </tr>
-					  </table>
-					</div>
-				</el-tab-pane>
-				<el-tab-pane label="百度今日热点榜" name="tab2">
-					<div class="hot-header">
-						<span>刚刚更新-数据源自百度</span>
-					</div>
-					<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
-					  <table>
-						 <tr title="一个人的时光也很美好" v-for="i of 50">
-							<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
-									 <span class="number">01</span>
-									 一个人的时光也很美好
-							</a></td>
-							<td width="15%">
-								<span class="level">4,411,840</span>
-							</td>
-							<td width="8%" style="text-align: center;">
-								<span class="trend">↑</span>
-							</td>
-						 </tr>
-					  </table>
-					</div>
-				</el-tab-pane>
-				<el-tab-pane label="百度百科热词" name="tab3">
-					<ul class="random">
-						<!-- 1 -->
-						<li class="el-col-24">
-							<a href="#" class="class-a">
-								<span>1中共十九届四中全会</span>
-							</a>
-						</li>
-						<!-- 2 -->
-						<li class="el-col-12">
-							<a href="#" class="class-b"><span>2中共十九届四中全会</span></a>
-						</li>
-						<li class="el-col-12">
-							<a href="#" class="class-c"><span>3中共十九届四中全会</span></a>
-						</li>
-						<!-- 3 -->
-						<li class="el-col-7">
-							<a href="#" class="class-c"><span>4中共十九届四中全会</span></a>
-						</li>
-						<li class="el-col-10">
-							<a href="#" class="class-a"><span>5中共十九届四中全会</span></a>
-						</li>
-						<li class="el-col-7">
-							<a href="#" class="class-b"><span>6中共十九届四中全会</span></a>
-						</li>
-						<!-- 4 -->
-						<li class="el-col-12">
-							<a href="#" class="class-b"><span>7中共十九届四中全会</span></a>
-						</li>
-						<li class="el-col-12">
-							<a href="#" class="class-c"><span>8中共十九届四中全会</span></a>
-						</li>
-					</ul>
-				</el-tab-pane>
-			  </el-tabs>
+			  <div class="tabpanel show" name='tab1'>
+			  		<el-tabs v-model="activeName" type="card">
+						<el-tab-pane label="百度实时热点榜" name="bd_tab1">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自百度</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <table>
+								 <tr title="一个人的时光也很美好" v-for="i of 50">
+									<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
+											 <span class="number">01</span>
+											 一个人的时光也很美好
+									</a></td>
+									<td width="15%">
+										<span class="level">4,411,840</span>
+									</td>
+									<td width="8%" style="text-align: center;">
+										<span class="trend">↑</span>
+									</td>
+								 </tr>
+							  </table>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="百度今日热点榜" name="bd_tab2">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自百度</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <table>
+								 <tr title="一个人的时光也很美好" v-for="i of 50">
+									<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
+											 <span class="number">01</span>
+											 一个人的时光也很美好
+									</a></td>
+									<td width="15%">
+										<span class="level">4,411,840</span>
+									</td>
+									<td width="8%" style="text-align: center;">
+										<span class="trend">↑</span>
+									</td>
+								 </tr>
+							  </table>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="百度百科热词" name="bd_tab3">
+							<ul class="random">
+								<!-- 1 -->
+								<li class="el-col-24">
+									<a href="#" class="class-a">
+										<span>1中共十九届四中全会</span>
+									</a>
+								</li>
+								<!-- 2 -->
+								<li class="el-col-12">
+									<a href="#" class="class-b"><span>2中共十九届四中全会</span></a>
+								</li>
+								<li class="el-col-12">
+									<a href="#" class="class-c"><span>3中共十九届四中全会</span></a>
+								</li>
+								<!-- 3 -->
+								<li class="el-col-7">
+									<a href="#" class="class-c"><span>4中共十九届四中全会</span></a>
+								</li>
+								<li class="el-col-10">
+									<a href="#" class="class-a"><span>5中共十九届四中全会</span></a>
+								</li>
+								<li class="el-col-7">
+									<a href="#" class="class-b"><span>6中共十九届四中全会</span></a>
+								</li>
+								<!-- 4 -->
+								<li class="el-col-12">
+									<a href="#" class="class-b"><span>7中共十九届四中全会</span></a>
+								</li>
+								<li class="el-col-12">
+									<a href="#" class="class-c"><span>8中共十九届四中全会</span></a>
+								</li>
+							</ul>
+						</el-tab-pane>
+			  		</el-tabs>
+			  </div>
+
 			  
-			  
+			  <div class="tabpanel" name='tab2'>
+		  		222
+		      </div>
 		  </el-main>
 		</el-container>
 	</main-layout>
@@ -98,11 +106,16 @@ export
 default {
 		data() {
 			return {
-				activeName:'tab1'
+				activeName:'bd_tab1'
 			}
 		},
 		methods: {
-			
+			tabs:function(name,event){
+				event.path[2].querySelector(".active").className = "";
+				event.target.className = "active";
+				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			}
 		},
 		components: {
 			MainLayout
@@ -117,6 +130,7 @@ default {
 		padding: 10px 0;
 	}
 	.aside li{
+		margin: 5px 0;
 		padding: 0 8px;
 	}
 	
@@ -129,7 +143,7 @@ default {
 		position: relative;
 	}
 	
-	.aside li a:hover{
+	.aside li a:hover , .aside li .active{
 		color: #fff;
 	}
 	
@@ -140,20 +154,21 @@ default {
 		left: 1.25em;
 		width: 8px;
 		height: 8px;
-		border: 2px solid #2775ff;
 		border-radius: 50%;
 		position: absolute;
-		background-color: #2775ff;
 		transition: all .4s ease;
 	}
 	
-	.aside li a:hover:before{
-		box-shadow: 0 5px 16px 0 rgba(165,165,165,.5);
+	.aside li a:hover:before,.aside li .active:before{
 		background-color: transparent;
 		border: 2px solid #fff;
 	}
 	
-	.aside li a:hover:after{
+	.aside li a:hover:before{
+		box-shadow: 0 5px 16px 0 rgba(165,165,165,.5);
+	}
+	
+	.aside li a:hover:after,.aside li .active:after{
 		content:"";
 		position: absolute;
 		top: 0;
@@ -161,7 +176,7 @@ default {
 		right: 0;
 		bottom: 0;
 		border-radius: 50px;
-		background: linear-gradient(to right,#2775ff,#7202bb);
+		background: linear-gradient(to right,#b5d9ff,#0077f3);
 		transition: all .4s ease;
 		opacity: 1;
 		z-index: -1;
@@ -175,7 +190,7 @@ default {
 	}
 	
 	.scrollbar{
-		height:710px;
+		height:620px;
 		overflow-y:auto;
 		
 	}
@@ -229,7 +244,7 @@ default {
 	
 	.hot-header{
 		width: 100%;
-		padding: 15px 16px;
+		padding: 20px 16px;
 		margin: 0;
 		box-sizing: border-box;
 		border-radius: 4px 4px 0 0;
@@ -243,7 +258,7 @@ default {
 		color: #909399;
 	}
 	.hot-header span{
-		font-size: 15px;
+		font-size: 14px;
 		line-height: 18px;
 	}
 	
@@ -307,5 +322,8 @@ default {
 		background-color: rgba(100, 187, 255, 0.5);
 	}
 	
-	
+	.el-tabs__item{
+		color: #747982;
+	}
+	    
 </style>
