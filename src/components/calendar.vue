@@ -7,8 +7,11 @@
 				<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
 			</h3>
 			<p class="info">{{lunarcalendar}} · {{week}} ·
-			<a :href="'http://www.tianqi.com/index.php?c=history&md='+num(nowMonth)+num(nowDay)" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
-		</div>
+			<a href="https://baike.baidu.com/calendar/" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
+<!--<a :href="'http://www.tianqi.com/index.php?c=history&md='+num(nowMonth)+num(nowDay)" target="_blank" style="font-size: 12px;">历史上的今天</a></p> -->		</div>
+		
+		
+		
 		<div class="week"><ul><li class="week-item" v-for="week in weekArr"><span>{{week}}</span></li></ul></div>
 		<div class="day">
 			<ul class="week-day" v-for="row in 6">
@@ -224,23 +227,24 @@ default {
 				if(i <= 7 && i < whereMonday){
 					if(month_ == 0){
 						month_ = 11
-            year_ = year_ - 1
+						year_ = year_ - 1
 					}
-          month_ = month_ - 1
+						month_ = month_ - 1
 					style = 'preMonth'
 				}
 				else if ( i + 1 > whereMonday + currentMonth.length){
 					if(month_ > 10){
 						month_ = 1
-            year_ = year_ + 1
+						year_ = year_ + 1
 					}
-          month_ = month_ + 1
+					month_ = month_ + 1
 					style = 'nextMonth'
 				}
 				else if(res_day == day)
 					style = 'active'
-				
-				if(new Date().getMonth() == month && new Date().getDate() == res_day){
+					
+				if(new Date().getMonth() == month && new Date().getDate() == res_day
+				 && style != 'preMonth' && style != 'nextMonth'){
 					style = 'today'
 				}
 				

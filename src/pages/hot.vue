@@ -3,76 +3,90 @@
 		<el-container>
 		  <el-aside width="180px">
 			  <ul class="aside">
-				  <li><a href="javascript:void(0)">v2ex</a></li>
-				  <li><a href="javascript:void(0)">gihub</a></li>
-				  <li><a href="javascript:void(0)">知乎</a></li>
-				  <li><a href="javascript:void(0)">哔哩哔哩</a></li>
+				  <li v-for="i of 10"><a href="javascript:void(0)">v2ex</a></li>
 			  </ul>
 		  </el-aside>
 		  <el-main class="content">
-			  <el-alert title="刚刚更新-数据源自百度" type="info" center style="margin-top: -10px;margin-bottom: 5px;"></el-alert>
-			  <table>
-				 <tr>
-					<td><a href="javascript:void(0)" class="item">
-							 <span class="number">01</span>
-							 一个人的时光也很美好
-					</a></td>
-					<td width="10%">
-						<span class="level">4,411,840</span>
-					</td>
-					<td width="10%" style="text-align: right;">
-						<span class="trend">↑</span>
-					</td>
-				 </tr>
-				 <tr>
-					<td><a href="javascript:void(0)" class="item">
-							 <span class="number">01</span>
-							 一个人的时光也很美好
-					</a></td>
-					<td width="10%">
-						<span class="level">4,411,840</span>
-					</td>
-					<td width="10%" style="text-align: right;">
-						<span class="trend">↑</span>
-					</td>
-				 </tr>
-				 <tr>
-					<td><a href="javascript:void(0)" class="item">
-							 <span class="number">01</span>
-							 一个人的时光也很美好
-					</a></td>
-					<td width="10%">
-						<span class="level">4,411,840</span>
-					</td>
-					<td width="10%" style="text-align: right;">
-						<span class="trend">↑</span>
-					</td>
-				 </tr>
-				 <tr>
-					<td><a href="javascript:void(0)" class="item">
-							 <span class="number">01</span>
-							 一个人的时光也很美好
-					</a></td>
-					<td width="10%">
-						<span class="level">4,411,840</span>
-					</td>
-					<td width="10%" style="text-align: right;">
-						<span class="trend">↑</span>
-					</td>
-				 </tr>
-				  <tr>
-					<td><a href="javascript:void(0)" class="item">
-							 <span class="number">01</span>
-							 一个人的时光也很美好
-					</a></td>
-					<td width="10%">
-						<span class="level">4,411,840</span>
-					</td>
-					<td width="10%" style="text-align: right;">
-						<span class="trend">↑</span>
-					</td>
-				 </tr>
-			  </table>
+			  <el-tabs v-model="activeName" type="card">
+				<el-tab-pane label="百度实时热点榜" name="tab1">
+					<div class="hot-header">
+						<span>刚刚更新-数据源自百度</span>
+					</div>
+					<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+					  <table>
+						 <tr title="一个人的时光也很美好" v-for="i of 50">
+							<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
+									 <span class="number">01</span>
+									 一个人的时光也很美好
+							</a></td>
+							<td width="15%">
+								<span class="level">4,411,840</span>
+							</td>
+							<td width="8%" style="text-align: center;">
+								<span class="trend">↑</span>
+							</td>
+						 </tr>
+					  </table>
+					</div>
+				</el-tab-pane>
+				<el-tab-pane label="百度今日热点榜" name="tab2">
+					<div class="hot-header">
+						<span>刚刚更新-数据源自百度</span>
+					</div>
+					<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+					  <table>
+						 <tr title="一个人的时光也很美好" v-for="i of 50">
+							<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
+									 <span class="number">01</span>
+									 一个人的时光也很美好
+							</a></td>
+							<td width="15%">
+								<span class="level">4,411,840</span>
+							</td>
+							<td width="8%" style="text-align: center;">
+								<span class="trend">↑</span>
+							</td>
+						 </tr>
+					  </table>
+					</div>
+				</el-tab-pane>
+				<el-tab-pane label="百度百科热词" name="tab3">
+					<ul class="random">
+						<!-- 1 -->
+						<li class="el-col-24">
+							<a href="#" class="class-a">
+								<span>1中共十九届四中全会</span>
+							</a>
+						</li>
+						<!-- 2 -->
+						<li class="el-col-12">
+							<a href="#" class="class-b"><span>2中共十九届四中全会</span></a>
+						</li>
+						<li class="el-col-12">
+							<a href="#" class="class-c"><span>3中共十九届四中全会</span></a>
+						</li>
+						<!-- 3 -->
+						<li class="el-col-7">
+							<a href="#" class="class-c"><span>4中共十九届四中全会</span></a>
+						</li>
+						<li class="el-col-10">
+							<a href="#" class="class-a"><span>5中共十九届四中全会</span></a>
+						</li>
+						<li class="el-col-7">
+							<a href="#" class="class-b"><span>6中共十九届四中全会</span></a>
+						</li>
+						<!-- 4 -->
+						<li class="el-col-12">
+							<a href="#" class="class-b"><span>7中共十九届四中全会</span></a>
+						</li>
+						<li class="el-col-12">
+							<a href="#" class="class-c"><span>8中共十九届四中全会</span></a>
+						</li>
+					</ul>
+				</el-tab-pane>
+			  </el-tabs>
+			  
+			  
 		  </el-main>
 		</el-container>
 	</main-layout>
@@ -84,7 +98,7 @@ export
 default {
 		data() {
 			return {
-				
+				activeName:'tab1'
 			}
 		},
 		methods: {
@@ -159,23 +173,30 @@ default {
 	.content{
 		background-color: #fff;
 	}
+	
+	.scrollbar{
+		height:710px;
+		overflow-y:auto;
+		
+	}
 	.content table{
 		width: 100%;
+		border-collapse: collapse;
 	}
 	
 	.content tr{
-		height: 30px;
+		height: 50px;
+		cursor: pointer;
+		border-bottom: 1px #E8E8E8 dotted;
 	}
 	
 	.content .item{
-		/* font-size: 16px;
-		padding: 10px 0;
-		display: inherit; */
+		font-size: 16px;
+		padding-left: 22px;
 	}
 	
 	.content .item .number{
-		/* background: #FF5722; */
-		background: #01AAED;
+		background-color: #01AAED;
 		padding: 2px 6px;
 		color: #F2F4F7;
 		border-radius: 4px;
@@ -184,12 +205,107 @@ default {
 	}
 	
 	.level{
-		font-size: 14px;
-		color: #909399;
+		font-size: 13px;
+		color: #666666;
 	}
 	
 	.trend{
 		font-size: 14px;
 		color: #909399;
 	}
+	
+	.content tr:nth-child(1) .number{
+		background-color: #FF5722;
+	}
+	
+	.content tr:nth-child(2) .number{
+		background-color: #FFB800;
+	}
+	
+	.content tr:hover a{
+		color: #5FB878;
+	}
+	
+	
+	.hot-header{
+		width: 100%;
+		padding: 15px 16px;
+		margin: 0;
+		box-sizing: border-box;
+		border-radius: 4px 4px 0 0;
+		position: relative;
+		background-color: #FFF;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #f4f4f5;
+		color: #909399;
+	}
+	.hot-header span{
+		font-size: 15px;
+		line-height: 18px;
+	}
+	
+	
+	
+	.random li{
+		height: 100px;
+		line-height: 100px;
+	}
+	.random li a{
+		color: #fff;
+		opacity: .9;
+		display: inherit;
+		text-align: center;
+		position: relative;
+		background-size: cover;
+		transition: all .6s ease;
+	}
+	
+	.random li span{
+		font-size: 18px;
+		display: inherit;
+		position: relative;
+		transition: all .6s ease;
+	}
+	
+	.random a:before{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	.random li a:hover{
+		opacity: 1;
+	}
+	.random li a:hover span{
+		font-size: 19px;
+	}
+	
+	
+	.random .class-a{
+		background-image:url(../assets/bg/bg.png);
+	}
+	.random .class-a:before{
+		background-color: rgba(232, 88, 88, 0.5);
+	}
+	
+	.random .class-b{
+		background-image:url(../assets/bg/bg.png);
+	}
+	.random .class-b:before{
+		background-color: rgba(0, 255, 231, 0.5);
+	}
+	
+	.random .class-c{
+		background-image:url(../assets/bg/bg.png);
+	}
+	.random .class-c:before{
+		background-color: rgba(100, 187, 255, 0.5);
+	}
+	
+	
 </style>
