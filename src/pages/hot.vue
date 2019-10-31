@@ -3,88 +3,84 @@
 		<el-container style="margin: 5px 0!important;">
 		  <el-aside width="180px">
 			  <ul class="aside">
-				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event)">百度风云榜单</a></li>
-				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">微博热搜榜</a></li>
-				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">知乎热搜榜</a></li>
-				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event)">豆瓣排行榜</a></li>
+				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜单</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">微博热搜榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">知乎热搜榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">豆瓣排行榜</a></li>
 			  </ul>
 		  </el-aside>
 		  <el-main class="content">
 			  <div class="tabpanel show" name='tab1'>
-			  		<el-tabs v-model="activeName" type="card">
-						<el-tab-pane label="百度实时热点榜" name="bd_tab1">
+			  		<el-tabs v-model="info.baidu.active" type="card" @tab-click="baiduClick">
+						<el-tab-pane label="百度实时热点榜" name="baidu_tab1">
 							<div class="hot-header">
 								<span>刚刚更新-数据源自百度</span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <table>
-								 <tr title="一个人的时光也很美好" v-for="i of 50">
-									<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
-											 <span class="number">01</span>
-											 一个人的时光也很美好
+								 <tr v-for="realTime of baidu.realTime">
+									<td><a :href="realTime.url" target="_blank" class="item" :title="'百度实时热点-'+realTime.title">
+											<span class="number tag">{{realTime.id}}</span> {{realTime.title}}
 									</a></td>
 									<td width="15%">
-										<span class="level">4,411,840</span>
+										<span class="level">{{realTime.level}}</span>
 									</td>
 									<td width="8%" style="text-align: center;">
-										<span class="trend">↑</span>
+										<span class="trend"><i :class="realTime.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i></span>
 									</td>
 								 </tr>
 							  </table>
 							</div>
 						</el-tab-pane>
-						<el-tab-pane label="百度今日热点榜" name="bd_tab2">
+						<el-tab-pane label="百度今日热点榜" name="baidu_tab2">
 							<div class="hot-header">
 								<span>刚刚更新-数据源自百度</span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <table>
-								 <tr title="一个人的时光也很美好" v-for="i of 50">
-									<td><a href="javascript:void(0)" class="item" title="百度实时热点-一个人的时光也很美好">
-											 <span class="number">01</span>
-											 一个人的时光也很美好
+								 <tr v-for="today of baidu.today">
+									<td><a :href="today.url" target="_blank" class="item" :title="'百度今日热点-'+today.title">
+											<span class="number tag">{{today.id}}</span> {{today.title}}
 									</a></td>
 									<td width="15%">
-										<span class="level">4,411,840</span>
+										<span class="level">{{today.level}}</span>
 									</td>
 									<td width="8%" style="text-align: center;">
-										<span class="trend">↑</span>
+										<span class="trend"><i :class="today.trend == 'rise' ? 'rise el-icon-top':'fall el-icon-bottom'"></i></span>
 									</td>
 								 </tr>
 							  </table>
 							</div>
 						</el-tab-pane>
-						<el-tab-pane label="百度百科热词" name="bd_tab3">
-							<ul class="random">
+						<el-tab-pane label="百度百科热词" name="baidu_tab3">
+							<ul class="random" v-if="baidu.baike.length > 0">
 								<!-- 1 -->
 								<li class="el-col-24">
-									<a href="#" class="class-a">
-										<span>1中共十九届四中全会</span>
-									</a>
+									<a :href="baidu.baike[1].url" target='_blank' class="class-a"><span>{{baidu.baike[0].title}}</span></a>
 								</li>
 								<!-- 2 -->
 								<li class="el-col-12">
-									<a href="#" class="class-b"><span>2中共十九届四中全会</span></a>
+									<a :href="baidu.baike[1].url" target='_blank' class="class-b"><span>{{baidu.baike[1].title}}</span></a>
 								</li>
 								<li class="el-col-12">
-									<a href="#" class="class-c"><span>3中共十九届四中全会</span></a>
+									<a :href="baidu.baike[2].url" target='_blank' class="class-c"><span>{{baidu.baike[2].title}}</span></a>
 								</li>
 								<!-- 3 -->
 								<li class="el-col-7">
-									<a href="#" class="class-c"><span>4中共十九届四中全会</span></a>
+									<a :href="baidu.baike[3].url" target='_blank' class="class-c"><span>{{baidu.baike[3].title}}</span></a>
 								</li>
 								<li class="el-col-10">
-									<a href="#" class="class-a"><span>5中共十九届四中全会</span></a>
+									<a :href="baidu.baike[4].url" target='_blank' class="class-a"><span>{{baidu.baike[4].title}}</span></a>
 								</li>
 								<li class="el-col-7">
-									<a href="#" class="class-b"><span>6中共十九届四中全会</span></a>
+									<a :href="baidu.baike[5].url" target='_blank' class="class-b"><span>{{baidu.baike[5].title}}</span></a>
 								</li>
 								<!-- 4 -->
 								<li class="el-col-12">
-									<a href="#" class="class-b"><span>7中共十九届四中全会</span></a>
+									<a :href="baidu.baike[6].url" target='_blank' class="class-b"><span>{{baidu.baike[6].title}}</span></a>
 								</li>
 								<li class="el-col-12">
-									<a href="#" class="class-c"><span>8中共十九届四中全会</span></a>
+									<a :href="baidu.baike[7].url" target='_blank' class="class-c"><span>{{baidu.baike[7].title}}</span></a>
 								</li>
 							</ul>
 						</el-tab-pane>
@@ -93,7 +89,43 @@
 
 			  
 			  <div class="tabpanel" name='tab2'>
-		  		222
+		  		<el-tabs v-model="info.weibo.active" type="card" @tab-click="weiboClick">
+		  			<el-tab-pane label="微博热搜榜" name="weibo_tab1">
+		  				<div class="hot-header">
+		  					<span>刚刚更新-数据源自微博</span>
+		  				</div>
+		  				<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+		  				  <table>
+		  					 <tr v-for="realTime of weibo.realTime">
+		  						<td><a :href="realTime.url" target="_blank" class="item" :title="'微博实时热点-'+realTime.title">
+		  							<span class="number tag" v-if="realTime.id == 0"><i class="el-icon-download" style="transform: rotate(180deg);"></i></span>
+									<span class="number tag" v-else>{{realTime.id}}</span> {{realTime.title}}
+		  						</a></td>
+		  						<td width="15%">
+		  							<span class="level">{{realTime.level}}</span>
+		  						</td>
+		  						<td width="8%" style="text-align: center;">
+		  							<span class="trend tag" v-if="realTime.trend != ''">{{realTime.trend}}</span>
+		  						</td>
+		  					 </tr>
+		  				  </table>
+		  				</div>
+		  			</el-tab-pane>
+					<el-tab-pane label="微博新时代榜" name="weibo_tab2">
+						<div class="hot-header">
+							<span>刚刚更新-数据源自微博</span>
+						</div>
+						<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+						  <table>
+							 <tr v-for="socialEvent of weibo.socialEvent">
+								<td><a :href="socialEvent.url" target="_blank" class="item" :title="'新时代-'+socialEvent.title">
+									<i class="el-icon-paperclip"></i> {{socialEvent.title}}
+								</a></td>
+							 </tr>
+						  </table>
+						</div>
+					</el-tab-pane>
+				</el-tabs>
 		      </div>
 		  </el-main>
 		</el-container>
@@ -106,7 +138,25 @@ export
 default {
 		data() {
 			return {
-				activeName:'bd_tab1'
+				info:{
+					baidu:{
+						url : "/hom1/api/hot/baidu?t=",
+						active : "baidu_tab1"
+					},
+					weibo:{
+						url : "/hom1/api/hot/weibo?t=",
+						active : "weibo_tab1"
+					}
+				},
+				baidu:{
+					realTime:[],
+					today:[],
+					baike:[],
+				},
+				weibo:{
+					realTime:[],
+					socialEvent:[]
+				}
 			}
 		},
 		methods: {
@@ -115,10 +165,57 @@ default {
 				event.target.className = "active";
 				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			},
+			baiduClick:function(tab,event){
+				const loading = this.$loading({
+				  lock: true,
+				  text: 'Loading',
+				  spinner: 'el-icon-loading',
+				  background: 'rgba(0, 0, 0, 0.2)'
+				});
+				this.$ajax.get('/hom1/api/hot/baidu?t=' + tab.index)
+				.then((response)=>{
+					loading.close();
+					if(tab.index == 0){
+						this.baidu.realTime = response.data.result
+					} else if(tab.index == 1){
+						this.baidu.today = response.data.result
+					} else if(tab.index == 2){
+						this.baidu.baike = response.data.result
+					}
+				console.log(this.baidu.baike)
+				}).catch((response)=>{
+				  loading.close();
+				  this.$message.error('数据请求失败，请稍后再试');
+				});
+			},
+			weiboClick:function(tab,event){
+				const loading = this.$loading({
+				  lock: true,
+				  text: 'Loading',
+				  spinner: 'el-icon-loading',
+				  background: 'rgba(0, 0, 0, 0.2)'
+				});
+				this.$ajax.get('/hom1/api/hot/weibo?t=' + tab.index)
+				.then((response)=>{
+					loading.close();
+					
+					if(tab.index == 0)
+						this.weibo.realTime = response.data.result
+					else if(tab.index == 1)
+						this.weibo.socialEvent = response.data.result
+
+				}).catch((response)=>{
+				  loading.close();
+				  this.$message.error('数据请求失败，请稍后再试');
+				});
 			}
 		},
 		components: {
 			MainLayout
+		},
+		created:function(){
+			this.baiduClick({index:0})
 		}
 }
 </script>
@@ -211,8 +308,11 @@ default {
 	}
 	
 	.content .item .number{
-		background-color: #01AAED;
 		padding: 2px 6px;
+	}
+	
+	.tag{
+		background-color: #01AAED;
 		color: #F2F4F7;
 		border-radius: 4px;
 		font-size: 14px;
@@ -224,16 +324,23 @@ default {
 		color: #666666;
 	}
 	
-	.trend{
-		font-size: 14px;
-		color: #909399;
+	.trend i{
+		font-size: 16px;
+		font-weight: 600;
+		padding: 2px;
 	}
 	
-	.content tr:nth-child(1) .number{
+	.trend.tag{
+		background-color: #f26d5f!important;
+		font-size: 12px;
+		padding: 2px;
+	}
+	
+	.content tr:nth-child(1) .tag{
 		background-color: #FF5722;
 	}
 	
-	.content tr:nth-child(2) .number{
+	.content tr:nth-child(2) .tag{
 		background-color: #FFB800;
 	}
 	
@@ -270,7 +377,7 @@ default {
 	}
 	.random li a{
 		color: #fff;
-		opacity: .9;
+		opacity: .85;
 		display: inherit;
 		text-align: center;
 		position: relative;
@@ -297,7 +404,7 @@ default {
 		opacity: 1;
 	}
 	.random li a:hover span{
-		font-size: 19px;
+		font-size: 20px;
 	}
 	
 	
@@ -312,7 +419,7 @@ default {
 		background-image:url(../assets/bg/bg.png);
 	}
 	.random .class-b:before{
-		background-color: rgba(0, 255, 231, 0.5);
+		background-color: rgba(125, 255, 243, 0.5);
 	}
 	
 	.random .class-c{
