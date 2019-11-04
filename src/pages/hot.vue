@@ -5,7 +5,7 @@
 			  <ul class="aside">
 				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜单</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">微博热搜榜</a></li>
-				  <li><a href="javascript:void(0)"  @click="tabs('tab3',$event),weiboClick({index:0})">知乎热搜榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab3',$event),zhihuClick({index:0})">知乎热搜榜</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">豆瓣排行榜</a></li>
 			  </ul>
 		  </el-aside>
@@ -48,7 +48,7 @@
 							<ul class="random" v-if="baidu.baike.length > 0">
 								<!-- 1 -->
 								<li class="el-col-24">
-									<a :href="baidu.baike[1].url" target='_blank' class="class-a"><span>{{baidu.baike[0].title}}</span></a>
+									<a :href="baidu.baike[0].url" target='_blank' class="class-a"><span>{{baidu.baike[0].title}}</span></a>
 								</li>
 								<!-- 2 -->
 								<li class="el-col-12">
@@ -142,7 +142,7 @@
 						<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 						  <ul class="article">
 							 <li v-for="(topHot,index) of zhihu.topHot">
-								<a class="item" :href="topHot.url" target="_blank" title="topHot.title">
+								<a class="item" :href="topHot.url" target="_blank" :title="topHot.title">
 									<div class="article-index"><span class="number">{{index+1}}</span></div>
 									<div class="article-content">
 										<h3 class="h3">{{topHot.title}}</h3>
