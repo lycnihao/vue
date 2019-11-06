@@ -6,7 +6,7 @@
 				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜单</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">微博热搜榜</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab3',$event),zhihuClick({index:0})">知乎热搜榜</a></li>
-				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">豆瓣排行榜</a></li>
+				  <li><a href="javascript:void(0)"  @click="tabs('tab4',$event),doubanClick({index:0})">豆瓣排行榜</a></li>
 			  </ul>
 		  </el-aside>
 		  <el-main class="content">
@@ -156,6 +156,155 @@
 					</el-tab-pane>
 				</el-tabs>
 			  </div>
+			  <div class="tabpanel" name='tab4'>
+					<el-tabs v-model="info.douban.active" type="card" @tab-click="doubanClick">
+						<el-tab-pane label="豆瓣新片榜" name="douban_tab1">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自豆瓣</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <ul class="article">
+								 <li v-for="(chart,index) of douban.chart">
+									<a class="item" :href="chart.url" target="_blank" :title="'豆瓣电影-'+chart.title">
+										<div class="article-image"><img :src="chart.img" v-if="chart.img" :title="chart.title" :alt="chart.title"/></div>
+										<div class="article-content">
+											<h3 class="h3">{{chart.title}}</h3>
+											<p class="article-description">{{chart.summary}}</p>
+											<p>
+												<el-rate
+												  :value="chart.level/2.08"
+												  disabled
+												  show-score
+												  :colors="colors"
+												  text-color="#ff9900"
+												  :score-template="chart.level"
+												  >
+												</el-rate>
+											</p>
+										</div>
+									</a>
+								 </li>
+							  </ul>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="豆瓣受关注-虚构类" name="douban_tab2">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自豆瓣</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <ul class="article">
+								 <li v-for="(chart,index) of douban.book1">
+									<a class="item" :href="chart.url" target="_blank" :title="'豆瓣图书-'+chart.title">
+										<div class="article-image"><img :src="chart.img" v-if="chart.img" :title="chart.title" :alt="chart.title"/></div>
+										<div class="article-content">
+											<h3 class="h3">{{chart.title}}</h3>
+											<p class="article-description">{{chart.summary}}</p>
+											<p>
+												<el-rate
+												  :value="chart.level/2.08"
+												  disabled
+												  show-score
+												  :colors="colors"
+												  text-color="#ff9900"
+												  :score-template="chart.level"
+												  >
+												</el-rate>
+											</p>
+										</div>
+									</a>
+								 </li>
+							  </ul>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="豆瓣受关注-非虚构类" name="douban_tab3">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自豆瓣</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <ul class="article">
+								 <li v-for="(chart,index) of douban.book2">
+									<a class="item" :href="chart.url" target="_blank" :title="'豆瓣图书-'+chart.title">
+										<div class="article-image"><img :src="chart.img" v-if="chart.img" :title="chart.title" :alt="chart.title"/></div>
+										<div class="article-content">
+											<h3 class="h3">{{chart.title}}</h3>
+											<p class="article-description">{{chart.summary}}</p>
+											<p>
+												<el-rate
+												  :value="chart.level/2.08"
+												  disabled
+												  show-score
+												  :colors="colors"
+												  text-color="#ff9900"
+												  :score-template="chart.level"
+												  >
+												</el-rate>
+											</p>
+										</div>
+									</a>
+								 </li>
+							  </ul>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="豆瓣新书-虚构类" name="douban_tab4">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自豆瓣</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <ul class="article">
+								 <li v-for="(chart,index) of douban.book3">
+									<a class="item" :href="chart.url" target="_blank" :title="'豆瓣图书-'+chart.title">
+										<div class="article-image"><img :src="chart.img" v-if="chart.img" :title="chart.title" :alt="chart.title"/></div>
+										<div class="article-content">
+											<h3 class="h3">{{chart.title}}</h3>
+											<p class="article-description">{{chart.summary}}</p>
+											<p>
+												<el-rate
+												  :value="chart.level/2.08"
+												  disabled
+												  show-score
+												  :colors="colors"
+												  text-color="#ff9900"
+												  :score-template="chart.level"
+												  >
+												</el-rate>
+											</p>
+										</div>
+									</a>
+								 </li>
+							  </ul>
+							</div>
+						</el-tab-pane>
+						<el-tab-pane label="豆瓣新书-非虚构类" name="douban_tab5">
+							<div class="hot-header">
+								<span>刚刚更新-数据源自豆瓣</span>
+							</div>
+							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
+							  <ul class="article">
+								 <li v-for="(chart,index) of douban.book4">
+									<a class="item" :href="chart.url" target="_blank" :title="'豆瓣图书-'+chart.title">
+										<div class="article-image"><img :src="chart.img" v-if="chart.img" :title="chart.title" :alt="chart.title"/></div>
+										<div class="article-content">
+											<h3 class="h3">{{chart.title}}</h3>
+											<p class="article-description">{{chart.summary}}</p>
+											<p>
+												<el-rate
+												  :value="chart.level/2.08"
+												  disabled
+												  show-score
+												  :colors="colors"
+												  text-color="#ff9900"
+												  :score-template="chart.level"
+												  >
+												</el-rate>
+											</p>
+										</div>
+									</a>
+								 </li>
+							  </ul>
+							</div>
+						</el-tab-pane>
+					</el-tabs>
+			  </div>
 		  </el-main>
 		</el-container>
 	</main-layout>
@@ -167,6 +316,7 @@ export
 default {
 		data() {
 			return {
+				colors: ['#99A9BF', '#F7BA2A', '#FF9900'] ,
 				info:{
 					baidu:{
 						url : "/hom1/api/hot/baidu?t=",
@@ -179,6 +329,10 @@ default {
 					zhihu:{
 						url : "/hom1/api/hot/zhihu?t=",
 						active : "zhihu_tab1"
+					},
+					douban:{
+						url : "/hom1/api/hot/douban?t=",
+						active : "douban_tab1"
 					}
 				},
 				baidu:{
@@ -193,6 +347,13 @@ default {
 				zhihu:{
 					topSearch:[],
 					topHot:[]
+				},
+				douban:{
+					chart:[],
+					book1:[],
+					book2:[],
+					book3:[],
+					book4:[]
 				}
 			}
 		},
@@ -262,6 +423,33 @@ default {
 						this.zhihu.topSearch = response.data.result
 					else if(tab.index == 1)
 						this.zhihu.topHot = response.data.result
+			
+				}).catch((response)=>{
+				  loading.close();
+				  this.$message.error('数据请求失败，请稍后再试');
+				});
+			},
+			doubanClick:function(tab,event){
+				const loading = this.$loading({
+				  lock: true,
+				  text: 'Loading',
+				  spinner: 'el-icon-loading',
+				  background: 'rgba(0, 0, 0, 0.2)'
+				});
+				this.$ajax.get('/hom1/api/hot/douban?t=' + tab.index)
+				.then((response)=>{
+					loading.close();
+					
+					if(tab.index == 0)
+						this.douban.chart = response.data.result
+					else if(tab.index == 1)
+						this.douban.book1 = response.data.result
+					else if(tab.index == 2)
+						this.douban.book2 = response.data.result
+					else if(tab.index == 3)
+						this.douban.book3 = response.data.result
+					else if(tab.index == 4)
+						this.douban.book4 = response.data.result
 			
 				}).catch((response)=>{
 				  loading.close();
@@ -345,7 +533,7 @@ default {
 	}
 	
 	.scrollbar{
-		height:620px;
+		height:668px;
 		overflow-y:auto;
 		
 	}
@@ -379,6 +567,21 @@ default {
 		object-fit: cover;
 	}
 	
+	.content .article .article-image{
+		display: block;
+		height: 140px;
+		margin: 0 16px;
+		position: relative;
+	}
+	
+	.content .article .article-image img{
+		border-radius: 4px;
+		height: 120px;
+		width: 98px;
+		display: block;
+		object-fit: cover;
+	}
+	
 	.content .article .article-content{
 		flex: 1 1;
 		overflow: hidden;
@@ -395,13 +598,19 @@ default {
 		color: #909399;
 	}
 	
-	.content .article .article-excerpt{
+	.content .article .article-excerpt,.content .article .article-description{
 		color: #444;
 		line-height: 25px;
 		margin-top: 2px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+	
+	.content .article .article-description{
+		color: #666666;
+		height: 50px;
+		white-space: initial;
 	}
 	
 	.article li:nth-child(1) .number, .article li:nth-child(2) .number, .article li:nth-child(3) .number{
