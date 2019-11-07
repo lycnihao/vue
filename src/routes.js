@@ -37,5 +37,8 @@ export default new Router({
 export default {
   '/': 'home',
   '/about': 'about',
-  '/hot': 'hot'
+  '/milestone': 'milestone',
+  '/hot': 'hot',
+  '/link': 'link',
+  '/kuaidi': 'kuaidi',
 }

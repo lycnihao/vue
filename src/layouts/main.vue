@@ -11,7 +11,7 @@
 
 			<el-row :gutter="10">
 				<!-- 主体显示块 -->
-				<el-col :md="18" :lg="18" :xl="18" class="container">
+				<el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" class="container">
 					<!-- 功能导航板块 -->
 					 <div id="nav" class="box">
 						 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;margin-bottom: -5px;">
@@ -19,6 +19,7 @@
 								 <ul class="nav menu-inline" style="line-height: 46px;">
 									 <li class="nav-item"><v-link href="/">导航</v-link></li>
 									 <li class="nav-item"><v-link href="/hot">热榜</v-link></li>
+									 <li class="nav-item"><v-link href="/kuaidi">查快递</v-link></li>
 								</ul>
 							 </div>
 							 <div class="float-right"></div>
@@ -41,7 +42,7 @@
 					</div> -->
 				</el-col>
 				<!-- 侧边栏 -->
-				<el-col :md="6" :lg="6" :xl="6" class="sidebar">
+				<el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" class="sidebar">
 					<!-- <div class="box">
 					  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 						<el-tab-pane label="音乐" name="first">
