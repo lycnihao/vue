@@ -121,18 +121,18 @@ default {
 	    return {
 	      searchTitle: '百度',
 	      searchUrl: 'https://www.baidu.com/s?word=',
-	      searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
+	      searchIcon: require('../assets/img/baidu.svg'),
 		  searchDescribe: '输入关键字 搜你所想',
 		  keywords:"",
 		  suggest:false,
 		  suggestContent:"",
 		  searchSite:{
 			  searchEngines:[
-				  {title:'百度',url:'https://www.baidu.com/s?word=',icon:'http://47.106.84.166:3302/upload/baidu.svg'},
-				  {title:'360',url:'https://www.so.com/s?q=',icon:'http://47.106.84.166:3302/upload/360.svg'},
-				  {title:'Bing',url:'https://cn.bing.com/search?q=',icon:'http://47.106.84.166:3302/upload/bing.svg'},
-				  {title:'搜狗',url:'https://www.sogou.com/web?query=',icon:'http://47.106.84.166:3302/upload/sogou.svg'},
-				  {title:'谷歌',url:'https://www.google.com/search?q=',icon:'http://47.106.84.166:3302/upload/google.svg'},
+				  {title:'百度',url:'https://www.baidu.com/s?word=',icon:require('../assets/img/baidu.svg')},
+				  {title:'360',url:'https://www.so.com/s?q=',icon:require('../assets/img/360.svg')},
+				  {title:'Bing',url:'https://cn.bing.com/search?q=',icon:require('../assets/img/bing.svg')},
+				  {title:'搜狗',url:'https://www.sogou.com/web?query=',icon:require('../assets/img/sougou.svg')},
+				  {title:'谷歌',url:'https://www.google.com/search?q=',icon:require('../assets/img/google.svg')},
 			  ],
 			  pictures:[
 				  {title:'高图网',describe:'免费无版权高清图片下载',url:'http://www.gaoimg.com/plus/search.php?kwtype=0&q='},
@@ -160,7 +160,7 @@ default {
 		    var str = command.split(',');
 		    this.searchTitle = str[0];
 		    this.searchUrl  = this.$parent.searchUrl = str[1];
-		    this.searchIcon = this.$parent.searchIcon = str[2];
+		    this.searchIcon = this.$parent.searchIcon = str[2]+','+str[3];
 		},
 		checkSearch: function() {
 			let obj = this.value.split(',');

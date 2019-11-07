@@ -3,7 +3,7 @@
 		<el-container style="margin: 5px 0!important;">
 		  <el-aside width="180px">
 			  <ul class="aside">
-				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜单</a></li>
+				  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">微博热搜榜</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab3',$event),zhihuClick({index:0})">知乎热搜榜</a></li>
 				  <li><a href="javascript:void(0)"  @click="tabs('tab4',$event),doubanClick({index:0})">豆瓣排行榜</a></li>
@@ -14,7 +14,7 @@
 			  		<el-tabs v-model="info.baidu.active" type="card" @tab-click="baiduClick">
 						<el-tab-pane label="百度实时热点榜" name="baidu_tab1">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自百度</span>
+								<span>刚刚更新-数据源自<a href="http://top.baidu.com/" target="_blank">百度</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul>
@@ -30,7 +30,7 @@
 						</el-tab-pane>
 						<el-tab-pane label="百度今日热点榜" name="baidu_tab2">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自百度</span>
+								<span>刚刚更新-数据源自<a href="http://top.baidu.com/" target="_blank">百度</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul>
@@ -84,7 +84,7 @@
 		  		<el-tabs v-model="info.weibo.active" type="card" @tab-click="weiboClick">
 		  			<el-tab-pane label="微博热搜榜" name="weibo_tab1">
 		  				<div class="hot-header">
-		  					<span>刚刚更新-数据源自微博</span>
+		  					<span>刚刚更新-数据源自<a href="https://s.weibo.com/top/summary?Refer=top_hot" target="_blank">微博</a></span>
 		  				</div>
 		  				<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 		  				  <ul>
@@ -103,7 +103,7 @@
 		  			</el-tab-pane>
 					<el-tab-pane label="微博新时代榜" name="weibo_tab2">
 						<div class="hot-header">
-							<span>刚刚更新-数据源自微博</span>
+							<span>刚刚更新-数据源自<a href="https://s.weibo.com/top/summary?cate=socialevent" target="_blank">微博</a></span>
 						</div>
 						<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 						  <ul>
@@ -122,7 +122,7 @@
 				<el-tabs v-model="info.zhihu.active" type="card" @tab-click="zhihuClick">
 					<el-tab-pane label="知乎热搜" name="zhihu_tab1">
 						<div class="hot-header">
-							<span>刚刚更新-数据源自知乎</span>
+							<span>刚刚更新-数据源自<a href="https://www.zhihu.com/" target="_blank">知乎</a></span>
 						</div>
 						<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 						  <ul>
@@ -137,7 +137,7 @@
 					</el-tab-pane>
 					<el-tab-pane label="知乎热榜" name="zhihu_tab2">
 						<div class="hot-header">
-							<span>刚刚更新-数据源自知乎</span>
+							<span>刚刚更新-数据源自<a href="https://www.zhihu.com/billboard" target="_blank">知乎</a></span>
 						</div>
 						<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 						  <ul class="article">
@@ -160,7 +160,7 @@
 					<el-tabs v-model="info.douban.active" type="card" @tab-click="doubanClick">
 						<el-tab-pane label="豆瓣新片榜" name="douban_tab1">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自豆瓣</span>
+								<span>刚刚更新-数据源自<a href="https://movie.douban.com/chart" target="_blank">豆瓣</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul class="article">
@@ -189,7 +189,7 @@
 						</el-tab-pane>
 						<el-tab-pane label="豆瓣受关注-虚构类" name="douban_tab2">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自豆瓣</span>
+								<span>刚刚更新-数据源自<a href="https://book.douban.com/chart?subcat=F" target="_blank">豆瓣</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul class="article">
@@ -201,7 +201,7 @@
 											<p class="article-description">{{chart.summary}}</p>
 											<p>
 												<el-rate
-												  :value="chart.level/2.08"
+												  :value="chart.star/2.08"
 												  disabled
 												  show-score
 												  :colors="colors"
@@ -218,7 +218,7 @@
 						</el-tab-pane>
 						<el-tab-pane label="豆瓣受关注-非虚构类" name="douban_tab3">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自豆瓣</span>
+								<span>刚刚更新-数据源自<a href="https://book.douban.com/chart?subcat=I" target="_blank">豆瓣</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul class="article">
@@ -230,7 +230,7 @@
 											<p class="article-description">{{chart.summary}}</p>
 											<p>
 												<el-rate
-												  :value="chart.level/2.08"
+												  :value="chart.star/2.08"
 												  disabled
 												  show-score
 												  :colors="colors"
@@ -247,7 +247,7 @@
 						</el-tab-pane>
 						<el-tab-pane label="豆瓣新书-虚构类" name="douban_tab4">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自豆瓣</span>
+								<span>刚刚更新-数据源自<a href="https://book.douban.com/latest?icn=index-latestbook-all" target="_blank">豆瓣</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul class="article">
@@ -276,7 +276,7 @@
 						</el-tab-pane>
 						<el-tab-pane label="豆瓣新书-非虚构类" name="douban_tab5">
 							<div class="hot-header">
-								<span>刚刚更新-数据源自豆瓣</span>
+								<span>刚刚更新-数据源自<a href="https://book.douban.com/latest?icn=index-latestbook-all" target="_blank">豆瓣</a></span>
 							</div>
 							<div class="scrollbar" style="border-left: 1px #F0F0F0 solid;border-right: 1px #F0F0F0 solid;border-bottom: 1px #F0F0F0 solid;">
 							  <ul class="article">
@@ -381,7 +381,6 @@ default {
 					} else if(tab.index == 2){
 						this.baidu.baike = response.data.result
 					}
-				console.log(this.baidu.baike)
 				}).catch((response)=>{
 				  loading.close();
 				  this.$message.error('数据请求失败，请稍后再试');
@@ -438,18 +437,36 @@ default {
 				});
 				this.$ajax.get('/hom1/api/hot/douban?t=' + tab.index)
 				.then((response)=>{
+					
 					loading.close();
 					
-					if(tab.index == 0)
+					if(tab.index == 0){
+						
 						this.douban.chart = response.data.result
-					else if(tab.index == 1)
-						this.douban.book1 = response.data.result
-					else if(tab.index == 2)
-						this.douban.book2 = response.data.result
-					else if(tab.index == 3)
+						
+					}else if(tab.index == 1){
+						
+						for(let tiem of response.data.result){
+							tiem.star = tiem.level.split(" (")[0]
+							this.douban.book1.push(tiem)
+						}
+						
+					} else if(tab.index == 2){
+						
+						for(let tiem of response.data.result){
+							tiem.star = tiem.level.split(" (")[0]
+							this.douban.book2.push(tiem)
+						}
+						
+					} else if(tab.index == 3){
+						
 						this.douban.book3 = response.data.result
-					else if(tab.index == 4)
+						
+					}else if(tab.index == 4){
+						
 						this.douban.book4 = response.data.result
+						
+					}
 			
 				}).catch((response)=>{
 				  loading.close();
@@ -663,9 +680,9 @@ default {
 		background-color: #FFB800;
 	}
 	
-	.content li:hover a{
+/* 	.content li:hover a{
 		color: #5FB878;
-	}
+	} */
 	
 	.content img{
 		height: 90px;
