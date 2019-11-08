@@ -4,7 +4,6 @@
 	    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
 		<ul class="nav">
 			<li class="nav-item"><a  href="/" class="active">主页</a></li>
-			<!-- <li class="nav-item"><a  href="#test">其他</a></li> -->
 		</ul>
 	  </div>
 	  <div class="header-item">
@@ -27,7 +26,7 @@
 				</li>
 				<li class="nav-item">
 					<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
-					  <a href="/"><img src="@/assets/img/skin.svg" width="21px"></a>
+					  <a href="javascript:void(0);" @click="skinOpen = true"><img src="@/assets/img/skin.svg" width="21px"></a>
 					</el-tooltip>
 				</li>
 				<li class="nav-item" v-show="isLogin">
@@ -47,7 +46,7 @@
 				<li class="nav-item" v-show="!isLogin" @click="registerOpen = true"><a>注册</a></li>
 			</ul>
 
-			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" :lock-scroll="false">
 				<el-form :model="logForm" ref="logForm" :rules="rules" status-icon>
 					<el-form-item prop="username">
 						<el-input v-model="logForm.username" placeholder="输入您的用户名或邮箱地址"></el-input>
@@ -59,7 +58,7 @@
 				<el-button type="primary" style="width: 100%;" @click="login()">登录</el-button>
 				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
 			</el-dialog>
-			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true">
+			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" :lock-scroll="false">
 				<el-form :model="regForm" ref="regForm" :rules="rules" status-icon>
 				  <el-form-item prop="username">
 					<el-input v-model="regForm.username" placeholder="请输入您的用户名"></el-input>
@@ -80,6 +79,55 @@
 
 				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
 				<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
+			</el-dialog>
+			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
+				<div class="skin">
+					<div class="skin_header">
+						<ul class="nav menu-inline">
+							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
+							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
+							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
+							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
+						</ul>
+					</div>
+					<div class="skin_body">
+						<div class="tabpanel show" name='tab1'>
+							<ul class="nav menu-inline">
+								<li class="nav-item-radius"><a href="javascript:(0);">萌宠</a></li>
+								<li class="nav-item-radius"><a href="javascript:(0);">卡通</a></li>
+								<li class="nav-item-radius"><a href="javascript:(0);">人物</a></li>
+								<li class="nav-item-radius"><a href="javascript:(0);">汽车</a></li>
+								<li class="nav-item-radius"><a href="javascript:(0);">风景</a></li>
+							</ul>
+							<div>
+								<ul class="nav menu-inline images_list">
+									<li v-for="item in 16">
+										<a href="javascript:(0);">
+											<div class="images_float"><span>设置皮肤</span></div>
+											<div class="images">
+												<img src="https://img.bidianer.com/skin/002.jpg?imageView2/1/w/456/h/256">
+											</div>
+										</a>
+										<a href="#" class="download">
+											<el-tooltip class="item" effect="dark" content="下载图片" placement="top">
+											  <svg t="1573193380691" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1170" width="22" height="22"><path d="M959.5 529.5c-2-84-59.4-161.2-144.4-192-46-126.4-165.9-211.5-300-213-132.5-1.4-253.2 79.2-303 202.5-87.4 32.2-146 112.6-147 199.5-1.2 104.1 80.7 199.5 193.9 216h12.8v-0.1h0.5c23.5 0 42.5-19 42.5-42.5s-19-42.5-42.5-42.5H264v-0.4c-65.5-5.3-117-60.2-117-127 0-70.2 56.7-127.1 126.8-127.5 23.4-110.2 121.3-192.9 238.5-192.9s215.1 82.7 238.5 192.9c70.1 0.4 126.8 57.3 126.8 127.5 0 67.9-53 123.3-119.9 127.2v0.2h-6.6c-23.5 0-42.5 19-42.5 42.5s19 42.5 42.5 42.5h0.8v0.1h19.3c111.2-17 190.7-111.4 188.3-213z" p-id="1171" fill="#f9f9f9"></path><path d="M663.9 681.8c-17.6-15.6-44.7-13.9-60.3 3.7l-49.2 55.7V529.5c0-23.2-18.9-42.1-42.1-42.1-23.2 0-42.1 18.9-42.1 42.1v211.6L421 685.5c-15.6-17.6-42.7-19.3-60.3-3.7-17.6 15.6-19.3 42.7-3.7 60.3l123.3 139.4c4.1 4.7 9 8.2 14.4 10.6 0.1 0 0.2 0.1 0.3 0.1l1.5 0.6c0.2 0.1 0.4 0.2 0.6 0.2 0.4 0.2 0.8 0.3 1.2 0.4 0.3 0.1 0.6 0.2 0.8 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.6 0.2 0.9 0.2 0.4 0.1 0.8 0.2 1.1 0.3 0.3 0.1 0.6 0.1 0.8 0.2 0.4 0.1 0.8 0.2 1.2 0.2 0.3 0 0.5 0.1 0.8 0.1 0.4 0.1 0.8 0.1 1.2 0.2 0.3 0 0.6 0.1 0.8 0.1 0.4 0 0.8 0.1 1.2 0.1 0.3 0 0.6 0 0.9 0.1h4.2c0.3 0 0.6 0 0.9-0.1 0.4 0 0.8-0.1 1.2-0.1 0.3 0 0.6-0.1 0.8-0.1 0.4 0 0.8-0.1 1.2-0.2 0.3 0 0.5-0.1 0.8-0.1 0.4-0.1 0.8-0.1 1.2-0.2 0.3-0.1 0.6-0.1 0.8-0.2 0.4-0.1 0.8-0.2 1.1-0.3 0.3-0.1 0.6-0.1 0.9-0.2 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.6-0.2 0.8-0.3 0.4-0.1 0.8-0.3 1.2-0.4 0.2-0.1 0.4-0.2 0.6-0.2l1.5-0.6c0.1 0 0.2-0.1 0.3-0.1 5.3-2.4 10.3-5.9 14.4-10.6l123.3-139.4c16-17.6 14.3-44.8-3.3-60.3z" p-id="1172" fill="#f9f9f9"></path></svg>
+											</el-tooltip>							
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="tabpanel" name='tab2'>
+							2222
+						</div>
+						<div class="tabpanel" name='tab3'>
+							3333
+						</div>
+						<div class="tabpanel" name='tab4'>
+							4444
+						</div>
+					</div>
+				</div>
 			</el-dialog>
 	  </div>
 	</header>
@@ -120,6 +168,7 @@
 				},
 				loginOpen:false,
 				registerOpen:false,
+				skinOpen:false,
 				isLogin:false,
 				user:null,
 				token:''
@@ -216,7 +265,14 @@
 				  	 }
 				  });
 			  }
-		  }
+		  },
+		  tabs:function(name,event){
+		  	event.path[3].querySelector(".active").className = "";
+		  	event.target.offsetParent.querySelector("a").className = "active";
+		  	event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+		  	event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			
+		  },
 		},
 		mounted() {
 			this.getInfo();
@@ -290,6 +346,84 @@
 		border-radius: 50%;
 		background-color: #fff;
 	}
+	
+	.skin_dialog{
+		width: 1006px!important
+	}
+	.skin_dialog .el-dialog__body{
+		padding:0;
+	}
+	.skin{
+		margin-top: 15px;
+	}
+	.skin_header{
+		box-sizing: border-box;
+		background: #f9f9f9;
+		padding: 0 20px;
+	}
+	.skin .skin_header .nav a{
+		display: inherit;
+	}
+	.skin_body{
+		padding: 0 15px 10px;
+	}
+	
+	.images_list{
+		flex-wrap:wrap;
+	}
+	.images_list li{
+		margin: 8px;
+	}
+	.images_list li{
+	 position: relative;
+	 display: block;
+	 overflow: hidden;
+	 border-radius: 4px;
+	}
+	
+	.images_list li a.download{
+		z-index: 10;
+		position: absolute;
+		right: 12px;
+		bottom: -16px;
+	}
+	
+	.images_float{
+		position: absolute;
+		width: 100%;
+		opacity: 0;
+		z-index: 10;
+		line-height: 128px;
+		text-align: center;
+		background: rgba(0,0,0,.3);
+	}
+	.images_float span{
+		padding: 10px 25px;
+		border: 2px solid #ccc;
+		color: #ccc;
+		border-radius: 5px;
+	}
+	.images{
+		display: block;
+		height: 128px;
+		position: relative;
+	}
+	
+	.images img{
+		height: 128px;
+		width: 228px;
+		display: block;
+		object-fit: cover;
+	}
+	
+	.images_list a:hover .images_float{
+		opacity: 1;
+	}
+	
+	.skin_header .nav .nav-item a.active:after {
+		width: 100%;
+		left: 0;
+	}
 
 	@media screen and (min-width:1200px) {
 		.header{
@@ -305,7 +439,7 @@
 			line-height:30px;
 		}
 	}
-
+	
 	@media screen and (min-width: 960px) and (max-width: 1199px) {
 		.header{
 			padding: 0 10px;
