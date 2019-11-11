@@ -101,11 +101,11 @@
 							</ul>
 							<div>
 								<ul class="nav menu-inline images_list">
-									<li v-for="item in 16">
+									<li v-for="item in 16" @click="optionBackground('https://img.bidianer.com/skin/002.jpg')">
 										<a href="javascript:(0);">
 											<div class="images_float"><span>设置皮肤</span></div>
 											<div class="images">
-												<img src="https://img.bidianer.com/skin/002.jpg?imageView2/1/w/456/h/256">
+												<img src="https://img.bidianer.com/skin/002.jpg">
 											</div>
 										</a>
 										<a href="#" class="download">
@@ -118,7 +118,15 @@
 							</div>
 						</div>
 						<div class="tabpanel" name='tab2'>
-							2222
+							<ul class="nav menu-inline images_list">
+								<li v-for="item of colors">
+									<a href="javascript:(0);" class="color">
+										<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
+										<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
+										</div>
+									</a>
+								</li>
+							</ul>
 						</div>
 						<div class="tabpanel" name='tab3'>
 							3333
@@ -171,7 +179,9 @@
 				skinOpen:false,
 				isLogin:false,
 				user:null,
-				token:''
+				token:'',
+				colors:[['#C4E759','#323B42'],['#41C7AF','#323B42'],['#54E38E','#323B42'],['#ABC7FF','#323B42'],['#C1E3FF','#323B42'],['#6CACFF','#323B42'],['#8DEBFF','#323B42'],['#41D8DD','#323B42'],['#DEB0DF','#323B42'],['#A16BFE','#323B42'],
+						['#F8C390','#323B42'],['#D279EE','#323B42'],['#F8C390','#323B42'],['#F78FAD','#323B42'],['#FDEB82','#323B42'],['#BC3D2F','#323B42'],['#E13680','#323B42'],['#E16E93','#323B42'],['#F5CCF6','#323B42'],['#F1EEF9','#323B42']]
 			}
 		},
 		methods: {
@@ -273,6 +283,14 @@
 		  	event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			
 		  },
+		  optionBackground:function(item){
+			 console.log("item"+item)
+			 this.$parent.$refs.search.theme = {'name':'background','value':item}
+		  },
+		  optionColor:function(item){
+			  console.log("item"+item)
+			  this.$parent.$refs.search.theme = {'name':'color','value':item}
+		  }
 		},
 		mounted() {
 			this.getInfo();
@@ -403,10 +421,29 @@
 		color: #ccc;
 		border-radius: 5px;
 	}
+	
+	.images_text{
+		position: absolute;
+		width: 100%;
+		z-index: 10;
+		line-height: 128px;
+		text-align: center;
+	}
+	
+	.color_text{
+		font-size: 19px;
+	}
+	
+	.color .images_text:hover + .images{
+		border-width: 2px!important;
+	}
+	
 	.images{
 		display: block;
+		width: 228px;
 		height: 128px;
 		position: relative;
+		box-sizing: border-box;
 	}
 	
 	.images img{
@@ -418,6 +455,7 @@
 	
 	.images_list a:hover .images_float{
 		opacity: 1;
+		transition: all .4s ease;
 	}
 	
 	.skin_header .nav .nav-item a.active:after {

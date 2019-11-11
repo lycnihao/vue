@@ -140,7 +140,7 @@ default {
 			  searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               hotList: null,
-              activeName: 'first',
+              activeName: 'first'
             };
         },
         methods: {

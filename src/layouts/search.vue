@@ -1,6 +1,8 @@
 <template>
 	<div id="search">
-	
+		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'"></div>
+		<div class="theme" v-else :style="'background:'+theme.value"></div>
+		
 		<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
 			<defs>
 				<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
@@ -55,29 +57,6 @@
 			</div>
 			
 			<div class="tabpanel" name="picture">
-				 <!-- <el-popover
-					trigger="manual"
-					data-html="true"
-					placement="bottom"
-					class="search-input select"
-					popper-class="suggest"
-					v-model="popovers.picture">
-					<div class="popover-content" v-html="suggestContent"></div>
-					<div slot="reference" style="width: 100%;display: inherit;">
-						<div class="dropdown">
-							<el-select v-model="value" placeholder="请选择" @change="checkSearch">
-								<el-option
-								  v-for="picture in pictures"
-								  :key="picture.title"
-								  :label="picture.title"
-								  :value="picture.url">
-								</el-option>
-							</el-select>
-						</div>
-						<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-						@focus="keywords!='' ? popovers.picture = !popovers.picture :''" @blur="keywords!='' ? popovers.picture = !popovers.picture :''" :placeholder="searchDescribe"/>
-					</div>
-					</el-popover> -->
 					<div class="search-input select">
 							<div class="dropdown">
 								<el-select v-model="value" placeholder="请选择" @change="checkSearch">
@@ -152,7 +131,8 @@ default {
 			  ]
 		  },
 		  value:'',
-		  tabName:'searchEngine'
+		  tabName:'searchEngine',
+		  theme:{'name':'background','value':'https://img.bidianer.com/skin/007.jpg'}
 		}
 	},
 	methods:{
@@ -226,7 +206,7 @@ default {
 			this.suggestContent = centent;
 		   });
 	   }
-	},
+	}
 }
 </script>
 
@@ -234,8 +214,17 @@ default {
 	#search {
 		position: relative;
 		padding: 180px 0 230px 0;
-		background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%);
-		background-image: url(../assets/bg/bg.png);
+	}
+	
+	.theme{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		/* background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%); */
+		/* background-image: url(/static/img/bg.404d371.png); */
+		background-size: cover;
 	}
 	
 	#search .search-center .tabpanel.show,#search .search-tools{
