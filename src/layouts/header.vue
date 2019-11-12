@@ -180,8 +180,24 @@
 				isLogin:false,
 				user:null,
 				token:'',
-				colors:[['#C4E759','#323B42'],['#41C7AF','#323B42'],['#54E38E','#323B42'],['#ABC7FF','#323B42'],['#C1E3FF','#323B42'],['#6CACFF','#323B42'],['#8DEBFF','#323B42'],['#41D8DD','#323B42'],['#DEB0DF','#323B42'],['#A16BFE','#323B42'],
-						['#F8C390','#323B42'],['#D279EE','#323B42'],['#F8C390','#323B42'],['#F78FAD','#323B42'],['#FDEB82','#323B42'],['#BC3D2F','#323B42'],['#E13680','#323B42'],['#E16E93','#323B42'],['#F5CCF6','#323B42'],['#F1EEF9','#323B42']]
+				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
+						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
+						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
+						['#FFFDE7','#FDD835'],['#FFF9C4','#FBC02D'],['#FFF59D','#F9A825'],['#FFF176','#F57F17'],
+						['#F9FBE7','#C0CA33'],['#F0F4C3','#AFB42B'],['#E6EE9C','#9E9D24'],['#DCE775','#827717'],
+						['#F1F8E9','#7CB342'],['#DCEDC8','#689F38'],['#C5E1A5','#558B2F'],['#AED581','#33691E'],
+						['#E8F5E9','#43A047'],['#C8E6C9','#388E3C'],['#A5D6A7','#2E7D32'],['#81C784','#1B5E20'],
+						['#E0F2F1','#00897B'],['#B2DFDB','#00796B'],['#80CBC4','#00695C'],['#4DB6AC','#004D40'],
+						['#E0F7FA','#00ACC1'],['#B2EBF2','#0097A7'],['#80DEEA','#00838F'],['#4DD0E1','#006064'],
+						['#E1F5FE','#039BE5'],['#B3E5FC','#0288D1'],['#81D4FA','#0277BD'],['#4FC3F7','#01579B'],
+						['#E3F2FD','#1E88E5'],['#BBDEFB','#1976D2'],['#90CAF9','#1565C0'],['#64B5F6','#0D47A1'],
+						['#E8EAF6','#3949AB'],['#C5CAE9','#303F9F'],['#9FA8DA','#283593'],['#7986CB','#1A237E'],
+						['#EDE7F6','#5E35B1'],['#D1C4E9','#512DA8'],['#B39DDB','#4527A0'],['#9575CD','#311B92'],
+						['#F3E5F5','#8E24AA'],['#E1BEE7','#7B1FA2'],['#CE93D8','#6A1B9A'],['#BA68C8','#4A148C'],
+						['#FCE4EC','#D81B60'],['#F8BBD0','#C2185B'],['#F48FB1','#AD1457'],['#F06292','#880E4F'],
+						['#EFEBE9','#6D4C41'],['#D7CCC8','#5D4037'],['#BCAAA4','#4E342E'],['#A1887F','#3E2723'],
+						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
+					]
 			}
 		},
 		methods: {
@@ -284,16 +300,20 @@
 			
 		  },
 		  optionBackground:function(item){
-			 console.log("item"+item)
-			 this.$parent.$refs.search.theme = {'name':'background','value':item}
+			 this.$parent.$refs.search.theme = {'name':'background','value':item},
+			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item}));
 		  },
 		  optionColor:function(item){
-			  console.log("item"+item)
-			  this.$parent.$refs.search.theme = {'name':'color','value':item}
+			  this.$parent.$refs.search.theme = {'name':'color','value':item},
+			  localStorage.setItem("theme", JSON.stringify({'name':'color','value':item}));
 		  }
 		},
 		mounted() {
 			this.getInfo();
+			var theme = JSON.parse(localStorage.getItem("theme"));
+			if(theme){
+				this.$parent.$refs.search.theme = theme
+			}
 		}
 	}
 </script>
