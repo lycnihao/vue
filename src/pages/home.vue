@@ -60,6 +60,7 @@
 									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
 									   <div class="site-icon">
 										<img :data-src="site.icon" :alt="site.title"></img>
+										<i class="site-icon-shadow" :style="'background: url('+site.icon+') no-repeat 50%/cover;'"></i>
 										</div>
 									   <div class="site-info">
 									   <h3>{{ site.title }}</h3>

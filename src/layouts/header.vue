@@ -10,11 +10,11 @@
 	  </div>
 	  <div class="header-item" style="height: 100%;">
 			<ul class="nav menu-inline">
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<el-tooltip class="item" effect="dark" content="便签">
 						<a  href="/"><img src="@/assets/img/note.svg" width="31px"></a>
 					</el-tooltip>
-				</li>
+				</li> -->
 				<li class="nav-item">
 					<el-popover placement="bottom" title="小工具" width="280" trigger="hover">
 						<a href="javascript:void(0);" slot="reference"><img src="@/assets/img/app.svg" width="17px"></a>
@@ -92,20 +92,20 @@
 					</div>
 					<div class="skin_body">
 						<div class="tabpanel show" name='tab1'>
-							<ul class="nav menu-inline">
+							<!-- <ul class="nav menu-inline">
 								<li class="nav-item-radius"><a href="javascript:(0);">萌宠</a></li>
 								<li class="nav-item-radius"><a href="javascript:(0);">卡通</a></li>
 								<li class="nav-item-radius"><a href="javascript:(0);">人物</a></li>
 								<li class="nav-item-radius"><a href="javascript:(0);">汽车</a></li>
 								<li class="nav-item-radius"><a href="javascript:(0);">风景</a></li>
-							</ul>
+							</ul> -->
 							<div>
 								<ul class="nav menu-inline images_list">
-									<li v-for="item in 16" @click="optionBackground('https://img.bidianer.com/skin/002.jpg')">
+									<li v-for="item of background_img" @click="optionBackground(item)">
 										<a href="javascript:(0);">
 											<div class="images_float"><span>设置皮肤</span></div>
 											<div class="images">
-												<img src="https://img.bidianer.com/skin/002.jpg">
+												<img :src="item">
 											</div>
 										</a>
 										<a href="#" class="download">
@@ -180,6 +180,7 @@
 				isLogin:false,
 				user:null,
 				token:'',
+				background_img:['https://img.bidianer.com/skin/002.jpg','https://img.bidianer.com/skin/002.jpg'],
 				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
@@ -197,7 +198,7 @@
 						['#FCE4EC','#D81B60'],['#F8BBD0','#C2185B'],['#F48FB1','#AD1457'],['#F06292','#880E4F'],
 						['#EFEBE9','#6D4C41'],['#D7CCC8','#5D4037'],['#BCAAA4','#4E342E'],['#A1887F','#3E2723'],
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
-					]
+					],
 			}
 		},
 		methods: {
@@ -293,11 +294,14 @@
 			  }
 		  },
 		  tabs:function(name,event){
-		  	event.path[3].querySelector(".active").className = "";
+		  	/* event.path[3].querySelector(".active").className = "";
 		  	event.target.offsetParent.querySelector("a").className = "active";
 		  	event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-		  	event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
-			
+		  	event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab */
+			event.path[2].querySelector(".active").className = "";
+			event.target.className = "active";
+			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+			event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 		  },
 		  optionBackground:function(item){
 			 this.$parent.$refs.search.theme = {'name':'background','value':item},
