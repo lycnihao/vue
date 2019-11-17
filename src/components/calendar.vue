@@ -1,14 +1,15 @@
 <template>
 	 <div class="wrapper">
 		<div class="calendar-header">
-			<h3>
-				<span class="btn-prev" @click="perCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-left"></i></a></span>
-				<span><strong>{{nowYear}}</strong> <small>年</small> &nbsp;<strong>{{nowMonth}}</strong> <small>日</small></span>
-				<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
-			</h3>
-			<p class="info">{{lunarcalendar}} · {{week}} ·
-			<a href="https://baike.baidu.com/calendar/" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
-<!--<a :href="'http://www.tianqi.com/index.php?c=history&md='+num(nowMonth)+num(nowDay)" target="_blank" style="font-size: 12px;">历史上的今天</a></p> -->		</div>
+			<span class="btn-prev" @click="perCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-left"></i></a></span>
+			<div style="display: inline-block;">
+				<h3>
+					<span><strong>{{nowYear}}</strong> <small>年</small> &nbsp;<strong>{{nowMonth}}</strong> <small>年</small> &nbsp;<strong>{{nowDay}}</strong> <small>日</small></span>
+				</h3>
+				<p class="info">{{lunarcalendar}} · {{week}} ·<a href="https://baike.baidu.com/calendar/" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
+			</div>
+			<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
+		</div>
 		
 		
 		
@@ -293,7 +294,11 @@ default {
 <style>
 		.calendar-header{
 		text-align: center;
-		margin-top: 3px;
+		margin: 10px 0;
+		padding: 0 10px;
+		display: flex;
+		justify-content: space-between;
+		align-items:center;
 	}
 
 	.calendar-header .btn-prev i{

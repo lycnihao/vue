@@ -106,7 +106,8 @@
 
 		</div>
 
-		<el-backtop :bottom="100"></el-backtop>
+		
+		<sidebar-block></sidebar-block>
 		</section>
 		
 		<!-- 友情链接 -->
@@ -129,6 +130,8 @@ import userBlock from '../layouts/userSite'
 import links from '../layouts/links'
 import calendar from '../components/calendar'
 import VLink from '../components/VLink'
+import sidebarBlock from '../components/sidebar_block'
+
 
 
 
@@ -175,6 +178,7 @@ default {
           'v-footer': footer,
 		  'v-search':search,
 		  'calendar': calendar,
+		  'sidebar-block': sidebarBlock,
 		  'v-user':userBlock,
 		  'v-links':links,
 		  'v-link':VLink,
