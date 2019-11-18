@@ -102,7 +102,7 @@ export
 default {
 		data() {
 			return {
-				headerNav:true,
+				headerNav:false,
 				menuTop:false,
 				listHeight: [],
 				sitesScrollY: 0,

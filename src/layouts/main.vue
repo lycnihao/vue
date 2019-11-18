@@ -58,6 +58,11 @@
 						<el-tab-pane label="预留" name="third">预留</el-tab-pane>
 					  </el-tabs>
 					</div> -->
+					<div class="box">
+						<div class="box-body">
+							<tianqi></tianqi>
+						</div>
+					</div>
 					<div class="box calendar">
 						<div class="box-body">
 							<calendar></calendar>
@@ -129,8 +134,7 @@ import links from '../layouts/links'
 import calendar from '../components/calendar'
 import VLink from '../components/VLink'
 import sidebarBlock from '../components/sidebar_block'
-
-
+import tianqiPlugin from '../components/tianqi_plugin'
 
 
 export
@@ -138,7 +142,7 @@ default {
         data() {
             return {
 			  searchUrl:'https://www.baidu.com/s?word=',
-			  searchIcon: 'http://47.106.84.166:3302/upload/baidu.svg',
+			  searchIcon: require('../assets/img/baidu.svg'),
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               hotList: null,
               activeName: 'first'
@@ -188,6 +192,7 @@ default {
 		  'v-user':userBlock,
 		  'v-links':links,
 		  'v-link':VLink,
+		  'tianqi':tianqiPlugin,
       },
 		created() {
 			this.getData();
