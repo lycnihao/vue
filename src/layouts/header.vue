@@ -294,10 +294,6 @@
 			  }
 		  },
 		  tabs:function(name,event){
-		  	/* event.path[3].querySelector(".active").className = "";
-		  	event.target.offsetParent.querySelector("a").className = "active";
-		  	event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-		  	event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab */
 			event.path[2].querySelector(".active").className = "";
 			event.target.className = "active";
 			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab

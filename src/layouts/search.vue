@@ -19,8 +19,8 @@
 		<div class="search-tools" style="height: 40px; line-height: 40px;">
 			<ul class="nav menu-inline" style="line-height: 30px;">
 				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('searchEngine',$event)" class="active">搜索引擎</a></li>
-				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('picture',$event)">图片</a></li>
-				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('icon',$event)">图标</a></li>
+				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('picture',$event)" class="">图片</a></li>
+				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('icon',$event)" class="">图标</a></li>
 			</ul>
 		</div>
 		<div class="search-center">
@@ -154,8 +154,8 @@ default {
 		tabs:function(name,event){
 			event.path[2].querySelector(".search-tools .active").className = "";
 			event.target.className = "active";
-			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-			event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			event.path[6].querySelector('.search-center .tabpanel.show').className = "tabpanel"; //隐藏旧tab
+			event.path[6].querySelector(`.search-center .tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			
 			this.keywords = '';
 			this.tabName = name;

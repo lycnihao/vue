@@ -7,9 +7,9 @@
 			<v-search ref="search"></v-search>
 			 <!-- 主体板块 -->
 			 <div class="main" style="margin-top: 20px;">
-			 <v-user ref="userSite"></v-user>
+				<v-user ref="userSite"></v-user>
 
-			<el-row :gutter="10">
+				<el-row :gutter="10">
 				<!-- 主体显示块 -->
 				<el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" class="container">
 					<!-- 功能导航板块 -->
@@ -102,19 +102,17 @@
 						</div>
 					</div> -->
 				</el-col>
-			</el-row>
-
-		</div>
-
-		
-		<sidebar-block></sidebar-block>
+				</el-row>
+			 </div>
 		</section>
 		
 		<!-- 友情链接 -->
 		<v-links></v-links>
 
+		<sidebar-block ref="sidebarBlock"></sidebar-block>
+		
 		<!-- <div id="sidebar" title="加载边栏" class="el-icon-discover"></div> -->
-    <v-footer></v-footer>
+		<v-footer></v-footer>
 
  </div>
 </template>
@@ -171,6 +169,14 @@ default {
                     });
                 });
             },
+			sidebarBlock_:function(){
+				var t = document.documentElement.scrollTop||document.body.scrollTop;
+				if(t > 680){
+					this.$children[5].show = true
+				} else {
+					this.$children[5].show = false
+				}
+			}
 	  },
 
       components: {
@@ -185,6 +191,9 @@ default {
       },
 		created() {
 			this.getData();
+			this.$nextTick(() => {
+				window.addEventListener('scroll', this.sidebarBlock_, true);
+			})
 		}
     }
 </script>

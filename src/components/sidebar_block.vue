@@ -1,17 +1,18 @@
 <template>
-
-	 <div class="sidebar_block">
+	 <div class="sidebar_block" v-show="show">
 		<ul>
-			<li class="item">
+			<!-- <li class="item">
 				<a>搜索</a>
 				<i class="el-icon-search"></i>
-			</li>
+			</li> -->
 			<li class="item">
-				<a>意见反馈</a>
+				<a href="https://wj.qq.com/s2/4216517/3dd6" target="_blank">意见反馈</a>
 				<i class="el-icon-chat-line-round"></i>
 			</li>
 			<li class="item">
-				<a>返回顶部</a>
+				<el-backtop :right="0" :bottom="0">
+					<a>返回顶部</a>
+				</el-backtop>
 				<i class="el-icon-arrow-up"></i>
 			</li>
 		</ul>
@@ -23,7 +24,7 @@ export
 default {
 	data() {
 		return{
-			
+			show:false
 		}
 	},
 	methods: {
@@ -51,10 +52,15 @@ default {
 	background: #fff;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+	position: relative;
+	overflow: hidden;
 }
 
 .sidebar_block .item a{
-	display: none;
+	padding-top: 80px;
+    position: absolute;
+	text-align: center;
+	transition: padding-top .5s cubic-bezier(.175,.885,.32,1);
 }
 
 .sidebar_block .item i{
@@ -63,8 +69,7 @@ default {
 }
 
 .sidebar_block .item:hover a{
-	display: inline-block;
-	text-align: center;
+	padding-top: 0;
 }
 .sidebar_block .item:hover i{
 	display: none;
@@ -74,6 +79,13 @@ default {
 
 .sidebar_block a{
 	color: #8590a6;
+}
+
+
+.sidebar_block .item .el-backtop{
+	position: absolute;
+	background-color:transparent;
+	box-shadow:0 0;
 }
 
 </style>
