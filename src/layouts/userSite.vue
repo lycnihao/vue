@@ -39,7 +39,7 @@
 					animation=400
 					chosenClass = ".site-item"
 					@update="checkEdit">
-					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites" :key="index" :data_id="webSite.id">
+					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites" :key="webSite.id" :data_id="webSite.id">
 						<a v-if="!enabled" class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
 						  <div class="site-icon">
 							<el-image :src="webSite.websiteIcon">
@@ -442,6 +442,9 @@ default {
 	components: {
 	  'draggable':draggable,
 	},
+	created() {
+		this.getUserSites()
+	}
 }
 </script>
 

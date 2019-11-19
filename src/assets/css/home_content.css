@@ -230,6 +230,7 @@ section {
   margin: 1px 5px;
   padding: 5px 15px;
   height: 32px;
+  line-height: 1;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -249,13 +250,14 @@ section {
 	border-radius: 20%;
 	display: inline-flex;
 }
+
 .user-website .site-info{
 	overflow: hidden;
 	text-overflow:ellipsis;
 	white-space: nowrap;
 }
 .user-website .site-info h3{
-	font-size: 15px;
+	font-size: 14px;
 }
 
 
@@ -391,25 +393,22 @@ section {
 }
 
 .site-list li {
-	height: 80px;
-  width: 25%;
-  display: inline-flex;
+  width: 31%;
+  margin: 5px 1%;
 }
 
 .site-list .site-item {
-  padding: 10px 15px;
-	height: 100%;
+	padding: 15px;
 	font-size: 14px;
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 	overflow: hidden;
-  transition: all .4s cubic-bezier(.175,.885,.32,1);
+	transition: all .4s cubic-bezier(.175,.885,.32,1);
 }
 
 .site-list .site-item:hover {
-	/* background: rgba(241,242,249,.5); */
   background: #eee;
-  transition: background 0.35s ease-out,
+  transition: background 0.35s ease-out;
 }
 
 .site-list .site-item:hover .site-icon-shadow{
@@ -423,15 +422,19 @@ section {
 }
 
 .site-list .site-info h3 {
-	color: #444444;
+	color: #444;
 }
 
 .site-list .site-info p {
 	color: #a1a7b7;
 	font-size: 12px;
+	margin-top: 2px;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	white-space: nowrap;
+	height: 30px;
+	display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .site-list .site-item:hover h3 {
@@ -546,7 +549,7 @@ section {
     left: 0;
     top: 10%;
     width: 100%;
-    height: 100%;
+    height: 32px;
     border-radius: 100%;
     -webkit-filter: blur(10px) brightness(80%) opacity(.8);
     filter: blur(10px) brightness(80%) opacity(.8);
@@ -556,7 +559,7 @@ section {
   }
 
 .site-icon img{
-	width: 36px;
+	width: 32px;
 }
 
 
@@ -631,11 +634,6 @@ section {
 		text-align: center;
 	}
 
-	.site-list .site-item {
-		height: 60px;
-		width: 100%;
-	}
-
 	.site-list .site-icon {
 		margin-right: 8px;
 	}
@@ -646,7 +644,7 @@ section {
   }
 
 	.site-list .site-info h3 {
-		font-size: 14px;
+		font-size: 15px;
 	}
 
 	.image-placeholder .block {
@@ -692,10 +690,6 @@ section {
 		font-size: 12px;
 		text-align: center;
 	}
-
-/* 	.container {
-		width: 100%;
-	} */
 
 	.site-list .site-item {
 		height: 30px;
@@ -832,10 +826,6 @@ section {
 
 	.container {
 		width: 100%;
-	}
-
-	.site-list li {
-		height: 45px;
 	}
 
 	.site-list .site-item {
@@ -978,21 +968,11 @@ section {
 		border-radius: 20px;
 	}
 
-	.site-list li {
-		height: 45px;
-		width: 33.3%;
-	}
-
 	.site-list .site-item {
 		height: 30px;
 		width: 100px;
     padding: 2px;
 	}
-
-/*  .site-list .site-icon .el-image {
-  	width: 25px;
-  	height: 25px;
-  } */
 
   .site-icon img{
   	width: 25px;
@@ -1016,5 +996,23 @@ section {
 		width: 49%;
 		height: 112px;
 		margin: 1px 1px;
+	}
+	   
+	.section{
+		display: block;
+	}
+	.aside{
+		width: 100%;
+	}
+	.content{
+		width: inherit;
+	}
+	.aside li {
+		width: 45%;
+		float: left;
+	}
+	.content .article .article-img img{
+		    width: 105px;
+			height: 70px;
 	}
 }

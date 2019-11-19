@@ -60,7 +60,7 @@
 					</div> -->
 					<div class="box">
 						<div class="box-body">
-							<tianqi></tianqi>
+							<weather></weather>
 						</div>
 					</div>
 					<div class="box calendar">
@@ -134,7 +134,7 @@ import links from '../layouts/links'
 import calendar from '../components/calendar'
 import VLink from '../components/VLink'
 import sidebarBlock from '../components/sidebar_block'
-import tianqiPlugin from '../components/tianqi_plugin'
+import weatherPlugin from '../components/weather_plugin'
 
 
 export
@@ -192,7 +192,7 @@ default {
 		  'v-user':userBlock,
 		  'v-links':links,
 		  'v-link':VLink,
-		  'tianqi':tianqiPlugin,
+		  'weather':weatherPlugin,
       },
 		created() {
 			this.getData();

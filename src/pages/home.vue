@@ -217,7 +217,6 @@ default {
 				}
 				this.sites = response.data.webSites;
 				  this.$nextTick(() => {
-					/* this.$refs.userSite.getUserSites(); */
 					this._initScroll(); // 初始化scroll
 					this._calculateHeight(); // 初始化列表高度列表
 					var img=document.querySelectorAll("img[data-src]")
