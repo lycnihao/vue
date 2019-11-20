@@ -227,14 +227,13 @@ section {
   background-color: #fff;
 }
 .user-website .site-item{
+  display: block;
   margin: 1px 5px;
   padding: 5px 15px;
   height: 32px;
-  line-height: 1;
+  line-height: 32px;
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  transition: box-shadow 0.25s ease-out, transform 0.25s ease-out, -webkit-box-shadow 0.25s ease-out, -webkit-transform 0.25s ease-out;
+  transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
 }
 .user-website .site-item:hover{
   box-shadow: 5px 8px 10px rgba(36, 37, 38, 0.13);
@@ -243,12 +242,14 @@ section {
 
 .user-website .site-item .site-icon{
 	margin-right: 5px;
+	float: left;
+	height: inherit;
 }
 .user-website .site-item .site-icon img{
     width: 20px;
     height: 20px;
 	border-radius: 20%;
-	display: inline-flex;
+	vertical-align: middle;
 }
 
 .user-website .site-info{
@@ -341,7 +342,6 @@ section {
        margin: 3px;
        padding:0;
        list-style: none;
-       text-align: center;
    }
    .tabpanel{
        width:100%;
@@ -547,7 +547,7 @@ section {
   .site-icon .site-icon-shadow{
     position: absolute;
     left: 0;
-    top: 10%;
+    top: 0;
     width: 100%;
     height: 32px;
     border-radius: 100%;
@@ -565,6 +565,7 @@ section {
 
 .site-icon .el-image{
 	position: inherit!important;
+	height: inherit;
 }
 
 #sidebar{width:40px;height:0;margin:0 auto;cursor:pointer;display:inherit}

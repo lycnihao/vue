@@ -1,14 +1,14 @@
 <template>
 	 <div class="wrapper">
 		<div class="calendar-header">
-			<span class="btn-prev" @click="perCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-left"></i></a></span>
+			<span class="btn-prev" @click="perCalendar()"><a href="Javascript:void(0);"><i class="el-icon-arrow-left"></i></a></span>
 			<div style="display: inline-block;">
 				<h3>
 					<span><strong>{{nowYear}}</strong> <small>年</small> &nbsp;<strong>{{nowMonth}}</strong> <small>年</small> &nbsp;<strong>{{nowDay}}</strong> <small>日</small></span>
 				</h3>
 				<p class="info">{{lunarcalendar}} · {{week}} ·<a href="https://baike.baidu.com/calendar/" target="_blank" style="font-size: 12px;">历史上的今天</a></p>
 			</div>
-			<span class="btn-next" @click="nextCalendar()"><a href="javascript:(0);"><i class="el-icon-arrow-right"></i></a></span>
+			<span class="btn-next" @click="nextCalendar()"><a href="Javascript:void(0);"><i class="el-icon-arrow-right"></i></a></span>
 		</div>
 		
 		
@@ -17,7 +17,7 @@
 		<div class="day">
 			<ul class="week-day" v-for="row in 6">
 				<li class="day-item" v-for="item in 7">
-					<a href="javascript:(0);" :class="days[(row-1) * 7 + item -1].style"
+					<a href="Javascript:void(0);" :class="days[(row-1) * 7 + item -1].style"
 					:title="days[(row-1) * 7 + item -1].significant ? days[(row-1) * 7 + item -1].text:''"
 					@click="updateCalendar(nowYear,days[(row-1) * 7 + item -1].month - 1,days[(row-1) * 7 + item -1].value)">
 					<span v-html="days[(row-1) * 7 + item -1].text"></span></a>

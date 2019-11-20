@@ -67,9 +67,8 @@
 					vertical-align: middle;
 				}
 				
-				.menu-inline{
-					display: flex;
-					flex-wrap: wrap;
+				.menu-inline li{
+					float: left;
 				}
 				.nav-item a ,.nav-item-radius a{
 					text-decoration: none;
@@ -85,7 +84,7 @@
 					bottom: 0;
 					left: calc(50% - 15px);
 					width: 30px;
-					height: 2px;
+					height: 3px;
 					background: #409eff;
 				}
 				.nav-item-radius {
@@ -115,7 +114,7 @@
 					border-radius: 2px;
 					background: #FFFFFF;
 					display: inline-block;
-					box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+					box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 				}
 				
 				.box-header {
@@ -178,6 +177,11 @@
 		</style>
   </head>
   <body>
+	  <!--[if lt IE 9]>
+	  <div class="alert alert-danger text-center" role="alert">
+	  	你的浏览器实在太旧啦，快去升级完浏览器吧
+	  </div>
+	  <![endif]-->
     <div id="app"></div>
   </body>
 </html>

@@ -358,10 +358,10 @@ default {
 		},
 		methods: {
 			tabs:function(name,event){
-				event.path[2].querySelector(".active").className = "";
+				document.querySelector(".aside .active").className = "";
 				event.target.className = "active";
-				event.path[6].querySelector('.content .show').className = "tabpanel"; //隐藏旧tab
-				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+				document.querySelector('.content .show').className = "tabpanel"; //隐藏旧tab
+				document.querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			},
 			baiduClick:function(tab,event){
 				const loading = this.$loading({

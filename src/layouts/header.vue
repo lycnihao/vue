@@ -84,25 +84,25 @@
 				<div class="skin">
 					<div class="skin_header">
 						<ul class="nav menu-inline">
-							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
-							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
-							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
-							<li class="nav-item"><a href="javascript:(0)" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
+							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
+							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
+							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
+							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
 						</ul>
 					</div>
 					<div class="skin_body">
 						<div class="tabpanel show" name='tab1'>
 							<!-- <ul class="nav menu-inline">
-								<li class="nav-item-radius"><a href="javascript:(0);">萌宠</a></li>
-								<li class="nav-item-radius"><a href="javascript:(0);">卡通</a></li>
-								<li class="nav-item-radius"><a href="javascript:(0);">人物</a></li>
-								<li class="nav-item-radius"><a href="javascript:(0);">汽车</a></li>
-								<li class="nav-item-radius"><a href="javascript:(0);">风景</a></li>
+								<li class="nav-item-radius"><a href="Javascript:void(0);">萌宠</a></li>
+								<li class="nav-item-radius"><a href="Javascript:void(0);">卡通</a></li>
+								<li class="nav-item-radius"><a href="Javascript:void(0);">人物</a></li>
+								<li class="nav-item-radius"><a href="Javascript:void(0);">汽车</a></li>
+								<li class="nav-item-radius"><a href="Javascript:void(0);">风景</a></li>
 							</ul> -->
 							<div>
 								<ul class="nav menu-inline images_list">
 									<li v-for="item of background_img" @click="optionBackground(item)">
-										<a href="javascript:(0);">
+										<a href="Javascript:void(0);">
 											<div class="images_float"><span>设置皮肤</span></div>
 											<div class="images">
 												<img :src="item">
@@ -120,7 +120,7 @@
 						<div class="tabpanel" name='tab2'>
 							<ul class="nav menu-inline images_list">
 								<li v-for="item of colors">
-									<a href="javascript:(0);" class="color">
+									<a href="Javascript:void(0);" class="color">
 										<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
 										<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
 										</div>
@@ -294,10 +294,10 @@
 			  }
 		  },
 		  tabs:function(name,event){
-			event.path[2].querySelector(".active").className = "";
+			document.querySelector(".skin .active").className = "";
 			event.target.className = "active";
-			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-			event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			document.querySelector('.skin .tabpanel.show').className = "tabpanel"; //隐藏旧tab
+			document.querySelector(`.skin .tabpanel[name='${name}']`).className += " show"; //显示新的tab
 		  },
 		  optionBackground:function(item){
 			 this.$parent.$refs.search.theme = {'name':'background','value':item},

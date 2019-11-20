@@ -3,7 +3,7 @@
 		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'"></div>
 		<div class="theme" v-else :style="'background:'+theme.value"></div>
 		
-		<svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+		<!-- <svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
 			<defs>
 				<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
 			</defs>
@@ -14,13 +14,13 @@
 				<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff"></use>
 			</g>
 	
-		</svg>
+		</svg> -->
 		<h3>以最快的方式获取想要的资源</h3>
 		<div class="search-tools" style="height: 40px; line-height: 40px;">
 			<ul class="nav menu-inline" style="line-height: 30px;">
-				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('searchEngine',$event)" class="active">搜索引擎</a></li>
-				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('picture',$event)" class="">图片</a></li>
-				<li class="nav-item"><a href="javascript:void(0)" @click="tabs('icon',$event)" class="">图标</a></li>
+				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('searchEngine',$event)" class="active">搜索引擎</a></li>
+				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('picture',$event)" class="">图片</a></li>
+				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('icon',$event)" class="">图标</a></li>
 			</ul>
 		</div>
 		<div class="search-center">
@@ -152,10 +152,10 @@ default {
 		    window.open(url, "_blank")
 		},
 		tabs:function(name,event){
-			event.path[2].querySelector(".search-tools .active").className = "";
+			document.querySelector(".search-tools .active").className = "";
 			event.target.className = "active";
-			event.path[6].querySelector('.search-center .tabpanel.show').className = "tabpanel"; //隐藏旧tab
-			event.path[6].querySelector(`.search-center .tabpanel[name='${name}']`).className += " show"; //显示新的tab
+			document.querySelector('.search-center .tabpanel.show').className = "tabpanel"; //隐藏旧tab
+			document.querySelector(`.search-center .tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			
 			this.keywords = '';
 			this.tabName = name;

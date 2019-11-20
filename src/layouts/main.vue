@@ -172,15 +172,7 @@ default {
                         position: 'bottom-right'
                     });
                 });
-            },
-			sidebarBlock_:function(){
-				var t = document.documentElement.scrollTop||document.body.scrollTop;
-				if(t > 680){
-					this.$children[5].show = true
-				} else {
-					this.$children[5].show = false
-				}
-			}
+            }
 	  },
 
       components: {
@@ -196,9 +188,6 @@ default {
       },
 		created() {
 			this.getData();
-			this.$nextTick(() => {
-				window.addEventListener('scroll', this.sidebarBlock_, true);
-			})
 		}
     }
 </script>

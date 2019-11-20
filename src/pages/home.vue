@@ -25,7 +25,7 @@
 			  <transition name="el-zoom-in-top">
 				<div style="position: relative;">
 					<span v-on:click="headerNav = !headerNav"  v-show="headerNav" style="position: absolute;left: -28px;top: -8px;">
-					   <a href="javascript:(0);;" title="收起"><i class="el-icon-caret-top"></i></a>
+					   <a href="Javascript:void(0);" title="收起"><i class="el-icon-caret-top"></i></a>
 					</span>
 				</div>
 			  </transition>
@@ -46,7 +46,7 @@
 						 <h3 :id="category.slugName">{{category.name}}</h3>
 						 <div class="tabs-nav">
 						 	<ul class="tablist">
-						 		<li class="tabs-item" v-for="(subCategory,index) in subCategorys[category.categoryId]" @click="tabs(subCategory.slugName,$event)"><a :class="index == 0 ? 'active':''" href="javascript:void(0);">{{subCategory.name}}</a></li>
+						 		<li class="tabs-item" v-for="(subCategory,index) in subCategorys[category.categoryId]" @click="tabs(subCategory.slugName,$event)"><a :class="index == 0 ? 'active':''" href="Javascript:void(0);">{{subCategory.name}}</a></li>
 						 	</ul>
 						 </div>
 					 </div>
@@ -57,9 +57,9 @@
 							<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName">
 								<ul class="site-list">
 								  <li v-for="site in sites[subCategory.categoryId]">
-									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									   <div class="site-icon">
-										<img :data-src="site.icon" :alt="site.title"></img>
+										<img :data-src="site.icon" :alt="site.title" style="opacity:0"></img>
 										<i class="site-icon-shadow" :style="'background: url('+site.icon+') no-repeat 50%/cover;'"></i>
 										</div>
 									   <div class="site-info">
@@ -74,7 +74,7 @@
 						<div v-else>
 							<ul class="site-list">
 							  <li v-for="site in sites[category.categoryId]">
-								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary">
+								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 								   <div class="site-icon float-left">
 									<el-image :src="site.icon" :alt="site.title">
 									  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
@@ -135,7 +135,7 @@ default {
 			  if (!event._constructed) {
 			    return
 			  }
-			  /* console.log(this.listHeight[index]) */
+			  /* window.scrollTo(0,this.listHeight[index]) */
 			  window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
 			},
 			lazy:function(){
@@ -153,10 +153,7 @@ default {
 						var img=new Image()
 						img.src=item.getAttribute("data-src")
 						item.src=img.src
-						var j=0
-						setInterval(function(){j+=0.2
-						if(j<=1){item.style.opacity=j
-						return}},100)
+						item.style.opacity = 1
 						item.removeAttribute('data-src')
 					})()}
 				})
@@ -172,20 +169,24 @@ default {
 					this.menuTop = false;
 				}
 			
-			
-				var img=document.querySelectorAll("img[data-src]")
-				for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
 				//图片懒加载
 				this.lazy();
 			
 			},
 			tabs:function(name,event){
-				event.path[2].querySelector(".tablist .active").className = "";
+				/* event.path[2].querySelector(".tablist .active").className = "";
 				event.target.className = "active";
 				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
+				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab */
+				event.target.parentElement.parentElement.querySelector(".tablist .active").className = "";
+				event.target.className = "active";
+				event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+				event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			
 				this._calculateHeight();
+			},
+			visit:function(id){
+				this.$ajax.post('/hom1/api/visit/'+id)
 			}
 		},
 		components: {
@@ -219,8 +220,6 @@ default {
 				  this.$nextTick(() => {
 					this._initScroll(); // 初始化scroll
 					this._calculateHeight(); // 初始化列表高度列表
-					var img=document.querySelectorAll("img[data-src]")
-					for(var i=0;i<img.length;i++){img[i].style.opacity="0"}
 					this.lazy();
 				  })
 				  this.$children[0].$el.ownerDocument.querySelector("#nav").appendChild(this.$refs.menuWrapper1)
@@ -236,4 +235,7 @@ default {
 </script>
 
 <style>
+	.site-icon img{
+		transition: opacity .5s ease-in;
+	}
 </style>
