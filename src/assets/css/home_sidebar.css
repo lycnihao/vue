@@ -1,6 +1,6 @@
 .hot-link a {
 	color: #444;
-	padding: 0 5px;
+	font-size: 13px;
 }
 
 .hot-link a:hover {

@@ -485,13 +485,13 @@
 
 	@media screen and (min-width:1200px) {
 		.header{
-			padding: 0 10%;
+			padding: 0 14%;
 		}
-		.nav-item a {
+		.header .nav-item a {
 			font-size: 14px;
 		    padding: 0 5px;
 		}
-		.nav-item .el-avatar{
+		.header .nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -502,11 +502,11 @@
 		.header{
 			padding: 0 10px;
 		}
-		.nav-item a {
+		.header .nav-item a {
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.nav-item .el-avatar{
+		.header .nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -520,11 +520,11 @@
 		.header{
 			padding: 0 10px;
 		}
-		.nav-item a {
+		.header .nav-item a {
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.nav-item .el-avatar{
+		.header .nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -538,11 +538,11 @@
 		.header{
 			padding: 0 10px;
 		}
-		.nav-item a {
+		.header .nav-item a {
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.nav-item .el-avatar{
+		.header .nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -561,11 +561,11 @@
 		.header{
 			padding: 0 10px;
 		}
-		.nav-item a {
+		.header .nav-item a {
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.nav-item .el-avatar{
+		.header .nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;

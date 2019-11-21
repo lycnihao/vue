@@ -76,7 +76,7 @@ default {
   }
 
   100% {
-    transform: translateX(-36px);
+    transform: translateX(-65px);
   }
 }
 	

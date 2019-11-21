@@ -9,9 +9,9 @@
 			 <div class="main" style="margin-top: 20px;">
 				<v-user ref="userSite"></v-user>
 
-				<el-row :gutter="10">
+				<el-row :gutter="20" style="margin-top: 10px;">
 				<!-- 主体显示块 -->
-				<el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" class="container">
+				<el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="container">
 					<!-- 功能导航板块 -->
 					 <div id="nav" class="box">
 						 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;margin-bottom: -5px;">
@@ -42,7 +42,7 @@
 					</div> -->
 				</el-col>
 				<!-- 侧边栏 -->
-				<el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" class="sidebar">
+				<el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="sidebar">
 					<!-- <div class="box">
 					  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 						<el-tab-pane label="音乐" name="first">
@@ -198,5 +198,9 @@ default {
 
 #nav .nav-item a{
 	font-size: 15px;
+}
+
+#nav .nav-item{
+	    margin: 0 8px;
 }
 </style>

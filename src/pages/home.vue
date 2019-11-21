@@ -12,7 +12,7 @@
 		  <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
 		  <el-row :gutter="10">
 			<!-- 主体显示块 -->
-			<el-col :md="18" :lg="18" :xl="18" class="block">
+			<el-col :md="17" :lg="17" :xl="17" class="block">
 			  <transition name="el-zoom-in-top" >
 				 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
 				 <li class="nav-item-radius" v-for="(category, index) in categorys">
@@ -60,7 +60,7 @@
 									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									   <div class="site-icon">
 										<img :data-src="site.icon" :alt="site.title" style="opacity:0"></img>
-										<i class="site-icon-shadow" :style="'background: url('+site.icon+') no-repeat 50%/cover;'"></i>
+										<i class="site-icon-shadow"></i>
 										</div>
 									   <div class="site-info">
 									   <h3>{{ site.title }}</h3>
@@ -154,7 +154,8 @@ default {
 						img.src=item.getAttribute("data-src")
 						item.src=img.src
 						item.style.opacity = 1
-						item.removeAttribute('data-src')
+						/* item.nextElementSibling.style.backgroundImage = 'url('+img.src+') no-repeat 50%/cover;' */
+						/* item.removeAttribute('data-src') */
 					})()}
 				})
 			},

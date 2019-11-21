@@ -355,7 +355,6 @@ section {
        display: block;
    }
 
-
 .site-tabs{
 	width: 100%;
 }
@@ -422,7 +421,9 @@ section {
 }
 
 .site-list .site-info h3 {
-	color: #444;
+	font-weight: 700;
+	color: #555;
+	font-size: 14px;
 }
 
 .site-list .site-info p {
@@ -616,7 +617,7 @@ section {
 	}
 	
 	.main, .links .box{
-		margin: 0 10%;
+		margin: 0 14%;
 	}
 
 	#touch .site-card {
@@ -643,10 +644,6 @@ section {
   	width: 36px;
   	height: 36px;
   }
-
-	.site-list .site-info h3 {
-		font-size: 15px;
-	}
 
 	.image-placeholder .block {
 		width: 190px;
@@ -705,10 +702,6 @@ section {
   	width: 25px;
   	height: 25px;
   }
-
-	.site-list .site-info h3 {
-		font-size: 12px;
-	}
 
 	.site-list .site-info p {
 		display: none;
@@ -771,10 +764,6 @@ section {
   	width: 25px;
   	height: 25px;
   }
-
-	.site-list .site-info h3 {
-		font-size: 12px;
-	}
 
 	.site-list .site-info p {
 		display: none;
@@ -842,10 +831,6 @@ section {
   	width: 25px;
   	height: 25px;
   }
-
-	.site-list .site-info h3 {
-		font-size: 12px;
-	}
 
 	.site-list .site-info p {
 		display: none;
@@ -986,7 +971,7 @@ section {
 
 
 	.site-list .site-info h3 {
-		font-size: 11px;
+		font-size: 12px;
 	}
 
 	.site-list .site-info p {
