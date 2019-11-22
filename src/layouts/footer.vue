@@ -1,6 +1,6 @@
 <template>
 	<footer>
-		<p>Copyright ©2019 红衣导航 All rights reserved <a href="#">备案号</a> <a href="#">网站地图</a></p>
+		<p>Copyright ©2019 红衣导航 All rights reserved <a href="#">湘ICP备19024303号</a> <a href="#">网站地图</a></p>
 	</footer>
 
 </template>
