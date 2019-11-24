@@ -58,11 +58,11 @@
 						<el-tab-pane label="预留" name="third">预留</el-tab-pane>
 					  </el-tabs>
 					</div> -->
-					<div class="box">
+					<!-- <div class="box">
 						<div class="box-body">
 							<weather></weather>
 						</div>
-					</div>
+					</div> -->
 					<div class="box calendar">
 						<div class="box-body">
 							<calendar></calendar>
