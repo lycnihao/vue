@@ -180,7 +180,7 @@
 				isLogin:false,
 				user:null,
 				token:'',
-				background_img:['https://img.bidianer.com/skin/002.jpg','https://img.bidianer.com/skin/002.jpg'],
+				background_img:['http://img.168dh.cn/skin/001.jpg','http://img.168dh.cn/skin/002.jpg','http://img.168dh.cn/skin/003.jpg'],
 				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
