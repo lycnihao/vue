@@ -1,13 +1,13 @@
 <template>
 	<main-layout>
-		<div class="section">
+		<div class="h-section">
 		  <ul class="aside">
 			  <li><a href="javascript:void(0)" class="active" @click="tabs('tab1',$event),baiduClick({index:0})">百度风云榜</a></li>
 			  <li><a href="javascript:void(0)"  @click="tabs('tab2',$event),weiboClick({index:0})">微博热搜榜</a></li>
 			  <li><a href="javascript:void(0)"  @click="tabs('tab3',$event),zhihuClick({index:0})">知乎热搜榜</a></li>
 			  <li><a href="javascript:void(0)"  @click="tabs('tab4',$event),doubanClick({index:0})">豆瓣排行榜</a></li>
 		  </ul>
-		  <div class="content">
+		  <div class="content-list">
 			  <div style="width: 100%;">
 				  <div class="tabpanel show" name='tab1'>
 				  		<el-tabs v-model="info.baidu.active" type="card" @tab-click="baiduClick">
@@ -360,7 +360,7 @@ default {
 			tabs:function(name,event){
 				document.querySelector(".aside .active").className = "";
 				event.target.className = "active";
-				document.querySelector('.content .show').className = "tabpanel"; //隐藏旧tab
+				document.querySelector('.content-list .show').className = "tabpanel"; //隐藏旧tab
 				document.querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab
 			},
 			baiduClick:function(tab,event){
@@ -483,7 +483,7 @@ default {
 </script>
 
 <style>
-	.section{
+	.h-section{
 		margin: 5px 0!important; 
 		display: flex;
 	}
@@ -494,7 +494,7 @@ default {
 		width: 20%;
 	}
 	
-	.content{
+	.content-list{
 		width: 75%;
 		display: flex;
 		flex: 1;
@@ -563,7 +563,7 @@ default {
 		overflow-y:auto;
 	}
 	
-	.content li{
+	.content-list li{
 		height: 50px;
 		line-height: 50px;
 		color: #909399;
@@ -571,20 +571,20 @@ default {
 		border-bottom: 1px #E8E8E8 dotted;
 	}
 	
-	.content .article li{
+	.content-list .article li{
 		height: auto;
 		line-height: inherit;
 		padding: 15px 10px;
 	}
 	
-	.content .article .article-img{
+	.content-list .article .article-img{
 		display: block;
 		height: 105px;
 		margin-left: 16px;
 		position: relative;
 	}
 	
-	.content .article .article-img img{
+	.content-list .article .article-img img{
 		border-radius: 4px;
 		height: 105px;
 		width: 190px;
@@ -592,14 +592,14 @@ default {
 		object-fit: cover;
 	}
 	
-	.content .article .article-image{
+	.content-list .article .article-image{
 		display: block;
 		height: 140px;
 		margin: 0 16px;
 		position: relative;
 	}
 	
-	.content .article .article-image img{
+	.content-list .article .article-image img{
 		border-radius: 4px;
 		height: 120px;
 		width: 98px;
@@ -607,23 +607,23 @@ default {
 		object-fit: cover;
 	}
 	
-	.content .article .article-content{
+	.content-list .article .article-content{
 		flex: 1 1;
 		overflow: hidden;
 	}
 	
-	.content .article .article-index{
+	.content-list .article .article-index{
 		width: 35px;
 	}
 	
-	.content .article .number{
+	.content-list .article .number{
 		font-size: 18px;
 		font-weight: 600;
 		line-height: 1.6;
 		color: #909399;
 	}
 	
-	.content .article .article-excerpt,.content .article .article-description{
+	.content-list .article .article-excerpt,.content-list .article .article-description{
 		color: #444;
 		line-height: 25px;
 		margin-top: 2px;
@@ -632,7 +632,7 @@ default {
 		white-space: nowrap;
 	}
 	
-	.content .article .article-description{
+	.content-list .article .article-description{
 		color: #666666;
 		height: 50px;
 		white-space: initial;
@@ -642,15 +642,15 @@ default {
 		color: #ff9607;
 	}
 	
-	.content .item{
+	.content-list .item{
 		font-size: 16px;
 		padding-left: 22px;
 		display: flex;
 	}
-	.content .item .title{
+	.content-list .item .title{
 		width: 78%;
 	}
-	.content .item .number{
+	.content-list .item .number{
 		padding: 2px 6px;
 	}
 	
@@ -680,7 +680,7 @@ default {
 		padding: 2px;
 	}
 	
-	.content li:nth-child(1) .tag{
+	.content-list li:nth-child(1) .tag{
 		background-color: #FF5722;
 	}
 	

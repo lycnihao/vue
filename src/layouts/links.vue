@@ -3,7 +3,8 @@
 		<div class="main">
 			<ul class="nav menu-inline">
 				<li class="nav-item"><span>友情链接:</span></li>
-				<li class="nav-item"><a href="#" target="_blank">红衣导航</a></li>
+				<li class="nav-item"><a href="#" target="_blank">创客导航</a></li>
+				<li class="nav-item"><a href="https://www.79xj.cn/" target="_blank">小九博客</a></li>
 			</ul>
 		</div>
 	</div>

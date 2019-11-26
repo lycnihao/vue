@@ -12,14 +12,14 @@
 						<em class="blue">8</em>
 					</span>
 					<span class="str">
-						<em class="red">红</em>
-						<em class="blue">衣</em>
+						<em class="red">创</em>
+						<em class="blue">客</em>
 					</span>
 				</h3>
 				<p style="margin: 32px 0 50px 0;">分享有价值的优质书签和工具，欢迎大家使用！</p>
 				<div class="block">
 					<p class="p">
-						168红衣导航 <a href="/">www.168dh.cn</a> 上线于2019年秋<!-- 2019年09月28日 -->，为大家提供发现、收藏、整理网站的平台，希望大家能够喜欢。
+						168创客导航 <a href="/">www.168dh.cn</a> 上线于2019年秋<!-- 2019年09月28日 -->，为大家提供发现、收藏、整理网站的平台，希望大家能够喜欢。
 					</p>
 					<p style="margin-top: 32px;">
 						<h3><p style="font-weight:600">与我联系</p></h3>
