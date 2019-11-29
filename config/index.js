@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
 		'/hom1': {
-			/* target:'http://127.0.0.1:3302/', */
-			target:'http://106.54.255.9:3302/',
+			target:'http://127.0.0.1:3302/',
+			/* target:'http://106.54.255.9:3302/', */
 			changeOrigin:true,
 			pathRewrite:{
 			  '^/hom1': ''
@@ -61,6 +61,25 @@ module.exports = {
   },
 
   build: {
+	  
+	proxyTable: {
+		'/hom1': {
+			target:'http://106.54.255.9:3302/',
+			changeOrigin:true,
+			pathRewrite:{
+			  '^/hom1': ''
+			}
+		},
+		'/suggestion': {
+			target:'https://suggestion.baidu.com',
+			// secure: false, // 如果是https接口，需要配置这个参数
+			changeOrigin:true,
+			pathRewrite:{
+			  '^/suggestion': ''
+			},
+		}
+	},  
+	  
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 

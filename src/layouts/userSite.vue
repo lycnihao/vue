@@ -449,4 +449,227 @@ default {
 </script>
 
 <style>
+.user.edit {
+	border: 1px #008eff solid;
+}
+
+.ghost>.site-item {
+	opacity: 0.5;
+	background: #c8ebfb;
+	border: 3px #F35C01 dotted !important;
+}
+
+.borderNone {
+	border: 0px;
+}
+
+.user.edit .list-group>div .site-item {
+	cursor: move;
+	margin: 5px;
+	border: 3px #f1f1f1 dotted;
+	position: relative;
+}
+
+.user.edit .site-item {
+	border-radius: 0;
+}
+
+.user.edit .site-item:hover {
+	box-shadow: none!important;
+	transform: none !important;
+}
+
+.user.edit .site-item .site-edit {
+	opacity: 0;
+}
+
+.user.edit .site-item:hover .site-edit {
+	opacity: 1;
+}
+
+.user.edit .site-item .site-edit {
+	cursor: pointer;
+}
+
+.user.edit .site-item .site-edit .el-icon-remove {
+	position: absolute;
+	top: -10px;
+	right: -8px;
+	color: #ff3d00;
+	font-size: 18px;
+	z-index: 50;
+}
+
+.option {
+	margin-bottom: 15px;
+}
+
+.option > div {
+	border-right: 1px solid #f5f5f5;
+}
+
+.option > div:last-child {
+	border-right: none;
+}
+
+.option .option-item {
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.option .option-item .item {
+	display: block;
+	height: 32px;
+	line-height: 32px;
+	margin-bottom: 5px;
+}
+
+.option .option-item .item i {
+	font-size: 32px;
+	vertical-align: middle;
+}
+
+.option .option-item .title {
+	color: #8492a6;
+	font-size: 14px;
+}
+
+.divider {
+	margin: 5px 0 15px 0;
+}
+
+.divider > div {
+	background: #f9f9f9;
+	border-radius: 10px;
+}
+
+.divider > div > span {
+	color: #a1a7b7;
+}
+
+.avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+}
+
+#user-block {
+	width: 100%;
+	margin: 5px 0;
+	border-radius: 2px;
+	background-color: #f9f9f9;
+}
+
+.user .list-group>div {
+	border: 2px #fff dotted;
+}
+
+.user-website {
+	padding: 2px 12px;
+	background-color: #fff;
+}
+
+.user-website .site-item {
+	display: block;
+	margin: 1px 5px;
+	padding: 5px 15px;
+	height: 32px;
+	line-height: 32px;
+	border-radius: 6px;
+	transition: box-shadow 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.user-website .site-item:hover {
+	box-shadow: 5px 8px 10px rgba(36, 37, 38, 0.13);
+	transform: translate(0%, -4px);
+}
+
+.user-website .site-item .site-icon {
+	margin-right: 5px;
+	float: left;
+	height: inherit;
+}
+
+.user-website .site-item .site-icon img {
+	width: 20px;
+	height: 20px;
+	border-radius: 20%;
+	vertical-align: middle;
+}
+
+.user-website .site-info {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.user-website .site-info h3 {
+	font-size: 14px;
+}
+
+.user .badge {
+	padding: 3px;
+	margin: 0 4px 2px 0;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.user .tabs-nav .active .badge {
+	display: none;
+}
+
+.user .user-button {
+	width: auto;
+	text-align: right;
+}
+
+.user .user-button ul {
+	display: flex;
+}
+
+.user .user-button ul li {
+	margin: 0 3px;
+}
+
+#user-block .null {
+	text-align: center;
+	background-color: #fff;
+}
+
+@media only screen and (max-width: 479px) {
+	.user-website {
+		padding: 0;
+	}
+
+	.user-website>li {
+		display: inline-flex;
+		margin: 2px;
+		width: 47%;
+	}
+
+	.user-website>li>a {
+		height: 40px;
+		padding: 5px 15px;
+	}
+
+	.user-website>li>a .site-icon {
+		margin-right: 2px;
+		position: relative;
+	}
+
+	.user-website>li>a .site-info h3 {
+		font-size: 14px;
+	}
+
+	.user-website>li>a .site-info p {
+		font-size: 11px;
+	}
+
+	.user-website>li>a .el-image {
+		width: 30px;
+		height: 30px;
+	}
+}
 </style>

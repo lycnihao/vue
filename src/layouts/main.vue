@@ -6,10 +6,10 @@
 			<!-- 搜索功能模块 -->
 			<v-search ref="search"></v-search>
 			 <!-- 主体板块 -->
-			 <div class="main" style="margin-top: 20px;">
+			 <div class="main scroll-in">
 				<v-user ref="userSite"></v-user>
 
-				<el-row :gutter="20" style="margin-top: 10px;">
+				<el-row :gutter="15">
 				<!-- 主体显示块 -->
 				<el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="container">
 					<!-- 功能导航板块 -->
@@ -188,6 +188,39 @@ default {
       },
 		created() {
 			this.getData();
+			
+			function addEvent(obj,xEvent,fn) {
+				if(obj.attachEvent){
+				  obj.attachEvent('on'+xEvent,fn);
+				}else{
+				  obj.addEventListener(xEvent,fn,false);
+				}
+			}
+			
+			 function onMouseWheel(ev) {/*当鼠标滚轮事件发生时，执行一些操作*/
+				var ev = ev || window.event;
+				var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
+					down = ev.wheelDelta?ev.wheelDelta<0:ev.detail>0;
+				if(down){
+					document.querySelector('.scroll-in').style.display= "block"
+					document.querySelector('.links').style.display= "block"
+					document.querySelector('.scroll-in').style.top= "0"
+					document.querySelector('#search').style.padding= "68px 0 128px 0"
+				}else{
+					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+					if(scrollTop == 0){
+						document.querySelector('.scroll-in').style.display= "none"
+						document.querySelector('.links').style.display= "none"
+						document.querySelector('#search').style.padding= "168px 0 128px 0"
+					}
+				}
+				//if(ev.preventDefault){/*FF 和 Chrome*/
+					//ev.preventDefault();// 阻止默认事件
+				//}
+				return false;
+			}
+			 addEvent(document.documentElement,'mousewheel',onMouseWheel);
+			 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 		}
     }
 </script>
@@ -202,5 +235,9 @@ default {
 
 #nav .nav-item{
 	    margin: 0 8px;
+}
+
+.scroll-in{
+	position: relative;top:400px; transition:top 1s;
 }
 </style>
