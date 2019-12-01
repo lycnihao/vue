@@ -132,7 +132,7 @@ default {
 		  },
 		  value:'',
 		  tabName:'searchEngine',
-		  theme:{'name':'background','value':'https://img.bidianer.com/skin/007.jpg'}
+		  theme:{'name':'background','value':'http://img.168dh.cn/skin/002.jpg'}
 		}
 	},
 	methods:{

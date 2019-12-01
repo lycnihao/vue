@@ -612,6 +612,10 @@ default {
 		overflow: hidden;
 	}
 	
+	.content-list .article .h3{
+		color: #1A1A1A;
+	}
+	
 	.content-list .article .article-index{
 		width: 35px;
 	}

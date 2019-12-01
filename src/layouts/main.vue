@@ -95,6 +95,14 @@
 							</el-carousel>
 						</div>
 					</div>
+					<div class="box" id="ads">
+						<ins class="adsbygoogle"
+						 style="display:block"
+						 data-ad-client="ca-pub-3017438581004529"
+						 data-ad-slot="2727905770"
+						 data-ad-format="auto"
+						 data-full-width-responsive="true"></ins>
+					</div>
 					<!-- <div class="box link">
 						<div class="box-header">
 							<h3>今日推荐 * 精选</h3>
@@ -201,17 +209,23 @@ default {
 				var ev = ev || window.event;
 				var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
 					down = ev.wheelDelta?ev.wheelDelta<0:ev.detail>0;
+					
+				var simple = localStorage.getItem("simple");
 				if(down){
 					document.querySelector('.scroll-in').style.display= "block"
 					document.querySelector('.links').style.display= "block"
 					document.querySelector('.scroll-in').style.top= "0"
 					document.querySelector('#search').style.padding= "68px 0 128px 0"
+					if(simple != false || simple == null )
+					localStorage.setItem("simple", false);
 				}else{
 					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 					if(scrollTop == 0){
 						document.querySelector('.scroll-in').style.display= "none"
 						document.querySelector('.links').style.display= "none"
-						document.querySelector('#search').style.padding= "168px 0 128px 0"
+						document.querySelector('#search').style.padding= "250px 0 128px 0"
+						if(simple != true || simple == null)
+						localStorage.setItem("simple", true);
 					}
 				}
 				//if(ev.preventDefault){/*FF 和 Chrome*/
@@ -221,6 +235,24 @@ default {
 			}
 			 addEvent(document.documentElement,'mousewheel',onMouseWheel);
 			 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
+			 
+			 
+			 this.$nextTick(() => {
+				 if (this.$refs.header.isLogin) {
+					 console.log("登录")
+					 document.querySelector("#ads").style.display = "none"
+				 }
+				 
+				 var simple = localStorage.getItem("simple");
+				 if(simple != 'false'){
+					 document.querySelector(".scroll-in").style.top = "400px";
+					 document.querySelector(".scroll-in").style.display = "none";
+					 document.querySelector('.links').style.display= "none"
+					 document.querySelector('#search').style.padding= "250px 0 128px 0"
+				 } else{
+					 document.querySelector(".scroll-in").style.top = "0";
+				 }
+			 })
 		}
     }
 </script>
@@ -238,6 +270,6 @@ default {
 }
 
 .scroll-in{
-	position: relative;top:400px; transition:top 1s;
+	position: relative; transition:top 1s;
 }
 </style>
