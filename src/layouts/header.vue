@@ -288,7 +288,7 @@
 				  .then((response)=>{
 				  	 if(response.data.code == 1){
 				  		 this.user = response.data.result;
-				  		 this.isLogin = true;
+				  		 this.$parent.isLogin = this.isLogin = true;
 				  	 }
 				  });
 			  }

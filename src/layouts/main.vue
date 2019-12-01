@@ -95,7 +95,7 @@
 							</el-carousel>
 						</div>
 					</div>
-					<div class="box" id="ads">
+					<div class="box" id="ads" v-show="!isLogin">
 						<ins class="adsbygoogle"
 						 style="display:block"
 						 data-ad-client="ca-pub-3017438581004529"
@@ -153,7 +153,8 @@ default {
 			  searchIcon: require('../assets/img/baidu.svg'),
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               hotList: null,
-              activeName: 'first'
+              activeName: 'first',
+			  isLogin:false
             };
         },
         methods: {
@@ -237,12 +238,7 @@ default {
 			 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 			 
 			 
-			 this.$nextTick(() => {
-				 if (this.$refs.header.isLogin) {
-					 console.log("登录")
-					 document.querySelector("#ads").style.display = "none"
-				 }
-				 
+			 this.$nextTick(() => {				 
 				 var simple = localStorage.getItem("simple");
 				 if(simple != 'false'){
 					 document.querySelector(".scroll-in").style.top = "400px";

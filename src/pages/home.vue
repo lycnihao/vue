@@ -59,7 +59,7 @@
 								  <li v-for="site in sites[subCategory.categoryId]">
 									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									   <div class="site-icon">
-										<img :data-src="site.icon" :alt="site.title" style="opacity:0"></img>
+										<img :data-src="site.icon" :alt="site.title"></img>
 										<i class="site-icon-shadow"></i>
 										</div>
 									   <div class="site-info">
@@ -170,7 +170,6 @@ default {
 					var rect
 					if(item.getAttribute("data-src")==="")
 					return
-			
 					rect=item.getBoundingClientRect()
 					if(rect.bottom>=0&&rect.top<viewHeight){(function(){
 						var img=new Image()
@@ -374,6 +373,7 @@ default {
 }
 
 .site-icon img {
+	opacity: 0;
 	transition: opacity .5s ease-in;
 }
 

@@ -15,7 +15,7 @@
 					</el-timeline-item>
 					<el-timeline-item timestamp="2019/9/28" placement="top">
 					  <el-card>
-						<h4 class="h4">168创客导航正式上线,并录入了大量网址,满足用户的基本使用。</h4>
+						<h4 class="h4">168酷达导航正式上线,并录入了大量网址,满足用户的基本使用。</h4>
 						<p>会飞的虾 提交于 2019/9/28 20:46</p>
 					  </el-card>
 					</el-timeline-item>

@@ -18,7 +18,7 @@
 				  <el-col :xs="8" :sm="6" :md="4" :lg="14" :xl="14">
 					<div class="box">
 					  <div class="box-header">
-						<h3> 168创客导航</h3>
+						<h3> 168酷达导航</h3>
 						<p>
 						  <span><i class="el-icon-time"></i>&nbsp; 2018-12-06 15:20:42</span>
 						  <span><i class="el-icon-view"></i>3541次浏览</span>
@@ -26,7 +26,7 @@
 						 </p>
 					  </div>
 					  <div class="info">
-						<p><span>网站名称：</span> 168创客导航</p>
+						<p><span>网站名称：</span> 168酷达导航</p>
 						<p><span>官方网址：</span>https://www.168dh.cn/</p>
 						<p><span>所属分类：</span>搜索引擎</p>
 						<p><a href="#"><el-button size="small">立即访问<i class="el-icon-position"></i></el-button></a></p>

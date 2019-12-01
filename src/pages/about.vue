@@ -12,19 +12,19 @@
 						<em class="blue">8</em>
 					</span>
 					<span class="str">
-						<em class="red">创</em>
-						<em class="blue">客</em>
+						<em class="red">库</em>
+						<em class="blue">达</em>
 					</span>
 				</h3>
 				<p style="margin: 32px 0 50px 0;">分享有价值的优质书签和工具，欢迎大家使用！</p>
 				<div class="block">
 					<p class="p">
-						168创客导航 <a href="/">www.168dh.cn</a> 上线于2019年秋<!-- 2019年09月28日 -->，为大家提供发现、收藏、整理网站的平台，希望大家能够喜欢。
+						168酷达导航 <a href="/">www.168dh.cn</a> 上线于2019年秋<!-- 2019年09月28日 -->，为大家提供发现、收藏、整理网站的平台，希望大家能够喜欢。
 					</p>
 					<p style="margin-top: 32px;">
 						<h3><p style="font-weight:600">与我联系</p></h3>
 						<p>欢迎用以下方式和我联系：</p>
-						<p>邮箱：38707145@qq.com      QQ：929789911</p>
+						<p>邮箱：38707145@qq.com      QQ：38707145</p>
 					</p>
 					<p style="margin-top: 50px;">
 						<h3><p style="font-weight:600">版权说明</p></h3>
