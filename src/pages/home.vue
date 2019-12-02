@@ -162,24 +162,27 @@ default {
 			step();
 			}, */
 			lazy:function(){
-				var viewHeight=document.documentElement.clientHeight
-				var t=document.documentElement.scrollTop||document.body.scrollTop;
-				var limg=document.querySelectorAll("img[data-src]")
-					Array.prototype.forEach.call(limg,function(item,index){
-			
-					var rect
-					if(item.getAttribute("data-src")==="")
-					return
-					rect=item.getBoundingClientRect()
-					if(rect.bottom>=0&&rect.top<viewHeight){(function(){
-						var img=new Image()
-						img.src=item.getAttribute("data-src")
-						item.src=img.src
-						item.style.opacity = 1
-						/* item.nextElementSibling.style.backgroundImage = 'url('+img.src+') no-repeat 50%/cover;' */
-						/* item.removeAttribute('data-src') */
-					})()}
+				this.$nextTick(() => {
+					var viewHeight=document.documentElement.clientHeight
+					var t=document.documentElement.scrollTop||document.body.scrollTop;
+					var limg=document.querySelectorAll("img[data-src]")
+						Array.prototype.forEach.call(limg,function(item,index){
+								
+						var rect
+						if(item.getAttribute("data-src")==="")
+						return
+						rect=item.getBoundingClientRect()
+						if(rect.bottom>=0&&rect.top<viewHeight){(function(){
+							var img=new Image()
+							img.src=item.getAttribute("data-src")
+							item.src=img.src
+							item.style.opacity = 1
+							/* item.nextElementSibling.style.backgroundImage = 'url('+img.src+') no-repeat 50%/cover;' */
+							/* item.removeAttribute('data-src') */
+						})()}
+					})
 				})
+				
 			},
 			handleScroll: function(){
 			
@@ -243,8 +246,8 @@ default {
 				  this.$nextTick(() => {
 					this._initScroll(); // 初始化scroll
 					this._calculateHeight(); // 初始化列表高度列表
-					this.lazy();
 				  })
+				  this.lazy();
 				  this.$children[0].$el.ownerDocument.querySelector("#nav").appendChild(this.$refs.menuWrapper1)
 				 loading.close();
 			}).catch((response)=>{

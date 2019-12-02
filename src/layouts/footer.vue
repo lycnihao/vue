@@ -1,6 +1,6 @@
 <template>
 	<footer>
-		<p>Copyright ©2019 酷达导航 All rights reserved <a href="#">湘ICP备19024303号</a> <a href="#">网站地图</a></p>
+		<p>Copyright ©2019 酷达导航 All rights reserved <a href="#">湘ICP备19024303号</a></p>
 	</footer>
 
 </template>
@@ -20,10 +20,13 @@
 </script>
 <style>
 	footer{
-		border-top: 1px solid rgba(188, 198, 208, 0.4);
+		position: absolute;
+		width: 100%;
 		padding: 10px 0px !important;
-		background-color: #fff;
 		text-align: center;
+	}
+	footer p {
+		color: #505869;
 	}
 	footer p,footer a{
 		font-size: 12px;

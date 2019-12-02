@@ -16,9 +16,7 @@
 <style>
 	.links{
 		width: 100%;
-		margin-top: 30px;
 		background-color: #fff;
-		display: inline-flex;
 	}
 	.links span{
 		color: #444;
