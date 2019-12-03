@@ -59,7 +59,7 @@
 				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
 			</el-dialog>
 			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" :lock-scroll="false">
-				<el-form :model="regForm" ref="regForm" :rules="rules" status-icon>
+				<!-- <el-form :model="regForm" ref="regForm" :rules="rules" status-icon>
 				  <el-form-item prop="username">
 					<el-input v-model="regForm.username" placeholder="请输入您的用户名"></el-input>
 				  </el-form-item>
@@ -77,7 +77,14 @@
 				  </el-form-item>
 				</el-form>
 
-				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
+				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button> -->
+				
+				<div style="text-align: center;">
+					<a href="javascript:void(0);">
+						<svg t="1575352316577" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="560" width="68" height="68"><path d="M873.472 772.48c-12.608 1.6-39.36-24-59.648-74.112-13.888 53.76-40.896 99.136-76.992 134.528 43.776 11.648 73.472 34.112 73.472 60.032 0 37.888-63.36 68.48-141.504 68.48-58.624 0-109.12-17.344-130.432-42.112a312.377 312.377 0 0 1-26.88 1.152c-10.496 0-20.864-0.64-31.104-1.472-21.12 24.896-71.744 42.496-130.816 42.496-78.08 0-141.376-30.656-141.376-68.48 0-26.88 32.064-50.112 78.784-61.376-36.032-35.52-63.04-80.64-77.056-133.504-20.224 50.496-47.04 76.48-59.584 74.88-16.256-2.112-32.512-52.224-23.552-128 5.952-50.752 34.112-112.832 62.4-133.376-0.128-5.76 0-11.712 0.704-17.792 5.312-47.232 12.992-88.96 32.704-93.12-3.392-17.216-5.248-34.88-5.248-52.864 0-157.504 136.768-285.184 294.208-285.184 157.44 0 294.208 127.68 294.208 285.184a265.33 265.33 0 0 1-5.376 53.184c0.128 0 0.256-0.064 0.384-0.064 16.256 1.088 30.4 43.136 35.904 93.184 0.768 6.592 0.896 12.928 0.64 19.136 27.52 22.592 54.144 82.24 59.904 131.2 8.896 75.776-7.488 126.016-23.744 128z" p-id="561"></path></svg>
+					</a>
+				</div>
+				
 				<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
 			</el-dialog>
 			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">

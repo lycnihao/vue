@@ -1,6 +1,6 @@
 <template>
 	<footer>
-		<p>Copyright ©2019 酷达导航 All rights reserved | <a href="http://www.beian.miit.gov.cn">湘ICP备19024303号</a>  <a href="http://www.168dh.cn/docs/">更新日志</a></p>
+		<p>Copyright ©2019 酷达导航 All rights reserved | <a href="http://www.beian.miit.gov.cn">湘ICP备19024303号</a>  <a href="http://www.168dh.cn/docs/milestone.html">更新日志</a></p>
 	</footer>
 
 </template>
