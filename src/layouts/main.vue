@@ -154,7 +154,8 @@ default {
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               hotList: null,
               activeName: 'first',
-			  isLogin:false
+			  isLogin:false,
+			  w:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth
             };
         },
         methods: {
@@ -242,7 +243,7 @@ default {
 			 
 			 this.$nextTick(() => {				 
 				 var simple = localStorage.getItem("simple");
-				 if(simple != 'false'){
+				 if(simple != 'false' && this.w > 500){
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
 					 document.querySelector('.links').style.display= "none"
