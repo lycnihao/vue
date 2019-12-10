@@ -22,4 +22,7 @@
 		color: #444;
 		font-size: 14px;
 	}
+	.links .nav-item a{
+		color: #56585d;
+	}
 </style>

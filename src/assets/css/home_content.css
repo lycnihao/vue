@@ -75,3 +75,9 @@
 	-webkit-transform: rotate(180deg);
 	transform: rotate(180deg)
 }
+
+.list-item-hover{
+	background: #F1F1F1!important;
+    color: #222;
+    text-shadow: 0 1px 0 #fff;
+}

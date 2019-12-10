@@ -77,6 +77,16 @@ default {
     transform: translateX(-65px);
   }
 }
+
+@keyframes ball1 {
+  0% {
+    transform: translateX(100px);
+  }
+
+  100% {
+    transform: translateX(-28px);
+  }
+}
 	
 	
 .sidebar_block{
@@ -142,6 +152,12 @@ default {
 	position: inherit;
 	background-color:transparent;
 	box-shadow:0 0;
+}
+
+@media only screen and (max-width: 479px) {
+	.sidebar_block{
+		display: none;
+	}
 }
 
 </style>

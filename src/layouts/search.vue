@@ -1,6 +1,6 @@
 <template>
 	<div id="search">
-		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'"></div>
+		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;filter: blur('+theme.cssBlur+'px);filter:saturate('+theme.cssSaturate+'%)'"></div>
 		<div class="theme" v-else :style="'background:'+theme.value"></div>
 		
 		<!-- <svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
@@ -16,80 +16,18 @@
 	
 		</svg> -->
 		<h3>以最快的方式获取想要的资源</h3>
-		<div class="search-tools" style="height: 40px; line-height: 40px;">
-			<ul class="nav menu-inline" style="line-height: 30px;">
-				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('searchEngine',$event)" class="active">搜索引擎</a></li>
-				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('picture',$event)" class="">图片</a></li>
-				<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('icon',$event)" class="">图标</a></li>
-			</ul>
-		</div>
 		<div class="search-center">
-			
-			<div class="tabpanel show" name="searchEngine">
-				<div class="dropdown">
-					<el-dropdown placement="bottom" @command="checkSearchIcon">
-						<el-button type="text" class="el-dropdown-link">
-							<img width="20px" height="20px" v-bind:src="searchIcon">
-							<i class="el-icon-arrow-down"></i>
-						</el-button>
-					
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item v-for="(searchEngine,index) in searchSite.searchEngines" :key="index" :command="searchEngine.title+','+searchEngine.url+','+searchEngine.icon">
-								<img width="20" alt="" :src="searchEngine.icon">
-								{{searchEngine.title}}
-							</el-dropdown-item>
-						</el-dropdown-menu>
-					
-					</el-dropdown>
+			<form>
+				<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
+				@focus="searchFocus()" @blur="searchBlur()" placeholder="输入关键字 搜你所想"/>
+				<button id="search_but" @click="search"><i class="el-icon-search"></i></button>
+				<div id="suggest">
+					<ul v-for="suggestItem of suggestItems">
+						<li v-html="suggestItem" @mousedown ="searchTo($event)"></li>
+					</ul>
 				</div>
-				 <el-popover
-					trigger="manual"
-					data-html="true"
-					placement="bottom"
-					class="search-input"
-					popper-class="suggest"
-					v-model="suggest">
-					<div class="popover-content" v-html="suggestContent"></div>
-					<input slot="reference" type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search"
-					@focus="keywords!='' ? suggest = !suggest :''" @blur="keywords!='' ? suggest = !suggest :''" placeholder="输入关键字 搜你所想"/>
-				  </el-popover>
-				<button id="search_but" @click="search" style="padding: 10px 25px;">{{searchTitle}}搜索</button>
-			</div>
-			
-			<div class="tabpanel" name="picture">
-					<div class="search-input select">
-							<div class="dropdown">
-								<el-select v-model="value" placeholder="请选择" @change="checkSearch">
-									<el-option
-									  v-for="picture in searchSite.pictures"
-									  :key="picture.title"
-									  :label="picture.title"
-									  :value="picture.url+','+picture.describe">
-									</el-option>
-								</el-select>
-							</div>
-							<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search" :placeholder="searchDescribe"/>
-					</div>
-				<button id="search_but" @click="search" style="padding: 12px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
-			</div>
-			<div class="tabpanel" name="icon">
-				<div class="search-input select">
-					<div class="dropdown">
-						<el-select v-model="value" placeholder="请选择" @change="checkSearch">
-							<el-option
-							  v-for="icon in searchSite.icons"
-							  :key="icon.title"
-							  :label="icon.title"
-							  :value="icon.url+','+icon.describe">
-							</el-option>
-						</el-select>
-					</div>
-					<input type="text" class="search_text" size="30" v-model="keywords"  @keyup.enter="search" :placeholder="searchDescribe"/>
-				</div>
-				<button id="search_but" @click="search" style="padding: 12px 25px;"><i class="el-icon-search" style="font-size: 20px;"></i></button>
-			</div>
-		</div>
-	
+			</form>
+		 </div>
 	</div>
 </template>
 
@@ -103,88 +41,34 @@ default {
 	      searchIcon: require('../assets/img/baidu.svg'),
 		  searchDescribe: '输入关键字 搜你所想',
 		  keywords:"",
-		  suggest:false,
-		  suggestContent:"",
-		  searchSite:{
-			  searchEngines:[
-				  {title:'百度',url:'https://www.baidu.com/s?word=',icon:require('../assets/img/baidu.svg')},
-				  {title:'360',url:'https://www.so.com/s?q=',icon:require('../assets/img/360.svg')},
-				  {title:'Bing',url:'https://cn.bing.com/search?q=',icon:require('../assets/img/bing.svg')},
-				  {title:'搜狗',url:'https://www.sogou.com/web?query=',icon:require('../assets/img/sougou.svg')},
-				  {title:'谷歌',url:'https://www.google.com/search?q=',icon:require('../assets/img/google.svg')},
-			  ],
-			  pictures:[
-				  {title:'高图网',describe:'免费无版权高清图片下载',url:'http://www.gaoimg.com/plus/search.php?kwtype=0&q='},
-				  {title:'Pexels',describe:'免费无版权高清图片下载',url:'https://www.pexels.com/search/'},
-				  {title:'Unsplash',describe:'免费无版权高清图片下载',url:'https://unsplash.com/s/photos/'},
-				  {title:'Wallhaven',describe:'免费无版权高清图片下载',url:'https://wallhaven.cc/search?q='},
-			  ],
-			  material:[
-				  {title:'包图网',describe:'专注原创商用设计图片下载',url:'https://ibaotu.com/tupian/niao.html?spm=stdhrs&utm_source=BD&utm_medium=168导航&utm_campaign='},
-			  ],
-			  icons:[
-				  {title:'iconfont',describe:'国内功能很强大且图标内容很丰富的矢量图标库',url:'https://www.iconfont.cn/search/index?searchType=icon&q='},
-				  {title:'easyicon',describe:'超过五十万个SVG、PNG、ICO、ICNS格式图标',url:'https://www.easyicon.net/iconsearch/'},
-				  {title:'iconfinder',describe:'290万加优质图标搜索',url:'https://www.iconfinder.com/search/?q='},
-				  {title:'flaticon',describe:'128万加免费矢量图标下载',url:'https://www.flaticon.com/search?word='},
-				  {title:'iconarchive',describe:'3.5万个免费矢量图标下载',url:'http://www.iconarchive.com/search?q='},
-			  ]
-		  },
+		  suggestItems:[],
 		  value:'',
 		  tabName:'searchEngine',
-		  theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg'}
+		  theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0','cssSaturate':'100'},
 		}
 	},
 	methods:{
-		checkSearchIcon: function(command) {
-		    var str = command.split(',');
-		    this.searchTitle = str[0];
-		    this.searchUrl  = this.$parent.searchUrl = str[1];
-		    this.searchIcon = this.$parent.searchIcon = str[2]+','+str[3];
+		searchBlur:function(){
+			document.querySelector("#suggest").style.display = "none";
 		},
-		checkSearch: function() {
-			let obj = this.value.split(',');
-			this.searchUrl = obj[0];
-			this.searchDescribe = obj[1];
+		searchFocus:function(){
+			document.querySelector("#suggest").style.display = "block";
 		},
 		search: function() {
 		    var url = this.searchUrl + this.keywords;
 		    window.open(url, "_blank")
 		},
-		tabs:function(name,event){
-			document.querySelector(".search-tools .active").className = "";
-			event.target.className = "active";
-			document.querySelector('.search-center .tabpanel.show').className = "tabpanel"; //隐藏旧tab
-			document.querySelector(`.search-center .tabpanel[name='${name}']`).className += " show"; //显示新的tab
-			
-			this.keywords = '';
-			this.tabName = name;
-			if(name == 'searchEngine'){
-				this.searchTitle = '百度'
-				this.searchUrl = 'https://www.baidu.com/s?word='
-			}else
-			if(name == 'picture'){
-				this.searchTitle = '高图网',
-				this.searchDescribe = '免费无版权高清图片下载'
-				this.searchUrl = 'http://www.gaoimg.com/plus/search.php?kwtype=0&q='
-				this.value = this.searchUrl +","+ this.searchDescribe
-			}else
-			if(name == 'icon'){
-				this.searchTitle = 'iconfont',
-				this.searchDescribe = '国内功能很强大且图标内容很丰富的矢量图标库'
-				this.searchUrl = 'https://www.iconfont.cn/search/index?searchType=icon&q='
-				this.value = this.searchUrl +","+ this.searchDescribe
-			}
-			
-		},
+		searchTo: function(event) {
+		    this.keywords = event.target.innerText;
+			this.search()
+		}
 	},
 	watch : {
 	   keywords:function(val){
 		   if(this.keywords.trim() == '' || this.tabName != 'searchEngine'){
-			this.suggest = false
+			this.suggestItems = [];
 		   	return
 		   }
-		   this.suggest = true
 		   this.$ajax.get(`/suggestion/su?wd=${this.keywords}&cb=window.baidu.sug`)
 		   .then((response)=>{
 		       let res_str = response.data;
@@ -193,17 +77,14 @@ default {
 		   	let strObj = eval("("+str+")");
 		   	
 			if(strObj.s.length == 0){
-				this.suggest = false
 				return
 			}
 			
-		   	let centent ='<ul>'
+			this.suggestItems = [];
 		   	for(let item of strObj.s){
-		   		console.log(item)
-		   		centent += `<li><a href="${this.searchUrl}${item}" target="_blank">${item}</a></li>`
+		   		let suggestItem = item.replace(this.keywords.trim(),"<b>"+this.keywords.trim()+"</b>");
+				this.suggestItems.push(suggestItem)
 		   	}
-		   	centent += "</ul>";
-			this.suggestContent = centent;
 		   });
 	   }
 	}
@@ -254,86 +135,19 @@ default {
 	height: 15vh;
 }
 
-#search {
-	position: relative;
-/* 	padding-top: 68px;
-	padding-bottom: 128px; */
-	padding: 200px 0 128px 0;
-	transition:padding 1s;
-	/* padding: 68px 0 128px 0; */
-}
-
 .theme {
 	position: fixed;
 	left: 0;
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-		/* background: linear-gradient(60deg, rgba(84,58,183,1) 10%, rgba(0,172,193,1) 100%); */
-		/* background-image: url(/static/img/bg.404d371.png); */
 	background-size: cover;
 }
 
-#search .search-center .tabpanel.show,#search .search-tools {
-	display: flex;
-	justify-content: center;
-}
-
-#search .search-center {
+#search {
 	position: relative;
-}
-
-#search .search-tools li {
-	margin: 0 12px;
-}
-
-#search .search-tools .nav .nav-item a {
-	display: inline-block;
-	color: #fff;
-	height: 100%;
-}
-
-#search .search-tools .nav .nav-item a.active:after {
-	width: 100%;
-	left: 0;
-}
-
-#search input,#search button {
-	margin: 0;
-	outline: 0;
-	border: none;
-}
-
-#search .search-input {
-	display: inherit;
-}
-
-.suggest {
-	z-index: 1!important;
-	padding: 0!important;
-}
-
-.suggest .popper__arrow {
-	left: 68px!important;
-}
-
-.suggest .popover-content {
-	padding: 10px 0;
-}
-
-.suggest .popover-content li {
-	padding-left: 15px;
-}
-
-.suggest .popover-content li:hover {
-	background: #f1f1f1;
-}
-
-.suggest .popover-content a {
-	height: 32px;
-	line-height: 32px;
-	color: #606266;
-	display: inherit;
+	padding: 200px 0 128px 0;
+	transition:padding .5s;
 }
 
 #search h3 {
@@ -345,195 +159,114 @@ default {
 	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif!important;
 }
 
-#search .search_text {
-	padding: 15px 15px 15px 5px;
-	width: 100%;
-	-webkit-transition: ease .3s;
-	transition: ease .3s;
-	-webkit-transform-origin: 50% 50%;
+#search .search-center {
+	text-align: center;
 }
 
-.search_text {
-	border-radius: 5px 0 0 5px;
-}
-
-.search_text:hover {
-			/* box-shadow: 0 8px 43px rgba(0,0,0,0.15); */
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-}
-
-#search_but {
-	border-radius: 0 5px 5px 0 !important;
-}
-
-#search #search_but {
-	color: #fff;
-	border-radius: 0;
-	background-color: #909399;
-	cursor: pointer;
-}
-
-.dropdown {
-	border-radius: 5px 0 0 5px;
-	background-color: #fff;
+#search form {
+	display: inline-block;
 	position: relative;
+}
+
+#search .search_text {
+	height: 45px;
+	border: none;
+	margin: auto;
+	outline: none;
+	color: #525252;
+	padding: 0 0 0 15px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: rgba(255,255,255,0.9);
+	float: left;
+}
+
+#search #search_but{
+	width: 48px;
+	height: 45px;
+	padding: 0;
+	margin: 0;
+    border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 17px;
+    position: relative;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+    background-color: rgba(255,255,255,0.9);
+}
+
+#suggest {
 	z-index: 1;
-	right: -4px;
-	padding: 0 8px 0 18px;
+	width: 100%;
+	margin-top: -2px;
+	text-align: left;
+	position: absolute;
+	background-color: #fff;
+	border-radius: 0 0 4px 4px;
 }
-
-.dropdown .el-button {
-	line-height: inherit!important;
+#suggest ul{
+	box-shadow: 0 1px 2px 0 #cdcdcd;
+    border-radius: 0 0 2px 2px;
 }
-
-.dropdown span {
-	color: #606266;
-	font-size: 15px;
+#suggest li{
+	margin: 0;
+	font-weight: 700!important;
+    color: #444;
+	height: inherit;
+	cursor: default;
+	background: #fff;
+	line-height: 18px;
+    padding: 4px 10px;
+    word-wrap: break-word;
+	font-family: 'Helvetica Neue',Helvetica,Arial;
+	font-weight: 400;
+	font-stretch: normal;
+	font-size: 16px;
 }
-
-.dropdown span i {
-	color: #909399;
+#suggest li b{
+	font-weight: 400!important;
+    color: #333;
 }
-
-.el-dropdown-menu__item:hover {
-	background-color: #F5F7FA!important;
-	color: #606266!important;
+#suggest li:hover{
+	background: #F1F1F1!important;
+    color: #222;
+    text-shadow: 0 1px 0 #fff;
 }
-
-.el-select-dropdown__item.selected {
-	color: #000!important;
-}
-
 @media screen and (min-width:1200px) {
+	#search .search_text {
+		width: 492px;
+		height: 45px;
+	}
 	
-	#search .search-input {
-		width: 72%;
-	}
-
-	#search .search-input.select {
-		width: 88%;
-	}
-
-	#search .search-center {
-		margin: 0 25%;
-	}
-
-	.suggest {
-		width: 36%;
-	}
-
-	.select .dropdown {
-		width: 150px;
-		padding: 0px;
-	}
-
-	.dropdown .el-select {
-		top: 2px;
-	}
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
-	
-	#search .search-center {
-		margin: 0 18%;
-	}
-
-	#search .search-input {
-		width: 72%;
-	}
-
-	.suggest {
-		width: 44%;
+	#search .search_text {
+		width: 492px;
+		height: 45px;
 	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
-	
-	.suggest {
-		width: 52%;
-	}
-
-	#search .search-center {
-		margin: 0 12%;
-	}
-
-	#search #search_input {
-		width: 68%;
-	}
-
-	.select .dropdown {
-		width: 168px;
-		padding: 0px;
+	#search .search_text {
+		width: 492px;
+		height: 45px;
 	}
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-	
-	#search .search-center {
-		margin: 0 8%;
-	}
-
-	#search #search_input {
-		width: 56%;
-	}
-
-	.suggest {
-		width: 57%;
-	}
-
-	#search h3 {
-		margin-bottom: 22px;
-		font-size: 32px;
+	#search .search_text {
+		width: 392px;
+		height: 45px;
 	}
 }
 
 @media only screen and (max-width: 479px) {
+	#search .search_text{
+		width: 292px;
+		height: 45px;
+	}
 	
-	.dropdown {
-		padding: 0 8px 0 10px;
-	}
-
-	.select .dropdown {
-		width: 198px;
-		padding: 0px;
-	}
-
-	#search .search-input {
-		width: 45%;
-	}
-
-	#search .search-input.select {
-		width: 72%;
-	}
-
-	.suggest {
-		width: 97%;
-	}
-
-	.header-top-nav {
-		display: none;
-	}
-
-	.bg {
-		height: 40px;
-		min-height: 40px;
-	}
-
-	#search {
-		padding: 130px 0 80px 0;
-	}
-
-	#search h3 {
-		margin-bottom: 22px;
-		font-size: 22px;
-	}
-
-	#search .search-tools li {
-		margin: 0 3px;
-	}
-
-	#search .search_text {
-		padding: 13px 8px 13px 4px!important;
-	}
 }
 </style>

@@ -42,54 +42,29 @@
 				</el-dropdown>
 
         </li>
-				<li class="nav-item" v-show="!isLogin" @click="loginOpen = true"><a>登录</a></li>
-				<li class="nav-item" v-show="!isLogin" @click="registerOpen = true"><a>注册</a></li>
+				<li class="nav-item" v-show="!isLogin"><a href="login">登录</a></li>
+				<li class="nav-item" v-show="!isLogin"><a href="register">注册</a></li>
 			</ul>
 
-			<el-dialog title="登录" :visible.sync="loginOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" :lock-scroll="false">
-				<el-form :model="logForm" ref="logForm" :rules="rules" status-icon>
-					<el-form-item prop="username">
-						<el-input v-model="logForm.username" placeholder="输入您的用户名或邮箱地址"></el-input>
-					</el-form-item>
-					<el-form-item prop="password">
-						<el-input v-model="logForm.password" placeholder="输入您的密码" show-password></el-input>
-					</el-form-item>
-				</el-form>
-				<el-button type="primary" style="width: 100%;" @click="login()">登录</el-button>
-				<p @click="registerOpen=true,loginOpen = false">没有账号？<a href="#">立即注册</a></p>
-			</el-dialog>
-			<el-dialog title="注册" :visible.sync="registerOpen" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" :lock-scroll="false">
-				<el-form :model="regForm" ref="regForm" :rules="rules" status-icon>
-				  <el-form-item prop="username">
-					<el-input v-model="regForm.username" placeholder="请输入您的用户名"></el-input>
-				  </el-form-item>
-				  <el-form-item prop="password">
-				  	<el-input v-model="regForm.password" placeholder="请输入您的密码" show-password></el-input>
-				  </el-form-item>
-				  <el-form-item prop="checkPass">
-				  	<el-input v-model="regForm.checkPass" placeholder="请确认您的密码" show-password></el-input>
-				  </el-form-item>
-				  <el-form-item prop="qq">
-				  	<el-input v-model.number="regForm.qq" placeholder="请输入您的QQ"></el-input>
-				  </el-form-item>
-				  <el-form-item prop="email">
-				  		<el-input v-model="regForm.email" placeholder="请输入您的邮箱地址"></el-input>
-				  </el-form-item>
-				</el-form>
-
-				<el-button type="primary" style="width: 100%;" @click="register()">注册</el-button>
-				<el-divider content-position="center">第三方注册</el-divider>
-				<div style="text-align: center;">
-					<a href="oauth/qq" class="login_icon">
-						<svg t="1575352316577" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="560"><path d="M873.472 772.48c-12.608 1.6-39.36-24-59.648-74.112-13.888 53.76-40.896 99.136-76.992 134.528 43.776 11.648 73.472 34.112 73.472 60.032 0 37.888-63.36 68.48-141.504 68.48-58.624 0-109.12-17.344-130.432-42.112a312.377 312.377 0 0 1-26.88 1.152c-10.496 0-20.864-0.64-31.104-1.472-21.12 24.896-71.744 42.496-130.816 42.496-78.08 0-141.376-30.656-141.376-68.48 0-26.88 32.064-50.112 78.784-61.376-36.032-35.52-63.04-80.64-77.056-133.504-20.224 50.496-47.04 76.48-59.584 74.88-16.256-2.112-32.512-52.224-23.552-128 5.952-50.752 34.112-112.832 62.4-133.376-0.128-5.76 0-11.712 0.704-17.792 5.312-47.232 12.992-88.96 32.704-93.12-3.392-17.216-5.248-34.88-5.248-52.864 0-157.504 136.768-285.184 294.208-285.184 157.44 0 294.208 127.68 294.208 285.184a265.33 265.33 0 0 1-5.376 53.184c0.128 0 0.256-0.064 0.384-0.064 16.256 1.088 30.4 43.136 35.904 93.184 0.768 6.592 0.896 12.928 0.64 19.136 27.52 22.592 54.144 82.24 59.904 131.2 8.896 75.776-7.488 126.016-23.744 128z" p-id="561"></path></svg>
-					</a>
-				</div>
-				
-				<p style="width: 100%;text-align: right;" @click="registerOpen=false,loginOpen = true">已有账号？<a href="#">立即登录</a></p>
-			</el-dialog>
 			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
 				<div class="skin">
 					<div class="skin_header">
+						<div class="skin_option">
+							<div class="skin_slider">
+								<label>背景虚化
+									<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
+									  <i class="el-icon-question"></i>
+									</el-tooltip>
+								</label>
+								<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
+								<label>背景深度
+									<el-tooltip class="item" effect="dark" content="数值越大背景颜色越深" placement="top">
+									  <i class="el-icon-question"></i>
+									</el-tooltip>
+								</label>
+								<div class="skin_content"><el-slider v-model="cssSaturate" :step="10" :max="200"></el-slider></div>
+							</div>
+						</div>
 						<ul class="nav menu-inline">
 							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
 							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
@@ -108,14 +83,14 @@
 							</ul> -->
 							<div>
 								<ul class="nav menu-inline images_list">
-									<li v-for="item of background_img" @click="optionBackground(item)">
+									<li v-for="item of background_img" @click="optionBackground(item.url)">
 										<a href="Javascript:void(0);">
 											<div class="images_float"><span>设置皮肤</span></div>
 											<div class="images">
-												<img :src="item">
+												<img :src="item.url">
 											</div>
 										</a>
-										<a href="#" class="download">
+										<a :href="item.url+'?attname='+item.name" class="download" target="_blank">
 											<el-tooltip class="item" effect="dark" content="下载图片" placement="top">
 											  <svg t="1573193380691" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1170" width="22" height="22"><path d="M959.5 529.5c-2-84-59.4-161.2-144.4-192-46-126.4-165.9-211.5-300-213-132.5-1.4-253.2 79.2-303 202.5-87.4 32.2-146 112.6-147 199.5-1.2 104.1 80.7 199.5 193.9 216h12.8v-0.1h0.5c23.5 0 42.5-19 42.5-42.5s-19-42.5-42.5-42.5H264v-0.4c-65.5-5.3-117-60.2-117-127 0-70.2 56.7-127.1 126.8-127.5 23.4-110.2 121.3-192.9 238.5-192.9s215.1 82.7 238.5 192.9c70.1 0.4 126.8 57.3 126.8 127.5 0 67.9-53 123.3-119.9 127.2v0.2h-6.6c-23.5 0-42.5 19-42.5 42.5s19 42.5 42.5 42.5h0.8v0.1h19.3c111.2-17 190.7-111.4 188.3-213z" p-id="1171" fill="#f9f9f9"></path><path d="M663.9 681.8c-17.6-15.6-44.7-13.9-60.3 3.7l-49.2 55.7V529.5c0-23.2-18.9-42.1-42.1-42.1-23.2 0-42.1 18.9-42.1 42.1v211.6L421 685.5c-15.6-17.6-42.7-19.3-60.3-3.7-17.6 15.6-19.3 42.7-3.7 60.3l123.3 139.4c4.1 4.7 9 8.2 14.4 10.6 0.1 0 0.2 0.1 0.3 0.1l1.5 0.6c0.2 0.1 0.4 0.2 0.6 0.2 0.4 0.2 0.8 0.3 1.2 0.4 0.3 0.1 0.6 0.2 0.8 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.6 0.2 0.9 0.2 0.4 0.1 0.8 0.2 1.1 0.3 0.3 0.1 0.6 0.1 0.8 0.2 0.4 0.1 0.8 0.2 1.2 0.2 0.3 0 0.5 0.1 0.8 0.1 0.4 0.1 0.8 0.1 1.2 0.2 0.3 0 0.6 0.1 0.8 0.1 0.4 0 0.8 0.1 1.2 0.1 0.3 0 0.6 0 0.9 0.1h4.2c0.3 0 0.6 0 0.9-0.1 0.4 0 0.8-0.1 1.2-0.1 0.3 0 0.6-0.1 0.8-0.1 0.4 0 0.8-0.1 1.2-0.2 0.3 0 0.5-0.1 0.8-0.1 0.4-0.1 0.8-0.1 1.2-0.2 0.3-0.1 0.6-0.1 0.8-0.2 0.4-0.1 0.8-0.2 1.1-0.3 0.3-0.1 0.6-0.1 0.9-0.2 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.6-0.2 0.8-0.3 0.4-0.1 0.8-0.3 1.2-0.4 0.2-0.1 0.4-0.2 0.6-0.2l1.5-0.6c0.1 0 0.2-0.1 0.3-0.1 5.3-2.4 10.3-5.9 14.4-10.6l123.3-139.4c16-17.6 14.3-44.8-3.3-60.3z" p-id="1172" fill="#f9f9f9"></path></svg>
 											</el-tooltip>							
@@ -161,33 +136,14 @@
 				}
 			};
 			return{
-				username:'',
-				password:'',
-				logForm:{
-					username:'',
-					password:'',
-				},
-				regForm:{
-					username:'',
-					password:'',
-					checkPass:'',
-					email:'',
-					qq:''
-				},
-				rules: {
-					username: [{ required: true, message: '请输入登陆用户名', trigger: 'blur' },{ min: 3, max: 16, message: '长度在 3 到 12 个字符', trigger: 'blur' }],
-					password: [{ required: true, message: '请输入登陆密码', trigger: 'blur' },{ min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }],
-					checkPass: [{ validator: validatePass, trigger: 'blur' } ],
-					qq:[{ min: 10000, max: 9999999999, message: '长度在 5 到 10 的数字', type:'number'}],
-					email: [ { required: false, message: '请输入邮箱地址', trigger: 'blur' },{ required: false, message: '请输入正确的邮箱地址', trigger: 'blur', type: 'email' }],
-				},
-				loginOpen:false,
-				registerOpen:false,
 				skinOpen:false,
 				isLogin:false,
 				user:null,
 				token:'',
-				background_img:['http://img.168dh.cn/skin/001.jpg','http://img.168dh.cn/skin/002.jpg','http://img.168dh.cn/skin/003.jpg'],
+				background_img:[
+				{'name':'www.couldr.com/001.jpg','url':'http://img.168dh.cn/skin/001.jpg'},
+				{'name':'www.couldr.com/002.jpg','url':'http://img.168dh.cn/skin/002.jpg'},
+				{'name':'www.couldr.com/003.jpg','url':'http://img.168dh.cn/skin/003.jpg'}],
 				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
@@ -206,66 +162,13 @@
 						['#EFEBE9','#6D4C41'],['#D7CCC8','#5D4037'],['#BCAAA4','#4E342E'],['#A1887F','#3E2723'],
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
+				cssBlur:0,
+				cssSaturate:100
 			}
 		},
 		methods: {
 			resetForm:function(formName) {
 				this.$refs[formName].resetFields();
-			},
-			login:function(){
-				let data = new FormData();
-				data.append('username',this.logForm.username);
-				data.append('password',this.logForm.password);
-				this.$refs.logForm.validate((valid) => {
-					if (valid) {
-						this.$ajax.post('/hom1/api/user/login',data)
-						.then((response)=>{
-						    if(response.data.code == 1){
-								this.$message({message: '登录成功',type: 'success'});
-								this.getInfo();
-								this.isLogin=true;
-								this.loginOpen=false;
-								this.user = response.data.result;
-								var d= new Date();
-								d.setHours(d.getHours() + (24 * 30)); //保存一个月
-								document.cookie="user_session="+response.data.result+"; expires=" + d.toGMTString();
-								window.location.reload();
-							} else{
-								this.$message.error(response.data.msg);
-							}
-						}).catch((response)=>{
-						    this.$message.error('发送请求失败，请检查网络是否通畅');
-						});
-					}else{
-						console.log('error submit!!');
-						return false;
-					}
-				});
-			},
-			register:function(){
-				this.$refs.regForm.validate((valid) => {
-				  if (valid) {
-					let data = new FormData();
-					data.append('username',this.regForm.username);
-					data.append('password',this.regForm.password);
-					data.append('email',this.regForm.email);
-					data.append('qq',this.regForm.qq);
-					this.$ajax.post('/hom1/api/user/register',data)
-					.then((response)=>{
-					    if(response.data.code == 1){
-							this.$message({message: '注册成功',type: 'success'});
-							this.registerOpen=false;
-						} else{
-							this.$message.error(response.data.msg);
-						}
-					}).catch((response)=>{
-					    this.$message.error('发送请求失败，请检查网络是否通畅');
-					});
-				  } else {
-					console.log('error submit!!');
-					return false;
-				  }
-				});
 			},
 		  handleCommand:function(command){
 			switch(command){
@@ -308,18 +211,33 @@
 		  },
 		  optionBackground:function(item){
 			 this.$parent.$refs.search.theme = {'name':'background','value':item},
-			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item}));
+			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item,'cssBlur':0,'cssSaturate':100}));
 		  },
 		  optionColor:function(item){
 			  this.$parent.$refs.search.theme = {'name':'color','value':item},
 			  localStorage.setItem("theme", JSON.stringify({'name':'color','value':item}));
 		  }
 		},
+		watch:{
+			cssBlur:function(val){
+				this.$set(this.$parent.$refs.search.theme,"cssBlur", val)
+				var obj = this.$parent.$refs.search.theme;
+				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val,'cssSaturate':obj.cssSaturate}));
+			},
+			
+			cssSaturate:function(val){
+				this.$set(this.$parent.$refs.search.theme,"cssSaturate", val)
+				var obj = this.$parent.$refs.search.theme;
+				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':obj.cssBlur,'cssSaturate':val}));
+			}
+		},
 		mounted() {
 			this.getInfo();
 			var theme = JSON.parse(localStorage.getItem("theme"));
 			if(theme){
-				this.$parent.$refs.search.theme = theme
+				this.cssBlur = theme.cssBlur;
+				this.cssSaturate = theme.cssSaturate;
+				this.$parent.$refs.search.theme = theme;
 			}
 		}
 	}
@@ -337,7 +255,7 @@
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
-		background-color: #fff;
+		background-color: rgba(255,255,255,0.95);
 		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
 		box-shadow: 0 1px 3px rgba(26,26,26,.1);
 		display: flex;
@@ -406,6 +324,25 @@
 		background: #f9f9f9;
 		padding: 0 20px;
 	}
+	
+	.skin_slider{
+		height: 36px;
+	}
+	
+	.skin_slider label i{
+		cursor: pointer;
+	}
+	.skin_slider .skin_content{
+		width: 200px;
+		margin: 0 15px;
+		display: inline-block;
+	}
+	
+	.skin_slider .skin_content .el-slider__runway{
+		margin: 0;
+	}
+	
+	
 	.skin .skin_header .nav a{
 		display: inherit;
 	}

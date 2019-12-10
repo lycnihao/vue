@@ -154,8 +154,7 @@ default {
               imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
               hotList: null,
               activeName: 'first',
-			  isLogin:false,
-			  w:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth
+			  isLogin:false
             };
         },
         methods: {
@@ -219,17 +218,17 @@ default {
 					document.querySelector('.scroll-in').style.top= "0"
 					document.querySelector('#search').style.padding= "68px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
-					if(simple != false || simple == null )
-					localStorage.setItem("simple", false);
+					if(simple != true || simple == null )
+					localStorage.setItem("simple", true);
 				}else{
 					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 					if(scrollTop == 0){
 						document.querySelector('.scroll-in').style.display= "none"
 						document.querySelector('.links').style.display= "none"
-						document.querySelector('#search').style.padding= "250px 0 128px 0"
+						document.querySelector('#search').style.padding= "180px 0 128px 0"
 						document.querySelector('footer').style.zIndex="-1"
-						if(simple != true || simple == null)
-						localStorage.setItem("simple", true);
+						if(simple != false || simple == null)
+						localStorage.setItem("simple", false);
 					}
 				}
 				//if(ev.preventDefault){/*FF 和 Chrome*/
@@ -240,18 +239,17 @@ default {
 			 addEvent(document.documentElement,'mousewheel',onMouseWheel);
 			 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 			 
-			 
 			 this.$nextTick(() => {				 
 				 var simple = localStorage.getItem("simple");
-				 if(simple != 'false' && this.w > 500){
+				 if(simple != 'false'){
+					 document.querySelector(".scroll-in").style.top = "0";
+					 document.querySelector('footer').style.zIndex="99"
+				 } else{
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
 					 document.querySelector('.links').style.display= "none"
-					 document.querySelector('#search').style.padding= "250px 0 128px 0"
+					 document.querySelector('#search').style.padding= "180px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
-				 } else{
-					 document.querySelector(".scroll-in").style.top = "0";
-					 document.querySelector('footer').style.zIndex="99"
 				 }
 			 })
 		}
