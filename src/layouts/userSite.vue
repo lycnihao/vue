@@ -39,7 +39,7 @@
 					animation=400
 					chosenClass = ".site-item"
 					@update="checkEdit">
-					  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="webSite in userSites" :key="webSite.id" :data_id="webSite.id">
+					  <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in userSites" :key="webSite.id" :data_id="webSite.id">
 						<a v-if="!enabled" class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
 						  <div class="site-icon">
 							<el-image :src="webSite.websiteIcon">
@@ -268,10 +268,10 @@ default {
 			}
 		},
 		getUserSites:function(){
-			let name = "user_session";
+			let name = "request_token";
 			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 			if(arr != null){
-			  this.$ajax.defaults.headers.common['token'] = arr[2];
+			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
 			}
 			this.$ajax.get('/hom1/api/userWebSite')
 			.then((response)=>{

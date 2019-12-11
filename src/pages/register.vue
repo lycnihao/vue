@@ -71,7 +71,7 @@ export default {
 				.then((response)=>{
 				    if(response.data.code == 1){
 						this.$message({message: '注册成功',type: 'success'});
-						this.registerOpen=false;
+						window.location.href="/"
 					} else{
 						this.$message.error(response.data.msg);
 					}

@@ -49,13 +49,10 @@ export default {
 					.then((response)=>{
 					    if(response.data.code == 1){
 							this.$message({message: '登录成功',type: 'success'});
-							this.getInfo();
-							this.isLogin=true;
-							this.user = response.data.result;
 							var d= new Date();
 							d.setHours(d.getHours() + (24 * 30)); //保存一个月
-							document.cookie="user_session="+response.data.result+"; expires=" + d.toGMTString();
-							window.location.reload();
+							document.cookie="request_token="+response.data.result+"; expires=" + d.toGMTString();
+							window.location.href="/";
 						} else{
 							this.$message.error(response.data.msg);
 						}

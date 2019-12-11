@@ -10,7 +10,7 @@
 					<el-form-item prop="username">
 						<el-input v-model="regForm.username" placeholder="请输入您的昵称"></el-input>
 					</el-form-item>
-					<el-button type="primary" style="width: 100%;" >确认使用该昵称</el-button>
+					<el-button type="primary" style="width: 100%;" @click="active">确认使用该昵称</el-button>
 				</el-form>
 			</div>
 		</div>
@@ -28,6 +28,37 @@ export default {
 				username: [{ required: true, message: '请输入您的昵称', trigger: 'blur' },{ min: 3, max: 16, message: '长度在 3 到 12 个字符', trigger: 'blur' }],
 			}
 		}
+	},
+	methods:{
+		getInfo:function(){
+		  let name = "request_token";
+		  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+		  if(arr != null){
+			  this.token = arr[2];
+			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
+			  this.$ajax.get('/hom1/api/user/info')
+			  .then((response)=>{
+					this.regForm.username = response.data.msg;
+			  });
+		  }
+		},
+		active:function(){
+		  let name = "request_token";
+		  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+		  if(arr != null){
+			  this.token = arr[2];
+			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
+			  this.$ajax.get('/hom1/api/user/active?userName=' + this.regForm.username)
+			  .then((response)=>{
+				 if(response.data.code == 1){
+					 console.log(response.data)
+					 document.location.href = "/"
+				 }
+			  });
+		  }
+		},
+	},mounted() {
+		this.getInfo();
 	}
 }
 </script>

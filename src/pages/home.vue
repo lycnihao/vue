@@ -75,9 +75,9 @@
 							<ul class="site-list">
 							  <li v-for="site in sites[category.categoryId]">
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
-								   <div class="site-icon float-left">
-									<el-image :src="site.icon" :alt="site.title">
-									  <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div></el-image>
+									<div class="site-icon">
+									<img :data-src="site.icon" :alt="site.title"></img>
+									<i class="site-icon-shadow"></i>
 									</div>
 								   <div class="site-info float-right">
 								   <h3>{{ site.title }}</h3>
@@ -375,7 +375,7 @@ default {
 	transition: 0.3s;
 }
 
-.site-icon img {
+#wrapper .site-icon img {
 	opacity: 0;
 	transition: opacity .5s ease-in;
 }

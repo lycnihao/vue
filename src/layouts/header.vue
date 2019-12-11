@@ -49,7 +49,7 @@
 			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
 				<div class="skin">
 					<div class="skin_header">
-						<div class="skin_option">
+						<div class="skin_option" style="float: right;">
 							<div class="skin_slider">
 								<label>背景虚化
 									<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
@@ -57,12 +57,6 @@
 									</el-tooltip>
 								</label>
 								<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
-								<label>背景深度
-									<el-tooltip class="item" effect="dark" content="数值越大背景颜色越深" placement="top">
-									  <i class="el-icon-question"></i>
-									</el-tooltip>
-								</label>
-								<div class="skin_content"><el-slider v-model="cssSaturate" :step="10" :max="200"></el-slider></div>
 							</div>
 						</div>
 						<ul class="nav menu-inline">
@@ -163,7 +157,6 @@
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
 				cssBlur:0,
-				cssSaturate:100
 			}
 		},
 		methods: {
@@ -179,7 +172,7 @@
 			}
 		  },
 		  logout:function(){
-			let name = "user_session";
+			let name = "request_token";
 			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 			if(arr != null){
 				for (var i = arr.length; i--;){
@@ -189,14 +182,14 @@
 			}
 		  },
 		  getInfo:function(){
-			  let name = "user_session";
+			  let name = "request_token";
 			  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 			  if(arr != null){
 				  this.token = arr[2];
-				  this.$ajax.defaults.headers.common['token'] = arr[2];
+				  this.$ajax.defaults.headers.common['request_token'] = arr[2];
 				  this.$ajax.get('/hom1/api/user/info')
 				  .then((response)=>{
-				  	 if(response.data.code == 1){
+				  	 if(response.data.code == 1 && response.data.result != null){
 				  		 this.user = response.data.result;
 				  		 this.$parent.isLogin = this.isLogin = true;
 				  	 }
@@ -211,7 +204,7 @@
 		  },
 		  optionBackground:function(item){
 			 this.$parent.$refs.search.theme = {'name':'background','value':item},
-			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item,'cssBlur':0,'cssSaturate':100}));
+			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item,'cssBlur':0}));
 		  },
 		  optionColor:function(item){
 			  this.$parent.$refs.search.theme = {'name':'color','value':item},
@@ -222,21 +215,14 @@
 			cssBlur:function(val){
 				this.$set(this.$parent.$refs.search.theme,"cssBlur", val)
 				var obj = this.$parent.$refs.search.theme;
-				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val,'cssSaturate':obj.cssSaturate}));
+				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val}));
 			},
-			
-			cssSaturate:function(val){
-				this.$set(this.$parent.$refs.search.theme,"cssSaturate", val)
-				var obj = this.$parent.$refs.search.theme;
-				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':obj.cssBlur,'cssSaturate':val}));
-			}
 		},
 		mounted() {
 			this.getInfo();
 			var theme = JSON.parse(localStorage.getItem("theme"));
 			if(theme){
 				this.cssBlur = theme.cssBlur;
-				this.cssSaturate = theme.cssSaturate;
 				this.$parent.$refs.search.theme = theme;
 			}
 		}

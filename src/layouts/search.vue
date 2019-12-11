@@ -1,6 +1,6 @@
 <template>
 	<div id="search">
-		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;filter: blur('+theme.cssBlur+'px);filter:saturate('+theme.cssSaturate+'%)'"></div>
+		<div class="theme" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;filter: blur('+theme.cssBlur+'px);'"></div>
 		<div class="theme" v-else :style="'background:'+theme.value"></div>
 		
 		<!-- <svg class="bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
@@ -44,7 +44,7 @@ default {
 		  suggestItems:[],
 		  value:'',
 		  tabName:'searchEngine',
-		  theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0','cssSaturate':'100'},
+		  theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0'},
 		}
 	},
 	methods:{
