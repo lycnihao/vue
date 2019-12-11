@@ -186,7 +186,7 @@
 			  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 			  if(arr != null){
 				  this.token = arr[2];
-				  this.$ajax.defaults.headers.common['request_token'] = arr[2];
+				  this.$ajax.defaults.headers.common[name] = arr[2];
 				  this.$ajax.get('/hom1/api/user/info')
 				  .then((response)=>{
 				  	 if(response.data.code == 1 && response.data.result != null){
