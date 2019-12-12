@@ -38,6 +38,9 @@ export default {
 			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
 			  this.$ajax.get('/hom1/api/user/info')
 			  .then((response)=>{
+				  if (response.data.msg == null) {
+				  	window.location.href = "/";
+				  }
 					this.regForm.username = response.data.msg;
 			  });
 		  }
