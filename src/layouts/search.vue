@@ -146,8 +146,8 @@ default {
 
 #search {
 	position: relative;
-	padding: 200px 0 128px 0;
-	transition:padding .5s;
+	padding: 52px 0 128px 0;
+	transition:padding 0.3s ease-out;
 }
 
 #search h3 {

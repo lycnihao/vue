@@ -1,6 +1,7 @@
 	.source{
 		text-align: center;
-		background-image: url(https://static.zhihu.com/heifetz/assets/sign_bg.db29b0fb.png);
+		background: rgb(0, 128, 157);
+		background-image: url(../bg/bg-small.jpg);
 		background-size: cover;
 		position: absolute;
 		top: 0;
@@ -17,7 +18,7 @@
 		box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
 	}
 	.source .form{
-		margin: 20px 30px 50px;
+		margin: 20px 30px 30px;
 	}
 	.source h1.title{
 		color: #409EFF;
@@ -32,4 +33,31 @@
 		display: block;
 		position: relative;
 		background-color: #d2dae0;
+	}
+	
+	.source .t{
+		color: #606266;
+		margin-top: 10px;
+		height: 20px;
+		line-height: 20px;
+		text-align: left;
+		font-size: 13px;
+	}
+	.source .t a{
+		color: #333;
+	}
+	.source .t a:hover{
+		color: #0067b8;
+	}
+	
+	.socialLogin{
+		margin-top: 10px;
+		display: flex;
+		justify-content: space-between;
+		color: #505561;
+		height: 60px;
+		line-height: 60px;
+	}
+	.source .login-btn-group a{
+		margin: 0 8px;
 	}

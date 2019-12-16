@@ -20,9 +20,18 @@
 									 <li class="nav-item"><v-link href="/">导航</v-link></li>
 									 <li class="nav-item"><v-link href="/hot">热榜</v-link></li>
 									 <li class="nav-item"><v-link href="/kuaidi">查快递</v-link></li>
+
 								</ul>
 							 </div>
-							 <div class="float-right"></div>
+							 <div class="float-right">
+								  <ul class="nav menu-inline" style="line-height: 46px;">
+								 	 <li class="nav-item">
+								 	 	<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
+								 	 	  <a href="javascript:void(0);" @click="skinOpen()"><img src="@/assets/img/skin.svg" width="21px"></a>
+								 	 	</el-tooltip>
+								 	 </li>
+								 </ul>
+							 </div>
 						 </div>
 					 </div>
 						
@@ -181,7 +190,10 @@ default {
                         position: 'bottom-right'
                     });
                 });
-            }
+            },
+			skinOpen: function(){
+				this.$refs.header.skinOpen = true
+			}
 	  },
 
       components: {
@@ -216,7 +228,7 @@ default {
 					document.querySelector('.scroll-in').style.display= "block"
 					document.querySelector('.links').style.display= "block"
 					document.querySelector('.scroll-in').style.top= "0"
-					document.querySelector('#search').style.padding= "68px 0 128px 0"
+					document.querySelector('#search').style.padding= "52px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
 					if(simple != true || simple == null )
 					localStorage.setItem("simple", true);
@@ -225,7 +237,7 @@ default {
 					if(scrollTop == 0){
 						document.querySelector('.scroll-in').style.display= "none"
 						document.querySelector('.links').style.display= "none"
-						document.querySelector('#search').style.padding= "180px 0 128px 0"
+						document.querySelector('#search').style.padding= "82px 0 228px 0"
 						document.querySelector('footer').style.zIndex="-1"
 						if(simple != false || simple == null)
 						localStorage.setItem("simple", false);
@@ -243,12 +255,13 @@ default {
 				 var simple = localStorage.getItem("simple");
 				 if(simple != 'false'){
 					 document.querySelector(".scroll-in").style.top = "0";
+					 document.querySelector('header').className="header head-bg"
 					 document.querySelector('footer').style.zIndex="99"
 				 } else{
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
 					 document.querySelector('.links').style.display= "none"
-					 document.querySelector('#search').style.padding= "180px 0 128px 0"
+					 document.querySelector('#search').style.padding= "82px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
 				 }
 			 })

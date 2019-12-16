@@ -1,49 +1,30 @@
 <template>
 	<header id="head_top" class="header">
-	  <div class="header-item" style="height: 100%;">
+	  <div class="header-item float-left" style="height: 100%;">
 	    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
-		<ul class="nav">
-			<li class="nav-item"><a  href="/" class="active">主页</a></li>
-		</ul>
+		<!-- <ul class="nav">
+			<li class="header-nav-item"><a  href="/" class="active">主页</a></li>
+		</ul> -->
 	  </div>
-	  <div class="header-item">
-	  </div>
-	  <div class="header-item" style="height: 100%;">
+	  <div class="header-item float-right" style="height: 100%;">
 			<ul class="nav menu-inline">
-				<!-- <li class="nav-item">
-					<el-tooltip class="item" effect="dark" content="便签">
-						<a  href="/"><img src="@/assets/img/note.svg" width="31px"></a>
-					</el-tooltip>
-				</li> -->
-				<li class="nav-item">
-					<el-popover placement="bottom" title="小工具" width="280" trigger="hover">
-						<a href="javascript:void(0);" slot="reference"><img src="@/assets/img/app.svg" width="17px"></a>
-						<ul class="tool-list">
-							<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-full-screen"></i></span><span class="title">二维码生成</span></a></li>
-							<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-link"></i></span><span class="title">短链接生成</span></a></li>
-						</ul>
-					</el-popover>
+				<li class="header-nav-item" v-show="!isLogin"><a href="login">登录</a></li>
+				<li class="header-nav-item" v-show="!isLogin"><a href="login">注册</a></li>
+				<li class="header-nav-item" v-show="isLogin">
+					<el-dropdown trigger="click" placement="top" @command="handleCommand">
+						<div>
+							<!-- <span class="user-icon" v-show="!isLogin"><i class="el-icon-user"></i></span> -->
+							<span class="el-dropdown-link">
+							  <el-avatar style="vertical-align: middle;" :src="user!=null ? user.userAvatar : ''"></el-avatar>
+							</span>
+						</div>
+						<el-dropdown-menu slot="dropdown" class="header-menu-dropdown">
+						  <el-dropdown-item command="1" icon="el-icon-user-solid">我的主页</el-dropdown-item>
+						  <el-dropdown-item command="2" icon="el-icon-s-check">设置</el-dropdown-item>
+						  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
 				</li>
-				<li class="nav-item">
-					<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
-					  <a href="javascript:void(0);" @click="skinOpen = true"><img src="@/assets/img/skin.svg" width="21px"></a>
-					</el-tooltip>
-				</li>
-				<li class="nav-item" v-show="isLogin">
-				<el-dropdown trigger="click" placement="top" @command="handleCommand">
-					<span class="el-dropdown-link">
-					  <el-avatar style="vertical-align: middle;" :src="user!=null ? user.userAvatar : ''"></el-avatar>
-					</span>
-					<el-dropdown-menu slot="dropdown">
-					  <el-dropdown-item command="1">我的主页</el-dropdown-item>
-					  <el-dropdown-item command="2">设置</el-dropdown-item>
-					  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
-
-        </li>
-				<li class="nav-item" v-show="!isLogin"><a href="login">登录</a></li>
-				<li class="nav-item" v-show="!isLogin"><a href="register">注册</a></li>
 			</ul>
 
 			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
@@ -120,15 +101,6 @@
 <script>
 	export default {
 		data(){
-			let validatePass = (rule, value, callback) => {
-				if (value === '') {
-				  callback(new Error('请再次输入密码'));
-				} else if (value !== this.regForm.password) {
-				  callback(new Error('两次输入密码不一致!'));
-				} else {
-				  callback();
-				}
-			};
 			return{
 				skinOpen:false,
 				isLogin:false,
@@ -160,15 +132,14 @@
 			}
 		},
 		methods: {
-			resetForm:function(formName) {
-				this.$refs[formName].resetFields();
-			},
 		  handleCommand:function(command){
 			switch(command){
+				case 'skin':
+					this.skinOpen =true;
+					break;
 			   case 'logout':
-				this.logout();
-				window.location.reload();
-				break;
+					this.logout();
+					break;
 			}
 		  },
 		  logout:function(){
@@ -179,6 +150,7 @@
 				document.cookie = arr[i] + '=0;expires=' + new Date(0).toUTCString()
 			  }
 			  this.isLogin = false;
+			  window.location.reload();
 			}
 		  },
 		  getInfo:function(){
@@ -232,24 +204,27 @@
 <style>
 	header{
 		position: fixed;
-		top: 0;
-		left: 0;
 		z-index: 999;
 		width: 100%;
+		max-width: 100%;
 		height: 3.75rem;
 		line-height: 3.75rem;
 		box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		background-color: rgba(255,255,255,0.95);
-		-webkit-box-shadow: 0 1px 3px rgba(26,26,26,.1);
 		box-shadow: 0 1px 3px rgba(26,26,26,.1);
-		display: flex;
-		justify-content:space-between;
-		align-items:center;
 	}
 
-
+	.header-nav-item{
+		margin: 0 5px;
+	}
+	
+	
+	
+	.header-nav-item a{
+		font-size: 15px;
+	}
+	
+	
 	.header .logo{
 	    width: 100px;
 	    float: left;
@@ -420,6 +395,41 @@
 		height: 50px;
 		margin: auto;
 	}
+	
+	.user-icon{
+		border-radius: 50%;
+	    padding: 9px;
+		display: inline-block;
+		background-color: #ececec;
+	}
+	.user-icon i{
+		display: block;
+	}
+	
+	.header-menu{
+		margin-left: 12px;
+	}
+	
+	.header-menu span{
+		display: inline-block;
+		font-size: 22px;
+	}
+	
+	.header-menu-dropdown{
+		
+	}
+	
+	.header-menu-dropdown i{
+		margin-left: -10px;
+		margin-right: 10px;
+	}
+	.header-menu-dropdown .el-dropdown-menu__item{
+		color: rgba(51, 51, 51, 0.75)!important;
+	}
+	
+	.header-menu-dropdown .el-dropdown-menu__item:not(.is-disabled):hover {
+	    background-color: #f5f5f5;
+	}
 
 	@media screen and (min-width:1200px) {
 		.header{
@@ -429,7 +439,7 @@
 			font-size: 14px;
 		    padding: 0 5px;
 		}
-		.header .nav-item .el-avatar{
+		.header .header-nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -444,7 +454,7 @@
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.header .nav-item .el-avatar{
+		.header .header-nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -462,7 +472,7 @@
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.header .nav-item .el-avatar{
+		.header .header-nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -480,7 +490,7 @@
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.header .nav-item .el-avatar{
+		.header .header-nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
@@ -503,7 +513,7 @@
 				font-size: 12px;
 		    padding: 0 5px;
 		}
-		.header .nav-item .el-avatar{
+		.header .header-nav-item .el-avatar{
 			height: 30px;
 			width: 30px;
 			line-height:30px;
