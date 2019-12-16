@@ -1,100 +1,117 @@
 <template>
-	<header id="head_top" class="header">
-	  <div class="header-item float-left" style="height: 100%;">
-	    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
-		<!-- <ul class="nav">
-			<li class="header-nav-item"><a  href="/" class="active">主页</a></li>
-		</ul> -->
-	  </div>
-	  <div class="header-item float-right" style="height: 100%;">
-			<ul class="nav menu-inline">
-				<li class="header-nav-item" v-show="!isLogin"><a href="login">登录</a></li>
-				<li class="header-nav-item" v-show="!isLogin"><a href="login">注册</a></li>
-				<li class="header-nav-item" v-show="isLogin">
-					<el-dropdown trigger="click" placement="top" @command="handleCommand">
-						<div>
-							<!-- <span class="user-icon" v-show="!isLogin"><i class="el-icon-user"></i></span> -->
-							<span class="el-dropdown-link">
-							  <el-avatar style="vertical-align: middle;" :src="user!=null ? user.userAvatar : ''"></el-avatar>
-							</span>
-						</div>
-						<el-dropdown-menu slot="dropdown" class="header-menu-dropdown">
-						  <el-dropdown-item command="1" icon="el-icon-user-solid">我的主页</el-dropdown-item>
-						  <el-dropdown-item command="2" icon="el-icon-s-check">设置</el-dropdown-item>
-						  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
-				</li>
-			</ul>
-
-			<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
-				<div class="skin">
-					<div class="skin_header">
-						<div class="skin_option" style="float: right;">
-							<div class="skin_slider">
-								<label>背景虚化
-									<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
-									  <i class="el-icon-question"></i>
-									</el-tooltip>
-								</label>
-								<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
-							</div>
-						</div>
-						<ul class="nav menu-inline">
-							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
-							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
-							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
-							<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
-						</ul>
-					</div>
-					<div class="skin_body">
-						<div class="tabpanel show" name='tab1'>
-							<!-- <ul class="nav menu-inline">
-								<li class="nav-item-radius"><a href="Javascript:void(0);">萌宠</a></li>
-								<li class="nav-item-radius"><a href="Javascript:void(0);">卡通</a></li>
-								<li class="nav-item-radius"><a href="Javascript:void(0);">人物</a></li>
-								<li class="nav-item-radius"><a href="Javascript:void(0);">汽车</a></li>
-								<li class="nav-item-radius"><a href="Javascript:void(0);">风景</a></li>
-							</ul> -->
-							<div>
-								<ul class="nav menu-inline images_list">
-									<li v-for="item of background_img" @click="optionBackground(item.url)">
-										<a href="Javascript:void(0);">
-											<div class="images_float"><span>设置皮肤</span></div>
-											<div class="images">
-												<img :src="item.url">
-											</div>
-										</a>
-										<a :href="item.url+'?attname='+item.name" class="download" target="_blank">
-											<el-tooltip class="item" effect="dark" content="下载图片" placement="top">
-											  <svg t="1573193380691" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1170" width="22" height="22"><path d="M959.5 529.5c-2-84-59.4-161.2-144.4-192-46-126.4-165.9-211.5-300-213-132.5-1.4-253.2 79.2-303 202.5-87.4 32.2-146 112.6-147 199.5-1.2 104.1 80.7 199.5 193.9 216h12.8v-0.1h0.5c23.5 0 42.5-19 42.5-42.5s-19-42.5-42.5-42.5H264v-0.4c-65.5-5.3-117-60.2-117-127 0-70.2 56.7-127.1 126.8-127.5 23.4-110.2 121.3-192.9 238.5-192.9s215.1 82.7 238.5 192.9c70.1 0.4 126.8 57.3 126.8 127.5 0 67.9-53 123.3-119.9 127.2v0.2h-6.6c-23.5 0-42.5 19-42.5 42.5s19 42.5 42.5 42.5h0.8v0.1h19.3c111.2-17 190.7-111.4 188.3-213z" p-id="1171" fill="#f9f9f9"></path><path d="M663.9 681.8c-17.6-15.6-44.7-13.9-60.3 3.7l-49.2 55.7V529.5c0-23.2-18.9-42.1-42.1-42.1-23.2 0-42.1 18.9-42.1 42.1v211.6L421 685.5c-15.6-17.6-42.7-19.3-60.3-3.7-17.6 15.6-19.3 42.7-3.7 60.3l123.3 139.4c4.1 4.7 9 8.2 14.4 10.6 0.1 0 0.2 0.1 0.3 0.1l1.5 0.6c0.2 0.1 0.4 0.2 0.6 0.2 0.4 0.2 0.8 0.3 1.2 0.4 0.3 0.1 0.6 0.2 0.8 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.6 0.2 0.9 0.2 0.4 0.1 0.8 0.2 1.1 0.3 0.3 0.1 0.6 0.1 0.8 0.2 0.4 0.1 0.8 0.2 1.2 0.2 0.3 0 0.5 0.1 0.8 0.1 0.4 0.1 0.8 0.1 1.2 0.2 0.3 0 0.6 0.1 0.8 0.1 0.4 0 0.8 0.1 1.2 0.1 0.3 0 0.6 0 0.9 0.1h4.2c0.3 0 0.6 0 0.9-0.1 0.4 0 0.8-0.1 1.2-0.1 0.3 0 0.6-0.1 0.8-0.1 0.4 0 0.8-0.1 1.2-0.2 0.3 0 0.5-0.1 0.8-0.1 0.4-0.1 0.8-0.1 1.2-0.2 0.3-0.1 0.6-0.1 0.8-0.2 0.4-0.1 0.8-0.2 1.1-0.3 0.3-0.1 0.6-0.1 0.9-0.2 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.6-0.2 0.8-0.3 0.4-0.1 0.8-0.3 1.2-0.4 0.2-0.1 0.4-0.2 0.6-0.2l1.5-0.6c0.1 0 0.2-0.1 0.3-0.1 5.3-2.4 10.3-5.9 14.4-10.6l123.3-139.4c16-17.6 14.3-44.8-3.3-60.3z" p-id="1172" fill="#f9f9f9"></path></svg>
-											</el-tooltip>							
-										</a>
-									</li>
+	<header id="head_top">
+		<div class="header-simple">
+			<div class="header-item float-left" style="height: 100%;">
+			    <a class="logo" href="/"><img src="@/assets/logo-simple.png" width="100%"></a>
+			</div>
+			<div class="header-item float-right" style="height: 100%;">
+				<div class="block">
+					<a class="header-weather" href="#">
+						<img class="weather-icon" src="https://img.bidianer.com/weather/opacity/101.svg"/> 12°
+					</a>
+				</div>
+				<div class="block">
+					<a class="text">长沙</a>
+				</div>
+			</div>
+		</div>
+		<div class="header">
+			<div class="header-item float-left" style="height: 100%;">
+			    <a class="logo" href="/"><img src="@/assets/logo.png" width="100%"></a>
+				<ul class="nav">
+					<li class="header-nav-item"><a  href="/" class="active">主页</a></li>
+				</ul>
+			  </div>
+			  <div class="header-item float-right" style="height: 100%;">
+					<ul class="nav menu-inline">
+						<li class="header-nav-item" v-show="!isLogin"><a href="login">登录</a></li>
+						<li class="header-nav-item" v-show="!isLogin"><a href="login">注册</a></li>
+						<li class="header-nav-item" v-show="isLogin">
+							<el-dropdown trigger="click" placement="top" @command="handleCommand">
+								<div>
+									<span class="user-icon" v-show="!isLogin"><i class="el-icon-user"></i></span>
+									<span class="el-dropdown-link">
+									  <el-avatar style="vertical-align: middle;" :src="user!=null ? user.userAvatar : ''"></el-avatar>
+									</span>
+								</div>
+								<el-dropdown-menu slot="dropdown" class="header-menu-dropdown">
+								  <el-dropdown-item command="1" icon="el-icon-user-solid">我的主页</el-dropdown-item>
+								  <el-dropdown-item command="2" icon="el-icon-s-check">设置</el-dropdown-item>
+								  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+						</li>
+					</ul>
+			
+					<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
+						<div class="skin">
+							<div class="skin_header">
+								<div class="skin_option" style="float: right;">
+									<div class="skin_slider">
+										<label>背景虚化
+											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
+											  <i class="el-icon-question"></i>
+											</el-tooltip>
+										</label>
+										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
+									</div>
+								</div>
+								<ul class="nav menu-inline">
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
 								</ul>
 							</div>
+							<div class="skin_body">
+								<div class="tabpanel show" name='tab1'>
+									<ul class="nav menu-inline">
+										<li class="nav-item-radius"><a href="Javascript:void(0);">萌宠</a></li>
+										<li class="nav-item-radius"><a href="Javascript:void(0);">卡通</a></li>
+										<li class="nav-item-radius"><a href="Javascript:void(0);">人物</a></li>
+										<li class="nav-item-radius"><a href="Javascript:void(0);">汽车</a></li>
+										<li class="nav-item-radius"><a href="Javascript:void(0);">风景</a></li>
+									</ul>
+									<div>
+										<ul class="nav menu-inline images_list">
+											<li v-for="item of background_img" @click="optionBackground(item.url)">
+												<a href="Javascript:void(0);">
+													<div class="images_float"><span>设置皮肤</span></div>
+													<div class="images">
+														<img :src="item.url">
+													</div>
+												</a>
+												<a :href="item.url+'?attname='+item.name" class="download" target="_blank">
+													<el-tooltip class="item" effect="dark" content="下载图片" placement="top">
+													  <svg t="1573193380691" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1170" width="22" height="22"><path d="M959.5 529.5c-2-84-59.4-161.2-144.4-192-46-126.4-165.9-211.5-300-213-132.5-1.4-253.2 79.2-303 202.5-87.4 32.2-146 112.6-147 199.5-1.2 104.1 80.7 199.5 193.9 216h12.8v-0.1h0.5c23.5 0 42.5-19 42.5-42.5s-19-42.5-42.5-42.5H264v-0.4c-65.5-5.3-117-60.2-117-127 0-70.2 56.7-127.1 126.8-127.5 23.4-110.2 121.3-192.9 238.5-192.9s215.1 82.7 238.5 192.9c70.1 0.4 126.8 57.3 126.8 127.5 0 67.9-53 123.3-119.9 127.2v0.2h-6.6c-23.5 0-42.5 19-42.5 42.5s19 42.5 42.5 42.5h0.8v0.1h19.3c111.2-17 190.7-111.4 188.3-213z" p-id="1171" fill="#f9f9f9"></path><path d="M663.9 681.8c-17.6-15.6-44.7-13.9-60.3 3.7l-49.2 55.7V529.5c0-23.2-18.9-42.1-42.1-42.1-23.2 0-42.1 18.9-42.1 42.1v211.6L421 685.5c-15.6-17.6-42.7-19.3-60.3-3.7-17.6 15.6-19.3 42.7-3.7 60.3l123.3 139.4c4.1 4.7 9 8.2 14.4 10.6 0.1 0 0.2 0.1 0.3 0.1l1.5 0.6c0.2 0.1 0.4 0.2 0.6 0.2 0.4 0.2 0.8 0.3 1.2 0.4 0.3 0.1 0.6 0.2 0.8 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.7 0.2 1 0.3 0.3 0.1 0.6 0.2 0.9 0.2 0.4 0.1 0.8 0.2 1.1 0.3 0.3 0.1 0.6 0.1 0.8 0.2 0.4 0.1 0.8 0.2 1.2 0.2 0.3 0 0.5 0.1 0.8 0.1 0.4 0.1 0.8 0.1 1.2 0.2 0.3 0 0.6 0.1 0.8 0.1 0.4 0 0.8 0.1 1.2 0.1 0.3 0 0.6 0 0.9 0.1h4.2c0.3 0 0.6 0 0.9-0.1 0.4 0 0.8-0.1 1.2-0.1 0.3 0 0.6-0.1 0.8-0.1 0.4 0 0.8-0.1 1.2-0.2 0.3 0 0.5-0.1 0.8-0.1 0.4-0.1 0.8-0.1 1.2-0.2 0.3-0.1 0.6-0.1 0.8-0.2 0.4-0.1 0.8-0.2 1.1-0.3 0.3-0.1 0.6-0.1 0.9-0.2 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.7-0.2 1-0.3 0.3-0.1 0.6-0.2 0.8-0.3 0.4-0.1 0.8-0.3 1.2-0.4 0.2-0.1 0.4-0.2 0.6-0.2l1.5-0.6c0.1 0 0.2-0.1 0.3-0.1 5.3-2.4 10.3-5.9 14.4-10.6l123.3-139.4c16-17.6 14.3-44.8-3.3-60.3z" p-id="1172" fill="#f9f9f9"></path></svg>
+													</el-tooltip>							
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="tabpanel" name='tab2'>
+									<ul class="nav menu-inline images_list">
+										<li v-for="item of colors">
+											<a href="Javascript:void(0);" class="color">
+												<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
+												<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="tabpanel" name='tab3'>
+									3333
+								</div>
+								<div class="tabpanel" name='tab4'>
+									4444
+								</div>
+							</div>
 						</div>
-						<div class="tabpanel" name='tab2'>
-							<ul class="nav menu-inline images_list">
-								<li v-for="item of colors">
-									<a href="Javascript:void(0);" class="color">
-										<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
-										<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="tabpanel" name='tab3'>
-							3333
-						</div>
-						<div class="tabpanel" name='tab4'>
-							4444
-						</div>
-					</div>
-				</div>
-			</el-dialog>
-	  </div>
+					</el-dialog>
+			  </div>
+		</div>
 	</header>
 </template>
 
@@ -202,7 +219,40 @@
 </script>
 
 <style>
-	header{
+	.header-simple{
+		position: absolute;
+		z-index: 99;
+		width: 100%;
+		height: 3.75rem;
+		line-height: 3.75rem;
+	}
+	
+	.header-simple .header-item{
+		margin: 2px 20px;
+	}
+	
+	.header-simple .logo{
+		display: block;
+		width: 136px;
+	}
+	
+	.header-simple .block{
+		display: inline;
+	}
+	
+	.header-simple .block a{
+		color: #fff;
+	}
+	
+	.header-simple .header-weather{
+		font-size: 22px;
+	}
+	
+	.header-simple .weather-icon{
+		width: 24px;
+	}
+	
+	.header{
 		position: fixed;
 		z-index: 999;
 		width: 100%;

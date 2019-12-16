@@ -230,6 +230,7 @@ default {
 					document.querySelector('.scroll-in').style.top= "0"
 					document.querySelector('#search').style.padding= "52px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
+					document.querySelector('.header').style.zIndex="99"
 					if(simple != true || simple == null )
 					localStorage.setItem("simple", true);
 				}else{
@@ -239,6 +240,7 @@ default {
 						document.querySelector('.links').style.display= "none"
 						document.querySelector('#search').style.padding= "82px 0 228px 0"
 						document.querySelector('footer').style.zIndex="-1"
+						document.querySelector('.header').style.zIndex="-1"
 						if(simple != false || simple == null)
 						localStorage.setItem("simple", false);
 					}
@@ -255,14 +257,16 @@ default {
 				 var simple = localStorage.getItem("simple");
 				 if(simple != 'false'){
 					 document.querySelector(".scroll-in").style.top = "0";
-					 document.querySelector('header').className="header head-bg"
+					 document.querySelector('.header').className="header head-bg"
 					 document.querySelector('footer').style.zIndex="99"
+					 document.querySelector('.header').style.zIndex="99"
 				 } else{
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
 					 document.querySelector('.links').style.display= "none"
 					 document.querySelector('#search').style.padding= "82px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
+					 document.querySelector('.header').style.zIndex="-1"
 				 }
 			 })
 		}
