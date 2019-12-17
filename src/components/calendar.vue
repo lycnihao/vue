@@ -39,7 +39,7 @@ default {
 			NumString: "一二三四五六七八九十",
 			MonString: "正二三四五六七八九十冬腊",
 			CalendarData: new Array(0xA4B, 0x5164B, 0x6A5, 0x6D4, 0x415B5, 0x2B6, 0x957, 0x2092F, 0x497, 0x60C96, 0xD4A, 0xEA5, 0x50DA9, 0x5AD, 0x2B6, 0x3126E, 0x92E, 0x7192D, 0xC95, 0xD4A, 0x61B4A, 0xB55, 0x56A, 0x4155B, 0x25D, 0x92D, 0x2192B, 0xA95, 0x71695, 0x6CA, 0xB55, 0x50AB5, 0x4DA, 0xA5B, 0x30A57, 0x52B, 0x8152A, 0xE95, 0x6AA, 0x615AA, 0xAB5, 0x4B6, 0x414AE, 0xA57, 0x526, 0x31D26, 0xD95, 0x70B55, 0x56A, 0x96D, 0x5095D, 0x4AD, 0xA4D, 0x41A4D, 0xD25, 0x81AA5, 0xB54, 0xB6A, 0x612DA, 0x95B, 0x49B, 0x41497, 0xA4B, 0xA164B, 0x6A5, 0x6D4, 0x615B4, 0xAB6, 0x957, 0x5092F, 0x497, 0x64B, 0x30D4A, 0xEA5, 0x80D65, 0x5AC, 0xAB6, 0x5126D, 0x92E, 0xC96, 0x41A95, 0xD4A, 0xDA5, 0x20B55, 0x56A, 0x7155B, 0x25D, 0x92D, 0x5192B, 0xA95, 0xB4A, 0x416AA, 0xAD5, 0x90AB5, 0x4BA, 0xA5B, 0x60A57, 0x52B, 0xA93, 0x40E95),
-			holidays:{t0101:"t,春节 ",t0115:"t,元宵节",t0202:"t,龙头节",t0505:"t,端午节",t0707:"t,七夕节",t0715:"t,中元节",t0815:"t,中秋节",t0909:"t,重阳节",t1001:"t,寒衣节",t1015:"t,下元节",t1208:"t,腊八节",t1223:"t,小年",
+			holidays:{t0101:"t,春节 ",t0115:"t,元宵节",t0202:"t,龙头节",t0505:"t,端午节",t0707:"t,七夕节",t0715:"t,中元节",t0815:"t,中秋节",t0909:"t,重阳节",t1001:"t,寒衣节",t1015:"t,下元节",t1208:"t,腊八节",t1223:"t,小年",t1230:"t,除夕",
 			"0202":"i,湿地日,1996","0308":"i,妇女节,1975","0315":"i,消费者权益日,1983","0401":"i,愚人节,1564","0422":"i,地球日,1990","0501":"i,劳动节,1889","0512":"i,护士节,1912","0518":"i,博物馆日,1977","0605":"i,环境日,1972","0623":"i,奥林匹克日,1948",1020:"i,骨质疏松日,1998",1117:"i,学生日,1942",1201:"i,艾滋病日,1988",
 			"0101":"h,元旦","0312":"h,植树节,1979","0504":"h,五四青年节,1939","0601":"h,儿童节,1950","0701":"h,建党节,1941","0801":"h,建军节,1933","0903":"h,抗战胜利日,1945","0910":"h,教师节,1985",1001:"h,国庆节,1949",1213:"h,国家公祭日,2014",1224:"c,平安夜",1225:"c,圣诞节","0214":"a,情人节",w:{"0520":"i,母亲节,1913","0630":"a,父亲节",1144:"a,感恩节"}},
 			dates:'',
@@ -97,13 +97,24 @@ default {
 				solarTerms = solarTerm[month * 2];
 			return solarTerms;
 		},
-		//获取节假日
+		//获取节日
 		getFestival:function(month, day){
 			let t='t';
 			let date = this.num(month) + this.num(day);
 			for(let holiday in this.holidays){
+				let key = holiday;
+				if(holiday.indexOf("t") != -1 ){
+					
+					let data = this.getLunarcalendar(this.nowYear,month,day);
+					if(holiday.replace("t","") == data){
+						let str = this.holidays[key];
+						console.log(str)
+						return str.split(',')[1];
+					}
+				}
+				
 				if(holiday == date){
-					let str = this.holidays[holiday];
+					let str = this.holidays[key];
 					return str.split(',')[1];
 				}
 			}
@@ -145,38 +156,37 @@ default {
 		            month --;
 		        }
 		    }
-			let tmp = '';
-			if (month_ < 1) {
-		        //tmp += "(闰)";
-		        tmp += this.MonString.charAt(-month_ - 1);
-		    } else {
-		        tmp += this.MonString.charAt(month_ - 1);
-		    }
-			tmp += "月";
-			tmp += (day < 11) ? "初" : ((day < 20) ? "十" : ((day < 30) ? "廿" : "三十"));
-			/* if (day % 10 != 0 || day == 10) {
+			
+			if (day < 10) 
+				day = "0" + day
+			if (month_ < 10) 
+				month_ = "0" + month_
+			
+			return month_ + "" +day;
+		},
+		//获取农历 字符串类型
+		getLunarcalendarStr:function(str){
+				let month = str.substring(0,2);
+				let day = str.substring(2,4);
+				let tmp = '';
+				if (month < 1) {
+				    //tmp += "(闰)";
+				    tmp += this.MonString.charAt(-month - 1);
+				} else {
+				    tmp += this.MonString.charAt(month - 1);
+				}
+				
+				tmp += "月";
+				tmp += (day < 11) ? "初" : ((day < 20) ? "十" : ((day < 30) ? "廿" : "三"));
+				/* if (day % 10 != 0 || day == 10) {
+					tmp += this.NumString.charAt((day - 1) % 10);
+				} */
+				
+				//获取农历节日
 				tmp += this.NumString.charAt((day - 1) % 10);
-			} */
-			tmp += this.NumString.charAt((day - 1) % 10);
-
-			return tmp;
+				return tmp;
 		},
-		// 获取农历 数字类型
-		getNumLunarcalendar:function(str){
-			var NumString = this.NumString;
-			function convert(s){
-				let num =  NumString.indexOf(s) + 1;
-				return num == 10 ? 0 : num;
-			}
-			let strDay = str.split("月")[1];
-			let strDay1_ = strDay.substring(0,1);
-			let strDay1 = strDay1_ == '初' ? '0' : strDay1_ == '十' ? '1' : strDay1_ == '廿' ? '2' : '3';
-			let strDay2 = convert(strDay.substring(1,2));
-			if(strDay1_ == "初" && strDay2 == 0){
-				return "10";
-			}
-			return strDay1 + strDay2 ;
-		},
+		
 		// 获得上个月的天数
 		getPreMonthCount : function(year, month) {
 			if (month === 0) {
@@ -205,7 +215,7 @@ default {
 			this.nowYear = year;
 			this.nowMonth = month + 1;
 			this.nowDay = day;
-			this.lunarcalendar = this.getLunarcalendar(year,month + 1,day);
+			this.lunarcalendar = this.getLunarcalendarStr(this.getLunarcalendar(year,month + 1,day));
 			let whereMonday = this.getWeekday(year, month);
 			this.week = "星期" + this.weekArr[whereMonday]
 
@@ -250,7 +260,7 @@ default {
 				}
 				
 				let solarTerm = this.getSolarTerm(year_, month_, res_day);
-				let lunarcalendar = this.getLunarcalendar(year_,month_ + 1,res_day);
+				/* let lunarcalendar = this.getLunarcalendarStr(this.getLunarcalendar(year_,month_ + 1,res_day)); */
 				let festival = this.getFestival(month_ + 1,res_day);
 				let text = res_day;
 				if(solarTerm != ''){
@@ -260,7 +270,6 @@ default {
 					style += ' significant';
 					text = festival
 				}
-				/* console.log(this.getNumLunarcalendar(lunarcalendar)) */
 				let significant = style.indexOf("significant");
 				
 				this.days.push({month:month_ + 1,value:res_day, text:text, style:style ,significant: significant != -1 })
@@ -374,6 +383,7 @@ default {
 	.significant span{
 		font-size: 12px!important;
 		color: #b1906f;
+		/* color: #84786d; */
 	}
 
 	.active.significant span{

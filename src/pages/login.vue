@@ -58,7 +58,7 @@ export default {
 					    if(response.data.code == 1){
 							this.$message({message: '登录成功',type: 'success'});
 							var d= new Date();
-							d.setHours(d.getHours() + (24 * 30)); //保存一个月
+							d.setHours(d.getHours() + (24 * 10)); //保存一个月
 							document.cookie="request_token="+response.data.result+"; expires=" + d.toGMTString();
 							window.location.href="/";
 						} else{

@@ -7,11 +7,11 @@
 			<div class="header-item float-right" style="height: 100%;">
 				<div class="block">
 					<a class="header-weather" href="#">
-						<img class="weather-icon" src="https://img.bidianer.com/weather/opacity/101.svg"/> 12°
+						<img class="weather-icon" :src="headerWeather.nowWeather.cond_img"/> {{headerWeather.nowWeather.tmp}}°
 					</a>
 				</div>
 				<div class="block">
-					<a class="text">长沙</a>
+					<a class="text">{{headerWeather.cityName}}</a>
 				</div>
 			</div>
 		</div>
@@ -24,6 +24,21 @@
 			  </div>
 			  <div class="header-item float-right" style="height: 100%;">
 					<ul class="nav menu-inline">
+						<li class="header-nav-item">
+							<el-popover placement="bottom" title="小工具" width="280" trigger="hover">
+								<a href="javascript:void(0);" slot="reference"><img src="@/assets/img/app.svg" width="17px"></a>
+								<ul class="tool-list">
+									<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-full-screen"></i></span><span class="title">二维码生成</span></a></li>
+									<li><a href="javascript:void(0);"><span class="icon"><i class="el-icon-link"></i></span><span class="title">短链接生成</span></a></li>
+								</ul>
+							</el-popover>
+						</li>
+								
+						<li class="header-nav-item">
+							<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
+							  <a href="javascript:void(0);" @click="skinOpen = true"><img src="@/assets/img/skin.svg" width="21px"></a>
+							</el-tooltip>
+						</li>
 						<li class="header-nav-item" v-show="!isLogin"><a href="login">登录</a></li>
 						<li class="header-nav-item" v-show="!isLogin"><a href="login">注册</a></li>
 						<li class="header-nav-item" v-show="isLogin">
@@ -65,13 +80,13 @@
 							</div>
 							<div class="skin_body">
 								<div class="tabpanel show" name='tab1'>
-									<ul class="nav menu-inline">
+									<!-- <ul class="nav menu-inline">
 										<li class="nav-item-radius"><a href="Javascript:void(0);">萌宠</a></li>
 										<li class="nav-item-radius"><a href="Javascript:void(0);">卡通</a></li>
 										<li class="nav-item-radius"><a href="Javascript:void(0);">人物</a></li>
 										<li class="nav-item-radius"><a href="Javascript:void(0);">汽车</a></li>
 										<li class="nav-item-radius"><a href="Javascript:void(0);">风景</a></li>
-									</ul>
+									</ul> -->
 									<div>
 										<ul class="nav menu-inline images_list">
 											<li v-for="item of background_img" @click="optionBackground(item.url)">
@@ -126,7 +141,22 @@
 				background_img:[
 				{'name':'www.couldr.com/001.jpg','url':'http://img.168dh.cn/skin/001.jpg'},
 				{'name':'www.couldr.com/002.jpg','url':'http://img.168dh.cn/skin/002.jpg'},
-				{'name':'www.couldr.com/003.jpg','url':'http://img.168dh.cn/skin/003.jpg'}],
+				{'name':'www.couldr.com/003.jpg','url':'http://img.168dh.cn/skin/003.jpg'},
+				{'name':'www.couldr.com/004.jpg','url':'http://img.168dh.cn/skin/004.jpg'},
+				{'name':'www.couldr.com/005.jpg','url':'http://img.168dh.cn/skin/005.jpg'},
+				{'name':'www.couldr.com/006.jpg','url':'http://img.168dh.cn/skin/006.jpg'},
+				{'name':'www.couldr.com/007.jpg','url':'http://img.168dh.cn/skin/007.jpg'},
+				{'name':'www.couldr.com/008.jpg','url':'http://img.168dh.cn/skin/008.jpg'},
+				{'name':'www.couldr.com/009.jpg','url':'http://img.168dh.cn/skin/009.jpg'},
+				{'name':'www.couldr.com/010.jpg','url':'http://img.168dh.cn/skin/010.jpg'},
+				{'name':'www.couldr.com/011.jpg','url':'http://img.168dh.cn/skin/011.jpg'},
+				{'name':'www.couldr.com/012.jpg','url':'http://img.168dh.cn/skin/012.jpg'},
+				{'name':'www.couldr.com/013.jpg','url':'http://img.168dh.cn/skin/013.jpg'},
+				{'name':'www.couldr.com/014.jpg','url':'http://img.168dh.cn/skin/014.jpg'},
+				{'name':'www.couldr.com/015.jpg','url':'http://img.168dh.cn/skin/015.jpg'},
+				{'name':'www.couldr.com/016.jpg','url':'http://img.168dh.cn/skin/016.jpg'},
+				],
+				
 				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
@@ -146,6 +176,10 @@
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
 				cssBlur:0,
+				headerWeather:{
+					nowWeather:{},
+					cityName:'',
+				}
 			}
 		},
 		methods: {
@@ -265,7 +299,7 @@
 	}
 
 	.header-nav-item{
-		margin: 0 5px;
+		margin: 0 10px;
 	}
 	
 	

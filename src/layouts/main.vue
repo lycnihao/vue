@@ -25,11 +25,7 @@
 							 </div>
 							 <div class="float-right">
 								  <ul class="nav menu-inline" style="line-height: 46px;">
-								 	 <li class="nav-item">
-								 	 	<el-tooltip class="item" effect="dark" content="自定义皮肤背景">
-								 	 	  <a href="javascript:void(0);" @click="skinOpen()"><img src="@/assets/img/skin.svg" width="21px"></a>
-								 	 	</el-tooltip>
-								 	 </li>
+								 	 
 								 </ul>
 							 </div>
 						 </div>
@@ -69,7 +65,7 @@
 					</div> -->
 					<div class="box">
 						<div class="box-body">
-							<weather></weather>
+							<weather ref="weather"></weather>
 						</div>
 					</div>
 					<div class="box calendar">
@@ -190,10 +186,7 @@ default {
                         position: 'bottom-right'
                     });
                 });
-            },
-			skinOpen: function(){
-				this.$refs.header.skinOpen = true
-			}
+            }
 	  },
 
       components: {
@@ -228,9 +221,10 @@ default {
 					document.querySelector('.scroll-in').style.display= "block"
 					document.querySelector('.links').style.display= "block"
 					document.querySelector('.scroll-in').style.top= "0"
-					document.querySelector('#search').style.padding= "52px 0 128px 0"
+					document.querySelector('#search').style.padding= "158px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
 					document.querySelector('.header').style.zIndex="99"
+					document.querySelector('.header-simple').style.opacity="0"
 					if(simple != true || simple == null )
 					localStorage.setItem("simple", true);
 				}else{
@@ -238,9 +232,10 @@ default {
 					if(scrollTop == 0){
 						document.querySelector('.scroll-in').style.display= "none"
 						document.querySelector('.links').style.display= "none"
-						document.querySelector('#search').style.padding= "82px 0 228px 0"
+						document.querySelector('#search').style.padding= "220px 0 228px 0"
 						document.querySelector('footer').style.zIndex="-1"
 						document.querySelector('.header').style.zIndex="-1"
+						document.querySelector('.header-simple').style.opacity="1"
 						if(simple != false || simple == null)
 						localStorage.setItem("simple", false);
 					}
@@ -264,7 +259,7 @@ default {
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
 					 document.querySelector('.links').style.display= "none"
-					 document.querySelector('#search').style.padding= "82px 0 128px 0"
+					 document.querySelector('#search').style.padding= "220px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
 					 document.querySelector('.header').style.zIndex="-1"
 				 }

@@ -73,6 +73,9 @@
 				}
 				
 				this.nowWeather.cond_img = require('../assets/img/weather/'+code+'.svg');
+				
+				this.$parent.$parent.$parent.$refs.header.headerWeather.cityName = this.cityName;
+				this.$parent.$parent.$parent.$refs.header.headerWeather.nowWeather = this.nowWeather;
 			});
 		}
 	}
