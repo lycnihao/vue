@@ -50,7 +50,7 @@
 									</span>
 								</div>
 								<el-dropdown-menu slot="dropdown" class="header-menu-dropdown">
-								  <el-dropdown-item command="1" icon="el-icon-user-solid">我的主页</el-dropdown-item>
+								  <el-dropdown-item command="people" icon="el-icon-user-solid">我的主页</el-dropdown-item>
 								  <el-dropdown-item command="2" icon="el-icon-s-check">设置</el-dropdown-item>
 								  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
 								</el-dropdown-menu>
@@ -185,8 +185,8 @@
 		methods: {
 		  handleCommand:function(command){
 			switch(command){
-				case 'skin':
-					this.skinOpen =true;
+				case 'people':
+					window.location.href = "/people"
 					break;
 			   case 'logout':
 					this.logout();
@@ -244,7 +244,7 @@
 		mounted() {
 			this.getInfo();
 			var theme = JSON.parse(localStorage.getItem("theme"));
-			if(theme){
+			if(theme && this.$parent.$refs.search != undefined){
 				this.cssBlur = theme.cssBlur;
 				this.$parent.$refs.search.theme = theme;
 			}
@@ -255,6 +255,7 @@
 <style>
 	.header-simple{
 		position: absolute;
+		opacity: 0;
 		z-index: 99;
 		width: 100%;
 		height: 3.75rem;
@@ -289,6 +290,7 @@
 	.header{
 		position: fixed;
 		z-index: 999;
+		opacity: 0;
 		width: 100%;
 		max-width: 100%;
 		height: 3.75rem;

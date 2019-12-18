@@ -224,6 +224,7 @@ default {
 					document.querySelector('#search').style.padding= "158px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
 					document.querySelector('.header').style.zIndex="99"
+					document.querySelector('.header').style.opacity="1"
 					document.querySelector('.header-simple').style.opacity="0"
 					if(simple != true || simple == null )
 					localStorage.setItem("simple", true);
@@ -235,6 +236,7 @@ default {
 						document.querySelector('#search').style.padding= "220px 0 228px 0"
 						document.querySelector('footer').style.zIndex="-1"
 						document.querySelector('.header').style.zIndex="-1"
+						document.querySelector('.header').style.opacity="0"
 						document.querySelector('.header-simple').style.opacity="1"
 						if(simple != false || simple == null)
 						localStorage.setItem("simple", false);
@@ -255,6 +257,8 @@ default {
 					 document.querySelector('.header').className="header head-bg"
 					 document.querySelector('footer').style.zIndex="99"
 					 document.querySelector('.header').style.zIndex="99"
+					 document.querySelector('.header').style.opacity="1"
+					 document.querySelector('.header-simple').style.opacity="0"
 				 } else{
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
@@ -262,6 +266,8 @@ default {
 					 document.querySelector('#search').style.padding= "220px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
 					 document.querySelector('.header').style.zIndex="-1"
+					 document.querySelector('.header').style.opacity="0"
+					 document.querySelector('.header-simple').style.opacity="1"
 				 }
 			 })
 		}
@@ -269,8 +275,7 @@ default {
 </script>
 
 <style>
-@import '../assets/css/home_content.css';
-@import '../assets/css/home_sidebar.css';
+@import '../assets/css/style.css';
 
 #nav .nav-item a{
 	font-size: 15px;

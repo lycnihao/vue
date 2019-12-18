@@ -539,11 +539,6 @@ default {
 		
 		
 @media screen and (min-width:1200px) {
-	
-	.main {
-		margin: 0 14%;
-	}
-
 	.site-list .site-icon {
 		margin-right: 8px;
 	}
@@ -562,10 +557,6 @@ default {
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
 	
-	.main {
-		margin: 0 10%;
-	}
-
 	.header-top-nav {
 		display: none;
 	}
