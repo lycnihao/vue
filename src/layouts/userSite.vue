@@ -315,11 +315,6 @@ default {
 			} */
 			let data = new FormData();
 			data.append('file',file.file);
-			let name = "user_session";
-			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-			if(arr != null){
-			  this.$ajax.defaults.headers.common['token'] = arr[2];
-			}
 			this.$ajax.post('/hom1/api/user/upload',data)
 			.then((response)=>{
 				if(response.data.code == 1){
