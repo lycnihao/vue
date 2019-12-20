@@ -495,6 +495,7 @@ default {
 	z-index: 50;
 }
 
+
 .option {
 	margin-bottom: 15px;
 }
@@ -554,16 +555,14 @@ default {
 	width: 100%;
 	margin: 5px 0;
 	border-radius: 2px;
-	background-color: #f9f9f9;
 }
 
 .user .list-group>div {
-	border: 2px #fff dotted;
+	border: 2px transparent dotted;
 }
 
 .user-website {
 	padding: 2px 12px;
-	background-color: #fff;
 }
 
 .user-website .site-item {

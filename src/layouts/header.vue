@@ -61,21 +61,10 @@
 					<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
 						<div class="skin">
 							<div class="skin_header">
-								<div class="skin_option" style="float: right;">
-									<div class="skin_slider">
-										<label>背景虚化
-											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
-											  <i class="el-icon-question"></i>
-											</el-tooltip>
-										</label>
-										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
-									</div>
-								</div>
 								<ul class="nav menu-inline">
 									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
 									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
-									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
-									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-upload"></i> 自定义</a></li>
 								</ul>
 							</div>
 							<div class="skin_body">
@@ -107,7 +96,7 @@
 								</div>
 								<div class="tabpanel" name='tab2'>
 									<ul class="nav menu-inline images_list">
-										<li v-for="item of colors">
+										<li v-for="item of colorList">
 											<a href="Javascript:void(0);" class="color">
 												<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
 												<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
@@ -117,10 +106,48 @@
 									</ul>
 								</div>
 								<div class="tabpanel" name='tab3'>
-									3333
-								</div>
-								<div class="tabpanel" name='tab4'>
-									4444
+									<div class="skin_slider">
+										<label>
+											<el-switch
+											  v-model="custom.frostedGlass"
+											  inactive-text="毛玻璃">
+											</el-switch>
+										</label>
+										<label>背景虚化
+											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
+											  <i class="el-icon-question"></i>
+											</el-tooltip>
+										</label>
+										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
+									</div>
+									<div>
+										<label class="h3">背景图</label>
+										<small>背景图会被拉伸到浏览器窗口大小, 合理的比例会取得更好的效果</small>
+										<div class="preview" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'" ></div>
+										<div v-else>无</div>
+									</div>
+									<div style="display: inline-block;width: 25%;">
+										<label class="h3">主题颜色</label>
+										<div class="colorInfo--37Ift">
+											<el-color-picker
+											  v-model="custom.themeColor"
+											  show-alpha
+											  :predefine="predefineColors">
+											</el-color-picker>
+											<span>{{custom.themeColor!=''?custom.themeColor:'默认'}}</span>
+										</div>
+									</div>
+									<div style="display: inline-block;">
+										<label class="h3">文字颜色</label>
+										<div class="colorInfo--37Ift">
+											<el-color-picker
+											  v-model="custom.fontColor"
+											  :predefine="predefineColors"
+											  >
+											</el-color-picker>
+											<span>{{custom.fontColor!=''?custom.fontColor:'默认'}}</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -131,6 +158,7 @@
 </template>
 
 <script>
+	 import generateColors from '../utils/color';
 	export default {
 		data(){
 			return{
@@ -157,7 +185,7 @@
 				{'name':'www.couldr.com/016.jpg','url':'http://img.168dh.cn/skin/016.jpg'},
 				],
 				
-				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
+				colorList:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
 						['#FFFDE7','#FDD835'],['#FFF9C4','#FBC02D'],['#FFF59D','#F9A825'],['#FFF176','#F57F17'],
@@ -176,10 +204,32 @@
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
 				cssBlur:0,
+				theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0'},
 				headerWeather:{
 					nowWeather:{},
 					cityName:'',
-				}
+				},
+				custom:{
+					frostedGlass:false,
+					themeColor:'',
+					fontColor:'',
+				},
+				 predefineColors: [
+					  '#ff4500',
+					  '#ff8c00',
+					  '#ffd700',
+					  '#90ee90',
+					  '#00ced1',
+					  '#1e90ff',
+					  '#c71585',
+					  'rgba(255, 69, 0, 0.68)',
+					  'rgb(255, 120, 0)',
+					  'hsv(51, 100, 98)',
+					  'hsva(120, 40, 94, 0.5)',
+					  'hsl(181, 100%, 37%)',
+					  'hsla(209, 100%, 56%, 0.73)',
+					  '#c7158577'
+					],
 			}
 		},
 		methods: {
@@ -226,13 +276,41 @@
 			document.querySelector(`.skin .tabpanel[name='${name}']`).className += " show"; //显示新的tab
 		  },
 		  optionBackground:function(item){
-			 this.$parent.$refs.search.theme = {'name':'background','value':item},
+			 this.theme = this.$parent.$refs.search.theme = {'name':'background','value':item},
 			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item,'cssBlur':0}));
 		  },
 		  optionColor:function(item){
-			  this.$parent.$refs.search.theme = {'name':'color','value':item},
+			  this.theme = this.$parent.$refs.search.theme = {'name':'color','value':item},
 			  localStorage.setItem("theme", JSON.stringify({'name':'color','value':item}));
-		  }
+		  },
+		  /* getStyleTemplate(data) {
+			const colorMap = {
+			  '#20a0ff': 'primary',
+			  '#0190fe': 'secondary',
+			  '#fbfdff': 'darkWhite',
+			  '#1f2d3d': 'baseBlack',
+			  '#324157': 'lightBlack',
+			  '#48576a': 'extraLightBlack',
+			  '#8391a5': 'baseSilver',
+			  '#97a8be': 'lightSilver',
+			  '#bfcbd9': 'extraLightSilver',
+			  '#d1dbe5': 'baseGray',
+			  '#e4e8f1': 'lightGray',
+			  '#eef1f6': 'extraLightGray',
+			  '#1d90e6': 'buttonActive',
+			  '#4db3ff': 'buttonHover',
+			  '#dfe6ec': 'tableBorder',
+			  '#d2ecff': 'datepickerInRange',
+			  '#afddff': 'datepickerInRangeHover',
+			  '#1c8de0': 'selectOptionSelected',
+			  '#edf7ff': 'lightBackground'
+			};
+			Object.keys(colorMap).forEach(key => {
+			  const value = colorMap[key];
+			  data = data.replace(new RegExp(key, 'ig'), value);
+			});
+			return data;
+		  }, */
 		},
 		watch:{
 			cssBlur:function(val){
@@ -240,14 +318,48 @@
 				var obj = this.$parent.$refs.search.theme;
 				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val}));
 			},
+			custom:{
+				handler(newValue, oldValue) {
+					
+					if(newValue.fontColor != ''){
+						console.log(newValue.fontColor)
+						var colors = generateColors(newValue.fontColor);
+						var cssText = "a{color:"+newValue.fontColor+"}"
+						cssText += ".site-list .site-info p{color:"+colors.baseBlack+"}"
+						
+						const style = document.createElement('style');
+						style.innerText = cssText;
+						document.head.appendChild(style);
+					}
+					if(newValue.frostedGlass){
+						var items = document.querySelectorAll('.box');
+						for(var tiem of items){
+							var fg = document.createElement('div');
+							fg.setAttribute('class','frostedGlass');
+							fg.setAttribute('style','background: url('+this.theme.value+') fixed center 0/cover no-repeat;')
+							tiem.appendChild(fg);
+						}
+					}else{
+						var items = document.querySelectorAll('.box');
+						for(var tiem of items){
+							var node = tiem.getElementsByClassName('frostedGlass');
+							if(node.length == 0)
+								return
+							tiem.removeChild(tiem.getElementsByClassName('frostedGlass')[0])
+						}
+					}
+		　　　　},
+		　　　　deep: true
+			}
 		},
 		mounted() {
 			this.getInfo();
 			var theme = JSON.parse(localStorage.getItem("theme"));
 			if(theme && this.$parent.$refs.search != undefined){
 				this.cssBlur = theme.cssBlur;
-				this.$parent.$refs.search.theme = theme;
+				this.theme = this.$parent.$refs.search.theme = theme;
 			}
+			
 		}
 	}
 </script>
@@ -358,11 +470,12 @@
 	}
 	
 	.skin_dialog{
-		width: 1006px!important
+		width: 852px!important
 	}
 	.skin_dialog .el-dialog__body{
 		padding:0;
 	}
+	
 	.skin{
 		margin-top: 15px;
 	}
@@ -374,6 +487,14 @@
 	
 	.skin_slider{
 		height: 36px;
+	}
+	
+	.skin_slider>label{
+		margin-right: 18px;
+	}
+	
+	.skin_slider>label:nth-child(2){
+		margin-right: 0!important;
 	}
 	
 	.skin_slider label i{
@@ -451,15 +572,15 @@
 	
 	.images{
 		display: block;
-		width: 228px;
-		height: 128px;
+		width: 258px;
+		height: 138px;
 		position: relative;
 		box-sizing: border-box;
 	}
 	
 	.images img{
-		height: 128px;
-		width: 228px;
+		height: 138px;
+		width: 258px;
 		display: block;
 		object-fit: cover;
 	}
@@ -472,6 +593,17 @@
 	.skin_header .nav .nav-item a.active:after {
 		width: 100%;
 		left: 0;
+	}
+	
+	.skin_dialog .preview{
+		width: 350px;
+		height: 197px;
+		cursor: pointer;
+	}
+	
+	.skin_dialog .preview:hover{
+		filter: brightness(70%);
+		transition: filter 0.2s ease-in-out;
 	}
 	
 	.login_icon{
@@ -515,6 +647,13 @@
 	
 	.header-menu-dropdown .el-dropdown-menu__item:not(.is-disabled):hover {
 	    background-color: #f5f5f5;
+	}
+	.colorInfo--37Ift{
+		display: flex;
+		align-items: center;
+	}
+	.colorInfo--37Ift > span{
+		margin-left: 10px;
 	}
 
 	@media screen and (min-width:1200px) {

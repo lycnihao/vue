@@ -202,7 +202,6 @@ default {
       },
 		created() {
 			this.getData();
-			
 			function addEvent(obj,xEvent,fn) {
 				if(obj.attachEvent){
 				  obj.attachEvent('on'+xEvent,fn);
@@ -211,7 +210,14 @@ default {
 				}
 			}
 			
+			var that = this;
 			 function onMouseWheel(ev) {/*当鼠标滚轮事件发生时，执行一些操作*/
+			 
+				if(that.$refs.header.skinOpen){
+					return
+				}
+				
+			 
 				var ev = ev || window.event;
 				var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
 					down = ev.wheelDelta?ev.wheelDelta<0:ev.detail>0;
