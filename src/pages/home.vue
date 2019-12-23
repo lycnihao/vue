@@ -10,7 +10,7 @@
 			 </ul>
 		</div>
 		  <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-		  <el-row :gutter="10">
+		  <el-row :gutter="10" style="margin-right: 0px!important;">
 			<!-- 主体显示块 -->
 			<el-col :md="17" :lg="17" :xl="17" class="block">
 			  <transition name="el-zoom-in-top" >

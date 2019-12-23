@@ -14,7 +14,7 @@
 				<el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="container">
 					<!-- 功能导航板块 -->
 					 <div id="nav" class="box">
-						 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;margin-bottom: -5px;">
+						 <div style="width: 100%;display: inherit;margin-bottom: -5px;">
 							 <div class="float-left" style="margin-bottom: -1px;margin-left: 5px;">
 								 <ul class="nav menu-inline" style="line-height: 46px;">
 									 <li class="nav-item"><v-link href="/">导航</v-link></li>

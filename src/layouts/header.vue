@@ -113,12 +113,19 @@
 											  inactive-text="毛玻璃">
 											</el-switch>
 										</label>
+										<label>面板透明度
+											<el-tooltip class="item" effect="dark" content="数值越大面板越透明，建议不要太小，以免看不清文字" placement="top">
+											  <i class="el-icon-question"></i>
+											</el-tooltip>
+										</label>
+										<div class="skin_content"><el-slider v-model="cssPanel" :step="1" :max="100"></el-slider></div>
 										<label>背景虚化
 											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
 											  <i class="el-icon-question"></i>
 											</el-tooltip>
 										</label>
 										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
+										<label><el-button @click="cssReset()" type="danger" size="mini" round><i class="el-icon-refresh"></i> 恢复默认</el-button></label>
 									</div>
 									<div>
 										<label class="h3">背景图</label>
@@ -131,7 +138,6 @@
 										<div class="colorInfo--37Ift">
 											<el-color-picker
 											  v-model="custom.themeColor"
-											  show-alpha
 											  :predefine="predefineColors">
 											</el-color-picker>
 											<span>{{custom.themeColor!=''?custom.themeColor:'默认'}}</span>
@@ -169,7 +175,6 @@
 				background_img:[
 				{'name':'www.couldr.com/001.jpg','url':'http://img.168dh.cn/skin/001.jpg'},
 				{'name':'www.couldr.com/002.jpg','url':'http://img.168dh.cn/skin/002.jpg'},
-				{'name':'www.couldr.com/003.jpg','url':'http://img.168dh.cn/skin/003.jpg'},
 				{'name':'www.couldr.com/004.jpg','url':'http://img.168dh.cn/skin/004.jpg'},
 				{'name':'www.couldr.com/005.jpg','url':'http://img.168dh.cn/skin/005.jpg'},
 				{'name':'www.couldr.com/006.jpg','url':'http://img.168dh.cn/skin/006.jpg'},
@@ -204,6 +209,7 @@
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
 				cssBlur:0,
+				cssPanel:100,
 				theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0'},
 				headerWeather:{
 					nowWeather:{},
@@ -233,6 +239,22 @@
 			}
 		},
 		methods: {
+		  cssReset:function(){
+			localStorage.removeItem("cssPanel");
+			localStorage.removeItem("themeColor");
+			localStorage.removeItem("fontColor");
+			this.cssBlur = 0;
+			this.cssPanel = 100;
+			this.custom.fontColor = '';
+			this.custom.themeColor = '';
+			this.custom.frostedGlass = false;
+			localStorage.setItem("theme",JSON.stringify({'name':'background','value':this.theme.value,'cssBlur':'0'}));
+			this.$message({message: '恢复初始状态',type: 'success'});
+			document.querySelector("#cssPanel").innerText = "";
+			document.querySelector("#themeColor").innerText = "";
+			document.querySelector("#fontColor").innerText = "";
+			
+		  },
 		  handleCommand:function(command){
 			switch(command){
 				case 'people':
@@ -283,6 +305,93 @@
 			  this.theme = this.$parent.$refs.search.theme = {'name':'color','value':item},
 			  localStorage.setItem("theme", JSON.stringify({'name':'color','value':item}));
 		  },
+		  optionFontColor:function(fontColor){
+			  localStorage.setItem("fontColor", fontColor);
+			  var colors = generateColors(fontColor);
+			  var cssText = ".user-website .site-info h3{color:"+fontColor+"}"
+			  cssText += ".site-list .site-info h3{color:"+colors.emptyText+"}"
+			  cssText += ".site-list .site-info p{color:"+colors.baseSilver+"}"
+			  cssText += ".site-list .site-item:hover p{color:"+colors.baseSilver+"}"
+			  
+			  var domFontColor = document.querySelector('#fontColor')
+			  if(domFontColor){
+			  	domFontColor.innerText = cssText
+			  }else{
+			  	const style = document.createElement('style');
+			  	style.setAttribute('id','fontColor');
+			  	style.innerText = cssText;
+			  	document.head.appendChild(style);
+			  }	
+		  },
+		  optionThemeColor:function(themeColor){
+			localStorage.setItem("themeColor", themeColor);
+			var colors = generateColors(themeColor);
+			var cssText = ".box-header h3{color:"+themeColor+"}"
+			cssText += ".hot-link a:hover{color:"+themeColor+"}"
+			cssText += ".site-list .site-item:hover h3{color:"+themeColor+"}"
+			cssText += ".nav.menu-inline .nav-item a{color:"+colors.baseSilver+"}"
+			cssText += ".nav-item a, .nav-item-radius a{color:"+colors.lightSilver+"}"
+			cssText += ".nav-item a.active{color:"+themeColor+"}"
+			cssText += ".nav.menu-inline .nav-item a.active{color:"+themeColor+"}"
+			cssText += ".nav-item a.active:after{background:"+themeColor+"}"
+			cssText += ".site-tabs .tablist li a.active{background-color:"+themeColor+"}"
+			cssText += ".nextMonth span,.preMonth span{color:"+colors.lightGray+"}"
+			cssText += ".info,.info a{color:"+colors.selectOptionSelected+"}"
+			cssText += ".day-item .day	{color:"+colors.selectOptionSelected+"!important}"
+								
+								
+			var domThemeColor = document.querySelector('#themeColor')
+			if(domThemeColor){
+				domThemeColor.innerText = cssText
+			}else{
+				const style = document.createElement('style');
+				style.setAttribute('id','themeColor');
+				style.innerText = cssText;
+				document.head.appendChild(style);
+			}			
+			
+		  },
+		  optionCssPanel:function(val){
+			  localStorage.setItem("cssPanel",val);
+			  var cssText = '.header,.box{background:rgba(255,255,255,'+ (val / 100) +')}'
+			  cssText += '.box .box-header{border-bottom:1px rgba(245,245,245,'+ (val / 100) +') solid}'
+			  var domCssPanel = document.querySelector('#cssPanel')
+			  if(domCssPanel){
+				  domCssPanel.innerText = cssText
+			  }else{
+				  const style = document.createElement('style');
+				  style.setAttribute('id','cssPanel');
+				  style.innerText = cssText;
+				  document.head.appendChild(style);
+			  }
+			   
+		  },
+		  
+		  optionFrostedGlass:function(frostedGlass){
+				if(frostedGlass == true){
+					var body = document.querySelector('body');
+					body.className = body.className + ' frostedCss'
+					localStorage.setItem("frostedGlass",true);
+					
+					var domFrostedGlass = document.querySelector('#frostedGlass')
+					console.log(domFrostedGlass)
+					if(domFrostedGlass){
+						domFrostedGlass.innerText = '.frostedCss .box:after{background: url('+this.theme.value+') fixed center -50px/cover no-repeat;}';
+					} else {
+						const style = document.createElement('style');
+						style.setAttribute('id','frostedGlass');
+						style.innerText = '.frostedCss .box:after{background: url('+this.theme.value+') fixed center -50px/cover no-repeat;}';
+						document.head.appendChild(style);
+					}
+					
+					
+				}else{
+					localStorage.setItem("frostedGlass",false);
+					document.querySelector('body').className = '';
+				}
+				
+		  }
+		  
 		  /* getStyleTemplate(data) {
 			const colorMap = {
 			  '#20a0ff': 'primary',
@@ -313,41 +422,25 @@
 		  }, */
 		},
 		watch:{
+			cssPanel:function(val){
+				this.optionCssPanel(val);
+			},
 			cssBlur:function(val){
 				this.$set(this.$parent.$refs.search.theme,"cssBlur", val)
 				var obj = this.$parent.$refs.search.theme;
 				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val}));
 			},
 			custom:{
-				handler(newValue, oldValue) {
+				handler(newValue, oldValue) {		
 					
 					if(newValue.fontColor != ''){
-						console.log(newValue.fontColor)
-						var colors = generateColors(newValue.fontColor);
-						var cssText = "a{color:"+newValue.fontColor+"}"
-						cssText += ".site-list .site-info p{color:"+colors.baseBlack+"}"
-						
-						const style = document.createElement('style');
-						style.innerText = cssText;
-						document.head.appendChild(style);
+						this.optionFontColor(newValue.fontColor)
 					}
-					if(newValue.frostedGlass){
-						var items = document.querySelectorAll('.box');
-						for(var tiem of items){
-							var fg = document.createElement('div');
-							fg.setAttribute('class','frostedGlass');
-							fg.setAttribute('style','background: url('+this.theme.value+') fixed center 0/cover no-repeat;')
-							tiem.appendChild(fg);
-						}
-					}else{
-						var items = document.querySelectorAll('.box');
-						for(var tiem of items){
-							var node = tiem.getElementsByClassName('frostedGlass');
-							if(node.length == 0)
-								return
-							tiem.removeChild(tiem.getElementsByClassName('frostedGlass')[0])
-						}
+					
+					if(newValue.themeColor != ''){
+						this.optionThemeColor(newValue.themeColor)
 					}
+					this.optionFrostedGlass(newValue.frostedGlass);
 		　　　　},
 		　　　　deep: true
 			}
@@ -359,6 +452,33 @@
 				this.cssBlur = theme.cssBlur;
 				this.theme = this.$parent.$refs.search.theme = theme;
 			}
+			
+			this.$nextTick(() => {
+				var cssPanel = localStorage.getItem("cssPanel");
+				var themeColor = localStorage.getItem("themeColor");
+				var fontColor = localStorage.getItem("fontColor");
+				var frostedGlass = localStorage.getItem("frostedGlass");
+				
+				if(cssPanel){
+					this.cssPanel = Number(cssPanel)
+					this.optionCssPanel(cssPanel)
+				}
+				
+				if(themeColor){
+					this.custom.themeColor = themeColor
+					this.optionThemeColor(themeColor)
+				}
+				
+				if(fontColor){
+					this.custom.fontColor = fontColor
+					this.optionFontColor(fontColor)
+				}
+				if(frostedGlass == 'true'){
+					this.custom.frostedGlass = true;
+				}
+				
+			})
+			
 			
 		}
 	}
@@ -501,7 +621,7 @@
 		cursor: pointer;
 	}
 	.skin_slider .skin_content{
-		width: 200px;
+		width: 168px;
 		margin: 0 15px;
 		display: inline-block;
 	}

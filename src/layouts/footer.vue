@@ -24,7 +24,7 @@
 		width: 100%;
 		padding: 10px 0px !important;
 		text-align: center;
-		border-top: 1px solid rgba(188, 198, 208, 0.4);
+		/* border-top: 1px solid rgba(188, 198, 208, 0.4); */
 	}
 	footer p,footer a{
 		color: #333435;

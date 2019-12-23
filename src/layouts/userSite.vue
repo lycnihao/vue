@@ -239,7 +239,7 @@ default {
 			  id:'1',
 			  icon:'',
 			  url:'http://www.168dh.cn',
-			  title:'168导航',
+			  title:'酷达导航',
 			  category:'0'
 			},
 			rules: {
