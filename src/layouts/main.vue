@@ -165,7 +165,7 @@ default {
         methods: {
             getData: function() {
                 this.thumbnails = dataJson.getThumbnail;
-                this.$ajax.get('/hom1/api/getHotList/')
+                this.$ajax.get('/couldr/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
@@ -176,7 +176,7 @@ default {
                 window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$ajax.get('/hom1/api/getHotList')
+                this.$ajax.get('/couldr/api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
                     this.$notify({

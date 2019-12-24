@@ -130,8 +130,10 @@
 									<div>
 										<label class="h3">背景图</label>
 										<small>背景图会被拉伸到浏览器窗口大小, 合理的比例会取得更好的效果</small>
-										<div class="preview" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'" ></div>
-										<div v-else>无</div>
+										<el-upload action="" :http-request="avatarUpload" :show-file-list="false">
+											<div class="preview" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'" ></div>
+											<div v-else>无</div>
+										</el-upload>
 									</div>
 									<div style="display: inline-block;width: 25%;">
 										<label class="h3">主题颜色</label>
@@ -236,9 +238,29 @@
 					  'hsla(209, 100%, 56%, 0.73)',
 					  '#c7158577'
 					],
+					bg:'',
 			}
 		},
 		methods: {
+			avatarUpload:function(file) {
+				const isJPG = file.type === 'image/jpeg';
+				const isLt2M = file.size / 1024 / 1024 < 2;
+			
+				let data = new FormData();
+				data.append('file',file.file);
+			
+				this.$ajax.post('/couldr/api/option/skinUpload',data)
+				.then((response)=>{
+					if(response.data.code == 1){
+						this.theme.name = response.data.result.filePath;
+						this.optionBackground(response.data.result.filePath);
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+					this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			},
 		  cssReset:function(){
 			localStorage.removeItem("cssPanel");
 			localStorage.removeItem("themeColor");
@@ -282,7 +304,7 @@
 			  if(arr != null){
 				  this.token = arr[2];
 				  this.$ajax.defaults.headers.common[name] = arr[2];
-				  this.$ajax.get('/hom1/api/user/info')
+				  this.$ajax.get('/couldr/api/user/info')
 				  .then((response)=>{
 				  	 if(response.data.code == 1 && response.data.result != null){
 				  		 this.user = response.data.result;

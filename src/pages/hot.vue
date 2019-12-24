@@ -318,19 +318,19 @@ default {
 				colors: ['#99A9BF', '#F7BA2A', '#FF9900'] ,
 				info:{
 					baidu:{
-						url : "/hom1/api/hot/baidu?t=",
+						url : "/couldr/api/hot/baidu?t=",
 						active : "baidu_tab1"
 					},
 					weibo:{
-						url : "/hom1/api/hot/weibo?t=",
+						url : "/couldr/api/hot/weibo?t=",
 						active : "weibo_tab1"
 					},
 					zhihu:{
-						url : "/hom1/api/hot/zhihu?t=",
+						url : "/couldr/api/hot/zhihu?t=",
 						active : "zhihu_tab1"
 					},
 					douban:{
-						url : "/hom1/api/hot/douban?t=",
+						url : "/couldr/api/hot/douban?t=",
 						active : "douban_tab1"
 					}
 				},
@@ -370,7 +370,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/hom1/api/hot/baidu?t=' + tab.index)
+				this.$ajax.get('/couldr/api/hot/baidu?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					if(tab.index == 0){
@@ -392,7 +392,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/hom1/api/hot/weibo?t=' + tab.index)
+				this.$ajax.get('/couldr/api/hot/weibo?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					
@@ -413,7 +413,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/hom1/api/hot/zhihu?t=' + tab.index)
+				this.$ajax.get('/couldr/api/hot/zhihu?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					
@@ -434,7 +434,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/hom1/api/hot/douban?t=' + tab.index)
+				this.$ajax.get('/couldr/api/hot/douban?t=' + tab.index)
 				.then((response)=>{
 					
 					loading.close();
@@ -629,11 +629,17 @@ default {
 	
 	.content-list .article .article-excerpt,.content-list .article .article-description{
 		color: #444;
+		font-size: 15px;
+		max-height: 50px;
 		line-height: 25px;
 		margin-top: 2px;
 		overflow: hidden;
+		white-space: normal;
 		text-overflow: ellipsis;
-		white-space: nowrap;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		
 	}
 	
 	.content-list .article .article-description{

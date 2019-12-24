@@ -23,13 +23,27 @@
 		            <el-dropdown-item icon="el-icon-menu" command="sort" disabled>分类管理</el-dropdown-item>
 		          </el-dropdown-menu>
 		        </el-dropdown>
-				<el-button type="primary" size="mini" @click="enabled = false" round v-else><i class="el-icon-success"></i>&nbsp;完成</el-button>
+				<el-button type="primary" size="mini" icon="el-icon-success" @click="enabled = false" round v-else>完成</el-button>
 		     </div>
 		  </div>
 		 <div class="box-body">
 		   <div id="user-block">
 		     <div class="tabs-content" style="width: 100%;">
 		      <div class="tabpanel show" name="常用链接">
+				<div class="groupBut" v-show="enabled">
+					<ul class="nav menu-inline">
+						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true">添加网址</el-button></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" disabled>创建分类</el-button></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-upload2" @click="siteManage.import=true">导入</el-button></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-download">导出</el-button></li>
+					</ul>
+					<ul class="nav menu-inline">
+						<li class="nav-item"><el-checkbox label="全选" border size="small" disabled></el-checkbox></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-right" disabled>移动到</el-button></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-delete" disabled>回收站</el-button></li>
+					</ul>
+				</div>
+				<el-alert v-show="enabled" title="拖动网址即可排序哦~" type="info" center show-icon></el-alert>
 		        <el-row class="user-website" v-if="userSites.length != 0">
 				  <draggable
 					:list="userSites"
@@ -80,69 +94,70 @@
 		   </div>
 		
 		 </div>
-		    <el-dialog title="添加网址" :visible.sync="siteManage.add" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" @closed="siteManage.imageUrl=''">
-		 	<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
-		 		<el-form-item prop="url">
-		 			<el-input v-model="addForm.url" placeholder="网站地址，如：http://www.baidu.com">
-		 			  <template slot="append"><el-button @click="getContent(addForm.url)">抓取标题</el-button></template>
-		 			</el-input>
-		 		</el-form-item>
-		 		<el-row :gutter="10">
-		 		  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
-		 			<el-form-item prop="title">
-		 				<el-input v-model="addForm.title" placeholder="网站名称"></el-input>
-		 			</el-form-item>
-		 		  </el-col>
-		 		  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
-		 			<el-form-item prop="category">
-		 				<el-select v-model="addForm.category" placeholder="请选择">
-		 				  <el-option
-		 					v-for="item in options"
-		 					:key="item.value"
-		 					:label="item.label"
-		 					:value="item.value">
-		 				  </el-option>
-		 				</el-select>
-		 			</el-form-item>
-		 		  </el-col>
-		 		</el-row>
-		 		<el-divider class="divider">
-		 			<span>文字格式设置</span>
-		 		</el-divider>
-		 		<el-row :gutter="15" class="option">
-		 			<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-		 				<div class="option-item">
-		 				  <div class="item">
-		 					  <el-upload
-		 						  ref="upload"
-		 						  :action="'/api/user/upload'"
-		 						  :show-file-list="false"
-		 						  :http-request="avatarUpload"
-		 						  >
-		 						  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
-		 						  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
-		 							  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
-		 							</el-tooltip>
-		 						</el-upload>
-		 				  </div>
-		 				  <span class="title">图标</span>
-		 				</div>
+		</div>
+		<el-dialog title="添加网址" :visible.sync="siteManage.add" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" @closed="siteManage.imageUrl=''">
+			<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
+				<el-form-item prop="url">
+					<el-input v-model="addForm.url" placeholder="网站地址，如：http://www.baidu.com">
+					  <template slot="append"><el-button @click="getContent(addForm.url)">抓取标题</el-button></template>
+					</el-input>
+				</el-form-item>
+				<el-row :gutter="10">
+				  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
+					<el-form-item prop="title">
+						<el-input v-model="addForm.title" placeholder="网站名称"></el-input>
+					</el-form-item>
+				  </el-col>
+				  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
+					<el-form-item prop="category">
+						<el-select v-model="addForm.category" placeholder="请选择">
+						  <el-option
+							v-for="item in options"
+							:key="item.value"
+							:label="item.label"
+							:value="item.value">
+						  </el-option>
+						</el-select>
+					</el-form-item>
+				  </el-col>
+				</el-row>
+				<el-divider class="divider">
+					<span>文字格式设置</span>
+				</el-divider>
+				<el-row :gutter="15" class="option">
+					<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+						<div class="option-item">
+						  <div class="item">
+							  <el-upload
+								  ref="upload"
+								  :action="'/api/user/upload'"
+								  :show-file-list="false"
+								  :http-request="avatarUpload"
+								  >
+								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
+									  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
+									</el-tooltip>
+								</el-upload>
+						  </div>
+						  <span class="title">图标</span>
+						</div>
 		 
-		 			</el-col>
-		 			<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-		 				<div class="option-item">
-		 				  <div class="item">
-		 				  	<el-color-picker size="small"></el-color-picker>
-		 				  </div>
-		 				  <span class="title">颜色</span>
-		 				</div>
-		 			</el-col>
-		 		</el-row>
-		 	</el-form>
-		 	<el-button type="primary" style="width: 100%;" @click="addSite()">立即保存</el-button>
-		 </el-dialog>
+					</el-col>
+					<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+						<div class="option-item">
+						  <div class="item">
+							<el-color-picker size="small"></el-color-picker>
+						  </div>
+						  <span class="title">颜色</span>
+						</div>
+					</el-col>
+				</el-row>
+			</el-form>
+			<el-button type="primary" style="width: 100%;" @click="addSite()">立即保存</el-button>
+		</el-dialog>
 		 
-		 <el-dialog title="修改网址" :visible.sync="siteManage.edit" :modal-append-to-body="false" :close-on-click-modal="false" :destroy-on-close="true" @closed	="siteManage.imageUrl=''">
+		<el-dialog title="修改网址" :visible.sync="siteManage.edit" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" @closed="siteManage.imageUrl=''">
 		 	<el-form :model="editForm" ref="editForm" :rules="rules" status-icon>
 		 		<el-form-item prop="url">
 		 			<el-input v-model="editForm.url" placeholder="网站地址，如：http://www.baidu.com">
@@ -201,12 +216,25 @@
 		 		</el-row>
 		 	</el-form>
 		 	<el-button type="primary" style="width: 100%;" @click="editSite()">立即保存</el-button>
-		 </el-dialog>
-		 <el-dialog title="分类管理" :visible.sync="siteManage.sort" :modal-append-to-body="false" :close-on-click-modal="false">
+		</el-dialog>
+		
+		<el-dialog title="书签导入" :visible.sync="siteManage.import" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true">
+				<el-upload
+				  style="text-align: center;"
+				  drag
+				  action="'/api/user/upload'"
+				  :http-request="importHtml"
+				  list-type="html"
+				  :limit="1">
+				  <i class="el-icon-upload"></i>
+				  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+				  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+				</el-upload>
+		</el-dialog>
+		
+		<el-dialog title="分类管理" :visible.sync="siteManage.sort" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true">
 		 	分类管理
-		 </el-dialog>
-		 
-		</div>
+		</el-dialog>
 	</div>
 </template>
 
@@ -222,6 +250,7 @@ default {
 				add:false,
 				edit:false,
 				sort:false,
+				import:false,
 				imageUrl:''
 			},
 			options: [{
@@ -249,13 +278,24 @@ default {
 		}
 	},
 	methods:{
+		importHtml:function(file) {
+			
+			let data = new FormData();
+			data.append('file',file.file);
+			this.$ajax.post('/couldr/api/user/import',data)
+			.then((response)=>{
+				
+			}).catch((response)=>{
+				this.$message.error('发送请求失败，请检查网络是否通畅');
+			});
+		},
 		userWebSite:function(command){
 			if(!this.$parent.$refs.header.isLogin){
 				this.$parent.$refs.header.loginOpen = true;
 			}else{
 				switch(command){
 				   case 'add':
-					this.siteManage.add = true
+					this.enabled = this.siteManage.add = true
 				   break;
 				   case 'edit':
 					/* this.siteManage.edit = true */
@@ -273,7 +313,7 @@ default {
 			if(arr != null){
 			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
 			}
-			this.$ajax.get('/hom1/api/userWebSite')
+			this.$ajax.get('/couldr/api/userWebSite')
 			.then((response)=>{
 				this.userSites = response.data;
 			}).catch((response)=>{
@@ -289,7 +329,7 @@ default {
 			data.append('oldIndex',e.oldIndex);
 			data.append('newIndex',e.newIndex);
 			
-			this.$ajax.post('/hom1/api/user/sortSite/' + id,data)
+			this.$ajax.post('/couldr/api/user/sortSite/' + id,data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$notify({
@@ -315,7 +355,7 @@ default {
 			} */
 			let data = new FormData();
 			data.append('file',file.file);
-			this.$ajax.post('/hom1/api/user/upload',data)
+			this.$ajax.post('/couldr/api/user/icon/upload',data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					if(this.siteManage.add){
@@ -332,12 +372,7 @@ default {
 			});
 		},
 		saveSite:function(data){
-			let name = "user_session";
-			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-			if(arr != null){
-			  this.$ajax.defaults.headers.common['token'] = arr[2];
-			}
-			this.$ajax.post('/hom1/api/user/saveSite',data)
+			this.$ajax.post('/couldr/api/user/saveSite',data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '保存成功！',type: 'success'});
@@ -369,7 +404,7 @@ default {
 		editOpen:function(siteId){
 			this.siteManage.edit = true;
 			this.editForm.id = siteId;
-			this.$ajax.post('/hom1/api/userWebSite/'+siteId)
+			this.$ajax.post('/couldr/api/userWebSite/'+siteId)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.editForm.title = response.data.result.websiteTitle;
@@ -400,12 +435,7 @@ default {
 			});
 		},
 		removeSite:function(siteId){
-			let name = "user_session";
-			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-			if(arr != null){
-			  this.$ajax.defaults.headers.common['token'] = arr[2];
-			}
-			this.$ajax.post('/hom1/api/user/removeSite/'+siteId)
+			this.$ajax.post('/couldr/api/user/removeSite/'+siteId)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '删除成功！',type: 'success'});
@@ -418,7 +448,7 @@ default {
 			});
 		},
 		getContent:function(url){
-			this.$ajax.get('/hom1/api/getWebContent?url=' + url)
+			this.$ajax.get('/couldr/api/getWebContent?url=' + url)
 			.then((response)=>{
 				if(response.data.code == 1){
 					if(this.siteManage.add){
@@ -446,6 +476,12 @@ default {
 <style>
 .user.edit {
 	border: 1px #008eff solid;
+}
+
+.user .groupBut{
+	margin: -16px 0 6px;
+	display: flex; 
+	justify-content:space-between;
 }
 
 .ghost>.site-item {
@@ -629,7 +665,6 @@ default {
 
 #user-block .null {
 	text-align: center;
-	background-color: #fff;
 }
 
 @media only screen and (max-width: 479px) {

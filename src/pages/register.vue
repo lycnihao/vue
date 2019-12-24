@@ -75,7 +75,7 @@ export default {
 				data.append('username',this.regForm.username);
 				data.append('password',this.regForm.password);
 				data.append('email',this.regForm.email);
-				this.$ajax.post('/hom1/api/user/register',data)
+				this.$ajax.post('/couldr/api/user/register',data)
 				.then((response)=>{
 				    if(response.data.code == 1){
 						this.$message({message: '注册成功',type: 'success'});

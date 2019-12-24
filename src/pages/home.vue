@@ -212,7 +212,7 @@ default {
 				this._calculateHeight();
 			},
 			visit:function(id){
-				this.$ajax.post('/hom1/api/visit/'+id)
+				this.$ajax.post('/couldr/api/visit/'+id)
 			}
 		},
 		components: {
@@ -225,7 +225,7 @@ default {
 			  spinner: 'el-icon-loading',
 			  background: 'rgba(0, 0, 0, 0.2)'
 			});
-			this.$ajax.get('/hom1/api/getList')
+			this.$ajax.get('/couldr/api/getList')
 			.then((response)=>{
 				for(let categorie of response.data.categories){
 				  if(categorie.parentId == 0){

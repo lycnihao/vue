@@ -19,12 +19,12 @@ module.exports = {
 			  '^/': ''
 			}
 		},
-		'/hom1': {
+		'/couldr': {
 			target:'http://127.0.0.1:3302/',
 			/* target:'http://106.54.255.9:3302/', */
 			changeOrigin:true,
 			pathRewrite:{
-			  '^/hom1': ''
+			  '^/couldr': ''
 			}
 		},
 		'/suggestion': {
