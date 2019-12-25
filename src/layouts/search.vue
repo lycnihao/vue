@@ -45,7 +45,7 @@ default {
 			document.querySelector("#suggest").style.display = "block";
 		},
 		search: function() {
-		    var url = this.searchUrl + this.keywords;
+		    var url = this.searchUrl + document.querySelector(".search_text").value;
 		    window.open(url, "_blank")
 		},
 		searchTo: function(event) {
@@ -69,7 +69,7 @@ default {
 				} else{
 					items[this.suggestIndex].className="";
 					items[this.suggestIndex + 1].className="suggestHover";
-					document.querySelector(".search_text").value = items[this.suggestIndex].innerText;
+					document.querySelector(".search_text").value = items[this.suggestIndex + 1].innerText;
 					this.suggestIndex ++;
 				}
 			} else if(ev.keyCode == 38){ //向上
@@ -86,7 +86,7 @@ default {
 				} else {
 					items[this.suggestIndex].className="";
 					items[this.suggestIndex - 1].className="suggestHover";
-					document.querySelector(".search_text").value = items[this.suggestIndex].innerText;
+					document.querySelector(".search_text").value = items[this.suggestIndex - 1].innerText;
 					this.suggestIndex --;
 				}
 			}
@@ -111,7 +111,8 @@ default {
 			this.suggestItems = [];
 		   	for(let item of strObj.s){
 		   		let suggestItem = item.replace(this.keywords.trim(),"<b>"+this.keywords.trim()+"</b>");
-				this.suggestItems.push(suggestItem)
+				this.suggestItems.push(suggestItem);
+				this.suggestIndex = -1;
 		   	}
 		   });
 	   }
@@ -153,6 +154,7 @@ default {
 }
 
 #search .search_text {
+	z-index: 99;
 	height: 45px;
 	border: none;
 	margin: auto;
