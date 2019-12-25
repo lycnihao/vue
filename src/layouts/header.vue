@@ -50,7 +50,7 @@
 									</span>
 								</div>
 								<el-dropdown-menu slot="dropdown" class="header-menu-dropdown">
-								  <el-dropdown-item command="1" icon="el-icon-user-solid">我的主页</el-dropdown-item>
+								  <el-dropdown-item command="people" icon="el-icon-user-solid">我的主页</el-dropdown-item>
 								  <el-dropdown-item command="2" icon="el-icon-s-check">设置</el-dropdown-item>
 								  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
 								</el-dropdown-menu>
@@ -61,21 +61,10 @@
 					<el-dialog title="换肤" :visible.sync="skinOpen" custom-class="skin_dialog" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
 						<div class="skin">
 							<div class="skin_header">
-								<div class="skin_option" style="float: right;">
-									<div class="skin_slider">
-										<label>背景虚化
-											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
-											  <i class="el-icon-question"></i>
-											</el-tooltip>
-										</label>
-										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
-									</div>
-								</div>
 								<ul class="nav menu-inline">
 									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab1',$event)" class="active"><i class="el-icon-picture-outline"></i> 图片背景</a></li>
 									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab2',$event)" class=""><i class="el-icon-brush"></i> 纯色背景</a></li>
-									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-files"></i> 动态背景</a></li>
-									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab4',$event)" class=""><i class="el-icon-upload"></i> 自定义上传</a></li>
+									<li class="nav-item"><a href="Javascript:void(0);" @click="tabs('tab3',$event)" class=""><i class="el-icon-upload"></i> 自定义</a></li>
 								</ul>
 							</div>
 							<div class="skin_body">
@@ -107,7 +96,7 @@
 								</div>
 								<div class="tabpanel" name='tab2'>
 									<ul class="nav menu-inline images_list">
-										<li v-for="item of colors">
+										<li v-for="item of colorList">
 											<a href="Javascript:void(0);" class="color">
 												<div class="images_text color_text" @click="optionColor(item[0])"><span :style="'color:'+item[1]">{{item[1]}}</span></div>
 												<div class="images" :style="'background-color: ' + item[0] + ';border:0 '+item[1]+' dashed'">
@@ -117,10 +106,56 @@
 									</ul>
 								</div>
 								<div class="tabpanel" name='tab3'>
-									3333
-								</div>
-								<div class="tabpanel" name='tab4'>
-									4444
+									<div class="skin_slider">
+										<label>
+											<el-switch
+											  v-model="custom.frostedGlass"
+											  inactive-text="毛玻璃">
+											</el-switch>
+										</label>
+										<label>面板透明度
+											<el-tooltip class="item" effect="dark" content="数值越大面板越透明，建议不要太小，以免看不清文字" placement="top">
+											  <i class="el-icon-question"></i>
+											</el-tooltip>
+										</label>
+										<div class="skin_content"><el-slider v-model="cssPanel" :step="1" :max="100"></el-slider></div>
+										<label>背景虚化
+											<el-tooltip class="item" effect="dark" content="数值越大背景越模糊，背景对文字干扰越小" placement="top">
+											  <i class="el-icon-question"></i>
+											</el-tooltip>
+										</label>
+										<div class="skin_content"><el-slider v-model="cssBlur" :step="1" :max="50"></el-slider></div>
+										<label><el-button @click="cssReset()" type="danger" size="mini" round><i class="el-icon-refresh"></i> 恢复默认</el-button></label>
+									</div>
+									<div>
+										<label class="h3">背景图</label>
+										<small>背景图会被拉伸到浏览器窗口大小, 合理的比例会取得更好的效果</small>
+										<el-upload action="" :before-upload="beforeAvatarUpload" :http-request="avatarUpload" :show-file-list="false">
+											<div class="preview" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'" ></div>
+											<div v-else>无</div>
+										</el-upload>
+									</div>
+									<div style="display: inline-block;width: 25%;">
+										<label class="h3">主题颜色</label>
+										<div class="colorInfo--37Ift">
+											<el-color-picker
+											  v-model="custom.themeColor"
+											  :predefine="predefineColors">
+											</el-color-picker>
+											<span>{{custom.themeColor!=''?custom.themeColor:'默认'}}</span>
+										</div>
+									</div>
+									<div style="display: inline-block;">
+										<label class="h3">文字颜色</label>
+										<div class="colorInfo--37Ift">
+											<el-color-picker
+											  v-model="custom.fontColor"
+											  :predefine="predefineColors"
+											  >
+											</el-color-picker>
+											<span>{{custom.fontColor!=''?custom.fontColor:'默认'}}</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -131,6 +166,7 @@
 </template>
 
 <script>
+	 import generateColors from '../utils/color';
 	export default {
 		data(){
 			return{
@@ -141,7 +177,6 @@
 				background_img:[
 				{'name':'www.couldr.com/001.jpg','url':'http://img.168dh.cn/skin/001.jpg'},
 				{'name':'www.couldr.com/002.jpg','url':'http://img.168dh.cn/skin/002.jpg'},
-				{'name':'www.couldr.com/003.jpg','url':'http://img.168dh.cn/skin/003.jpg'},
 				{'name':'www.couldr.com/004.jpg','url':'http://img.168dh.cn/skin/004.jpg'},
 				{'name':'www.couldr.com/005.jpg','url':'http://img.168dh.cn/skin/005.jpg'},
 				{'name':'www.couldr.com/006.jpg','url':'http://img.168dh.cn/skin/006.jpg'},
@@ -157,7 +192,7 @@
 				{'name':'www.couldr.com/016.jpg','url':'http://img.168dh.cn/skin/016.jpg'},
 				],
 				
-				colors:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
+				colorList:[['#FFEBEE','#EF9A9A'],['#FFCDD2','#E57373'],['#EF9A9A','#EF5350'],['#E57373','#F44336'],
 						['#FBE9E7','#FFAB91'],['#FFCCBC','#FF8A65'],['#FFAB91','#FF7043'],['#FF8A65','#FF5722'],
 						['#FFF3E0','#EF9A9A'],['#FFE0B2','#E57373'],['#FFCC80','#EF5350'],['#FFB74D','#F44336'],
 						['#FFFDE7','#FDD835'],['#FFF9C4','#FBC02D'],['#FFF59D','#F9A825'],['#FFF176','#F57F17'],
@@ -176,17 +211,83 @@
 						['#ECEFF1','#546E7A'],['#CFD8DC','#455A64'],['#B0BEC5','#37474F'],['#90A4AE','#263238'],
 					],
 				cssBlur:0,
+				cssPanel:100,
+				theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0'},
 				headerWeather:{
 					nowWeather:{},
 					cityName:'',
-				}
+				},
+				custom:{
+					frostedGlass:false,
+					themeColor:'',
+					fontColor:'',
+				},
+				 predefineColors: [
+					  '#ff4500',
+					  '#ff8c00',
+					  '#ffd700',
+					  '#90ee90',
+					  '#00ced1',
+					  '#1e90ff',
+					  '#c71585',
+					  'rgba(255, 69, 0, 0.68)',
+					  'rgb(255, 120, 0)',
+					  'hsv(51, 100, 98)',
+					  'hsva(120, 40, 94, 0.5)',
+					  'hsl(181, 100%, 37%)',
+					  'hsla(209, 100%, 56%, 0.73)',
+					  '#c7158577'
+					],
+					bg:'',
 			}
 		},
 		methods: {
+			beforeAvatarUpload:function(file) {
+				const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/bmp';
+				const isLt5M = file.size / 1024 / 1024 < 5;
+						
+				if (!isImage || !isLt5M) {
+				  this.$message.error('上传背景只能是 jpeg/png/jpg/bmp/gif 格式且不超过5M');
+				}
+				
+				return isImage && isLt5M;
+			},
+			avatarUpload:function(file) {
+				let data = new FormData();
+				data.append('file',file.file);
+			
+				this.$ajax.post('/couldr/api/option/skinUpload',data)
+				.then((response)=>{
+					if(response.data.code == 1){
+						this.theme.name = response.data.result.filePath;
+						this.optionBackground(response.data.result.filePath);
+					} else{
+						this.$message.error(response.data.msg);
+					}
+				}).catch((response)=>{
+					this.$message.error('发送请求失败，请检查网络是否通畅');
+				});
+			},
+		  cssReset:function(){
+			localStorage.removeItem("cssPanel");
+			localStorage.removeItem("themeColor");
+			localStorage.removeItem("fontColor");
+			this.cssBlur = 0;
+			this.cssPanel = 100;
+			this.custom.fontColor = '';
+			this.custom.themeColor = '';
+			this.custom.frostedGlass = false;
+			localStorage.setItem("theme",JSON.stringify({'name':'background','value':this.theme.value,'cssBlur':'0'}));
+			this.$message({message: '恢复初始状态',type: 'success'});
+			document.querySelector("#cssPanel").innerText = "";
+			document.querySelector("#themeColor").innerText = "";
+			document.querySelector("#fontColor").innerText = "";
+			
+		  },
 		  handleCommand:function(command){
 			switch(command){
-				case 'skin':
-					this.skinOpen =true;
+				case 'people':
+					window.location.href = "/people"
 					break;
 			   case 'logout':
 					this.logout();
@@ -210,7 +311,7 @@
 			  if(arr != null){
 				  this.token = arr[2];
 				  this.$ajax.defaults.headers.common[name] = arr[2];
-				  this.$ajax.get('/hom1/api/user/info')
+				  this.$ajax.get('/couldr/api/user/info')
 				  .then((response)=>{
 				  	 if(response.data.code == 1 && response.data.result != null){
 				  		 this.user = response.data.result;
@@ -226,28 +327,188 @@
 			document.querySelector(`.skin .tabpanel[name='${name}']`).className += " show"; //显示新的tab
 		  },
 		  optionBackground:function(item){
-			 this.$parent.$refs.search.theme = {'name':'background','value':item},
+			 this.theme = this.$parent.$refs.search.theme = {'name':'background','value':item},
 			 localStorage.setItem("theme", JSON.stringify({'name':'background','value':item,'cssBlur':0}));
 		  },
 		  optionColor:function(item){
-			  this.$parent.$refs.search.theme = {'name':'color','value':item},
+			  this.theme = this.$parent.$refs.search.theme = {'name':'color','value':item},
 			  localStorage.setItem("theme", JSON.stringify({'name':'color','value':item}));
+		  },
+		  optionFontColor:function(fontColor){
+			  localStorage.setItem("fontColor", fontColor);
+			  var colors = generateColors(fontColor);
+			  var cssText = ".user-website .site-info h3{color:"+fontColor+"}"
+			  cssText += ".site-list .site-info h3{color:"+colors.emptyText+"}"
+			  cssText += ".site-list .site-info p{color:"+colors.baseSilver+"}"
+			  cssText += ".site-list .site-item:hover p{color:"+colors.baseSilver+"}"
+			  
+			  var domFontColor = document.querySelector('#fontColor')
+			  if(domFontColor){
+			  	domFontColor.innerText = cssText
+			  }else{
+			  	const style = document.createElement('style');
+			  	style.setAttribute('id','fontColor');
+			  	style.innerText = cssText;
+			  	document.head.appendChild(style);
+			  }	
+		  },
+		  optionThemeColor:function(themeColor){
+			localStorage.setItem("themeColor", themeColor);
+			var colors = generateColors(themeColor);
+			var cssText = ".box-header h3{color:"+themeColor+"}"
+			cssText += ".hot-link a:hover{color:"+themeColor+"}"
+			cssText += ".site-list .site-item:hover h3{color:"+themeColor+"}"
+			cssText += ".nav.menu-inline .nav-item a{color:"+colors.baseSilver+"}"
+			cssText += ".nav-item a, .nav-item-radius a{color:"+colors.lightSilver+"}"
+			cssText += ".nav-item a.active{color:"+themeColor+"}"
+			cssText += ".nav.menu-inline .nav-item a.active{color:"+themeColor+"}"
+			cssText += ".nav-item a.active:after{background:"+themeColor+"}"
+			cssText += ".site-tabs .tablist li a.active{background-color:"+themeColor+"}"
+			cssText += ".nextMonth span,.preMonth span{color:"+colors.lightGray+"}"
+			cssText += ".info,.info a{color:"+colors.selectOptionSelected+"}"
+			cssText += ".day-item .day	{color:"+colors.selectOptionSelected+"!important}"
+								
+								
+			var domThemeColor = document.querySelector('#themeColor')
+			if(domThemeColor){
+				domThemeColor.innerText = cssText
+			}else{
+				const style = document.createElement('style');
+				style.setAttribute('id','themeColor');
+				style.innerText = cssText;
+				document.head.appendChild(style);
+			}			
+			
+		  },
+		  optionCssPanel:function(val){
+			  localStorage.setItem("cssPanel",val);
+			  var cssText = '.header,.box{background:rgba(255,255,255,'+ (val / 100) +')}'
+			  cssText += '.box .box-header{border-bottom:1px rgba(245,245,245,'+ (val / 100) +') solid}'
+			  var domCssPanel = document.querySelector('#cssPanel')
+			  if(domCssPanel){
+				  domCssPanel.innerText = cssText
+			  }else{
+				  const style = document.createElement('style');
+				  style.setAttribute('id','cssPanel');
+				  style.innerText = cssText;
+				  document.head.appendChild(style);
+			  }
+			   
+		  },
+		  
+		  optionFrostedGlass:function(frostedGlass){
+				if(frostedGlass == true){
+					var body = document.querySelector('body');
+					body.className = body.className + ' frostedCss'
+					localStorage.setItem("frostedGlass",true);
+					
+					var domFrostedGlass = document.querySelector('#frostedGlass')
+					console.log(domFrostedGlass)
+					if(domFrostedGlass){
+						domFrostedGlass.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
+					} else {
+						const style = document.createElement('style');
+						style.setAttribute('id','frostedGlass');
+						style.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
+						document.head.appendChild(style);
+					}
+					
+					
+				}else{
+					localStorage.setItem("frostedGlass",false);
+					document.querySelector('body').className = '';
+				}
+				
 		  }
+		  
+		  /* getStyleTemplate(data) {
+			const colorMap = {
+			  '#20a0ff': 'primary',
+			  '#0190fe': 'secondary',
+			  '#fbfdff': 'darkWhite',
+			  '#1f2d3d': 'baseBlack',
+			  '#324157': 'lightBlack',
+			  '#48576a': 'extraLightBlack',
+			  '#8391a5': 'baseSilver',
+			  '#97a8be': 'lightSilver',
+			  '#bfcbd9': 'extraLightSilver',
+			  '#d1dbe5': 'baseGray',
+			  '#e4e8f1': 'lightGray',
+			  '#eef1f6': 'extraLightGray',
+			  '#1d90e6': 'buttonActive',
+			  '#4db3ff': 'buttonHover',
+			  '#dfe6ec': 'tableBorder',
+			  '#d2ecff': 'datepickerInRange',
+			  '#afddff': 'datepickerInRangeHover',
+			  '#1c8de0': 'selectOptionSelected',
+			  '#edf7ff': 'lightBackground'
+			};
+			Object.keys(colorMap).forEach(key => {
+			  const value = colorMap[key];
+			  data = data.replace(new RegExp(key, 'ig'), value);
+			});
+			return data;
+		  }, */
 		},
 		watch:{
+			cssPanel:function(val){
+				this.optionCssPanel(val);
+			},
 			cssBlur:function(val){
 				this.$set(this.$parent.$refs.search.theme,"cssBlur", val)
 				var obj = this.$parent.$refs.search.theme;
 				localStorage.setItem("theme",JSON.stringify({'name':'background','value':obj.value,'cssBlur':val}));
 			},
+			custom:{
+				handler(newValue, oldValue) {		
+					
+					if(newValue.fontColor != ''){
+						this.optionFontColor(newValue.fontColor)
+					}
+					
+					if(newValue.themeColor != ''){
+						this.optionThemeColor(newValue.themeColor)
+					}
+					this.optionFrostedGlass(newValue.frostedGlass);
+		　　　　},
+		　　　　deep: true
+			}
 		},
 		mounted() {
 			this.getInfo();
 			var theme = JSON.parse(localStorage.getItem("theme"));
-			if(theme){
+			if(theme && this.$parent.$refs.search != undefined){
 				this.cssBlur = theme.cssBlur;
-				this.$parent.$refs.search.theme = theme;
+				this.theme = this.$parent.$refs.search.theme = theme;
 			}
+			
+			this.$nextTick(() => {
+				var cssPanel = localStorage.getItem("cssPanel");
+				var themeColor = localStorage.getItem("themeColor");
+				var fontColor = localStorage.getItem("fontColor");
+				var frostedGlass = localStorage.getItem("frostedGlass");
+				
+				if(cssPanel){
+					this.cssPanel = Number(cssPanel)
+					this.optionCssPanel(cssPanel)
+				}
+				
+				if(themeColor){
+					this.custom.themeColor = themeColor
+					this.optionThemeColor(themeColor)
+				}
+				
+				if(fontColor){
+					this.custom.fontColor = fontColor
+					this.optionFontColor(fontColor)
+				}
+				if(frostedGlass == 'true'){
+					this.custom.frostedGlass = true;
+				}
+				
+			})
+			
+			
 		}
 	}
 </script>
@@ -255,6 +516,7 @@
 <style>
 	.header-simple{
 		position: absolute;
+		opacity: 0;
 		z-index: 99;
 		width: 100%;
 		height: 3.75rem;
@@ -289,6 +551,7 @@
 	.header{
 		position: fixed;
 		z-index: 999;
+		opacity: 0;
 		width: 100%;
 		max-width: 100%;
 		height: 3.75rem;
@@ -356,11 +619,12 @@
 	}
 	
 	.skin_dialog{
-		width: 1006px!important
+		width: 852px!important
 	}
 	.skin_dialog .el-dialog__body{
 		padding:0;
 	}
+	
 	.skin{
 		margin-top: 15px;
 	}
@@ -374,11 +638,19 @@
 		height: 36px;
 	}
 	
+	.skin_slider>label{
+		margin-right: 18px;
+	}
+	
+	.skin_slider>label:nth-child(2){
+		margin-right: 0!important;
+	}
+	
 	.skin_slider label i{
 		cursor: pointer;
 	}
 	.skin_slider .skin_content{
-		width: 200px;
+		width: 168px;
 		margin: 0 15px;
 		display: inline-block;
 	}
@@ -449,15 +721,15 @@
 	
 	.images{
 		display: block;
-		width: 228px;
-		height: 128px;
+		width: 258px;
+		height: 138px;
 		position: relative;
 		box-sizing: border-box;
 	}
 	
 	.images img{
-		height: 128px;
-		width: 228px;
+		height: 138px;
+		width: 258px;
 		display: block;
 		object-fit: cover;
 	}
@@ -470,6 +742,17 @@
 	.skin_header .nav .nav-item a.active:after {
 		width: 100%;
 		left: 0;
+	}
+	
+	.skin_dialog .preview{
+		width: 350px;
+		height: 197px;
+		cursor: pointer;
+	}
+	
+	.skin_dialog .preview:hover{
+		filter: brightness(70%);
+		transition: filter 0.2s ease-in-out;
 	}
 	
 	.login_icon{
@@ -513,6 +796,13 @@
 	
 	.header-menu-dropdown .el-dropdown-menu__item:not(.is-disabled):hover {
 	    background-color: #f5f5f5;
+	}
+	.colorInfo--37Ift{
+		display: flex;
+		align-items: center;
+	}
+	.colorInfo--37Ift > span{
+		margin-left: 10px;
 	}
 
 	@media screen and (min-width:1200px) {

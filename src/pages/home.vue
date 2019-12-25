@@ -10,7 +10,7 @@
 			 </ul>
 		</div>
 		  <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-		  <el-row :gutter="10">
+		  <el-row :gutter="10" style="margin-right: 0px!important;">
 			<!-- 主体显示块 -->
 			<el-col :md="17" :lg="17" :xl="17" class="block">
 			  <transition name="el-zoom-in-top" >
@@ -212,7 +212,7 @@ default {
 				this._calculateHeight();
 			},
 			visit:function(id){
-				this.$ajax.post('/hom1/api/visit/'+id)
+				this.$ajax.post('/couldr/api/visit/'+id)
 			}
 		},
 		components: {
@@ -225,7 +225,7 @@ default {
 			  spinner: 'el-icon-loading',
 			  background: 'rgba(0, 0, 0, 0.2)'
 			});
-			this.$ajax.get('/hom1/api/getList')
+			this.$ajax.get('/couldr/api/getList')
 			.then((response)=>{
 				for(let categorie of response.data.categories){
 				  if(categorie.parentId == 0){
@@ -539,11 +539,6 @@ default {
 		
 		
 @media screen and (min-width:1200px) {
-	
-	.main {
-		margin: 0 14%;
-	}
-
 	.site-list .site-icon {
 		margin-right: 8px;
 	}
@@ -562,10 +557,6 @@ default {
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
 	
-	.main {
-		margin: 0 10%;
-	}
-
 	.header-top-nav {
 		display: none;
 	}

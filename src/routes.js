@@ -8,4 +8,5 @@ export default {
   '/login': 'login',
   '/register': 'register',
   '/register/name': 'registerName',
+	'/people': 'people',
 }

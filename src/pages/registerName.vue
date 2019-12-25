@@ -36,7 +36,7 @@ export default {
 		  if(arr != null){
 			  this.token = arr[2];
 			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
-			  this.$ajax.get('/hom1/api/user/info')
+			  this.$ajax.get('/couldr/api/user/info')
 			  .then((response)=>{
 				  if (response.data.msg == null) {
 				  	window.location.href = "/";
@@ -51,7 +51,7 @@ export default {
 		  if(arr != null){
 			  this.token = arr[2];
 			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
-			  this.$ajax.get('/hom1/api/user/active?userName=' + this.regForm.username)
+			  this.$ajax.get('/couldr/api/user/active?userName=' + this.regForm.username)
 			  .then((response)=>{
 				 if(response.data.code == 1){
 					 console.log(response.data)

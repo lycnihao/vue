@@ -14,7 +14,7 @@
 				<el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="container">
 					<!-- 功能导航板块 -->
 					 <div id="nav" class="box">
-						 <div style="width: 100%;display: inherit;border-bottom: 1px #F2F2F2 solid;margin-bottom: -5px;">
+						 <div style="width: 100%;display: inherit;margin-bottom: -5px;">
 							 <div class="float-left" style="margin-bottom: -1px;margin-left: 5px;">
 								 <ul class="nav menu-inline" style="line-height: 46px;">
 									 <li class="nav-item"><v-link href="/">导航</v-link></li>
@@ -165,7 +165,7 @@ default {
         methods: {
             getData: function() {
                 this.thumbnails = dataJson.getThumbnail;
-                this.$ajax.get('/hom1/api/getHotList/')
+                this.$ajax.get('/couldr/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
@@ -176,7 +176,7 @@ default {
                 window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$ajax.get('/hom1/api/getHotList')
+                this.$ajax.get('/couldr/api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
                     this.$notify({
@@ -202,7 +202,6 @@ default {
       },
 		created() {
 			this.getData();
-			
 			function addEvent(obj,xEvent,fn) {
 				if(obj.attachEvent){
 				  obj.attachEvent('on'+xEvent,fn);
@@ -211,7 +210,14 @@ default {
 				}
 			}
 			
+			var that = this;
 			 function onMouseWheel(ev) {/*当鼠标滚轮事件发生时，执行一些操作*/
+			 
+				if(that.$refs.header.skinOpen){
+					return
+				}
+				
+			 
 				var ev = ev || window.event;
 				var down = true; // 定义一个标志，当滚轮向下滚时，执行一些操作
 					down = ev.wheelDelta?ev.wheelDelta<0:ev.detail>0;
@@ -224,6 +230,7 @@ default {
 					document.querySelector('#search').style.padding= "158px 0 128px 0"
 					document.querySelector('footer').style.zIndex="99"
 					document.querySelector('.header').style.zIndex="99"
+					document.querySelector('.header').style.opacity="1"
 					document.querySelector('.header-simple').style.opacity="0"
 					if(simple != true || simple == null )
 					localStorage.setItem("simple", true);
@@ -235,6 +242,7 @@ default {
 						document.querySelector('#search').style.padding= "220px 0 228px 0"
 						document.querySelector('footer').style.zIndex="-1"
 						document.querySelector('.header').style.zIndex="-1"
+						document.querySelector('.header').style.opacity="0"
 						document.querySelector('.header-simple').style.opacity="1"
 						if(simple != false || simple == null)
 						localStorage.setItem("simple", false);
@@ -255,6 +263,8 @@ default {
 					 document.querySelector('.header').className="header head-bg"
 					 document.querySelector('footer').style.zIndex="99"
 					 document.querySelector('.header').style.zIndex="99"
+					 document.querySelector('.header').style.opacity="1"
+					 document.querySelector('.header-simple').style.opacity="0"
 				 } else{
 					 document.querySelector(".scroll-in").style.top = "400px";
 					 document.querySelector(".scroll-in").style.display = "none";
@@ -262,6 +272,8 @@ default {
 					 document.querySelector('#search').style.padding= "220px 0 128px 0"
 					 document.querySelector('footer').style.zIndex="-1"
 					 document.querySelector('.header').style.zIndex="-1"
+					 document.querySelector('.header').style.opacity="0"
+					 document.querySelector('.header-simple').style.opacity="1"
 				 }
 			 })
 		}
@@ -269,8 +281,7 @@ default {
 </script>
 
 <style>
-@import '../assets/css/home_content.css';
-@import '../assets/css/home_sidebar.css';
+@import '../assets/css/style.css';
 
 #nav .nav-item a{
 	font-size: 15px;

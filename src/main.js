@@ -14,21 +14,6 @@ axios.defaults.withCredentials=true
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-// vue router
-/* routes.beforeEach((to, from, next) => {
-	var _hmt = _hmt || [];
-	window._hmt = _hmt;
-
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?b14e8cb38dafe28ede1af1dfd1f498dc";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-
-    // _hmt.push(['_trackPageview', pageURL]) 必须是以"/"（斜杠）开头的相对路径
-    if (to.path) window._hmt.push(['_trackPageview', '/#' + to.fullPath])
-    next()
-}) */
-
 /* eslint-disable no-new */
 const app = new Vue({
   el: '#app',
