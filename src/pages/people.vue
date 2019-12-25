@@ -8,7 +8,7 @@
 						<div class="bg"></div>
 					</div>
 					<div class="profileHeader-wrapper">
-						<el-upload action="" :http-request="avatarUpload" :show-file-list="false">
+						<el-upload action="" :before-upload="beforeAvatarUpload" :http-request="avatarUpload" :show-file-list="false">
 							<div class="userAvatarEditor">
 								<div class="userAvatar">
 									<img class="avatar" width="160" height="160" :src="this.userForm.userAvatar">
@@ -48,7 +48,7 @@
 									</el-form-item>
 									<el-form-item>
 										<el-button type="primary" @click="userSub()">保存</el-button>
-										<el-button>取消</el-button>
+										<el-button onClick="window.location.href='/'">取消</el-button>
 									</el-form-item>
 								  </el-form>
 							  </div>
@@ -266,9 +266,17 @@ default {
 				    this.$message.error('发送请求失败，请检查网络是否通畅');
 				});
 			},
-			avatarUpload:function(file) {
-				const isJPG = file.type === 'image/jpeg';
+			beforeAvatarUpload:function(file) {
+				const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif' ;
 				const isLt2M = file.size / 1024 / 1024 < 2;
+						
+				if (!isImage || !isLt2M) {
+				  this.$message.error('上传头像图片只能是 jpeg/png/gif 格式,且大小不超过2MB!');
+				}
+				
+				return isImage && isLt2M;
+			},
+			avatarUpload:function(file) {
 			
 				let data = new FormData();
 				data.append('file',file.file);

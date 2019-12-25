@@ -35,7 +35,12 @@
 						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true">添加网址</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" disabled>创建分类</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-upload2" @click="siteManage.import=true">导入</el-button></li>
-						<li class="nav-item"><el-button size="small" icon="el-icon-download">导出</el-button></li>
+						<li class="nav-item">
+							<el-popconfirm title="确定导出吗？" @onConfirm="exportHtml()">
+								<el-button slot="reference" size="small" icon="el-icon-download">导出</el-button>
+							</el-popconfirm>
+						</li>
+						
 					</ul>
 					<ul class="nav menu-inline">
 						<li class="nav-item"><el-checkbox label="全选" border size="small" disabled></el-checkbox></li>
@@ -132,10 +137,11 @@
 								  ref="upload"
 								  :action="'/api/user/upload'"
 								  :show-file-list="false"
+								  :before-upload="beforeAvatarUpload"
 								  :http-request="avatarUpload"
 								  >
 								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
-								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
+								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 									  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 									</el-tooltip>
 								</el-upload>
@@ -194,9 +200,10 @@
 		 					  ref="upload"
 		 					  :action="'/api/user/upload'"
 		 					  :show-file-list="false"
+							  :before-upload="beforeAvatarUpload"
 		 					  :http-request="avatarUpload">
 		 					  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
-		 					  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过500Kb" placement="top-start">
+		 					  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 		 						  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 		 						</el-tooltip>
 		 					</el-upload>
@@ -224,11 +231,11 @@
 				  drag
 				  action="'/api/user/upload'"
 				  :http-request="importHtml"
-				  list-type="html"
+				  :beforeUpload="beforeImportHtml"
 				  :limit="1">
 				  <i class="el-icon-upload"></i>
 				  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-				  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+				  <div class="el-upload__tip" slot="tip">只能上传html文件。上传完成后需要一段时间解析，<b>请勿重复上传</b>。</div>
 				</el-upload>
 		</el-dialog>
 		
@@ -278,13 +285,22 @@ default {
 		}
 	},
 	methods:{
+		exportHtml:function(){
+			window.open('/couldr/api/user/export')
+		},
+		beforeImportHtml:function(file){
+			const isJPG = file.type === 'text/html';
+			if (!isJPG) {
+				this.$message.error('只能是 html 格式!');
+			}
+			return isJPG;
+		},
 		importHtml:function(file) {
-			
 			let data = new FormData();
 			data.append('file',file.file);
 			this.$ajax.post('/couldr/api/user/import',data)
 			.then((response)=>{
-				
+				this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
 			}).catch((response)=>{
 				this.$message.error('发送请求失败，请检查网络是否通畅');
 			});
@@ -341,18 +357,22 @@ default {
 			});
 			
 		},
-		avatarUpload:function(file) {
-			const isJPG = file.type === 'image/jpeg';
-			const isLt2M = file.size / 1024 / 1024 < 2;
 		
-			/* if (!isJPG) {
-			  this.$message.error('上传头像图片只能是 JPG 格式!');
-			  return false
-			} */
-			/* if (!isLt2M) {
+		beforeAvatarUpload:function(file) {
+			const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/ico'
+			 || file.type === 'image/gif' || file.type === 'image/svg' || file.type === 'image/bmp';
+			const isLt2M = file.size / 1024 / 1024 < 2;
+					
+			if (!isImage) {
+			  this.$message.error('上传头像图片只能是 svg/ico/png/jpg/bmp/gif 格式!');
+			}
+			if (!isLt2M) {
 			  this.$message.error('上传头像图片大小不能超过 2MB!');
-			  return false
-			} */
+			}
+			
+			return isImage && isLt2M;
+		},
+		avatarUpload:function(file) {
 			let data = new FormData();
 			data.append('file',file.file);
 			this.$ajax.post('/couldr/api/user/icon/upload',data)

@@ -181,7 +181,7 @@ default {
 }
 
 #suggest {
-	z-index: 1;
+	z-index: 10;
 	width: 100%;
 	margin-top: -2px;
 	text-align: left;

@@ -130,7 +130,7 @@
 									<div>
 										<label class="h3">背景图</label>
 										<small>背景图会被拉伸到浏览器窗口大小, 合理的比例会取得更好的效果</small>
-										<el-upload action="" :http-request="avatarUpload" :show-file-list="false">
+										<el-upload action="" :before-upload="beforeAvatarUpload" :http-request="avatarUpload" :show-file-list="false">
 											<div class="preview" v-if="theme.name == 'background'" :style="'background-image: url('+theme.value+');background-size: cover;'" ></div>
 											<div v-else>无</div>
 										</el-upload>
@@ -242,10 +242,17 @@
 			}
 		},
 		methods: {
+			beforeAvatarUpload:function(file) {
+				const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/bmp';
+				const isLt5M = file.size / 1024 / 1024 < 5;
+						
+				if (!isImage || !isLt5M) {
+				  this.$message.error('上传背景只能是 jpeg/png/jpg/bmp/gif 格式且不超过5M');
+				}
+				
+				return isImage && isLt5M;
+			},
 			avatarUpload:function(file) {
-				const isJPG = file.type === 'image/jpeg';
-				const isLt2M = file.size / 1024 / 1024 < 2;
-			
 				let data = new FormData();
 				data.append('file',file.file);
 			
@@ -398,11 +405,11 @@
 					var domFrostedGlass = document.querySelector('#frostedGlass')
 					console.log(domFrostedGlass)
 					if(domFrostedGlass){
-						domFrostedGlass.innerText = '.frostedCss .box:after{background: url('+this.theme.value+') fixed center -50px/cover no-repeat;}';
+						domFrostedGlass.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
 					} else {
 						const style = document.createElement('style');
 						style.setAttribute('id','frostedGlass');
-						style.innerText = '.frostedCss .box:after{background: url('+this.theme.value+') fixed center -50px/cover no-repeat;}';
+						style.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
 						document.head.appendChild(style);
 					}
 					
