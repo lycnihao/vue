@@ -342,6 +342,7 @@ default {
 	.profileHeader-userCover{
 		width: 100%;
 		height: 185px;
+		position: relative;
 	}
 	
 	.profileHeader-userCover .bg{
@@ -369,6 +370,8 @@ default {
 	}
 	
 	.userAvatarEditor .avatar{
+		width:160px;
+		height: 160px;
 		display: inline-block;
 		overflow: hidden;
 		vertical-align: top;
