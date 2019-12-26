@@ -110,6 +110,7 @@
 		<v-footer></v-footer>
 		<el-dialog title="修改密码" :visible.sync="passOpen" :modal-append-to-body="false" :destroy-on-close="true" :lock-scroll="false" :modal="false">
 			<el-form :model="userForm" ref="userForm" :rules="rules">
+				<el-alert title="默认密码为123456" type="info"></el-alert>
 				<el-form-item prop="oldPassword">
 					<el-input v-model="userForm.oldPassword" placeholder="请输入您当前登陆密码" show-password></el-input>
 				</el-form-item>

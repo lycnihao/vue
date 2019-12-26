@@ -140,7 +140,7 @@
 								  :before-upload="beforeAvatarUpload"
 								  :http-request="avatarUpload"
 								  >
-								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar" alt="无">
 								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 									  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 									</el-tooltip>
@@ -202,7 +202,7 @@
 		 					  :show-file-list="false"
 							  :before-upload="beforeAvatarUpload"
 		 					  :http-request="avatarUpload">
-		 					  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+		 					  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar" alt="无">
 		 					  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 		 						  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 		 						</el-tooltip>
@@ -247,6 +247,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import icons from './icons'
 
 export
 default {
@@ -258,7 +259,8 @@ default {
 				edit:false,
 				sort:false,
 				import:false,
-				imageUrl:''
+				icons:false,
+				imageUrl:'',
 			},
 			options: [{
 				value: '0',
@@ -429,6 +431,7 @@ default {
 				if(response.data.code == 1){
 					this.editForm.title = response.data.result.websiteTitle;
 					this.editForm.icon = response.data.result.websiteIcon;
+					this.editForm.url = response.data.result.websiteUrl;
 					this.editForm.category = response.data.result.websiteCate;
 					this.siteManage.imageUrl = this.editForm.websiteIcon = response.data.result.websiteIcon;
 				} else{
@@ -486,6 +489,7 @@ default {
 	},
 	components: {
 	  'draggable':draggable,
+	  'v-icons':icons,
 	},
 	created() {
 		this.getUserSites()
@@ -494,6 +498,9 @@ default {
 </script>
 
 <style>
+	.iconList{
+		width: 580px!important;
+	}
 .user.edit {
 	border: 1px #008eff solid;
 }

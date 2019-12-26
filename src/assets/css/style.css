@@ -217,34 +217,6 @@ padding: 8px 3px;
 	border-bottom: none;
 }
 
-#sidebar {
-	width: 40px;
-	height: 0;
-	margin: 0 auto;
-	cursor: pointer;
-	display: inherit
-}
-
-#sidebar:before {
-	width: 40px;
-	height: 40px;
-	margin-top: -20px;
-	font-size: 24px;
-	line-height: 40px;
-	color: #ccc;
-	text-align: center;
-	background: #303133;
-	border-radius: 50%;
-	-webkit-transition: .3s;
-	transition: .3s;
-	display: inline-block
-}
-
-#sidebar:hover:before {
-	-webkit-transform: rotate(180deg);
-	transform: rotate(180deg)
-}
-
 .list-item-hover{
 	background: #F1F1F1!important;
     color: #222;
