@@ -53,7 +53,7 @@ export default {
 			data.append('password',this.logForm.password);
 			this.$refs.logForm.validate((valid) => {
 				if (valid) {
-					this.$ajax.post('/couldr/api/user/login',data)
+					this.$ajax.post('/api/user/login',data)
 					.then((response)=>{
 					    if(response.data.code == 1){
 							this.$message({message: '登录成功',type: 'success'});

@@ -192,7 +192,7 @@ default {
 					  let data = new FormData();
 					  data.append('nickname',this.userForm.nickname);
 					  data.append('userAvatar',this.userForm.userAvatar);
-					  this.$ajax.post('/couldr/api/user/info/update',data)
+					  this.$ajax.post('/api/user/info/update',data)
 					  .then((response)=>{
 					      if(response.data.code == 1){
 					  		this.$message({message: '保存成功',type: 'success'});
@@ -214,7 +214,7 @@ default {
 					  let data = new FormData();
 					  data.append('email',this.userForm.email);
 					  data.append('password',this.userForm.password);
-					  this.$ajax.post('/couldr/api/user/info/email/update',data)
+					  this.$ajax.post('/api/user/info/email/update',data)
 					  .then((response)=>{
 					      if(response.data.code == 1){
 					  		this.$message({message: '绑定成功',type: 'success'});
@@ -237,7 +237,7 @@ default {
 					  let data = new FormData();
 					  data.append('oldPass',this.userForm.oldPassword);
 					  data.append('newPass',this.userForm.password);
-					  this.$ajax.post('/couldr/api/user/info/pass/update',data)
+					  this.$ajax.post('/api/user/info/pass/update',data)
 					  .then((response)=>{
 					      if(response.data.code == 1){
 					  		this.$message({message: '修改成功，请重新登陆',type: 'success'});
@@ -256,7 +256,7 @@ default {
 				});
 			},
 			cancel:function(source){
-				this.$ajax.post('/couldr/api/user/info/cancel?source=' + source)
+				this.$ajax.post('/api/user/info/cancel?source=' + source)
 				.then((response)=>{
 				    if(response.data.code == 1){
 						window.location.reload()
@@ -282,7 +282,7 @@ default {
 				let data = new FormData();
 				data.append('file',file.file);
 
-				this.$ajax.post('/couldr/api/option/skinUpload',data)
+				this.$ajax.post('/api/option/skinUpload',data)
 				.then((response)=>{
 					if(response.data.code == 1){
 						this.userForm.userAvatar = response.data.result.filePath;
@@ -299,7 +299,7 @@ default {
           'v-footer': footer,
 		},
 		created() {
-			 this.$ajax.get('/couldr/api/user/info')
+			 this.$ajax.get('/api/user/info')
 			 .then((response)=>{
 			 	 if(response.data.code == 1 && response.data.result != null){
 			 		 var user = response.data.result;

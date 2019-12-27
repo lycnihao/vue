@@ -138,7 +138,7 @@ default {
         },
         methods: {
             getData: function() {
-                this.$ajax.get('/couldr/api/getHotList/')
+                this.$ajax.get('/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
@@ -149,7 +149,7 @@ default {
                 window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$ajax.get('/couldr/api/getHotList')
+                this.$ajax.get('/api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
                     this.$notify({

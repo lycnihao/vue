@@ -256,7 +256,7 @@
 				let data = new FormData();
 				data.append('file',file.file);
 			
-				this.$ajax.post('/couldr/api/option/skinUpload',data)
+				this.$ajax.post('/api/option/skinUpload',data)
 				.then((response)=>{
 					if(response.data.code == 1){
 						this.theme.name = response.data.result.filePath;
@@ -311,7 +311,7 @@
 			  if(arr != null){
 				  this.token = arr[2];
 				  this.$ajax.defaults.headers.common[name] = arr[2];
-				  this.$ajax.get('/couldr/api/user/info')
+				  this.$ajax.get('/api/user/info')
 				  .then((response)=>{
 				  	 if(response.data.code == 1 && response.data.result != null){
 				  		 this.user = response.data.result;
@@ -403,13 +403,15 @@
 					localStorage.setItem("frostedGlass",true);
 					
 					var domFrostedGlass = document.querySelector('#frostedGlass')
-					console.log(domFrostedGlass)
+					var cssText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}'
+					cssText += ".frostedCss .box-header{border-bottom:1px rgba(245,245,245,0.2) solid !important}"
+
 					if(domFrostedGlass){
-						domFrostedGlass.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
+						domFrostedGlass.innerText = cssText;
 					} else {
 						const style = document.createElement('style');
 						style.setAttribute('id','frostedGlass');
-						style.innerText = '.frostedCss .box{background: rgba(255,255,255,0.16)!important} .frostedCss .box:after{background: url('+this.theme.value+') fixed center 0px/cover no-repeat;}';
+						style.innerText = cssText;
 						document.head.appendChild(style);
 					}
 					

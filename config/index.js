@@ -19,12 +19,12 @@ module.exports = {
 			  '^/': ''
 			}
 		},
-		'/couldr': {
-			target:'http://127.0.0.1:3302/',
+		'/api': {
+			target:'http://127.0.0.1:3302/api',
 			/* target:'http://106.54.255.9:3302/', */
 			changeOrigin:true,
 			pathRewrite:{
-			  '^/couldr': ''
+			  '^/api': ''
 			}
 		},
 		'/suggestion': {

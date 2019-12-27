@@ -135,32 +135,8 @@ default {
 			  if (!event._constructed) {
 			    return
 			  }
-			  /* window.scrollTo(0,this.listHeight[index]) */
 			  window.scrollTo({ top: this.listHeight[index], left: 0, behavior: 'smooth' })
 			},
-			 /* scrollSmoothTo (position) {
-			if (!window.requestAnimationFrame) {
-				window.requestAnimationFrame = function(callback, element) {
-					return setTimeout(callback, 17);
-				};
-			}
-			// 当前滚动高度
-			var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-			// 滚动step方法
-			var step = function () {
-				// 距离目标滚动距离
-				var distance = position - scrollTop;
-				// 目标滚动位置
-				scrollTop = scrollTop + distance / 5;
-				if (Math.abs(distance) < 1) {
-					window.scrollTo(0, position);
-				} else {
-					window.scrollTo(0, scrollTop);
-					requestAnimationFrame(step);
-				}
-			};
-			step();
-			}, */
 			lazy:function(){
 				this.$nextTick(() => {
 					var viewHeight=document.documentElement.clientHeight
@@ -200,10 +176,6 @@ default {
 			
 			},
 			tabs:function(name,event){
-				/* event.path[2].querySelector(".tablist .active").className = "";
-				event.target.className = "active";
-				event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
-				event.path[6].querySelector(`.tabpanel[name='${name}']`).className += " show"; //显示新的tab */
 				event.target.parentElement.parentElement.querySelector(".tablist .active").className = "";
 				event.target.className = "active";
 				event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
@@ -212,7 +184,7 @@ default {
 				this._calculateHeight();
 			},
 			visit:function(id){
-				this.$ajax.post('/couldr/api/visit/'+id)
+				this.$ajax.post('/api/visit/'+id)
 			}
 		},
 		components: {
@@ -225,9 +197,19 @@ default {
 			  spinner: 'el-icon-loading',
 			  background: 'rgba(0, 0, 0, 0.2)'
 			});
-			this.$ajax.get('/couldr/api/getList')
+			this.$ajax.get('/api/webSite/list')
 			.then((response)=>{
 				for(let categorie of response.data.categories){
+					//常用网址
+				  if(categorie.cateType == 1){
+					  let webSites = response.data.webSites[categorie.categoryId]
+					  let userSite = this.$children[0].$refs.userSite
+					  if(userSite.webSites == null) userSite.webSites = {}
+					  userSite.webSites[categorie.categoryId] = webSites
+					  var categories = userSite.categories
+					  categories.push(categorie)
+					  this.$set(userSite,"categories", categories)
+				  } else 
 				  if(categorie.parentId == 0){
 					this.categorys.push(categorie)
 				  }else{
