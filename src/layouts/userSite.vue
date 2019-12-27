@@ -299,18 +299,16 @@ default {
 			let data = new FormData();
 			data.append('file',file.file);
 			this.$ajax.post('/couldr/api/user/import',data)
-			.then((response)=>{
-				this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
-			}).catch((response)=>{
-				this.$message.error('发送请求失败，请检查网络是否通畅');
-			});
+			this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
 		},
 		userWebSite:function(command){
 			if(!this.$parent.$refs.header.isLogin){
-				this.$parent.$refs.header.loginOpen = true;
+				window.location.href = "/login"
 			}else{
+				console.log(command)
 				switch(command){
 				   case 'add':
+					console.log("添加")
 					this.enabled = this.siteManage.add = true
 				   break;
 				   case 'edit':
