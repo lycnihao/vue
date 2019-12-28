@@ -21,7 +21,7 @@
 			}
 		},
 		created(){
-			this.$ajax.get('/couldr/api/getWeather/?cityId=')
+			this.$ajax.get('/api/getWeather/?cityId=')
 			.then((response)=>{
 				
 				this.cityName = response.data.result.basic.parent_city;

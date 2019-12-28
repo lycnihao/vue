@@ -5,11 +5,18 @@
 		   <div class="box-header">
 		     <div class="site-tabs">
 		       <div class="tabs-nav">
-		        <ul class="tablist">
-		          <li class="tabs-item"  @click="tabs(subCategory.slugName,$event)">
-		            <a class="active" href="javascript:void(0);"><i class="badge" style="background-color: #00FFFF;"></i>我的常用网址</a>
-		            </li>
-		        </ul>
+				   <el-collapse-transition>
+					<ul class="tablist">
+					  <li class="tabs-item">
+						  <a class="active" href="javascript:void(0);">{{activeName}}</a>
+					  </li>
+					  <li class="tabs-item" v-for="(categorie,index) in categories" :key="categorie.categoryId" 
+						v-show="show3 && categorie.slugName != activeSlugName" @click="tabs(categorie,$event)">
+						<a href="javascript:void(0);"><!-- <i class="badge" style="background-color: #00FFFF;"></i> -->{{categorie.name}}</a>
+					  </li>
+					</ul>
+					</el-collapse-transition>
+					<a class="open1" @click="show3 = !show3"><i class="el-icon-arrow-right"></i></a>
 		       </div>
 		     </div>
 		     <div class="user-button">
@@ -29,7 +36,7 @@
 		 <div class="box-body">
 		   <div id="user-block">
 		     <div class="tabs-content" style="width: 100%;">
-		      <div class="tabpanel show" name="常用链接">
+		      <div  v-for="(categorie,index) in categories" :name="categorie.slugName" :class="index == 0 ? 'tabpanel show':'tabpanel'">
 				<div class="groupBut" v-show="enabled">
 					<ul class="nav menu-inline">
 						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true">添加网址</el-button></li>
@@ -49,45 +56,45 @@
 					</ul>
 				</div>
 				<el-alert v-show="enabled" title="拖动网址即可排序哦~" type="info" center show-icon></el-alert>
-		        <el-row class="user-website" v-if="userSites.length != 0">
-				  <draggable
-					:list="userSites"
-					:disabled="!enabled"
-					class="list-group"
-					ghost-class="ghost"
-					animation=400
-					chosenClass = ".site-item"
-					@update="checkEdit">
-					  <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in userSites" :key="webSite.id" :data_id="webSite.id">
-						<a v-if="!enabled" class="site-item" :href="webSite.websiteUrl" target='_blank' :title="webSite.websiteTitle">
-						  <div class="site-icon">
-							<el-image :src="webSite.websiteIcon">
-							  <div slot="error" class="image-slot">
-								<i class="el-icon-picture-outline"></i>
-							  </div>
-							</el-image>
-						  </div>
-						  <div class="site-info">
-							<h3>{{webSite.websiteTitle}}</h3>
-						  </div>
-						</a>
-						<div class="site-item" @click="editOpen(webSite.id)" v-else>
-							<div class="site-edit">
-								<i class="el-icon-remove" @click.stop="removeSite(webSite.id)"></i>
-							</div>
-							<div class="site-icon">
-								<el-image :src="webSite.websiteIcon">
-								  <div slot="error" class="image-slot">
-								  <i class="el-icon-picture-outline"></i>
+		        <el-row class="user-website" v-if="webSites != null">
+					  <draggable
+						:list="webSites[categorie.categoryId]"
+						:disabled="!enabled"
+						class="list-group"
+						ghost-class="ghost"
+						animation=400
+						chosenClass = ".site-item"
+						@update="checkEdit">
+							 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId">
+								<a v-if="!enabled" class="site-item" :href="webSite.url" target='_blank' :title="webSite.title">
+								  <div class="site-icon">
+									<el-image :src="webSite.icon">
+									  <div slot="error" class="image-slot">
+										<i class="el-icon-picture-outline"></i>
+									  </div>
+									</el-image>
 								  </div>
-								</el-image>
-							</div>
-							<div class="site-info">
-								<h3>{{webSite.websiteTitle}}</h3>
-							</div>
-						</div>
-					  </el-col>
-				  </draggable>
+								  <div class="site-info">
+									<h3>{{webSite.title}}</h3>
+								  </div>
+								</a>
+								<div class="site-item" @click="editOpen(webSite.websiteId)" v-else>
+									<div class="site-edit">
+										<i class="el-icon-remove" @click.stop="removeSite(webSite.websiteId)"></i>
+									</div>
+									<div class="site-icon">
+										<el-image :src="webSite.icon">
+										  <div slot="error" class="image-slot">
+										  <i class="el-icon-picture-outline"></i>
+										  </div>
+										</el-image>
+									</div>
+									<div class="site-info">
+										<h3>{{webSite.title}}</h3>
+									</div>
+								</div>
+							</el-col>
+					  </draggable>
 		        </el-row>
 		
 		        <div class="null" v-else>
@@ -135,12 +142,12 @@
 						  <div class="item">
 							  <el-upload
 								  ref="upload"
-								  :action="'/api/user/upload'"
+								  :action="'/api/webSite/upload'"
 								  :show-file-list="false"
 								  :before-upload="beforeAvatarUpload"
 								  :http-request="avatarUpload"
 								  >
-								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar" alt="无">
 								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 									  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 									</el-tooltip>
@@ -202,7 +209,7 @@
 		 					  :show-file-list="false"
 							  :before-upload="beforeAvatarUpload"
 		 					  :http-request="avatarUpload">
-		 					  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar">
+		 					  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar" alt="无">
 		 					  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
 		 						  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
 		 						</el-tooltip>
@@ -247,18 +254,24 @@
 
 <script>
 import draggable from 'vuedraggable'
+import icons from './icons'
 
 export
 default {
 	data() {
 		return {
-			userSites:[],
+			activeName:'',
+			activeSlugName:'',
+			show3:false,
+			webSites:null,
+			categories:[],
 			 siteManage:{
 				add:false,
 				edit:false,
 				sort:false,
 				import:false,
-				imageUrl:''
+				icons:false,
+				imageUrl:'',
 			},
 			options: [{
 				value: '0',
@@ -285,8 +298,17 @@ default {
 		}
 	},
 	methods:{
+		tabs:function(cate,event){
+			this.activeName = cate.name;
+			this.activeSlugName = cate.slugName;
+			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
+			event.path[6].querySelector(`.tabpanel[name='${cate.slugName}']`).className += " show"; //显示新的tab
+		},
+		userShow:function(){
+			
+		},
 		exportHtml:function(){
-			window.open('/couldr/api/user/export')
+			window.open('/api/webSite/export')
 		},
 		beforeImportHtml:function(file){
 			const isJPG = file.type === 'text/html';
@@ -298,8 +320,12 @@ default {
 		importHtml:function(file) {
 			let data = new FormData();
 			data.append('file',file.file);
-			this.$ajax.post('/couldr/api/user/import',data)
-			this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
+			this.$ajax.post('/api/webSite/import',data)
+			.then((response)=>{
+				this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
+			}).catch((response)=>{
+				this.$message.error('发送请求失败，请检查网络是否通畅');
+			});
 		},
 		userWebSite:function(command){
 			if(!this.$parent.$refs.header.isLogin){
@@ -322,17 +348,12 @@ default {
 			}
 		},
 		getUserSites:function(){
-			let name = "request_token";
-			var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-			if(arr != null){
-			  this.$ajax.defaults.headers.common['request_token'] = arr[2];
-			}
-			this.$ajax.get('/couldr/api/userWebSite')
+			/* this.$ajax.get('/api/webSite/user')
 			.then((response)=>{
-				this.userSites = response.data;
+				this.webSites = response.data;
 			}).catch((response)=>{
 			  this.$message.error('数据请求失败，请稍后再试');
-			});
+			}); */
 		},
 		checkEdit: function(e) {
 			console.log("之前位置"+e.oldIndex)
@@ -343,7 +364,7 @@ default {
 			data.append('oldIndex',e.oldIndex);
 			data.append('newIndex',e.newIndex);
 			
-			this.$ajax.post('/couldr/api/user/sortSite/' + id,data)
+			this.$ajax.post('/api/webSite/sortSite/' + id,data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$notify({
@@ -373,7 +394,7 @@ default {
 		avatarUpload:function(file) {
 			let data = new FormData();
 			data.append('file',file.file);
-			this.$ajax.post('/couldr/api/user/icon/upload',data)
+			this.$ajax.post('/api/webSite/icon/upload',data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					if(this.siteManage.add){
@@ -390,7 +411,7 @@ default {
 			});
 		},
 		saveSite:function(data){
-			this.$ajax.post('/couldr/api/user/saveSite',data)
+			this.$ajax.post('/api/webSite/saveSite',data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '保存成功！',type: 'success'});
@@ -407,7 +428,7 @@ default {
 		addSite:function(){
 			let data = new FormData();
 			data.append('websiteTitle',this.addForm.title);
-			data.append('websiteUrl',this.addForm.url);
+			data.append('url',this.addForm.url);
 			data.append('websiteIcon',this.addForm.icon);
 			data.append('websiteCate',this.addForm.category);
 			this.$refs.addForm.validate((valid) => {
@@ -422,13 +443,14 @@ default {
 		editOpen:function(siteId){
 			this.siteManage.edit = true;
 			this.editForm.id = siteId;
-			this.$ajax.post('/couldr/api/userWebSite/'+siteId)
+			this.$ajax.post('/api/webSite/user/'+siteId)
 			.then((response)=>{
 				if(response.data.code == 1){
-					this.editForm.title = response.data.result.websiteTitle;
-					this.editForm.icon = response.data.result.websiteIcon;
-					this.editForm.category = response.data.result.websiteCate;
-					this.siteManage.imageUrl = this.editForm.websiteIcon = response.data.result.websiteIcon;
+					this.editForm.title = response.data.result.title;
+					this.editForm.icon = response.data.result.icon;
+					this.editForm.url = response.data.result.url;
+					this.editForm.category = response.data.result.category;
+					this.siteManage.imageUrl = this.editForm.icon = response.data.result.icon;
 				} else{
 					this.$message.error(response.data.msg);
 				}
@@ -440,7 +462,7 @@ default {
 			let data = new FormData();
 			data.append('id',this.editForm.id);
 			data.append('websiteTitle',this.editForm.title);
-			data.append('websiteUrl',this.editForm.url);
+			data.append('url',this.editForm.url);
 			data.append('websiteIcon',this.editForm.icon);
 			data.append('websiteCate',this.editForm.category);
 			this.$refs.editForm.validate((valid) => {
@@ -453,7 +475,7 @@ default {
 			});
 		},
 		removeSite:function(siteId){
-			this.$ajax.post('/couldr/api/user/removeSite/'+siteId)
+			this.$ajax.post('/api/webSite/removeSite/'+siteId)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '删除成功！',type: 'success'});
@@ -466,7 +488,7 @@ default {
 			});
 		},
 		getContent:function(url){
-			this.$ajax.get('/couldr/api/getWebContent?url=' + url)
+			this.$ajax.get('/api/getWebContent?url=' + url)
 			.then((response)=>{
 				if(response.data.code == 1){
 					if(this.siteManage.add){
@@ -482,8 +504,19 @@ default {
 			})
 		}
 	},
+	watch:{
+		categories:function(cates){
+			if (cates.length > 1) {
+				this.activeName = cates[0].name
+				this.activeSlugName = cates[0].slugName
+			} else{
+				document.querySelector('.open1').style.display = 'none'
+			}
+		},
+	},
 	components: {
 	  'draggable':draggable,
+	  'v-icons':icons,
 	},
 	created() {
 		this.getUserSites()
@@ -492,6 +525,25 @@ default {
 </script>
 
 <style>
+.open1{
+	cursor:pointer;
+	opacity: 0.5;
+	transition: opacity 0.3s ease-in-out;
+}
+.open1:hover{
+	opacity: 1;
+}
+/* .user .box-header .tablist .tabs-item a{
+	display: none;
+}
+
+.user .box-header .tablist .tabs-item .active{
+	display: block;
+} */
+	
+	.iconList{
+		width: 580px!important;
+	}
 .user.edit {
 	border: 1px #008eff solid;
 }

@@ -318,19 +318,19 @@ default {
 				colors: ['#99A9BF', '#F7BA2A', '#FF9900'] ,
 				info:{
 					baidu:{
-						url : "/couldr/api/hot/baidu?t=",
+						url : "/api/hot/baidu?t=",
 						active : "baidu_tab1"
 					},
 					weibo:{
-						url : "/couldr/api/hot/weibo?t=",
+						url : "/api/hot/weibo?t=",
 						active : "weibo_tab1"
 					},
 					zhihu:{
-						url : "/couldr/api/hot/zhihu?t=",
+						url : "/api/hot/zhihu?t=",
 						active : "zhihu_tab1"
 					},
 					douban:{
-						url : "/couldr/api/hot/douban?t=",
+						url : "/api/hot/douban?t=",
 						active : "douban_tab1"
 					}
 				},
@@ -370,7 +370,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/couldr/api/hot/baidu?t=' + tab.index)
+				this.$ajax.get('/api/hot/baidu?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					if(tab.index == 0){
@@ -392,7 +392,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/couldr/api/hot/weibo?t=' + tab.index)
+				this.$ajax.get('/api/hot/weibo?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					
@@ -413,7 +413,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/couldr/api/hot/zhihu?t=' + tab.index)
+				this.$ajax.get('/api/hot/zhihu?t=' + tab.index)
 				.then((response)=>{
 					loading.close();
 					
@@ -434,7 +434,7 @@ default {
 				  spinner: 'el-icon-loading',
 				  background: 'rgba(0, 0, 0, 0.2)'
 				});
-				this.$ajax.get('/couldr/api/hot/douban?t=' + tab.index)
+				this.$ajax.get('/api/hot/douban?t=' + tab.index)
 				.then((response)=>{
 					
 					loading.close();

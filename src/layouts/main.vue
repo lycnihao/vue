@@ -32,19 +32,6 @@
 					 </div>
 						
 					<slot></slot>
-						
-<!-- 						<div class="box">
-						<div class="box-header">
-							<h3>精选图集</h3>
-						</div>
-						<div class="box-body">
-							<ul class="accordion-container">
-							  <li class="accordion-item" :style="{'background-image': 'url('+thumbnail.url+')'}" v-for="thumbnail in thumbnails">
-								<a href="#"><p class="accordion-title">{{thumbnail.title}}</p></a>
-							  </li>
-							</ul>
-						</div>
-					</div> -->
 				</el-col>
 				<!-- 侧边栏 -->
 				<el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="sidebar">
@@ -108,17 +95,6 @@
 						 data-ad-format="auto"
 						 data-full-width-responsive="true"></ins>
 					</div>
-					<!-- <div class="box link">
-						<div class="box-header">
-							<h3>今日推荐 * 精选</h3>
-						</div>
-						<div class="box-body">
-							<a v-for="item in recommend" :href="item.url" target="_blank">
-								<img :src="item.icon">
-								{{ item.title }}-{{ item.summary }}
-							</a>
-						</div>
-					</div> -->
 				</el-col>
 				</el-row>
 			 </div>
@@ -129,7 +105,6 @@
 
 		<sidebar-block ref="sidebarBlock"></sidebar-block>
 		
-		<!-- <div id="sidebar" title="加载边栏" class="el-icon-discover"></div> -->
 		<v-footer></v-footer>
 
  </div>
@@ -137,7 +112,6 @@
 
 <script>
 import BScroll from 'better-scroll'
-import dataJson from '../data.json';
 import header from '../layouts/header'
 import footer from '../layouts/footer'
 
@@ -164,8 +138,7 @@ default {
         },
         methods: {
             getData: function() {
-                this.thumbnails = dataJson.getThumbnail;
-                this.$ajax.get('/couldr/api/getHotList/')
+                this.$ajax.get('/api/getHotList/')
                 .then((response)=>{
                     this.hotList = response.data;
                 }).catch((response)=>{
@@ -176,7 +149,7 @@ default {
                 window.open(this.searchUrl + options.target.innerText);
             },
             hotRefresh: function() {
-                this.$ajax.get('/couldr/api/getHotList')
+                this.$ajax.get('/api/getHotList')
                 .then((response)=>{
                     this.hotList = response.data;
                     this.$notify({
