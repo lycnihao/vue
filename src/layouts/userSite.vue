@@ -10,8 +10,8 @@
 					  <li class="tabs-item">
 						  <a class="active" href="javascript:void(0);">{{activeName}}</a>
 					  </li>
-					  <li class="tabs-item" v-for="(categorie,index) in categories" :key="categorie.categoryId" 
-						v-show="show3 && categorie.slugName != activeSlugName" @click="tabs(categorie,$event)">
+					  <li class="tabs-item" v-for="categorie in categories" :key="categorie.categoryId" 
+						v-show="show3" @click="tabs(categorie,$event)">
 						<a href="javascript:void(0);"><!-- <i class="badge" style="background-color: #00FFFF;"></i> -->{{categorie.name}}</a>
 					  </li>
 					</ul>
@@ -39,7 +39,7 @@
 		      <div  v-for="(categorie,index) in categories" :name="categorie.slugName" :class="index == 0 ? 'tabpanel show':'tabpanel'">
 				<div class="groupBut" v-show="enabled">
 					<ul class="nav menu-inline">
-						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true">添加网址</el-button></li>
+						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true,getUserCates()">添加网址</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" disabled>创建分类</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-upload2" @click="siteManage.import=true">导入</el-button></li>
 						<li class="nav-item">
@@ -124,10 +124,10 @@
 					<el-form-item prop="category">
 						<el-select v-model="addForm.category" placeholder="请选择">
 						  <el-option
-							v-for="item in options"
-							:key="item.value"
-							:label="item.label"
-							:value="item.value">
+							v-for="category in userCates"
+							:key="category.categoryId"
+							:label="category.name"
+							:value="category.categoryId">
 						  </el-option>
 						</el-select>
 					</el-form-item>
@@ -187,10 +187,10 @@
 		 			<el-form-item prop="category">
 		 				<el-select v-model="editForm.category" placeholder="请选择">
 		 				  <el-option
-		 					v-for="item in options"
-		 					:key="item.value"
-		 					:label="item.label"
-		 					:value="item.value">
+		 					v-for="category in userCates"
+		 					:key="category.categoryId"
+		 					:label="category.name"
+		 					:value="category.categoryId">
 		 				  </el-option>
 		 				</el-select>
 		 			</el-form-item>
@@ -264,6 +264,7 @@ default {
 			activeSlugName:'',
 			show3:false,
 			webSites:null,
+			userCates:null,
 			categories:[],
 			 siteManage:{
 				add:false,
@@ -273,23 +274,19 @@ default {
 				icons:false,
 				imageUrl:'',
 			},
-			options: [{
-				value: '0',
-				label: '我的常用网址'
-			}],
 			enabled: false,
 			addForm:{
 			  url:'',
 			  icon:'',
 			  title:'',
-			  category:'0'
+			  category:null,
 			},
 			editForm:{
-			  id:'1',
+			  id:null,
 			  icon:'',
 			  url:'http://www.168dh.cn',
 			  title:'酷达导航',
-			  category:'0'
+			  category:null,
 			},
 			rules: {
 				url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
@@ -331,10 +328,9 @@ default {
 			if(!this.$parent.$refs.header.isLogin){
 				window.location.href = "/login"
 			}else{
-				console.log(command)
 				switch(command){
 				   case 'add':
-					console.log("添加")
+					this.getUserCates();
 					this.enabled = this.siteManage.add = true
 				   break;
 				   case 'edit':
@@ -354,6 +350,15 @@ default {
 			}).catch((response)=>{
 			  this.$message.error('数据请求失败，请稍后再试');
 			}); */
+		},
+		getUserCates:function(f){
+			this.$ajax.post('/api/cate/getUserCategoryList/')
+			.then((response)=>{
+				this.userCates = response.data;
+				if (typeof f === "function") {
+					f()
+				}
+			})
 		},
 		checkEdit: function(e) {
 			console.log("之前位置"+e.oldIndex)
@@ -376,7 +381,6 @@ default {
 			});
 			
 		},
-		
 		beforeAvatarUpload:function(file) {
 			const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/ico'
 			 || file.type === 'image/gif' || file.type === 'image/svg' || file.type === 'image/bmp';
@@ -441,22 +445,24 @@ default {
 			});
 		},
 		editOpen:function(siteId){
+			var that = this;
 			this.siteManage.edit = true;
 			this.editForm.id = siteId;
-			this.$ajax.post('/api/webSite/user/'+siteId)
-			.then((response)=>{
-				if(response.data.code == 1){
-					this.editForm.title = response.data.result.title;
-					this.editForm.icon = response.data.result.icon;
-					this.editForm.url = response.data.result.url;
-					this.editForm.category = response.data.result.category;
-					this.siteManage.imageUrl = this.editForm.icon = response.data.result.icon;
-				} else{
-					this.$message.error(response.data.msg);
-				}
-			}).catch((response)=>{
-				this.$message.error('发送请求失败，请检查网络是否通畅');
-			});
+			this.getUserCates(function(){
+				that.$ajax.post('/api/webSite/user/'+siteId)
+				.then((response)=>{
+					if(response.data.code == 1){
+						that.editForm.title = response.data.result.webSite.title;
+						that.editForm.icon = response.data.result.webSite.icon;
+						that.editForm.url = response.data.result.webSite.url;
+						that.editForm.category = response.data.result.categories[0].name;
+						that.siteManage.imageUrl = that.editForm.icon = response.data.result.icon;
+					} else{
+						that.$message.error(response.data.msg);
+					}
+				})
+			})
+			
 		},
 		editSite:function(){
 			let data = new FormData();
