@@ -365,8 +365,10 @@
 			cssText += ".nav-item a.active:after{background:"+themeColor+"}"
 			cssText += ".site-tabs .tablist li a.active{background-color:"+themeColor+"}"
 			cssText += ".nextMonth span,.preMonth span{color:"+colors.lightGray+"}"
-			cssText += ".info,.info a{color:"+colors.selectOptionSelected+"}"
 			cssText += ".day-item .day	{color:"+colors.selectOptionSelected+"!important}"
+			cssText += ".info,.info a{color:"+colors.lightSilver+"}"
+			cssText += ".calendar-header > div > h3 > span > strong{color:"+themeColor+"}"
+			cssText += ".calendar-header > div > h3 > span > small{color:"+colors.baseSilver+"}"
 								
 								
 			var domThemeColor = document.querySelector('#themeColor')

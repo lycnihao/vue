@@ -58,14 +58,13 @@
 				<el-alert v-show="enabled" title="拖动网址即可排序哦~" type="info" center show-icon></el-alert>
 		        <el-row class="user-website" v-if="webSites != null">
 					  <draggable
-						:list="webSites[categorie.categoryId]"
 						:disabled="!enabled"
 						class="list-group"
 						ghost-class="ghost"
 						animation=400
 						chosenClass = ".site-item"
 						@update="checkEdit">
-							 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId">
+							 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId" :data_cateId="categorie.categoryId">
 								<a v-if="!enabled" class="site-item" :href="webSite.url" target='_blank' :title="webSite.title">
 								  <div class="site-icon">
 									<el-image :src="webSite.icon">
@@ -80,7 +79,7 @@
 								</a>
 								<div class="site-item" @click="editOpen(webSite.websiteId)" v-else>
 									<div class="site-edit">
-										<i class="el-icon-remove" @click.stop="removeSite(webSite.websiteId)"></i>
+										<i class="el-icon-remove" @click.stop="removeSite(categorie.categoryId,webSite.websiteId)"></i>
 									</div>
 									<div class="site-icon">
 										<el-image :src="webSite.icon">
@@ -265,7 +264,7 @@ default {
 			show3:false,
 			webSites:null,
 			userCates:null,
-			categories:[],
+			categories:null,
 			 siteManage:{
 				add:false,
 				edit:false,
@@ -287,6 +286,7 @@ default {
 			  url:'http://www.168dh.cn',
 			  title:'酷达导航',
 			  category:null,
+			  categoryId:null,
 			},
 			rules: {
 				url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
@@ -344,12 +344,31 @@ default {
 			}
 		},
 		getUserSites:function(){
-			/* this.$ajax.get('/api/webSite/user')
+			function compare(property){
+				return function(a,b){
+					var value1 = a[property];
+					var value2 = b[property];
+					return value1 - value2;
+				}
+			}
+			this.$ajax.get('/api/webSite/user')
 			.then((response)=>{
-				this.webSites = response.data;
+				this.webSites = {};
+				this.categories = [];
+				if(response.data.webSites.keys == undefined) {
+					this.webSites = null;
+					return
+				}
+				for(let categorie of response.data.categories){
+					let webSites = response.data.webSites[categorie.categoryId]
+					webSites.sort(compare('ordered'))
+					this.webSites[categorie.categoryId] = webSites
+					this.categories.push(categorie)
+					
+				}
 			}).catch((response)=>{
 			  this.$message.error('数据请求失败，请稍后再试');
-			}); */
+			});
 		},
 		getUserCates:function(f){
 			this.$ajax.post('/api/cate/getUserCategoryList/')
@@ -364,12 +383,12 @@ default {
 			console.log("之前位置"+e.oldIndex)
 			console.log("当前位置"+e.newIndex)
 			let id = e.clone.attributes.data_id.value;
-			
+			let cateId = e.clone.attributes.data_cateId.value;
 			let data = new FormData();
 			data.append('oldIndex',e.oldIndex);
 			data.append('newIndex',e.newIndex);
 			
-			this.$ajax.post('/api/webSite/sortSite/' + id,data)
+			this.$ajax.post('/api/webSite/sortSite/' + cateId + "/" + id,data)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$notify({
@@ -431,10 +450,10 @@ default {
 		},
 		addSite:function(){
 			let data = new FormData();
-			data.append('websiteTitle',this.addForm.title);
+			data.append('title',this.addForm.title);
 			data.append('url',this.addForm.url);
-			data.append('websiteIcon',this.addForm.icon);
-			data.append('websiteCate',this.addForm.category);
+			data.append('icon',this.addForm.icon);
+			data.append('categoryId',this.addForm.category);
 			this.$refs.addForm.validate((valid) => {
 				if (valid) {
 					this.saveSite(data)
@@ -448,6 +467,7 @@ default {
 			var that = this;
 			this.siteManage.edit = true;
 			this.editForm.id = siteId;
+			
 			this.getUserCates(function(){
 				that.$ajax.post('/api/webSite/user/'+siteId)
 				.then((response)=>{
@@ -455,8 +475,8 @@ default {
 						that.editForm.title = response.data.result.webSite.title;
 						that.editForm.icon = response.data.result.webSite.icon;
 						that.editForm.url = response.data.result.webSite.url;
-						that.editForm.category = response.data.result.categories[0].name;
-						that.siteManage.imageUrl = that.editForm.icon = response.data.result.icon;
+						that.editForm.category = response.data.result.categories[0].categoryId;
+						that.siteManage.imageUrl = that.editForm.icon = response.data.result.webSite.icon;
 					} else{
 						that.$message.error(response.data.msg);
 					}
@@ -466,11 +486,11 @@ default {
 		},
 		editSite:function(){
 			let data = new FormData();
-			data.append('id',this.editForm.id);
-			data.append('websiteTitle',this.editForm.title);
+			data.append('websiteId',this.editForm.id);
+			data.append('title',this.editForm.title);
 			data.append('url',this.editForm.url);
-			data.append('websiteIcon',this.editForm.icon);
-			data.append('websiteCate',this.editForm.category);
+			data.append('icon',this.editForm.icon);
+			data.append('categoryId',this.editForm.category);
 			this.$refs.editForm.validate((valid) => {
 				if (valid) {
 					this.saveSite(data)
@@ -480,8 +500,8 @@ default {
 				}
 			});
 		},
-		removeSite:function(siteId){
-			this.$ajax.post('/api/webSite/removeSite/'+siteId)
+		removeSite:function(categoryId,siteId){
+			this.$ajax.post('/api/webSite/removeSite/'+categoryId+'/'+siteId)
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '删除成功！',type: 'success'});
@@ -512,10 +532,9 @@ default {
 	},
 	watch:{
 		categories:function(cates){
-			if (cates.length > 1) {
-				this.activeName = cates[0].name
-				this.activeSlugName = cates[0].slugName
-			} else{
+			this.activeName = cates[0].name
+			this.activeSlugName = cates[0].slugName
+			if (cates.length <= 1) {
 				document.querySelector('.open1').style.display = 'none'
 			}
 		},

@@ -200,16 +200,6 @@ default {
 			this.$ajax.get('/api/webSite/list')
 			.then((response)=>{
 				for(let categorie of response.data.categories){
-					//常用网址
-				  if(categorie.cateType == 1){
-					  let webSites = response.data.webSites[categorie.categoryId]
-					  let userSite = this.$children[0].$refs.userSite
-					  if(userSite.webSites == null) userSite.webSites = {}
-					  userSite.webSites[categorie.categoryId] = webSites
-					  var categories = userSite.categories
-					  categories.push(categorie)
-					  this.$set(userSite,"categories", categories)
-				  } else 
 				  if(categorie.parentId == 0){
 					this.categorys.push(categorie)
 				  }else{
