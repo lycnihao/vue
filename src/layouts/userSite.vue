@@ -27,7 +27,7 @@
 		          <el-dropdown-menu slot="dropdown">
 		            <el-dropdown-item icon="el-icon-circle-plus" command="add">添加网址</el-dropdown-item>
 		            <el-dropdown-item icon="el-icon-edit" command="edit">编辑网址</el-dropdown-item>
-		            <el-dropdown-item icon="el-icon-menu" command="sort" disabled>分类管理</el-dropdown-item>
+		            <el-dropdown-item icon="el-icon-menu" command="sort">分类管理</el-dropdown-item>
 		          </el-dropdown-menu>
 		        </el-dropdown>
 				<el-button type="primary" size="mini" icon="el-icon-success" @click="enabled = false" round v-else>完成</el-button>
@@ -40,7 +40,7 @@
 				<div class="groupBut" v-show="enabled">
 					<ul class="nav menu-inline">
 						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true,getUserCates()">添加网址</el-button></li>
-						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" disabled>创建分类</el-button></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" @click="siteManage.categorie=true">创建分类</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-upload2" @click="siteManage.import=true">导入</el-button></li>
 						<li class="nav-item">
 							<el-popconfirm title="确定导出吗？" @onConfirm="exportHtml()">
@@ -245,8 +245,35 @@
 				</el-upload>
 		</el-dialog>
 		
-		<el-dialog title="分类管理" :visible.sync="siteManage.sort" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true">
-		 	分类管理
+		<el-dialog title="新建分类" :visible.sync="siteManage.categorie" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true">
+		 	<el-form :model="form1" ref="form1" :rules="rules" status-icon>
+		 		<el-row :gutter="10">
+		 			<el-form-item prop="cateName">
+		 				<el-input v-model="form1.cateName" placeholder="新建分类"></el-input>
+		 			</el-form-item>
+		 		</el-row>
+				<el-button type="primary" style="width: 100%;" @click="saveCategory()">立即保存</el-button>
+		 	</el-form>
+		</el-dialog>
+		
+		<el-dialog title="分类管理" :visible.sync="siteManage.sort" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" custom-class="sort_w">
+		 	<el-alert title="拖动分类列表即可排序" type="warning" show-icon></el-alert>
+			<ul class="menu sort">
+				<draggable 
+				ghost-class="sortGhost"
+				chosenClass = "sortItem"
+				animation=400>
+					<li class="box" v-for="(categorie,index) of categories" :key="categorie.categoryId" >
+						<div class="text">
+							<em>{{index + 1}}.</em><b>{{categorie.name}}</b>
+						</div>
+						<div class="edit">
+							<span><i class="el-icon-edit"></i></span>
+							<span><i class="el-icon-delete"></i></span>
+						</div>
+					</li>
+				</draggable>
+			</ul>
 		</el-dialog>
 	</div>
 </template>
@@ -272,6 +299,7 @@ default {
 				import:false,
 				icons:false,
 				imageUrl:'',
+				categorie:false,
 			},
 			enabled: false,
 			addForm:{
@@ -288,9 +316,13 @@ default {
 			  category:null,
 			  categoryId:null,
 			},
+			form1:{
+				cateName:'我的常用网址',
+			},
 			rules: {
 				url: [{ required: true,type:"url", message: '请输入正确的网站链接URL', trigger: 'blur' }],
 				title: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
+				cateName: [{ required: true, message: '请输入分类名称', trigger: 'blur' }],
 			}
 		}
 	},
@@ -300,9 +332,6 @@ default {
 			this.activeSlugName = cate.slugName;
 			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 			event.path[6].querySelector(`.tabpanel[name='${cate.slugName}']`).className += " show"; //显示新的tab
-		},
-		userShow:function(){
-			
 		},
 		exportHtml:function(){
 			window.open('/api/webSite/export')
@@ -355,15 +384,16 @@ default {
 			.then((response)=>{
 				this.webSites = {};
 				this.categories = [];
-				if(response.data.webSites.keys == undefined) {
-					this.webSites = null;
-					return
-				}
+				
 				for(let categorie of response.data.categories){
-					let webSites = response.data.webSites[categorie.categoryId]
-					webSites.sort(compare('ordered'))
-					this.webSites[categorie.categoryId] = webSites
 					this.categories.push(categorie)
+					try{
+						let webSites = response.data.webSites[categorie.categoryId]
+						webSites.sort(compare('ordered'))
+						this.webSites[categorie.categoryId] = webSites
+					}catch(e){
+						this.webSites[categorie.categoryId] = [];
+					}
 					
 				}
 			}).catch((response)=>{
@@ -528,6 +558,26 @@ default {
 					this.$message.error(response.data.msg);
 				}
 			})
+		},
+		saveCategory:function(){
+			this.$refs.form1.validate((valid) => {
+				if (valid) {
+					this.$ajax.post('/api/cate/create?name=' + this.form1.cateName)
+					.then((response)=>{
+						if(response.data.code == 1){
+							this.getUserSites();
+							this.siteManage.categorie = false;
+						} else{
+							this.$message.error(response.data.msg);
+						}
+					}).catch((response)=>{
+						this.$message.error('发送请求失败，请检查网络是否通畅');
+					});
+				}else{
+					console.log('error submit!!');
+					return false;
+				}
+			});
 		}
 	},
 	watch:{
@@ -550,6 +600,57 @@ default {
 </script>
 
 <style>
+.sortGhost.sortItem{
+	opacity: 0.5;
+	border: 3px #0084ff dotted !important;
+}
+.sort_w {
+	width: 400px!important;
+}
+
+.sort_w .el-dialog__body{
+	padding: 15px 20px 30px!important;
+}
+.sort li{
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	height: 45px;
+	line-height: 45px;
+	border: 3px transparent dotted;
+	box-sizing:border-box;
+}
+
+.sort .text{
+	color: #6b7386;
+	display: inline-block;
+	padding-left: 15px;
+	font-size: 15px;
+}
+
+.sort .text em{
+	color: #ccc;
+	padding-right: 10px;
+}
+
+.sort .edit{
+	height: auto;
+	display: inline-block;
+}
+
+.sort .edit span{
+	padding: 0 12px;
+	font-size: 16px;
+    display: inline-block;
+}
+
+.sort .edit span:hover{
+	cursor: pointer;
+	background: #f1f1f1;
+}
+
+
+
 .open1{
 	cursor:pointer;
 	opacity: 0.5;

@@ -40,7 +40,7 @@
 							</el-tooltip>
 						</li>
 						<li class="header-nav-item" v-show="!isLogin"><a href="login">登录</a></li>
-						<li class="header-nav-item" v-show="!isLogin"><a href="login">注册</a></li>
+						<li class="header-nav-item" v-show="!isLogin"><a href="register">注册</a></li>
 						<li class="header-nav-item" v-show="isLogin">
 							<el-dropdown trigger="click" placement="top" @command="handleCommand">
 								<div>
