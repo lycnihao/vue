@@ -10,7 +10,7 @@
 					  <li class="tabs-item">
 						  <a class="active" href="javascript:void(0);">{{activeName}}</a>
 					  </li>
-					  <li class="tabs-item" v-for="categorie in categories" :key="categorie.categoryId" 
+					  <li class="tabs-item" v-for="categorie in userCates" :key="categorie.categoryId" 
 						v-show="show3" @click="tabs(categorie,$event)">
 						<a href="javascript:void(0);"><!-- <i class="badge" style="background-color: #00FFFF;"></i> -->{{categorie.name}}</a>
 					  </li>
@@ -245,7 +245,7 @@
 				</el-upload>
 		</el-dialog>
 		
-		<el-dialog title="新建分类" :visible.sync="siteManage.categorie" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true">
+		<el-dialog title="新建分类" :visible.sync="siteManage.categorie" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" :open="cateOpen()" :close="form1.cateId = null">
 		 	<el-form :model="form1" ref="form1" :rules="rules" status-icon>
 		 		<el-row :gutter="10">
 		 			<el-form-item prop="cateName">
@@ -263,13 +263,13 @@
 				ghost-class="sortGhost"
 				chosenClass = "sortItem"
 				animation=400>
-					<li class="box" v-for="(categorie,index) of categories" :key="categorie.categoryId" >
+					<li class="box" v-for="(categorie,index) of userCates" :key="categorie.categoryId" >
 						<div class="text">
 							<em>{{index + 1}}.</em><b>{{categorie.name}}</b>
 						</div>
 						<div class="edit">
-							<span><i class="el-icon-edit"></i></span>
-							<span><i class="el-icon-delete"></i></span>
+							<span @click="siteManage.categorie=true,form1.cateId = categorie.categoryId"><i class="el-icon-edit"></i></span>
+							<span @click="removeCategory(categorie.categoryId)"><i class="el-icon-delete"></i></span>
 						</div>
 					</li>
 				</draggable>
@@ -317,6 +317,7 @@ default {
 			  categoryId:null,
 			},
 			form1:{
+				cateId:null,
 				cateName:'我的常用网址',
 			},
 			rules: {
@@ -562,7 +563,12 @@ default {
 		saveCategory:function(){
 			this.$refs.form1.validate((valid) => {
 				if (valid) {
-					this.$ajax.post('/api/cate/create?name=' + this.form1.cateName)
+					let data = new FormData();
+					data.append('name',this.form1.cateName);
+					if(this.form1.cateId != null){
+						data.append('categoryId',this.form1.cateId);
+					}
+					this.$ajax.post('/api/cate/create', data)
 					.then((response)=>{
 						if(response.data.code == 1){
 							this.getUserSites();
@@ -577,6 +583,34 @@ default {
 					console.log('error submit!!');
 					return false;
 				}
+			});
+		},
+		cateOpen:function(){
+			if(this.form1.cateId == null)
+				return
+			this.$ajax.post('/api/cate/' + this.form1.cateId)
+			.then((response)=>{
+				if(response.data.code == 1){
+					this.form1.cateName = response.data.result.name
+				} else{
+					this.$message.error(response.data.msg);
+				}
+			}).catch((response)=>{
+				this.$message.error('发送请求失败，请检查网络是否通畅');
+			});
+			return
+		},
+		removeCategory:function(cateId){
+			this.$ajax.post('/api/cate/remove/' + cateId)
+			.then((response)=>{
+				if(response.data.code == 1){
+					this.getUserCates();
+					this.$message({message: '删除成功！',type: 'success'});
+				} else{
+					this.$message.error(response.data.msg);
+				}
+			}).catch((response)=>{
+				this.$message.error('发送请求失败，请检查网络是否通畅');
 			});
 		}
 	},
@@ -594,7 +628,8 @@ default {
 	  'v-icons':icons,
 	},
 	created() {
-		this.getUserSites()
+		this.getUserSites();
+		this.getUserCates();
 	}
 }
 </script>
