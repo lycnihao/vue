@@ -262,8 +262,9 @@
 				<draggable 
 				ghost-class="sortGhost"
 				chosenClass = "sortItem"
-				animation=400>
-					<li class="box" v-for="(categorie,index) of userCates" :key="categorie.categoryId" >
+				animation=400
+				@update="checkCate">
+					<li class="box" v-for="(categorie,index) of userCates" :key="categorie.categoryId" :data_id="categorie.categoryId">
 						<div class="text">
 							<em>{{index + 1}}.</em><b>{{categorie.name}}</b>
 						</div>
@@ -274,6 +275,8 @@
 					</li>
 				</draggable>
 			</ul>
+			<el-button style="width: 100%;margin-top: 10px;" icon="el-icon-circle-plus-outline"
+			 @click="siteManage.categorie = true" plain>创建分类</el-button>
 		</el-dialog>
 	</div>
 </template>
@@ -431,16 +434,41 @@ default {
 			});
 			
 		},
+		checkCate:function(e){
+			console.log("之前位置"+e.oldIndex)
+			console.log("当前位置"+e.newIndex)
+			let items = e.item.parentElement.children
+			for (let i = 0; i < items.length; i++) {
+				items[i].querySelector('em').innerText = (i+1) + '.'
+			}
+			
+			let id = e.clone.attributes.data_id.value;
+			let data = new FormData();
+			data.append('oldIndex',e.oldIndex);
+			data.append('newIndex',e.newIndex);
+			this.$ajax.post('/api/cate/sort/' + id,data)
+			.then((response)=>{
+				if(response.data.code == 1){
+					this.$notify({
+					  title: '成功',
+					  message: '排序已经自动保存~',
+					  type: 'success'
+					});
+				}
+			});
+			
+		},
 		beforeAvatarUpload:function(file) {
+			console.log(file.type)
 			const isImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/ico'
-			 || file.type === 'image/gif' || file.type === 'image/svg' || file.type === 'image/bmp';
+			 || file.type === 'image/gif' || file.type === 'image/svg+xml';
 			const isLt2M = file.size / 1024 / 1024 < 2;
 					
 			if (!isImage) {
-			  this.$message.error('上传头像图片只能是 svg/ico/png/jpg/bmp/gif 格式!');
+			  this.$message.error('只能是 svg/ico/png/jpg/gif 格式!');
 			}
 			if (!isLt2M) {
-			  this.$message.error('上传头像图片大小不能超过 2MB!');
+			  this.$message.error('图片大小不能超过 2MB!');
 			}
 			
 			return isImage && isLt2M;
@@ -571,7 +599,7 @@ default {
 					this.$ajax.post('/api/cate/create', data)
 					.then((response)=>{
 						if(response.data.code == 1){
-							this.getUserSites();
+							this.getUserCategoryList();
 							this.siteManage.categorie = false;
 						} else{
 							this.$message.error(response.data.msg);
@@ -707,6 +735,7 @@ default {
 	}
 .user.edit {
 	border: 1px #008eff solid;
+	box-shadow: 0 0 0 0.2rem rgba(68,139,255,.25);
 }
 
 .user .groupBut{
