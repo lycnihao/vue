@@ -39,7 +39,7 @@
 		      <div  v-for="(categorie,index) in categories" :name="categorie.slugName" :class="index == 0 ? 'tabpanel show':'tabpanel'">
 				<div class="groupBut" v-show="enabled">
 					<ul class="nav menu-inline">
-						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="siteManage.add = true,getUserCates()">添加网址</el-button></li>
+						<li class="nav-item"><el-button type="primary" size="small" icon="el-icon-plus" @click="editOpen(),getUserCates()">添加网址</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-folder-add" @click="siteManage.categorie=true">创建分类</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-upload2" @click="siteManage.import=true">导入</el-button></li>
 						<li class="nav-item">
@@ -77,7 +77,7 @@
 									<h3>{{webSite.title}}</h3>
 								  </div>
 								</a>
-								<div class="site-item" @click="editOpen(webSite.websiteId)" v-else>
+								<div class="site-item" @click="editOpen(webSite,categorie.categoryId)" v-else>
 									<div class="site-edit">
 										<i class="el-icon-remove" @click.stop="removeSite(categorie.categoryId,webSite.websiteId)"></i>
 									</div>
@@ -106,85 +106,22 @@
 		
 		 </div>
 		</div>
-		<el-dialog title="添加网址" :visible.sync="siteManage.add" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" @closed="siteManage.imageUrl=''">
-			<el-form :model="addForm" ref="addForm" :rules="rules" status-icon>
-				<el-form-item prop="url">
-					<el-input v-model="addForm.url" placeholder="网站地址，如：http://www.baidu.com">
-					  <template slot="append"><el-button @click="getContent(addForm.url)">抓取标题</el-button></template>
-					</el-input>
-				</el-form-item>
-				<el-row :gutter="10">
-				  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
-					<el-form-item prop="title">
-						<el-input v-model="addForm.title" placeholder="网站名称"></el-input>
-					</el-form-item>
-				  </el-col>
-				  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
-					<el-form-item prop="category">
-						<el-select v-model="addForm.category" placeholder="请选择">
-						  <el-option
-							v-for="category in userCates"
-							:key="category.categoryId"
-							:label="category.name"
-							:value="category.categoryId">
-						  </el-option>
-						</el-select>
-					</el-form-item>
-				  </el-col>
-				</el-row>
-				<el-divider class="divider">
-					<span>文字格式设置</span>
-				</el-divider>
-				<el-row :gutter="15" class="option">
-					<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-						<div class="option-item">
-						  <div class="item">
-							  <el-upload
-								  ref="upload"
-								  :action="'/api/webSite/upload'"
-								  :show-file-list="false"
-								  :before-upload="beforeAvatarUpload"
-								  :http-request="avatarUpload"
-								  >
-								  <img v-if="siteManage.imageUrl" :src="siteManage.imageUrl" class="avatar" alt="无">
-								  <el-tooltip v-else class="item" effect="dark" content="只能上传svg/ico/png/jpg/bmp/gif文件,且不超过2MB" placement="top-start">
-									  <span><i slot="trigger" class="el-icon-camera-solid"></i></span>
-									</el-tooltip>
-								</el-upload>
-						  </div>
-						  <span class="title">图标</span>
-						</div>
-		 
-					</el-col>
-					<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-						<div class="option-item">
-						  <div class="item">
-							<el-color-picker size="small"></el-color-picker>
-						  </div>
-						  <span class="title">颜色</span>
-						</div>
-					</el-col>
-				</el-row>
-			</el-form>
-			<el-button type="primary" style="width: 100%;" @click="addSite()">立即保存</el-button>
-		</el-dialog>
-		 
-		<el-dialog title="修改网址" :visible.sync="siteManage.edit" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" @closed="siteManage.imageUrl=''">
-		 	<el-form :model="editForm" ref="editForm" :rules="rules" status-icon>
+		<el-dialog :title="siteManage.title" :visible.sync="siteManage.save" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" @close="clearForm()" @closed="siteManage.imageUrl=''">
+		 	<el-form :model="saveForm" ref="saveForm" :rules="rules" status-icon>
 		 		<el-form-item prop="url">
-		 			<el-input v-model="editForm.url" placeholder="网站地址，如：http://www.baidu.com">
-		 			  <template slot="append"><el-button @click="getContent(editForm.url)">抓取标题</el-button></template>
+		 			<el-input v-model="saveForm.url" placeholder="网站地址，如：http://www.baidu.com">
+		 			  <template slot="append"><el-button @click="getContent(saveForm.url)">抓取标题</el-button></template>
 		 			</el-input>
 		 		</el-form-item>
 		 		<el-row :gutter="10">
 		 		  <el-col :xs="14" :sm="16" :md="16" :lg="16" :xl="16">
 		 			<el-form-item prop="title">
-		 				<el-input v-model="editForm.title" placeholder="网站名称"></el-input>
+		 				<el-input v-model="saveForm.title" placeholder="网站名称"></el-input>
 		 			</el-form-item>
 		 		  </el-col>
 		 		  <el-col :xs="10" :sm="8" :md="8" :lg="8" :xl="8">
 		 			<el-form-item prop="category">
-		 				<el-select v-model="editForm.category" placeholder="请选择">
+		 				<el-select v-model="saveForm.category" placeholder="请选择">
 		 				  <el-option
 		 					v-for="category in userCates"
 		 					:key="category.categoryId"
@@ -296,26 +233,20 @@ default {
 			userCates:null,
 			categories:null,
 			 siteManage:{
-				add:false,
-				edit:false,
+				save:false,
 				sort:false,
 				import:false,
 				icons:false,
 				imageUrl:'',
 				categorie:false,
+				title:'',
 			},
 			enabled: false,
-			addForm:{
-			  url:'',
-			  icon:'',
-			  title:'',
-			  category:null,
-			},
-			editForm:{
+			saveForm:{
 			  id:null,
 			  icon:'',
-			  url:'http://www.168dh.cn',
-			  title:'酷达导航',
+			  url:'',
+			  title:'',
 			  category:null,
 			  categoryId:null,
 			},
@@ -364,10 +295,9 @@ default {
 				switch(command){
 				   case 'add':
 					this.getUserCates();
-					this.enabled = this.siteManage.add = true
+					this.enabled = this.siteManage.save = true
 				   break;
 				   case 'edit':
-					/* this.siteManage.edit = true */
 					this.enabled = true;
 				   break;
 				   case 'sort':
@@ -405,7 +335,7 @@ default {
 			});
 		},
 		getUserCates:function(f){
-			this.$ajax.post('/api/cate/getUserCategoryList/')
+			this.$ajax.post('/api/cate/getUserCategoryList')
 			.then((response)=>{
 				this.userCates = response.data;
 				if (typeof f === "function") {
@@ -476,15 +406,11 @@ default {
 		avatarUpload:function(file) {
 			let data = new FormData();
 			data.append('file',file.file);
+			data.append('url',this.saveForm.url);
 			this.$ajax.post('/api/webSite/icon/upload',data)
 			.then((response)=>{
 				if(response.data.code == 1){
-					if(this.siteManage.add){
-						this.addForm.icon = this.siteManage.imageUrl = response.data.result.filePath;
-					}else{
-						this.editForm.icon = this.siteManage.imageUrl = response.data.result.filePath;
-					}
-		
+					this.saveForm.icon = this.siteManage.imageUrl = response.data.result.filePath;
 				} else{
 					this.$message.error(response.data.msg);
 				}
@@ -497,8 +423,7 @@ default {
 			.then((response)=>{
 				if(response.data.code == 1){
 					this.$message({message: '保存成功！',type: 'success'});
-					this.siteManage.add = false;
-					this.siteManage.edit = false;
+					this.siteManage.save = false;
 					this.getUserSites();
 				} else{
 					this.$message.error(response.data.msg);
@@ -507,50 +432,35 @@ default {
 				this.$message.error('发送请求失败，请检查网络是否通畅');
 			});
 		},
-		addSite:function(){
-			let data = new FormData();
-			data.append('title',this.addForm.title);
-			data.append('url',this.addForm.url);
-			data.append('icon',this.addForm.icon);
-			data.append('categoryId',this.addForm.category);
-			this.$refs.addForm.validate((valid) => {
-				if (valid) {
-					this.saveSite(data)
-				}else{
-					console.log('error submit!!');
-					return false;
-				}
-			});
-		},
-		editOpen:function(siteId){
+		editOpen:function(webSite,cateId){
 			var that = this;
-			this.siteManage.edit = true;
-			this.editForm.id = siteId;
+			this.siteManage.save = true;
+			if (webSite == undefined){
+				this.siteManage.title="添加网站"
+				return
+			} else {
+				this.siteManage.title="编辑网站"
+			}
+			this.saveForm.id = webSite.websiteId;
 			
-			this.getUserCates(function(){
-				that.$ajax.post('/api/webSite/user/'+siteId)
-				.then((response)=>{
-					if(response.data.code == 1){
-						that.editForm.title = response.data.result.webSite.title;
-						that.editForm.icon = response.data.result.webSite.icon;
-						that.editForm.url = response.data.result.webSite.url;
-						that.editForm.category = response.data.result.categories[0].categoryId;
-						that.siteManage.imageUrl = that.editForm.icon = response.data.result.webSite.icon;
-					} else{
-						that.$message.error(response.data.msg);
-					}
-				})
-			})
-			
+			that.saveForm.title = webSite.title;
+			that.saveForm.icon = webSite.icon;
+			that.saveForm.url = webSite.url;
+			that.siteManage.imageUrl = that.saveForm.icon = webSite.icon;
+			if (cateId  != undefined) {
+				that.saveForm.category = cateId;
+			} 
 		},
 		editSite:function(){
 			let data = new FormData();
-			data.append('websiteId',this.editForm.id);
-			data.append('title',this.editForm.title);
-			data.append('url',this.editForm.url);
-			data.append('icon',this.editForm.icon);
-			data.append('categoryId',this.editForm.category);
-			this.$refs.editForm.validate((valid) => {
+			data.append('title',this.saveForm.title);
+			data.append('url',this.saveForm.url);
+			data.append('icon',this.saveForm.icon);
+			if(this.saveForm.category != null)
+			data.append('categoryId',this.saveForm.category);
+			if(this.saveForm.id != null)
+			data.append('websiteId',this.saveForm.id);
+			this.$refs.saveForm.validate((valid) => {
 				if (valid) {
 					this.saveSite(data)
 				}else{
@@ -580,8 +490,8 @@ default {
 						this.addForm.title = response.data.result.name
 						this.addForm.icon = this.siteManage.imageUrl = response.data.result.iconFile
 					}else{
-						this.editForm.title = response.data.result.name
-						this.editForm.icon = this.siteManage.imageUrl = response.data.result.iconFile
+						this.saveForm.title = response.data.result.name
+						this.saveForm.icon = this.siteManage.imageUrl = response.data.result.iconFile
 					}
 				} else{
 					this.$message.error(response.data.msg);
@@ -640,6 +550,9 @@ default {
 			}).catch((response)=>{
 				this.$message.error('发送请求失败，请检查网络是否通畅');
 			});
+		},
+		clearForm:function(){
+			this.saveForm = {id:null,icon:'',url:'',title:'',category:null,categoryId:null,}
 		}
 	},
 	watch:{

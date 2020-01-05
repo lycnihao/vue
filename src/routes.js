@@ -9,4 +9,5 @@ export default {
   '/register': 'register',
   '/register/name': 'registerName',
   '/people': 'people',
+	'/site': 'site',
 }

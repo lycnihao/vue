@@ -349,7 +349,9 @@ default {
 
 #wrapper .site-icon img {
 	opacity: 0;
+	/* border-radius: 30px; */
 	transition: opacity .5s ease-in;
+	/* box-shadow: 0 0 4px 0 rgba(0,0,0,.2); */
 }
 
 .site-list {
@@ -375,7 +377,8 @@ default {
 }
 
 .site-list .site-item:hover {
-	background: #eee;
+	background: #f9f9f9;
+	border-radius: 8px;
 	transition: background 0.35s ease-out;
 }
 
