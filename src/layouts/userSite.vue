@@ -67,7 +67,7 @@
 							 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId" :data_cateId="categorie.categoryId">
 								<a v-if="!enabled" class="site-item" :href="webSite.url" target='_blank' :title="webSite.title">
 								  <div class="site-icon">
-									<el-image :src="webSite.icon">
+									<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
 									  <div slot="error" class="image-slot">
 										<i class="el-icon-picture-outline"></i>
 									  </div>
@@ -82,7 +82,7 @@
 										<i class="el-icon-remove" @click.stop="removeSite(categorie.categoryId,webSite.websiteId)"></i>
 									</div>
 									<div class="site-icon">
-										<el-image :src="webSite.icon">
+										<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
 										  <div slot="error" class="image-slot">
 										  <i class="el-icon-picture-outline"></i>
 										  </div>
@@ -226,6 +226,8 @@ export
 default {
 	data() {
 		return {
+			//defaultImg: require('../assets/img/google.svg'),
+			defaultImg: 'https://www.168dh.cn/favicon.ico',
 			activeName:'',
 			activeSlugName:'',
 			show3:false,
