@@ -285,7 +285,12 @@ default {
 			data.append('file',file.file);
 			this.$ajax.post('/api/webSite/import',data)
 			.then((response)=>{
-				this.$message({message: '提交成功！后台为您解析中请稍后查看',type: 'success'});
+				this.$notify({
+					title: '导入成功',
+					message: '后台为您解析中请稍后查看~',
+					type: 'success',
+					position: 'bottom-right'
+				});
 			}).catch((response)=>{
 				this.$message.error('发送请求失败，请检查网络是否通畅');
 			});
