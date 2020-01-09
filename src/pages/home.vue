@@ -63,8 +63,8 @@
 										<i class="site-icon-shadow"></i>
 										</div>
 									   <div class="site-info">
-									   <h3>{{ site.title }}</h3>
-									   <p>{{ site.summary }}</p>
+										   <h3>{{ site.title }}</h3>
+										   <p>{{ site.summary }}</p>
 									   </div>
 									 </a>
 								  </li>
@@ -74,6 +74,7 @@
 						<div v-else>
 							<ul class="site-list">
 							  <li v-for="site in sites[category.categoryId]">
+								  <i class="el-icon-circle-plus collect"></i>
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									<div class="site-icon">
 									<img :data-src="site.icon" :alt="site.title"></img>
@@ -365,6 +366,26 @@ default {
 .site-list li {
 	width: 31%;
 	margin: 5px 1%;
+	position: relative;
+}
+
+.site-list .collect{
+	z-index: 10;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    color: #a1a7b7;
+    font-size: 15px;
+}
+
+.site-list .collect:hover{
+	color: #6b7386;
+}
+
+.site-list li:hover .collect{
+	display: block!important;
 }
 
 .site-list .site-item {
