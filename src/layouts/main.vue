@@ -11,7 +11,7 @@
 
 				<el-row :gutter="15">
 				<!-- 主体显示块 -->
-				<el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="container">
+				<el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18" class="container">
 					<!-- 功能导航板块 -->
 					 <div id="nav" class="box">
 						 <div style="width: 100%;display: inherit;margin-bottom: -5px;">
@@ -34,7 +34,7 @@
 					<slot></slot>
 				</el-col>
 				<!-- 侧边栏 -->
-				<el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="sidebar">
+				<el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6" class="sidebar">
 					<!-- <div class="box">
 					  <el-tabs class="tabs box-body" v-model="activeName" type="card">
 						<el-tab-pane label="音乐" name="first">
@@ -55,27 +55,32 @@
 							<weather ref="weather"></weather>
 						</div>
 					</div>
-					<div class="box hot-link">
+					<div class="box">
 						<div class="box-header">
-							<h3>热门推荐</h3>
+							<h3>🎖️热门推荐</h3>
 							<i class="el-icon-refresh" style="cursor:pointer"></i>
 						</div>
 						<div id="billboard" class="box-body">
-							 <ul style="width: 100%;">
-								 <li  style="width: 100%;"  v-for="item in 5" :key="item">
-									 <a class="link" href="/">
-										<div class="webSite-icon" style="background-image: url(https://www.168dh.cn/favicon.ico);"></div>
-										<div class="webSite-info">
-											<a class="title" href="/">
-												酷达导航
-											</a>
-											<div class="description">
-												酷达导航（www.168dh.cn）是汇聚全网优质网址及资源的网址导航。专注于分享有价值的优质书签和工具。欢迎大家使用！
-											</div>
-										</div>
-									 </a>
-								 </li>
-							</ul>
+							<el-carousel indicator-position="outside" :autoplay="false" arrow="never" >
+								<el-carousel-item v-for="item in 3" :key="item">
+								  <ul style="width: 100%;">
+								  	 <li  style="width: 100%;"  v-for="item in 8" :key="item">
+								  		 <a class="link" href="/">
+								  			<div class="webSite-icon" style="background-image: url(https://www.168dh.cn/favicon.ico);"></div>
+								  			<div class="webSite-info">
+								  				<a class="title" href="/">
+								  					酷达导航
+								  				</a>
+								  				<div class="description">
+								  					酷达导航（www.168dh.cn）是汇聚全网优质网址及资源的网址导航。专注于分享有价值的优质书签和工具。欢迎大家使用！
+								  				</div>
+								  			</div>
+								  		 </a>
+								  	 </li>
+								  </ul>
+								</el-carousel-item>
+							  </el-carousel>
+							 
 						</div>
 					</div>
 					<div class="box" id="ads" v-show="!isLogin">
@@ -220,6 +225,10 @@ default {
 <style>
 @import '../assets/css/style.css';
 
+.sidebar .box-header h3{
+	font-size: 17px;
+}
+
 #nav .nav-item a{
 	font-size: 15px;
 }
@@ -237,10 +246,11 @@ default {
 }
 
 #billboard li > a{
-	padding: 1rem 1.3rem;
+	padding: .8rem .5rem;
     display: flex;
     align-items: center;
     cursor: pointer;
+	height: 50px;
 }
 
 #billboard li > a:hover{
@@ -248,9 +258,9 @@ default {
 }
 
 #billboard .webSite-icon{
-	    flex: 0 0 auto;
-    width: 3.8rem;
-    height: 3.8rem;
+	flex: 0 0 auto;
+    width: 3.2rem;
+    height: 3.2rem;
     border-radius: 50%;
     margin-right: .8rem;
 	display: inline-block;
@@ -272,5 +282,10 @@ default {
 
 #billboard .webSite-info .description{
 	font-size: 13px;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 </style>

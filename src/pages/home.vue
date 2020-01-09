@@ -12,7 +12,7 @@
 		  <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
 		  <el-row :gutter="10" style="margin-right: 0px!important;">
 			<!-- 主体显示块 -->
-			<el-col :md="17" :lg="17" :xl="17" class="block">
+			<el-col :md="18" :lg="18" :xl="18" class="block">
 			  <transition name="el-zoom-in-top" >
 				 <ul v-show="headerNav" class="menu menu-inline cate-list" ref="menuWrapper2">
 				 <li class="nav-item-radius" v-for="(category, index) in categorys">
