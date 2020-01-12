@@ -62,17 +62,17 @@
 						</div>
 						<div id="billboard" class="box-body">
 							<el-carousel indicator-position="outside" :autoplay="false" arrow="never" >
-								<el-carousel-item v-for="item in 3" :key="item">
+								<el-carousel-item v-for="(array,index) in recommends" :key="index">
 								  <ul style="width: 100%;">
-								  	 <li  style="width: 100%;"  v-for="item in 8" :key="item">
-								  		 <a class="link" href="/">
-								  			<div class="webSite-icon" style="background-image: url(https://www.168dh.cn/favicon.ico);"></div>
+								  	 <li  style="width: 100%;"  v-for="(website,key) in array" :key="key">
+								  		 <a class="link" :href="website.url">
+								  			<div class="webSite-icon" :style="'background-image: url('+website.icon+');'"></div>
 								  			<div class="webSite-info">
-								  				<a class="title" href="/">
-								  					酷达导航
+								  				<a class="title" :href="website.url">
+								  					{{website.title}}
 								  				</a>
 								  				<div class="description">
-								  					酷达导航（www.168dh.cn）是汇聚全网优质网址及资源的网址导航。专注于分享有价值的优质书签和工具。欢迎大家使用！
+								  					{{website.summary}}
 								  				</div>
 								  			</div>
 								  		 </a>
@@ -126,11 +126,31 @@ default {
 		  searchUrl:'https://www.baidu.com/s?word=',
 		  imgs: ['//icweiliimg9.pstatp.com/weili/l/189463222381969704.webp', '//icweiliimg1.pstatp.com/weili/l/199522817473249287.webp'],
 		  activeName: 'first',
-		  isLogin:false
+		  isLogin:false,
+		  recommends : []
 		};
 	},
 	methods: {
-
+		getRecommend:function(){
+			this.$ajax.get('/api/webSite/recommend')
+			.then((response)=>{
+				if (response.data != null) {
+					let index = 1;
+				    for(let i = 0; i < response.data.length; i++ ){
+						if(i!= 0 && i % 4 == 0){
+							index ++
+						}
+						if(this.recommends[index-1] == undefined){
+							this.recommends[index-1] = [];
+						}
+						this.recommends[index-1].push(response.data[i]);
+					}
+					console.log(this.recommends[0])
+				}
+			}).catch((response)=>{
+			  this.$message.error('数据请求失败，请稍后再试');
+			});
+		}
 	},
 
 	components: {
@@ -144,6 +164,9 @@ default {
 	  'weather':weatherPlugin,
 	},
 	created() {
+		
+		this.getRecommend();
+		
 		function addEvent(obj,xEvent,fn) {
 			if(obj.attachEvent){
 			  obj.attachEvent('on'+xEvent,fn);
@@ -246,7 +269,7 @@ default {
 }
 
 #billboard li > a{
-	padding: .8rem .5rem;
+	padding: .8rem 1rem;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -257,19 +280,23 @@ default {
 	background-color: hsla(0,0%,84.7%,.1);
 }
 
+#billboard li > a:hover .title{
+	color: #3280fc;
+}
+
 #billboard .webSite-icon{
 	flex: 0 0 auto;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    margin-right: .8rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    /* border-radius: 50%; */
+    margin-right: .5rem;
 	display: inline-block;
     position: relative;
     background-position: 50%;
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-color: #eee;
-	    cursor: pointer;
+    background-color: #fff;
+	cursor: pointer;
 }
 #billboard .webSite-info{
 	
