@@ -56,7 +56,7 @@
 					</ul>
 				</div>
 				<el-alert v-show="enabled" title="拖动网址即可排序哦~" type="info" center show-icon></el-alert>
-		        <el-row class="user-website" v-if="webSites != null">
+		        <el-row class="user-website" v-if="webSites[categorie.categoryId] !== undefined && webSites[categorie.categoryId].length > 0">
 					  <draggable
 						:disabled="!enabled"
 						class="list-group"

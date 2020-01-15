@@ -58,7 +58,7 @@
 					<div class="box">
 						<div class="box-header">
 							<h3>🎖️热门推荐</h3>
-							<i class="el-icon-refresh" style="cursor:pointer"></i>
+							<i class="el-icon-refresh" style="cursor:pointer" @click="RefRecommend()"></i>
 						</div>
 						<div id="billboard" class="box-body">
 							<el-carousel indicator-position="outside" :autoplay="false" arrow="never" >
@@ -83,13 +83,13 @@
 							 
 						</div>
 					</div>
-					<div class="box" id="ads" v-show="!isLogin">
+					<div class="box" id="ads">
 						<ins class="adsbygoogle"
-						 style="display:block"
+						 style="display:block; text-align:center;"
+						 data-ad-layout="in-article"
+						 data-ad-format="fluid"
 						 data-ad-client="ca-pub-3017438581004529"
-						 data-ad-slot="2727905770"
-						 data-ad-format="auto"
-						 data-full-width-responsive="true"></ins>
+						 data-ad-slot="6351802465"></ins>
 					</div>
 				</el-col>
 				</el-row>
@@ -136,6 +136,27 @@ default {
 			.then((response)=>{
 				if (response.data != null) {
 					let index = 1;
+				    for(let i = 0; i < response.data.length; i++ ){
+						if(i!= 0 && i % 4 == 0){
+							index ++
+						}
+						if(this.recommends[index-1] == undefined){
+							this.recommends[index-1] = [];
+						}
+						this.recommends[index-1].push(response.data[i]);
+					}
+					console.log(this.recommends[0])
+				}
+			}).catch((response)=>{
+			  this.$message.error('数据请求失败，请稍后再试');
+			});
+		},
+		RefRecommend:function(){
+			this.$ajax.get('/api/webSite/recommend/r')
+			.then((response)=>{
+				if (response.data != null) {
+					let index = 1;
+					this.recommends = [];
 				    for(let i = 0; i < response.data.length; i++ ){
 						if(i!= 0 && i % 4 == 0){
 							index ++
@@ -221,7 +242,8 @@ default {
 		 addEvent(document.documentElement,'mousewheel',onMouseWheel);
 		 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 		 
-		 this.$nextTick(() => {				 
+		 this.$nextTick(() => {
+			 (adsbygoogle = window.adsbygoogle || []).push({});
 			 var simple = localStorage.getItem("simple");
 			 if(simple != 'false'){
 				 document.querySelector(".scroll-in").style.top = "0";

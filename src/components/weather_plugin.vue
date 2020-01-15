@@ -28,7 +28,7 @@
 				this.nowWeather = response.data.result.now;
 				this.info = response.data.result.msg;
 				
-				let code = this.nowWeather.cond_code;
+				var code = Number(this.nowWeather.cond_code);
 				switch(code){
 					case 201: code = 200; break;
 					case 202: code = 200; break;
@@ -38,7 +38,6 @@
 					case 206: code = 200; break;
 					case 207: code = 200; break;
 					case 208: code = 200; break;
-					
 					case 210: code = 209; break;
 					case 211: code = 209; break;
 					case 213: code = 209; break;
@@ -93,5 +92,6 @@
 	}
 	#weather .info{
 		font-size: 12px;
+		color: #909399;
 	}
 </style>
