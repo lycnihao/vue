@@ -66,7 +66,8 @@
 								  <ul style="width: 100%;">
 								  	 <li  style="width: 100%;"  v-for="(website,key) in array" :key="key">
 								  		 <a class="link" :href="website.url">
-								  			<div class="webSite-icon" :style="'background-image: url('+website.icon+');'"></div>
+											<div class="webSite-icon" style="background-image: url('https://www.168dh.cn/favicon.ico');" v-if="website.icon == null"></div>
+								  			<div class="webSite-icon" :style="'background-image: url('+website.icon+');'" v-else></div>
 								  			<div class="webSite-info">
 								  				<a class="title" :href="website.url">
 								  					{{website.title}}
@@ -136,6 +137,7 @@ default {
 			.then((response)=>{
 				if (response.data != null) {
 					let index = 1;
+					this.recommends = [];
 				    for(let i = 0; i < response.data.length; i++ ){
 						if(i!= 0 && i % 4 == 0){
 							index ++
@@ -185,8 +187,6 @@ default {
 	  'weather':weatherPlugin,
 	},
 	created() {
-		
-		this.getRecommend();
 		
 		function addEvent(obj,xEvent,fn) {
 			if(obj.attachEvent){
@@ -243,7 +243,12 @@ default {
 		 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 		 
 		 this.$nextTick(() => {
-			 (adsbygoogle = window.adsbygoogle || []).push({});
+			 try{
+			 	(adsbygoogle = window.adsbygoogle || []).push({});
+			 }catch(e){
+			 	console.log("adsbygoogle error")
+			 }
+			 this.getRecommend();
 			 var simple = localStorage.getItem("simple");
 			 if(simple != 'false'){
 				 document.querySelector(".scroll-in").style.top = "0";

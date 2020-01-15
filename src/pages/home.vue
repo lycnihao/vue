@@ -54,12 +54,13 @@
 				   <div class="box-body">
 		
 						<div class="tabs-content" v-if="subCategorys[category.categoryId]">
-							<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName">
+							<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :key="index" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName" >
 								<ul class="site-list">
-								  <li v-for="site in sites[subCategory.categoryId]">
+								  <li v-for="(site,i) in sites[subCategory.categoryId]" :key="i">
 									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									   <div class="site-icon">
-										<img :data-src="site.icon" :alt="site.title"></img>
+										<img data-src="https://www.168dh.cn/favicon.ico" :alt="site.title" v-if="site.icon == null"></img>
+										<img :data-src="site.icon" :alt="site.title" v-else></img>
 										<i class="site-icon-shadow"></i>
 										</div>
 									   <div class="site-info">
@@ -77,7 +78,8 @@
 								  <i class="el-icon-circle-plus collect"></i>
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									<div class="site-icon">
-									<img :data-src="site.icon" :alt="site.title"></img>
+									<img data-src="https://www.168dh.cn/favicon.ico" :alt="site.title" v-if="site.icon == null"></img>
+									<img :data-src="site.icon" :alt="site.title" v-else></img>
 									<i class="site-icon-shadow"></i>
 									</div>
 								   <div class="site-info float-right">

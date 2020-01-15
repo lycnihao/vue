@@ -459,11 +459,14 @@ default {
 			} 
 		},
 		editSite:function(){
+			if(this.saveForm.category == null){
+				this.$message.error('还未选择分类。');
+				return false;
+			}
 			let data = new FormData();
 			data.append('title',this.saveForm.title);
 			data.append('url',this.saveForm.url);
 			data.append('icon',this.saveForm.icon);
-			if(this.saveForm.category != null)
 			data.append('categoryId',this.saveForm.category);
 			if(this.saveForm.id != null)
 			data.append('websiteId',this.saveForm.id);
