@@ -10,7 +10,7 @@
 			 </ul>
 		</div>
 		  <div v-show="menuTop" v-bind:class="['header-top-nav main', !headerNav ? 'hide' : '']">
-		  <el-row :gutter="10" style="margin-right: 0px!important;">
+		  <el-row :gutter="10" style="margin-right: -2px!important;">
 			<!-- 主体显示块 -->
 			<el-col :md="18" :lg="18" :xl="18" class="block">
 			  <transition name="el-zoom-in-top" >
@@ -57,6 +57,7 @@
 							<div v-for="(subCategory,index) in subCategorys[category.categoryId]" :key="index" :class="index == 0 ? 'tabpanel show':'tabpanel'" :name="subCategory.slugName" >
 								<ul class="site-list">
 								  <li v-for="(site,i) in sites[subCategory.categoryId]" :key="i">
+									 <i class="el-icon-circle-plus collect" @click="addUserSite(site)"></i>
 									 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									   <div class="site-icon">
 										<img data-src="https://www.168dh.cn/favicon.ico" :alt="site.title" v-if="site.icon == null"></img>
@@ -75,7 +76,7 @@
 						<div v-else>
 							<ul class="site-list">
 							  <li v-for="site in sites[category.categoryId]">
-								  <i class="el-icon-circle-plus collect"></i>
+								 <i class="el-icon-circle-plus collect" @click="addUserSite(site)"></i>
 								 <a class="site-item" :href="site.url" target='_blank' :title="site.summary" @click="visit(site.websiteId)">
 									<div class="site-icon">
 									<img data-src="https://www.168dh.cn/favicon.ico" :alt="site.title" v-if="site.icon == null"></img>
@@ -113,7 +114,6 @@ default {
 				categorys: [],
 				subCategorys: {},
 				activeSubCategorys: {},
-				loading:true,
 			}
 		},
 		methods: {
@@ -125,7 +125,7 @@ default {
 			  let foodList = this.$refs.sitesWrapper.querySelectorAll(".site-list-hook");
 			  let user = document.querySelector(".user").scrollHeight;
 			  let search = document.getElementById("search");
-			  let height = 520 + user;
+			  let height = 450 + user;
 			  this.listHeight  = []
 			  this.listHeight.push(height)
 			  for (let i = 0, l = foodList.length; i < l; i++) {
@@ -168,7 +168,7 @@ default {
 				//变量t是滚动条滚动时，距离顶部的距离
 				var t = document.documentElement.scrollTop||document.body.scrollTop;
 				let user = document.querySelector(".user").scrollHeight;
-				if ( t > 618 + user) {
+				if ( t > 450 + user) {
 					this.menuTop = true;
 				} else{
 					this.menuTop = false;
@@ -188,18 +188,23 @@ default {
 			},
 			visit:function(id){
 				this.$ajax.post('/api/visit/'+id)
+			},
+			addUserSite:function(webSite){
+				if(!this.$children[0].$refs.header.isLogin){
+					this.$message.error('请登陆后在进行操作');
+					return false;
+				}
+				this.$set(this.$children[0].$refs.userSite.saveForm,"icon", webSite.icon)
+				this.$set(this.$children[0].$refs.userSite.saveForm,"url", webSite.url)
+				this.$set(this.$children[0].$refs.userSite.saveForm,"title", webSite.title)
+				this.$set(this.$children[0].$refs.userSite.siteManage,"imageUrl", webSite.icon)
+				this.$children[0].$refs.userSite.editOpen();
 			}
 		},
 		components: {
 			MainLayout
 		},
 		created() {
-			const loading = this.$loading({
-			  lock: true,
-			  text: 'Loading',
-			  spinner: 'el-icon-loading',
-			  background: 'rgba(0, 0, 0, 0.2)'
-			});
 			this.$ajax.get('/api/webSite/list')
 			.then((response)=>{
 				for(let categorie of response.data.categories){
@@ -224,9 +229,7 @@ default {
 				  })
 				  this.lazy();
 				  this.$children[0].$el.ownerDocument.querySelector("#nav").appendChild(this.$refs.menuWrapper1)
-				 loading.close();
 			}).catch((response)=>{
-			  loading.close();
 			  this.$message.error('数据请求失败，请稍后再试');
 			});
 			
@@ -394,7 +397,7 @@ default {
 	padding: 15px;
 	font-size: 14px;
 	display: flex;
-		/* align-items: center; */
+	align-items: center;
 	overflow: hidden;
 	transition: all .4s cubic-bezier(.175,.885,.32,1);
 }
@@ -426,7 +429,7 @@ default {
 	margin-top: 2px;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	height: 30px;
+	/* height: 30px; */
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -538,7 +541,7 @@ default {
 		
 @media screen and (min-width:1200px) {
 	.site-list .site-icon {
-		margin-right: 8px;
+		margin-right: 12px;
 	}
 
 	.site-list .site-icon .el-image {
@@ -565,7 +568,7 @@ default {
 	}
 
 	.site-list .site-icon {
-		margin-right: 5px;
+		margin-right: 8px;
 	}
 
 	.site-list .site-icon .el-image {

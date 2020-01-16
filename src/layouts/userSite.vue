@@ -50,50 +50,53 @@
 						
 					</ul>
 					<ul class="nav menu-inline">
-						<li class="nav-item"><el-checkbox label="全选" border size="small" disabled></el-checkbox></li>
-						<li class="nav-item"><el-button size="small" icon="el-icon-right" disabled>移动到</el-button></li>
+						<li class="nav-item"><el-checkbox :indeterminate="check.isIndeterminate" v-model="check.checkAll" @change="handleCheckAllChange($event,webSites[categorie.categoryId])" border size="small">全选</el-checkbox></li>
+						<li class="nav-item"><el-button size="small" icon="el-icon-right" @click="siteManage.move = !siteManage.move">移动到</el-button></li>
 						<li class="nav-item"><el-button size="small" icon="el-icon-delete" disabled>回收站</el-button></li>
 					</ul>
 				</div>
 				<el-alert v-show="enabled" title="拖动网址即可排序哦~" type="info" center show-icon></el-alert>
 		        <el-row class="user-website" v-if="webSites[categorie.categoryId] !== undefined && webSites[categorie.categoryId].length > 0">
-					  <draggable
-						:disabled="!enabled"
-						class="list-group"
-						ghost-class="ghost"
-						animation=400
-						chosenClass = ".site-item"
-						@update="checkEdit">
-							 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId" :data_cateId="categorie.categoryId">
-								<a v-if="!enabled" class="site-item" :href="webSite.url" target='_blank' :title="webSite.title">
-								  <div class="site-icon">
-									<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
-									  <div slot="error" class="image-slot">
-										<i class="el-icon-picture-outline"></i>
-									  </div>
-									</el-image>
-								  </div>
-								  <div class="site-info">
-									<h3>{{webSite.title}}</h3>
-								  </div>
-								</a>
-								<div class="site-item" @click="editOpen(webSite,categorie.categoryId)" v-else>
-									<div class="site-edit">
-										<i class="el-icon-remove" @click.stop="removeSite(categorie.categoryId,webSite.websiteId)"></i>
-									</div>
-									<div class="site-icon">
-										<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
-										  <div slot="error" class="image-slot">
-										  <i class="el-icon-picture-outline"></i>
+					  <el-checkbox-group v-model="check.checkedWebSites" @change="handleCheckedCitiesChange($event,webSites[categorie.categoryId])">
+						  <draggable
+							:disabled="!enabled"
+							class="list-group"
+							ghost-class="ghost"
+							animation=400
+							chosenClass = ".site-item"
+							@update="checkEdit">
+									 <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="4" v-for="webSite in webSites[categorie.categoryId]" :key="webSite.websiteId" :data_id="webSite.websiteId" :data_cateId="categorie.categoryId">
+										<a v-if="!enabled" class="site-item" :href="webSite.url" target='_blank' :title="webSite.title">
+										  <div class="site-icon">
+											<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
+											  <div slot="error" class="image-slot">
+												<i class="el-icon-picture-outline"></i>
+											  </div>
+											</el-image>
 										  </div>
-										</el-image>
-									</div>
-									<div class="site-info">
-										<h3>{{webSite.title}}</h3>
-									</div>
-								</div>
-							</el-col>
-					  </draggable>
+										  <div class="site-info">
+											<h3>{{webSite.title}}</h3>
+										  </div>
+										</a>
+										<div class="site-item" v-else>
+											<el-checkbox :label="webSite.websiteId" name="checkedWebSites" class="checked-box"></el-checkbox>
+											<div class="site-edit">
+												<i class="el-icon-remove" @click.stop="removeSite(categorie.categoryId,webSite.websiteId)"></i>
+											</div>
+											<div class="site-icon" @click="editOpen(webSite,categorie.categoryId)">
+												<el-image :src="webSite.icon == null ? defaultImg:webSite.icon">
+												  <div slot="error" class="image-slot">
+												  <i class="el-icon-picture-outline"></i>
+												  </div>
+												</el-image>
+											</div>
+											<div class="site-info" @click="editOpen(webSite,categorie.categoryId)">
+												<h3>{{webSite.title}}</h3>
+											</div>
+										</div>
+									</el-col>
+						  </draggable>
+					  </el-checkbox-group>
 		        </el-row>
 		
 		        <div class="null" v-else>
@@ -215,13 +218,27 @@
 			<el-button style="width: 100%;margin-top: 10px;" icon="el-icon-circle-plus-outline"
 			 @click="siteManage.categorie = true" plain>创建分类</el-button>
 		</el-dialog>
+	
+		<el-dialog title="移动到" :visible.sync="siteManage.move" :append-to-body="true" :close-on-click-modal="false" :destroy-on-close="true" :open="cateOpen()" @closed="check.category = null" custom-class="sort_w">
+			<div style="text-align: center;">
+				<el-select v-model="check.category" placeholder="请选择需要移动到的分类" style="width: 100%;margin-bottom: 15px;">
+				  <el-option
+					v-for="category in userCates"
+					:key="category.categoryId"
+					:label="category.name"
+					:value="category.categoryId">
+				  </el-option>
+				</el-select>
+				<el-button type="primary" style="width: 100%;" @click="moveWebSite()">立即保存</el-button>
+			</div>
+		</el-dialog>
+	
 	</div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
 import icons from './icons'
-
 export
 default {
 	data() {
@@ -234,6 +251,12 @@ default {
 			webSites:null,
 			userCates:null,
 			categories:null,
+			check:{
+				checkedWebSites:[],
+				checkAll: false,
+				isIndeterminate: true,
+				category:null,
+			},
 			 siteManage:{
 				save:false,
 				sort:false,
@@ -242,6 +265,7 @@ default {
 				imageUrl:'',
 				categorie:false,
 				title:'',
+				move:false,
 			},
 			enabled: false,
 			saveForm:{
@@ -264,11 +288,46 @@ default {
 		}
 	},
 	methods:{
+		handleCheckAllChange:function(val,webSites){
+			if(webSites !== undefined && webSites.length > 0){
+				let options = [];
+				for (let webSite of webSites) { options.push(webSite.websiteId) }
+				this.check.checkedWebSites = val ? options : [];
+				this.check.isIndeterminate = false;
+			}
+		},
+		handleCheckedCitiesChange:function(value,webSites){
+			let checkedCount = value.length;
+			this.check.checkAll = checkedCount === webSites.length;
+			this.check.isIndeterminate = checkedCount > 0 && checkedCount < webSites.length;
+		},
 		tabs:function(cate,event){
 			this.activeName = cate.name;
 			this.activeSlugName = cate.slugName;
 			event.path[6].querySelector('.tabpanel.show').className = "tabpanel"; //隐藏旧tab
 			event.path[6].querySelector(`.tabpanel[name='${cate.slugName}']`).className += " show"; //显示新的tab
+			this.checkedWebSites = [];
+			this.checkAll = false;
+			this.isIndeterminate = true;
+		},
+		moveWebSite:function(){
+			if (this.check.category == null) {
+				this.$message.error('请选择需要移动到的分类');
+				return false;
+			}
+			let data = new FormData();
+			data.append('webSiteIds',this.check.checkedWebSites);
+			data.append('categoryId',this.check.category);
+			this.$ajax.post('/api/webSite/moveSite',data)
+			.then((response)=>{
+				if (response.data.code == 1) {
+					this.$message({message: '网址已经移动到目标分类~',type: 'success'});
+					this.getUserSites();
+					this.siteManage.move = false;
+				}
+			}).catch((response)=>{
+				this.$message.error('发送请求失败，请检查网络是否通畅');
+			});
 		},
 		exportHtml:function(){
 			window.open('/api/webSite/export')
@@ -297,7 +356,7 @@ default {
 		},
 		userWebSite:function(command){
 			if(!this.$parent.$refs.header.isLogin){
-				window.location.href = "/login"
+				this.$message.error('请登陆后在进行操作');
 			}else{
 				switch(command){
 				   case 'add':
@@ -519,7 +578,7 @@ default {
 					this.$ajax.post('/api/cate/create', data)
 					.then((response)=>{
 						if(response.data.code == 1){
-							this.getUserCategoryList();
+							this.getUserCates();
 							this.siteManage.categorie = false;
 						} else{
 							this.$message.error(response.data.msg);
@@ -692,6 +751,17 @@ default {
 	box-shadow: none!important;
 	transform: none !important;
 }
+
+.user.edit .site-item .checked-box {
+	position: absolute;
+    left: -8px;
+    top: -16px;
+}
+
+.user.edit .site-item .checked-box .el-checkbox__label{
+	display: none;
+}
+
 
 .user.edit .site-item .site-edit {
 	opacity: 0;

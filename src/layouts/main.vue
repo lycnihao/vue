@@ -147,7 +147,6 @@ default {
 						}
 						this.recommends[index-1].push(response.data[i]);
 					}
-					console.log(this.recommends[0])
 				}
 			}).catch((response)=>{
 			  this.$message.error('数据请求失败，请稍后再试');
@@ -243,11 +242,6 @@ default {
 		 addEvent(document.documentElement,'DOMMouseScroll',onMouseWheel);
 		 
 		 this.$nextTick(() => {
-			 try{
-			 	(adsbygoogle = window.adsbygoogle || []).push({});
-			 }catch(e){
-			 	console.log("adsbygoogle error")
-			 }
 			 this.getRecommend();
 			 var simple = localStorage.getItem("simple");
 			 if(simple != 'false'){
@@ -274,6 +268,11 @@ default {
 
 <style>
 @import '../assets/css/style.css';
+
+#ads{
+	background-color: transparent;
+	box-shadow:none;
+}
 
 .sidebar .box-header h3{
 	font-size: 17px;
