@@ -398,6 +398,13 @@ default {
 				}
 			}).catch((response)=>{
 			  this.$message.error('数据请求失败，请稍后再试');
+			  let name = "request_token";
+			  var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+			  if(arr != null){
+			  	for (var i = arr.length; i--;){
+			  	document.cookie = arr[i] + '=0;expires=' + new Date(0).toUTCString()
+			    }
+			  }
 			});
 		},
 		getUserCates:function(f){

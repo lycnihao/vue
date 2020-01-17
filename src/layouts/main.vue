@@ -18,7 +18,7 @@
 							 <div class="float-left" style="margin-bottom: -1px;margin-left: 5px;">
 								 <ul class="nav menu-inline" style="line-height: 46px;">
 									 <li class="nav-item"><v-link href="/">导航</v-link></li>
-									 <li class="nav-item"><v-link href="/hot">热榜</v-link></li>
+									 <li class="nav-item"><v-link href="/hot">热点</v-link></li>
 									 <li class="nav-item"><v-link href="/kuaidi">查快递</v-link></li>
 
 								</ul>
@@ -85,12 +85,12 @@
 						</div>
 					</div>
 					<div class="box" id="ads">
-						<ins class="adsbygoogle"
-						 style="display:block; text-align:center;"
-						 data-ad-layout="in-article"
-						 data-ad-format="fluid"
+						 <ins class="adsbygoogle"
+						 style="display:block;text-align:center;"
 						 data-ad-client="ca-pub-3017438581004529"
-						 data-ad-slot="6351802465"></ins>
+						 data-ad-slot="4561306129"
+						 data-ad-format="auto"
+						 data-full-width-responsive="true"></ins>
 					</div>
 				</el-col>
 				</el-row>
@@ -270,6 +270,7 @@ default {
 @import '../assets/css/style.css';
 
 #ads{
+	height: 200px;
 	background-color: transparent;
 	box-shadow:none;
 }
