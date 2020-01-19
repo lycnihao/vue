@@ -69,7 +69,7 @@
 											<div class="webSite-icon" style="background-image: url('https://www.168dh.cn/favicon.ico');" v-if="website.icon == null"></div>
 								  			<div class="webSite-icon" :style="'background-image: url('+website.icon+');'" v-else></div>
 								  			<div class="webSite-info">
-								  				<a class="title" :href="website.url">
+								  				<a class="title" :href="website.url" target='_blank'>
 								  					{{website.title}}
 								  				</a>
 								  				<div class="description">

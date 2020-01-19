@@ -239,6 +239,8 @@ default {
 </script>
 
 <style>
+@import '../assets/css/webSite_list.css';
+
 /* 可以设置不同的进入和离开动画 */
 	/* 设置持续时间和动画函数 */
 .slide-fade-enter-active {
@@ -359,117 +361,6 @@ default {
 	transition: opacity .5s ease-in;
 	/* box-shadow: 0 0 4px 0 rgba(0,0,0,.2); */
 }
-
-.site-list {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin-bottom: 10px;
-}
-
-.site-list li {
-	width: 31%;
-	margin: 5px 1%;
-	position: relative;
-}
-
-.site-list .collect{
-	z-index: 10;
-    cursor: pointer;
-    display: none;
-    position: absolute;
-    right: 6px;
-    top: 6px;
-    color: #a1a7b7;
-    font-size: 15px;
-}
-
-.site-list .collect:hover{
-	color: #6b7386;
-}
-
-.site-list li:hover .collect{
-	display: block!important;
-}
-
-.site-list .site-item {
-	padding: 15px;
-	font-size: 14px;
-	display: flex;
-	align-items: center;
-	overflow: hidden;
-	transition: all .4s cubic-bezier(.175,.885,.32,1);
-}
-
-.site-list .site-item:hover {
-	background: #f9f9f9;
-	border-radius: 8px;
-	transition: background 0.35s ease-out;
-}
-
-.site-list .site-item:hover .site-icon-shadow {
-	opacity: 1;
-	transition: opacity 0.25s ease-out,
-}
-
-.site-list .site-info {
-	width: 88%;
-}
-
-.site-list .site-info h3 {
-	font-weight: 700;
-	color: #555;
-	font-size: 14px;
-}
-
-.site-list .site-info p {
-	color: #a1a7b7;
-	font-size: 12px;
-	margin-top: 2px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	/* height: 30px; */
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-}
-
-.site-list .site-item:hover h3 {
-	color: #409EFF;
-	transition: color 0.35s ease-out,
-}
-
-.site-list .site-item:hover p {
-	color: #131313a1;
-}
-
-.site-list .site-icon {
-	position: relative;
-}
-
-.site-icon .site-icon-shadow {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 32px;
-	border-radius: 100%;
-	-webkit-filter: blur(10px) brightness(80%) opacity(.8);
-	filter: blur(10px) brightness(80%) opacity(.8);
-	transform: scale(.95);
-	z-index: 1;
-	opacity: 0;
-}
-
-.site-icon img {
-	width: 32px;
-}
-
-.site-icon .el-image {
-	position: inherit!important;
-	height: inherit;
-}
 	
 		/* 手风琴样式 开始*/
 .accordion-container {
@@ -540,15 +431,6 @@ default {
 		
 		
 @media screen and (min-width:1200px) {
-	.site-list .site-icon {
-		margin-right: 12px;
-	}
-
-	.site-list .site-icon .el-image {
-		width: 36px;
-		height: 36px;
-	}
-
 	.image-placeholder .block {
 		width: 190px;
 		height: 123px;
@@ -561,47 +443,11 @@ default {
 	.header-top-nav {
 		display: none;
 	}
-
-	.site-list .site-item {
-		height: 30px;
-		width: 115px;
-	}
-
-	.site-list .site-icon {
-		margin-right: 8px;
-	}
-
-	.site-list .site-icon .el-image {
-		width: 25px;
-		height: 25px;
-	}
-
-	.site-list .site-info p {
-		display: none;
-	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
 	.container {
 		width: 100%;
-	}
-
-	.site-list .site-item {
-		height: 30px;
-		width: 115px;
-	}
-
-	.site-list .site-icon {
-		margin-right: 5px;
-	}
-
-	.site-list .site-icon .el-image {
-		width: 25px;
-		height: 25px;
-	}
-
-	.site-list .site-info p {
-		display: none;
 	}
 
 	.image-placeholder .block {
@@ -615,24 +461,6 @@ default {
 
 	.container {
 		width: 100%;
-	}
-
-	.site-list .site-item {
-		height: 30px;
-		width: 115px;
-	}
-
-	.site-list .site-icon {
-		margin-right: 5px;
-	}
-
-	.site-list .site-icon .el-image {
-		width: 25px;
-		height: 25px;
-	}
-
-	.site-list .site-info p {
-		display: none;
 	}
 
 	.image-placeholder .block {
@@ -651,35 +479,7 @@ default {
 	.tabs-nav {
 		margin-top: 8px;
 	}
-
-	.site-tabs .tablist li a {
-		padding: 3px 6px;
-		border-radius: 20px;
-	}
-
-	.site-list .site-item {
-		height: 30px;
-		width: 100px;
-		padding: 2px;
-	}
-
-	.site-icon img {
-		width: 25px;
-		height: 25px;
-	}
-
-	.site-list .site-icon {
-		margin-right: 5px;
-	}
-
-	.site-list .site-info h3 {
-		font-size: 12px;
-	}
-
-	.site-list .site-info p {
-		display: none;
-	}
-
+	
 	.image-placeholder .block {
 		width: 49%;
 		height: 112px;
