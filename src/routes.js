@@ -10,4 +10,5 @@ export default {
   '/register/name': 'registerName',
   '/people': 'people',
 	'/site': 'site',
+	'/collect': 'collect',
 }
