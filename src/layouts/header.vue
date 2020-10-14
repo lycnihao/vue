@@ -212,7 +212,7 @@
 					],
 				cssBlur:0,
 				cssPanel:100,
-				theme:{'name':'background','value':'http://img.168dh.cn/skin/001.jpg','cssBlur':'0'},
+				theme:{'name':'background','value':'https://cdn.jsdelivr.net/gh/hshanx/static@v1.0.2/default-bg.jpeg','cssBlur':'0'},
 				headerWeather:{
 					nowWeather:{},
 					cityName:'',
